@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "213295116647",
+    "project_id": "teameat-a39c2",
+    "storage_bucket": "teameat-a39c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213295116647:android:b17d83744ccbcc1a21bfc2",
+        "android_client_info": {
+          "package_name": "com.teameat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7bIKMPMm1RdicSdfoC4PCU5YEi9-QbfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213295116647:android:dcbbf19f541cd93a21bfc2",
+        "android_client_info": {
+          "package_name": "com.teameat.teameat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7bIKMPMm1RdicSdfoC4PCU5YEi9-QbfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

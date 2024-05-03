@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:teameat/0_config/firebase_options.dart';
+import 'package:get/get.dart';
+import 'package:teameat/3_domain/message/i_message_repository.dart';
 
 late final AndroidNotificationChannel channel;
 bool isFlutterLocalNotificationsInitialized = false;
@@ -15,12 +15,7 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 /// call. Be sure to annotate the handler with `@pragma('vm:entry-point')` above the function declaration.
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await setupFlutterNotifications();
   showFlutterNotification(message);
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  print('Handling a background message ${message.messageId}');
 }
 
 Future<void> setupFlutterNotifications() async {
@@ -55,7 +50,7 @@ Future<void> setupFlutterNotifications() async {
   isFlutterLocalNotificationsInitialized = true;
 }
 
-void showFlutterNotification(RemoteMessage message) {
+Future<void> showFlutterNotification(RemoteMessage message) async {
   RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
   if (notification != null && android != null && !kIsWeb) {
@@ -68,6 +63,7 @@ void showFlutterNotification(RemoteMessage message) {
           channel.id,
           channel.name,
           channelDescription: channel.description,
+          priority: Priority.max,
           // TODO add a proper drawable resource to android, for now using
           //      one that already exists in example app.
           icon: 'launch_background',
@@ -78,18 +74,29 @@ void showFlutterNotification(RemoteMessage message) {
 }
 
 Future<void> _addMessageListener() async {
+  // 백그라운드에서 알람이 왔을 때 추가 동작
+  // FirebaseMessaging.onBackgroundMessage(showFlutterNotification);
+
+  // foreground 에서 알람이 왔을때 추가 동작
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('onMessage');
-    showFlutterNotification(message);
+    // print('onMessage');
+    // print(message);
+    // showFlutterNotification(message);
   });
+
+  // background 에서 앱이 켜졌을때 추가 동작
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    print('onMessageOpenedApp');
-    showFlutterNotification(message);
+    // print('onMessageOpenedApp');
+    // print(message);
+    // showFlutterNotification(message);
   });
-  FirebaseMessaging.instance.onTokenRefresh.listen((String newToken) {
-    print('Token refreshed');
-    print(newToken);
-  });
+  FirebaseMessaging.instance.onTokenRefresh.listen(_trySaveToken);
+}
+
+Future<void> _trySaveToken(String token) async {
+  final msgRepo = Get.find<IMessageRepository>();
+  final ret = await msgRepo.saveToken(token);
+  ret.fold((l) => print, (r) => null);
 }
 
 Future<bool> _isMessagePermitted() async {
@@ -113,9 +120,8 @@ Future<void> configMessage() async {
     return;
   }
   await setupFlutterNotifications();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   _addMessageListener();
   final token = await FirebaseMessaging.instance.getToken();
-  print('first Token!');
-  print(token);
+  if (token != null) _trySaveToken(token);
 }

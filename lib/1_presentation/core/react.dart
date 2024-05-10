@@ -6,4 +6,14 @@ class React extends IReact {
   void toRoot() {
     Get.offAllNamed('/');
   }
+
+  @override
+  void toHomeOffAll() {
+    Get.offAllNamed('/home');
+  }
+
+  @override
+  void showError() {
+    throw "NOT IMPLEMENTED";
+  }
 }

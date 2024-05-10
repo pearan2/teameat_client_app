@@ -13,11 +13,8 @@ part 'error_response.g.dart';
 
 @freezed
 class ErrorResponse with _$ErrorResponse {
-  const factory ErrorResponse(
-      {required int status,
-      required String name,
-      required String code,
-      required String message}) = _ErrorResponse;
+  const factory ErrorResponse({required int status, required String message}) =
+      _ErrorResponse;
 
   factory ErrorResponse.fromJson(Map<String, Object?> json) =>
       _$ErrorResponseFromJson(json);

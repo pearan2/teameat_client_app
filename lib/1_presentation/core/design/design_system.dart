@@ -1,9 +1,11 @@
 import 'package:teameat/1_presentation/core/design/default/default_color_system.dart';
+import 'package:teameat/1_presentation/core/design/default/default_image_system.dart';
 import 'package:teameat/1_presentation/core/design/default/default_space_system.dart';
 import 'package:teameat/1_presentation/core/design/default/default_text_style_system.dart';
 import 'package:teameat/1_presentation/core/design/default/default_text_system.dart';
 import 'package:teameat/1_presentation/core/design/i_color_system.dart';
 import 'package:teameat/1_presentation/core/design/i_design_system.dart';
+import 'package:teameat/1_presentation/core/design/i_image_system.dart';
 import 'package:teameat/1_presentation/core/design/i_space_system.dart';
 import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 import 'package:teameat/1_presentation/core/design/i_text_system.dart';
@@ -23,24 +25,28 @@ class DS extends IDesignSystem {
   static ITextSystem getText() => _instance.textSystem;
   static ITextStyleSystem getTextStyle() => _instance.textStyleSystem;
   static ISpaceSystem getSpace() => _instance.spaceSystem;
+  static IImageSystem getImage() => _instance.imageSystem;
 
   final IColorSystem colorSystem;
   final ISpaceSystem spaceSystem;
   final ITextSystem textSystem;
   final ITextStyleSystem textStyleSystem;
+  final IImageSystem imageSystem;
 
   DS._(
       {required this.colorSystem,
       required this.spaceSystem,
       required this.textSystem,
-      required this.textStyleSystem});
+      required this.textStyleSystem,
+      required this.imageSystem});
 
   factory DS.base() {
     return DS._(
         colorSystem: DefaultColorSystem(),
         spaceSystem: DefaultSpaceSystem(),
         textSystem: DefaultTextSystem(),
-        textStyleSystem: DefaultTextStyleSystem());
+        textStyleSystem: DefaultTextStyleSystem(),
+        imageSystem: DefaultImageSystem());
   }
 
   @override

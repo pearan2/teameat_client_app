@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -6,9 +7,8 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('this is root'),
-      ),
+      backgroundColor: DS.getColor().primary500,
+      body: Center(child: DS.getImage().splashBackground),
     );
   }
 }

@@ -50,6 +50,10 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.10+1
   infinite_scroll_pagination: ^4.0.0
+  carousel_slider: ^4.2.1
+  intl: ^0.19.0
+  flutter_animated_icons: ^1.0.1
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:

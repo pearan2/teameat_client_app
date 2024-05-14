@@ -64,3 +64,37 @@ Map<String, dynamic> _$$StoreSimpleImplToJson(_$StoreSimpleImpl instance) =>
       'location': instance.location,
       'items': instance.items,
     };
+
+_$StoreDetailImpl _$$StoreDetailImplFromJson(Map<String, dynamic> json) =>
+    _$StoreDetailImpl(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      profileImageUrl: json['profileImageUrl'] as String,
+      address: json['address'] as String,
+      location: Point.fromJson(json['location'] as Map<String, dynamic>),
+      items: (json['items'] as List<dynamic>)
+          .map((e) => ItemSimple.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      phone: json['phone'] as String,
+      oneLineIntroduce: json['oneLineIntroduce'] as String,
+      introduce: json['introduce'] as String,
+      operationTime: json['operationTime'] as String,
+      breakTime: json['breakTime'] as String,
+      lastOrderTime: json['lastOrderTime'] as String,
+    );
+
+Map<String, dynamic> _$$StoreDetailImplToJson(_$StoreDetailImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'profileImageUrl': instance.profileImageUrl,
+      'address': instance.address,
+      'location': instance.location,
+      'items': instance.items,
+      'phone': instance.phone,
+      'oneLineIntroduce': instance.oneLineIntroduce,
+      'introduce': instance.introduce,
+      'operationTime': instance.operationTime,
+      'breakTime': instance.breakTime,
+      'lastOrderTime': instance.lastOrderTime,
+    };

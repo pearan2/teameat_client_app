@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/message/i_message_repository.dart';
-import 'package:teameat/4_infra/connection/connection.dart';
 
 class MessageRepository extends IMessageRepository {
-  final _conn = Get.find<HttpClient>();
+  final _conn = Get.find<IConnection>();
 
   @override
   Future<Either<Failure, Unit>> saveToken(String token) async {

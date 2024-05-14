@@ -16,4 +16,19 @@ class React extends IReact {
   void showError() {
     throw "NOT IMPLEMENTED";
   }
+
+  @override
+  void toStoreItemDetail(int itemId) {
+    Get.toNamed('/store/item', arguments: {'itemId': itemId});
+  }
+
+  @override
+  void back() {
+    Get.back();
+  }
+
+  @override
+  Future<void> toLogin() async {
+    return Get.toNamed('/login');
+  }
 }

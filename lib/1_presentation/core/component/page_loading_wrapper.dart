@@ -12,8 +12,8 @@ class PageLoadingWrapper extends GetView<LoadingProvider> {
   const PageLoadingWrapper(
       {super.key,
       required this.child,
-      this.borderRadius = 20,
-      this.baseColor = Colors.black,
+      this.borderRadius = 8,
+      this.baseColor = Colors.grey,
       this.highlightColor = Colors.white});
 
   @override

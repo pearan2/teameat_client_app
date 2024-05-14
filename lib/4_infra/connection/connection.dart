@@ -17,6 +17,8 @@ class HttpClient extends IConnection<String, Failure> {
   final int connectionTimeout = 5;
   final _pref = Get.find<SharedPreferences>();
 
+  bool _isLogined = false;
+
   final _headers = <String, String>{
     HttpHeaders.contentTypeHeader: 'application/json'
   };
@@ -31,11 +33,14 @@ class HttpClient extends IConnection<String, Failure> {
       setAuthentication(registeredToken);
     }
   }
+  @override
+  bool get isLogined => _isLogined;
 
   @override
   void removeAuthentication() {
     _headers.remove(HttpHeaders.authorizationHeader);
     _pref.remove(_authTokenKey); // delete
+    _isLogined = false;
   }
 
   @override
@@ -45,9 +50,10 @@ class HttpClient extends IConnection<String, Failure> {
     };
     _headers.addEntries(entry.entries);
     _pref.setString(_authTokenKey, token); // setToken
+    _isLogined = true;
   }
 
-  JsonMap _convert(String jsonString) {
+  Object _convert(String jsonString) {
     try {
       final ret = jsonDecode(jsonString);
       return ret;
@@ -57,16 +63,15 @@ class HttpClient extends IConnection<String, Failure> {
   }
 
   @override
-  Future<Either<Failure, JsonMap>> get(String path, JsonMap params) async {
+  Future<Either<Failure, Object>> get(String path, JsonMap? params) async {
     final uri = Uri.https(endPoint, path, params);
-
     try {
       final res = await http
           .get(uri, headers: _headers)
           .timeout(Duration(seconds: connectionTimeout));
-      final ret = _convert(res.body);
+      final ret = _convert(utf8.decode(res.bodyBytes));
       if (res.statusCode != HttpStatus.ok) {
-        final errorResponse = ErrorResponse.fromJson(ret);
+        final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
         return left(Failure.networkError(errorResponse.message));
       }
       return right(ret);
@@ -77,7 +82,7 @@ class HttpClient extends IConnection<String, Failure> {
   }
 
   @override
-  Future<Either<Failure, JsonMap>> put(String path, JsonMap params) async {
+  Future<Either<Failure, Object>> put(String path, JsonMap params) async {
     final uri = Uri.https(endPoint, path);
     try {
       final res = await http
@@ -85,7 +90,7 @@ class HttpClient extends IConnection<String, Failure> {
           .timeout(Duration(seconds: connectionTimeout));
       final ret = _convert(res.body);
       if (res.statusCode != HttpStatus.ok) {
-        final errorResponse = ErrorResponse.fromJson(ret);
+        final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
         return left(Failure.networkError(errorResponse.message));
       }
       return right(ret);
@@ -96,7 +101,7 @@ class HttpClient extends IConnection<String, Failure> {
   }
 
   @override
-  Future<Either<Failure, JsonMap>> post(String path, JsonMap params) async {
+  Future<Either<Failure, Object>> post(String path, JsonMap params) async {
     final uri = Uri.https(endPoint, path);
     try {
       final res = await http
@@ -104,7 +109,7 @@ class HttpClient extends IConnection<String, Failure> {
           .timeout(Duration(seconds: connectionTimeout));
       final ret = _convert(res.body);
       if (res.statusCode != HttpStatus.ok) {
-        final errorResponse = ErrorResponse.fromJson(ret);
+        final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
         return left(Failure.networkError(errorResponse.message));
       }
       return right(ret);

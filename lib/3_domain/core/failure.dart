@@ -8,4 +8,7 @@ class Failure with _$Failure {
   const factory Failure.requestFail(String desc) = _RequestFail;
   const factory Failure.invalidValueProvide(String desc) = _InvalidValueProvide;
   const factory Failure.jsonConvertFail(String desc) = _JsonConvertFail;
+  const factory Failure.fetchCodeFail(String desc) = _FetchCodeFail;
+  const factory Failure.fetchStoreFail(String desc) = _FetchStoreFail;
+  const factory Failure.fetchStoreItemFail(String desc) = _FetchStoreItemFail;
 }

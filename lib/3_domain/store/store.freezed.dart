@@ -697,3 +697,403 @@ abstract class _StoreSimple implements StoreSimple {
   _$$StoreSimpleImplCopyWith<_$StoreSimpleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+StoreDetail _$StoreDetailFromJson(Map<String, dynamic> json) {
+  return _StoreDetail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StoreDetail {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get profileImageUrl => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  Point get location => throw _privateConstructorUsedError;
+  List<ItemSimple> get items => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
+  String get oneLineIntroduce => throw _privateConstructorUsedError;
+  String get introduce => throw _privateConstructorUsedError;
+  String get operationTime => throw _privateConstructorUsedError;
+  String get breakTime => throw _privateConstructorUsedError;
+  String get lastOrderTime => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StoreDetailCopyWith<StoreDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StoreDetailCopyWith<$Res> {
+  factory $StoreDetailCopyWith(
+          StoreDetail value, $Res Function(StoreDetail) then) =
+      _$StoreDetailCopyWithImpl<$Res, StoreDetail>;
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String profileImageUrl,
+      String address,
+      Point location,
+      List<ItemSimple> items,
+      String phone,
+      String oneLineIntroduce,
+      String introduce,
+      String operationTime,
+      String breakTime,
+      String lastOrderTime});
+
+  $PointCopyWith<$Res> get location;
+}
+
+/// @nodoc
+class _$StoreDetailCopyWithImpl<$Res, $Val extends StoreDetail>
+    implements $StoreDetailCopyWith<$Res> {
+  _$StoreDetailCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? profileImageUrl = null,
+    Object? address = null,
+    Object? location = null,
+    Object? items = null,
+    Object? phone = null,
+    Object? oneLineIntroduce = null,
+    Object? introduce = null,
+    Object? operationTime = null,
+    Object? breakTime = null,
+    Object? lastOrderTime = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as Point,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ItemSimple>,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      oneLineIntroduce: null == oneLineIntroduce
+          ? _value.oneLineIntroduce
+          : oneLineIntroduce // ignore: cast_nullable_to_non_nullable
+              as String,
+      introduce: null == introduce
+          ? _value.introduce
+          : introduce // ignore: cast_nullable_to_non_nullable
+              as String,
+      operationTime: null == operationTime
+          ? _value.operationTime
+          : operationTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      breakTime: null == breakTime
+          ? _value.breakTime
+          : breakTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastOrderTime: null == lastOrderTime
+          ? _value.lastOrderTime
+          : lastOrderTime // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PointCopyWith<$Res> get location {
+    return $PointCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$StoreDetailImplCopyWith<$Res>
+    implements $StoreDetailCopyWith<$Res> {
+  factory _$$StoreDetailImplCopyWith(
+          _$StoreDetailImpl value, $Res Function(_$StoreDetailImpl) then) =
+      __$$StoreDetailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String name,
+      String profileImageUrl,
+      String address,
+      Point location,
+      List<ItemSimple> items,
+      String phone,
+      String oneLineIntroduce,
+      String introduce,
+      String operationTime,
+      String breakTime,
+      String lastOrderTime});
+
+  @override
+  $PointCopyWith<$Res> get location;
+}
+
+/// @nodoc
+class __$$StoreDetailImplCopyWithImpl<$Res>
+    extends _$StoreDetailCopyWithImpl<$Res, _$StoreDetailImpl>
+    implements _$$StoreDetailImplCopyWith<$Res> {
+  __$$StoreDetailImplCopyWithImpl(
+      _$StoreDetailImpl _value, $Res Function(_$StoreDetailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? profileImageUrl = null,
+    Object? address = null,
+    Object? location = null,
+    Object? items = null,
+    Object? phone = null,
+    Object? oneLineIntroduce = null,
+    Object? introduce = null,
+    Object? operationTime = null,
+    Object? breakTime = null,
+    Object? lastOrderTime = null,
+  }) {
+    return _then(_$StoreDetailImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as Point,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ItemSimple>,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      oneLineIntroduce: null == oneLineIntroduce
+          ? _value.oneLineIntroduce
+          : oneLineIntroduce // ignore: cast_nullable_to_non_nullable
+              as String,
+      introduce: null == introduce
+          ? _value.introduce
+          : introduce // ignore: cast_nullable_to_non_nullable
+              as String,
+      operationTime: null == operationTime
+          ? _value.operationTime
+          : operationTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      breakTime: null == breakTime
+          ? _value.breakTime
+          : breakTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastOrderTime: null == lastOrderTime
+          ? _value.lastOrderTime
+          : lastOrderTime // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$StoreDetailImpl implements _StoreDetail {
+  const _$StoreDetailImpl(
+      {required this.id,
+      required this.name,
+      required this.profileImageUrl,
+      required this.address,
+      required this.location,
+      required final List<ItemSimple> items,
+      required this.phone,
+      required this.oneLineIntroduce,
+      required this.introduce,
+      required this.operationTime,
+      required this.breakTime,
+      required this.lastOrderTime})
+      : _items = items;
+
+  factory _$StoreDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StoreDetailImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String profileImageUrl;
+  @override
+  final String address;
+  @override
+  final Point location;
+  final List<ItemSimple> _items;
+  @override
+  List<ItemSimple> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
+
+  @override
+  final String phone;
+  @override
+  final String oneLineIntroduce;
+  @override
+  final String introduce;
+  @override
+  final String operationTime;
+  @override
+  final String breakTime;
+  @override
+  final String lastOrderTime;
+
+  @override
+  String toString() {
+    return 'StoreDetail(id: $id, name: $name, profileImageUrl: $profileImageUrl, address: $address, location: $location, items: $items, phone: $phone, oneLineIntroduce: $oneLineIntroduce, introduce: $introduce, operationTime: $operationTime, breakTime: $breakTime, lastOrderTime: $lastOrderTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StoreDetailImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.profileImageUrl, profileImageUrl) ||
+                other.profileImageUrl == profileImageUrl) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.oneLineIntroduce, oneLineIntroduce) ||
+                other.oneLineIntroduce == oneLineIntroduce) &&
+            (identical(other.introduce, introduce) ||
+                other.introduce == introduce) &&
+            (identical(other.operationTime, operationTime) ||
+                other.operationTime == operationTime) &&
+            (identical(other.breakTime, breakTime) ||
+                other.breakTime == breakTime) &&
+            (identical(other.lastOrderTime, lastOrderTime) ||
+                other.lastOrderTime == lastOrderTime));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      profileImageUrl,
+      address,
+      location,
+      const DeepCollectionEquality().hash(_items),
+      phone,
+      oneLineIntroduce,
+      introduce,
+      operationTime,
+      breakTime,
+      lastOrderTime);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StoreDetailImplCopyWith<_$StoreDetailImpl> get copyWith =>
+      __$$StoreDetailImplCopyWithImpl<_$StoreDetailImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StoreDetailImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StoreDetail implements StoreDetail {
+  const factory _StoreDetail(
+      {required final int id,
+      required final String name,
+      required final String profileImageUrl,
+      required final String address,
+      required final Point location,
+      required final List<ItemSimple> items,
+      required final String phone,
+      required final String oneLineIntroduce,
+      required final String introduce,
+      required final String operationTime,
+      required final String breakTime,
+      required final String lastOrderTime}) = _$StoreDetailImpl;
+
+  factory _StoreDetail.fromJson(Map<String, dynamic> json) =
+      _$StoreDetailImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  String get profileImageUrl;
+  @override
+  String get address;
+  @override
+  Point get location;
+  @override
+  List<ItemSimple> get items;
+  @override
+  String get phone;
+  @override
+  String get oneLineIntroduce;
+  @override
+  String get introduce;
+  @override
+  String get operationTime;
+  @override
+  String get breakTime;
+  @override
+  String get lastOrderTime;
+  @override
+  @JsonKey(ignore: true)
+  _$$StoreDetailImplCopyWith<_$StoreDetailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

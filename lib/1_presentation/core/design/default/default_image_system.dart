@@ -16,4 +16,11 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 140,
       );
+
+  @override
+  Image get nearbyMeIcon => Image.asset(
+        'assets/image/nearby_me.png',
+        height: 12,
+        width: 12,
+      );
 }

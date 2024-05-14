@@ -23,6 +23,9 @@ mixin _$Failure {
     required TResult Function(String desc) requestFail,
     required TResult Function(String desc) invalidValueProvide,
     required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,6 +34,9 @@ mixin _$Failure {
     TResult? Function(String desc)? requestFail,
     TResult? Function(String desc)? invalidValueProvide,
     TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +45,9 @@ mixin _$Failure {
     TResult Function(String desc)? requestFail,
     TResult Function(String desc)? invalidValueProvide,
     TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +57,9 @@ mixin _$Failure {
     required TResult Function(_RequestFail value) requestFail,
     required TResult Function(_InvalidValueProvide value) invalidValueProvide,
     required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +68,9 @@ mixin _$Failure {
     TResult? Function(_RequestFail value)? requestFail,
     TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +79,9 @@ mixin _$Failure {
     TResult Function(_RequestFail value)? requestFail,
     TResult Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -174,6 +192,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     required TResult Function(String desc) requestFail,
     required TResult Function(String desc) invalidValueProvide,
     required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
   }) {
     return networkError(desc);
   }
@@ -185,6 +206,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult? Function(String desc)? requestFail,
     TResult? Function(String desc)? invalidValueProvide,
     TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
   }) {
     return networkError?.call(desc);
   }
@@ -196,6 +220,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult Function(String desc)? requestFail,
     TResult Function(String desc)? invalidValueProvide,
     TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (networkError != null) {
@@ -211,6 +238,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     required TResult Function(_RequestFail value) requestFail,
     required TResult Function(_InvalidValueProvide value) invalidValueProvide,
     required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
   }) {
     return networkError(this);
   }
@@ -222,6 +252,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult? Function(_RequestFail value)? requestFail,
     TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
   }) {
     return networkError?.call(this);
   }
@@ -233,6 +266,9 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult Function(_RequestFail value)? requestFail,
     TResult Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (networkError != null) {
@@ -323,6 +359,9 @@ class _$RequestFailImpl implements _RequestFail {
     required TResult Function(String desc) requestFail,
     required TResult Function(String desc) invalidValueProvide,
     required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
   }) {
     return requestFail(desc);
   }
@@ -334,6 +373,9 @@ class _$RequestFailImpl implements _RequestFail {
     TResult? Function(String desc)? requestFail,
     TResult? Function(String desc)? invalidValueProvide,
     TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
   }) {
     return requestFail?.call(desc);
   }
@@ -345,6 +387,9 @@ class _$RequestFailImpl implements _RequestFail {
     TResult Function(String desc)? requestFail,
     TResult Function(String desc)? invalidValueProvide,
     TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (requestFail != null) {
@@ -360,6 +405,9 @@ class _$RequestFailImpl implements _RequestFail {
     required TResult Function(_RequestFail value) requestFail,
     required TResult Function(_InvalidValueProvide value) invalidValueProvide,
     required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
   }) {
     return requestFail(this);
   }
@@ -371,6 +419,9 @@ class _$RequestFailImpl implements _RequestFail {
     TResult? Function(_RequestFail value)? requestFail,
     TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
   }) {
     return requestFail?.call(this);
   }
@@ -382,6 +433,9 @@ class _$RequestFailImpl implements _RequestFail {
     TResult Function(_RequestFail value)? requestFail,
     TResult Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (requestFail != null) {
@@ -473,6 +527,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     required TResult Function(String desc) requestFail,
     required TResult Function(String desc) invalidValueProvide,
     required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
   }) {
     return invalidValueProvide(desc);
   }
@@ -484,6 +541,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult? Function(String desc)? requestFail,
     TResult? Function(String desc)? invalidValueProvide,
     TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
   }) {
     return invalidValueProvide?.call(desc);
   }
@@ -495,6 +555,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult Function(String desc)? requestFail,
     TResult Function(String desc)? invalidValueProvide,
     TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (invalidValueProvide != null) {
@@ -510,6 +573,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     required TResult Function(_RequestFail value) requestFail,
     required TResult Function(_InvalidValueProvide value) invalidValueProvide,
     required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
   }) {
     return invalidValueProvide(this);
   }
@@ -521,6 +587,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult? Function(_RequestFail value)? requestFail,
     TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
   }) {
     return invalidValueProvide?.call(this);
   }
@@ -532,6 +601,9 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult Function(_RequestFail value)? requestFail,
     TResult Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (invalidValueProvide != null) {
@@ -624,6 +696,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     required TResult Function(String desc) requestFail,
     required TResult Function(String desc) invalidValueProvide,
     required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
   }) {
     return jsonConvertFail(desc);
   }
@@ -635,6 +710,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult? Function(String desc)? requestFail,
     TResult? Function(String desc)? invalidValueProvide,
     TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
   }) {
     return jsonConvertFail?.call(desc);
   }
@@ -646,6 +724,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult Function(String desc)? requestFail,
     TResult Function(String desc)? invalidValueProvide,
     TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (jsonConvertFail != null) {
@@ -661,6 +742,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     required TResult Function(_RequestFail value) requestFail,
     required TResult Function(_InvalidValueProvide value) invalidValueProvide,
     required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
   }) {
     return jsonConvertFail(this);
   }
@@ -672,6 +756,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult? Function(_RequestFail value)? requestFail,
     TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
   }) {
     return jsonConvertFail?.call(this);
   }
@@ -683,6 +770,9 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult Function(_RequestFail value)? requestFail,
     TResult Function(_InvalidValueProvide value)? invalidValueProvide,
     TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     required TResult orElse(),
   }) {
     if (jsonConvertFail != null) {
@@ -700,5 +790,509 @@ abstract class _JsonConvertFail implements Failure {
   @override
   @JsonKey(ignore: true)
   _$$JsonConvertFailImplCopyWith<_$JsonConvertFailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FetchCodeFailImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$FetchCodeFailImplCopyWith(
+          _$FetchCodeFailImpl value, $Res Function(_$FetchCodeFailImpl) then) =
+      __$$FetchCodeFailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String desc});
+}
+
+/// @nodoc
+class __$$FetchCodeFailImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$FetchCodeFailImpl>
+    implements _$$FetchCodeFailImplCopyWith<$Res> {
+  __$$FetchCodeFailImplCopyWithImpl(
+      _$FetchCodeFailImpl _value, $Res Function(_$FetchCodeFailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? desc = null,
+  }) {
+    return _then(_$FetchCodeFailImpl(
+      null == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetchCodeFailImpl implements _FetchCodeFail {
+  const _$FetchCodeFailImpl(this.desc);
+
+  @override
+  final String desc;
+
+  @override
+  String toString() {
+    return 'Failure.fetchCodeFail(desc: $desc)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchCodeFailImpl &&
+            (identical(other.desc, desc) || other.desc == desc));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, desc);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchCodeFailImplCopyWith<_$FetchCodeFailImpl> get copyWith =>
+      __$$FetchCodeFailImplCopyWithImpl<_$FetchCodeFailImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String desc) networkError,
+    required TResult Function(String desc) requestFail,
+    required TResult Function(String desc) invalidValueProvide,
+    required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
+  }) {
+    return fetchCodeFail(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String desc)? networkError,
+    TResult? Function(String desc)? requestFail,
+    TResult? Function(String desc)? invalidValueProvide,
+    TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
+  }) {
+    return fetchCodeFail?.call(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String desc)? networkError,
+    TResult Function(String desc)? requestFail,
+    TResult Function(String desc)? invalidValueProvide,
+    TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchCodeFail != null) {
+      return fetchCodeFail(desc);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_RequestFail value) requestFail,
+    required TResult Function(_InvalidValueProvide value) invalidValueProvide,
+    required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
+  }) {
+    return fetchCodeFail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_RequestFail value)? requestFail,
+    TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+  }) {
+    return fetchCodeFail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_RequestFail value)? requestFail,
+    TResult Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchCodeFail != null) {
+      return fetchCodeFail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchCodeFail implements Failure {
+  const factory _FetchCodeFail(final String desc) = _$FetchCodeFailImpl;
+
+  @override
+  String get desc;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchCodeFailImplCopyWith<_$FetchCodeFailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FetchStoreFailImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$FetchStoreFailImplCopyWith(_$FetchStoreFailImpl value,
+          $Res Function(_$FetchStoreFailImpl) then) =
+      __$$FetchStoreFailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String desc});
+}
+
+/// @nodoc
+class __$$FetchStoreFailImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$FetchStoreFailImpl>
+    implements _$$FetchStoreFailImplCopyWith<$Res> {
+  __$$FetchStoreFailImplCopyWithImpl(
+      _$FetchStoreFailImpl _value, $Res Function(_$FetchStoreFailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? desc = null,
+  }) {
+    return _then(_$FetchStoreFailImpl(
+      null == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetchStoreFailImpl implements _FetchStoreFail {
+  const _$FetchStoreFailImpl(this.desc);
+
+  @override
+  final String desc;
+
+  @override
+  String toString() {
+    return 'Failure.fetchStoreFail(desc: $desc)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchStoreFailImpl &&
+            (identical(other.desc, desc) || other.desc == desc));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, desc);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchStoreFailImplCopyWith<_$FetchStoreFailImpl> get copyWith =>
+      __$$FetchStoreFailImplCopyWithImpl<_$FetchStoreFailImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String desc) networkError,
+    required TResult Function(String desc) requestFail,
+    required TResult Function(String desc) invalidValueProvide,
+    required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
+  }) {
+    return fetchStoreFail(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String desc)? networkError,
+    TResult? Function(String desc)? requestFail,
+    TResult? Function(String desc)? invalidValueProvide,
+    TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
+  }) {
+    return fetchStoreFail?.call(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String desc)? networkError,
+    TResult Function(String desc)? requestFail,
+    TResult Function(String desc)? invalidValueProvide,
+    TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchStoreFail != null) {
+      return fetchStoreFail(desc);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_RequestFail value) requestFail,
+    required TResult Function(_InvalidValueProvide value) invalidValueProvide,
+    required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
+  }) {
+    return fetchStoreFail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_RequestFail value)? requestFail,
+    TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+  }) {
+    return fetchStoreFail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_RequestFail value)? requestFail,
+    TResult Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchStoreFail != null) {
+      return fetchStoreFail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchStoreFail implements Failure {
+  const factory _FetchStoreFail(final String desc) = _$FetchStoreFailImpl;
+
+  @override
+  String get desc;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchStoreFailImplCopyWith<_$FetchStoreFailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FetchStoreItemFailImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$FetchStoreItemFailImplCopyWith(_$FetchStoreItemFailImpl value,
+          $Res Function(_$FetchStoreItemFailImpl) then) =
+      __$$FetchStoreItemFailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String desc});
+}
+
+/// @nodoc
+class __$$FetchStoreItemFailImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$FetchStoreItemFailImpl>
+    implements _$$FetchStoreItemFailImplCopyWith<$Res> {
+  __$$FetchStoreItemFailImplCopyWithImpl(_$FetchStoreItemFailImpl _value,
+      $Res Function(_$FetchStoreItemFailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? desc = null,
+  }) {
+    return _then(_$FetchStoreItemFailImpl(
+      null == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
+  const _$FetchStoreItemFailImpl(this.desc);
+
+  @override
+  final String desc;
+
+  @override
+  String toString() {
+    return 'Failure.fetchStoreItemFail(desc: $desc)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchStoreItemFailImpl &&
+            (identical(other.desc, desc) || other.desc == desc));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, desc);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchStoreItemFailImplCopyWith<_$FetchStoreItemFailImpl> get copyWith =>
+      __$$FetchStoreItemFailImplCopyWithImpl<_$FetchStoreItemFailImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String desc) networkError,
+    required TResult Function(String desc) requestFail,
+    required TResult Function(String desc) invalidValueProvide,
+    required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
+  }) {
+    return fetchStoreItemFail(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String desc)? networkError,
+    TResult? Function(String desc)? requestFail,
+    TResult? Function(String desc)? invalidValueProvide,
+    TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
+  }) {
+    return fetchStoreItemFail?.call(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String desc)? networkError,
+    TResult Function(String desc)? requestFail,
+    TResult Function(String desc)? invalidValueProvide,
+    TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchStoreItemFail != null) {
+      return fetchStoreItemFail(desc);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_RequestFail value) requestFail,
+    required TResult Function(_InvalidValueProvide value) invalidValueProvide,
+    required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
+  }) {
+    return fetchStoreItemFail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_RequestFail value)? requestFail,
+    TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+  }) {
+    return fetchStoreItemFail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_RequestFail value)? requestFail,
+    TResult Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+    required TResult orElse(),
+  }) {
+    if (fetchStoreItemFail != null) {
+      return fetchStoreItemFail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchStoreItemFail implements Failure {
+  const factory _FetchStoreItemFail(final String desc) =
+      _$FetchStoreItemFailImpl;
+
+  @override
+  String get desc;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchStoreItemFailImplCopyWith<_$FetchStoreItemFailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

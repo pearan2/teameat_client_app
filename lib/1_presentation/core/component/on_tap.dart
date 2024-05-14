@@ -31,7 +31,6 @@ class TEonTap extends GetView<LoadingProvider> {
           return;
         }
         if (isLoginRequired && !await checkLoginIfNotTryLogin()) {
-          print('not logined');
           return;
         }
         onTap.call();

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 
 class TEonTap extends GetView<LoadingProvider> {
@@ -18,7 +19,7 @@ class TEonTap extends GetView<LoadingProvider> {
   Future<bool> checkLoginIfNotTryLogin() async {
     if (Get.find<IConnection>().isLogined) return true;
     final react = Get.find<IReact>();
-    react.toHomeOffAll();
+    await react.toLogin();
     return Get.find<IConnection>().isLogined;
   }
 

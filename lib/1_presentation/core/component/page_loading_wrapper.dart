@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 
-class PageLoadingWrapper extends GetView<LoadingProvider> {
+class PageLoadingWrapper extends StatefulWidget {
   final Widget child;
   final double borderRadius;
   final Color baseColor;
@@ -17,22 +17,41 @@ class PageLoadingWrapper extends GetView<LoadingProvider> {
       this.highlightColor = Colors.white});
 
   @override
+  State<PageLoadingWrapper> createState() => _PageLoadingWrapperState();
+}
+
+class _PageLoadingWrapperState extends State<PageLoadingWrapper> {
+  bool firstLoadingEnded = false;
+
+  @override
   Widget build(BuildContext context) {
+    if (firstLoadingEnded) {
+      return widget.child;
+    }
+    final c = Get.find<LoadingProvider>();
+
     return Obx(() {
-      if (!controller.isPageLoading) return child;
+      if (!c.isPageLoading) {
+        Future.delayed(Duration.zero, () {
+          setState(() {
+            firstLoadingEnded = true;
+          });
+        });
+      }
       return Shimmer.fromColors(
-        baseColor: baseColor,
-        highlightColor: highlightColor,
+        baseColor: widget.baseColor,
+        highlightColor: widget.highlightColor,
         child: Stack(
           children: [
             Positioned.fill(
                 child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(widget.borderRadius)),
               child: Container(
-                color: baseColor,
+                color: widget.baseColor,
               ),
             )),
-            child,
+            widget.child,
           ],
         ),
       );

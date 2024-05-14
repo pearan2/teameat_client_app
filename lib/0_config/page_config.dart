@@ -32,7 +32,6 @@ List<GetPage> allPages() => [
         name: "/login",
         binding: LoginPageBinding(),
         page: () => const LoginPage(),
-        transitionDuration: const Duration(milliseconds: 200),
-        transition: Transition.rightToLeft,
+        transition: Transition.noTransition,
       ),
     ];

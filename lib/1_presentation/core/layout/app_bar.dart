@@ -6,8 +6,9 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize = const Size.fromHeight(defaultHeight);
   final void Function() leadingIconOnPressed;
+  final String? title;
 
-  const TEAppBar({super.key, required this.leadingIconOnPressed});
+  const TEAppBar({super.key, required this.leadingIconOnPressed, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,16 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
           onPressed: leadingIconOnPressed,
           icon: const Icon(Icons.arrow_back_ios)),
+      centerTitle: true,
+      title: title == null
+          ? null
+          : Text(
+              title!,
+              style: DS
+                  .getTextStyle()
+                  .paragraph2
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
     );
   }
 }

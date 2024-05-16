@@ -1,3 +1,5 @@
+import 'package:teameat/3_domain/store/item/item.dart';
+
 abstract class IRouter {
   void toRoot();
 
@@ -5,7 +7,11 @@ abstract class IRouter {
 
   void toStoreItemDetail(int itemId);
 
-  void back();
+  void back<T>({T? result});
 
   Future<void> toLogin();
+
+  void toItemPurchase(Map<ItemDetail, int> items);
+
+  void toPayment();
 }

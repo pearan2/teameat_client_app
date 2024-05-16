@@ -5,4 +5,6 @@ abstract class IImageSystem {
   Image get splashBackground;
   SvgPicture get mainIconWithText;
   Image get nearbyMeIcon;
+  Image get mainIconNoBg;
+  Image get kakaoLogo;
 }

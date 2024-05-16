@@ -88,7 +88,7 @@ class HttpClient extends IConnection<String, Failure> {
       final res = await http
           .put(uri, headers: _headers, body: jsonEncode(params))
           .timeout(Duration(seconds: connectionTimeout));
-      final ret = _convert(res.body);
+      final ret = _convert(utf8.decode(res.bodyBytes));
       if (res.statusCode != HttpStatus.ok) {
         final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
         return left(Failure.networkError(errorResponse.message));
@@ -107,7 +107,7 @@ class HttpClient extends IConnection<String, Failure> {
       final res = await http
           .post(uri, headers: _headers, body: jsonEncode(params))
           .timeout(Duration(seconds: connectionTimeout));
-      final ret = _convert(res.body);
+      final ret = _convert(utf8.decode(res.bodyBytes));
       if (res.statusCode != HttpStatus.ok) {
         final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
         return left(Failure.networkError(errorResponse.message));

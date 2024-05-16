@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:teameat/2_application/core/i_react.dart';
+import 'package:teameat/3_domain/store/item/item.dart';
 
 class React extends IReact {
   @override
@@ -23,12 +24,23 @@ class React extends IReact {
   }
 
   @override
-  void back() {
-    Get.back();
+  void back<T>({T? result}) {
+    return Get.back<T>(result: result);
   }
 
   @override
   Future<void> toLogin() async {
     return Get.toNamed('/login');
+  }
+
+  @override
+  void toItemPurchase(Map<ItemDetail, int> items) {
+    Get.toNamed('/store/item/purchase',
+        preventDuplicates: false, arguments: {'items': items});
+  }
+
+  @override
+  void toPayment() {
+    Get.offNamed('/payment');
   }
 }

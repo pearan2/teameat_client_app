@@ -10,6 +10,7 @@ Future<void> showTEBottomSheet(Widget child) async {
           top: DS.getSpace().xBase,
           left: DS.getSpace().xBase,
           right: DS.getSpace().xBase,
+          bottom: GetPlatform.isIOS ? DS.getSpace().xBase : 0.0,
         ),
         decoration: BoxDecoration(
           color: DS.getColor().background000,

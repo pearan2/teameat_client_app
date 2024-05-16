@@ -40,7 +40,7 @@ class StoreSimpleInfoRow extends StatelessWidget {
                     .paragraph2
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              DS.getSpace().vXXTiny,
+              DS.getSpace().vXTiny,
               Text(
                 address,
                 overflow: TextOverflow.ellipsis,

@@ -23,4 +23,14 @@ class DefaultImageSystem extends IImageSystem {
         height: 12,
         width: 12,
       );
+
+  @override
+  Image get mainIconNoBg => Image.asset('assets/image/main_icon_no_bg.png');
+
+  @override
+  Image get kakaoLogo => Image.asset(
+        'assets/image/sns_logo_kakao.png',
+        width: 24,
+        height: 24,
+      );
 }

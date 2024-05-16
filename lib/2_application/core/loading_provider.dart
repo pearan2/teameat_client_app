@@ -5,4 +5,5 @@ class LoadingProvider {
   final _react = Get.find<IReact>();
   bool get isPageLoading => _react.isPageLoading;
   bool get isGlobalLoading => _react.isGlobalLoading;
+  bool get isEventLoading => _react.isEventLoading;
 }

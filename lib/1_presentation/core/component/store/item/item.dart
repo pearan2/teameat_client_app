@@ -33,7 +33,7 @@ class ItemPriceDiscountRateText extends StatelessWidget {
     return Row(
       children: [
         Text(
-          originalPrice.format('###,###,###원'),
+          originalPrice.format(DS.getText().priceFormat),
           style: DS.getTextStyle().caption1.copyWith(
                 color: DS.getColor().background600,
                 fontWeight: FontWeight.bold,
@@ -265,7 +265,7 @@ class StoreItemPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      price.format('###,###,###원'),
+      price.format(DS.getText().priceFormat),
       style: isTitle
           ? DS.getTextStyle().title1
           : DS.getTextStyle().paragraph1.copyWith(fontWeight: FontWeight.bold),

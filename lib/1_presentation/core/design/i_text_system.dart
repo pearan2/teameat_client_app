@@ -10,4 +10,23 @@ abstract class ITextSystem {
   String get lastOrderTime;
   String get originInformation;
   String get buy;
+  String get login;
+  String get trySnsJoinOrLogin;
+  String get teameatIntroduce1;
+  String get teameatIntroduce2;
+  String get teameatIntroduce3;
+  String get teameatIntroduce4;
+  String get willYouJoinUs;
+  String get loginWithKakao;
+  String get needToLoginContent;
+  String get confirmToLogin;
+  String get refuseToLogin;
+  String get purchase;
+  String get purchaseItemInfo;
+  String get quantityFormat;
+  String get quantity;
+  String get priceFormat;
+  String get purchaseMethod;
+  String get purchasePrice;
+  String get purchaseNotice;
 }

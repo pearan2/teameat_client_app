@@ -24,7 +24,7 @@ class StoreItemPageController extends PageController {
   }
 
   void onBuyClickHandler() {
-// Todo.. 구매 페이지
+    react.toItemPurchase({item: buyQuantity});
   }
 
   Future<void> _loadStoreItemInfo() async {

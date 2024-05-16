@@ -59,6 +59,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                       PageLoadingWrapper(
                           child: Text(controller.item.name,
                               style: DS.getTextStyle().title3)),
+                      DS.getSpace().vTiny,
                       PageLoadingWrapper(
                           child: Text(
                         controller.item.introduce,
@@ -72,6 +73,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                         child: StoreItemSellTypeText(
                             sellType: controller.item.sellType),
                       ),
+                      DS.getSpace().vTiny,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -184,7 +186,7 @@ class StoreItemBuyBottomSheet extends GetView<StoreItemPageController> {
         DS.getSpace().vBase,
         TEPrimaryButton(
           isLoginRequired: true,
-          onTap: () {},
+          onTap: controller.onBuyClickHandler,
           text: DS.getText().buy,
         )
       ],

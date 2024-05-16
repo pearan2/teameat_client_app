@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -22,9 +23,7 @@ class HomePage extends GetView<HomePageController> {
         child: SafeArea(
           child: RefreshIndicator(
             onRefresh: () async {
-              // await Future.delayed(const Duration(seconds: 1));
-              // controller.pagingController.itemList = [];
-              // controller.pagingController.refresh();
+              controller.pagingController.refresh();
             },
             child: CustomScrollView(
               slivers: [
@@ -109,11 +108,7 @@ class StoreItemCard extends GetView<HomePageController> {
           children: [
             Stack(
               children: [
-                Image.network(
-                  item.imageUrl,
-                  height: imageWidth,
-                  fit: BoxFit.cover,
-                ),
+                TENetworkImage(url: item.imageUrl, width: imageWidth),
                 // Todo 좋아요 버튼
                 // Positioned(
                 //   right: DS.getSpace().tiny,
@@ -140,6 +135,7 @@ class StoreItemCard extends GetView<HomePageController> {
                 StoreItemSellTypeText(sellType: item.sellType)
               ],
             ),
+            DS.getSpace().vTiny,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -180,7 +176,7 @@ class StoreItemList extends StatelessWidget {
 }
 
 class HomePageSearcher extends StatelessWidget {
-  static const double homePageSearcherMaxHeight = 160.0;
+  static const double homePageSearcherMaxHeight = 124.0;
 
   const HomePageSearcher({super.key});
 
@@ -207,11 +203,11 @@ class HomePageSearcher extends StatelessWidget {
               children: [DS.getImage().mainIconWithText],
             ),
             DS.getSpace().vBase,
-            TextSearcher(),
-            DS.getSpace().vXSmall,
-            Row(
-              children: [NearbyMe()],
-            )
+            const TextSearcher(),
+            // DS.getSpace().vXSmall,
+            // Row(
+            // children: [NearbyMe()],
+            // )
           ],
         ),
       ),

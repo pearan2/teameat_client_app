@@ -75,6 +75,7 @@ class StoreDetail with _$StoreDetail {
     required int id,
     required String name,
     required String profileImageUrl,
+    required List<String> imageUrls,
     required String address,
     required Point location,
     required List<ItemSimple> items,
@@ -106,6 +107,10 @@ class StoreDetail with _$StoreDetail {
           "월 09:00 ~ 21:00\n화 09:00 ~ 21:00\n수 09:00 ~ 21:00\n목 정기 휴무\n금 09:00 ~ 21:00\n토 09:00 ~ 22:00\n일 09:00 ~ 22:00",
       breakTime: "매일 11:00 ~ 12:00",
       lastOrderTime: "월 19:30\n화 19:30\n수 19:30\n금 19:30\n토 20:30\n일 20:30",
+      imageUrls: List.generate(
+          5,
+          (_) =>
+              "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"),
     );
   }
 }

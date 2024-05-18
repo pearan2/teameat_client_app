@@ -707,6 +707,7 @@ mixin _$StoreDetail {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
+  List<String> get imageUrls => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   Point get location => throw _privateConstructorUsedError;
   List<ItemSimple> get items => throw _privateConstructorUsedError;
@@ -733,6 +734,7 @@ abstract class $StoreDetailCopyWith<$Res> {
       {int id,
       String name,
       String profileImageUrl,
+      List<String> imageUrls,
       String address,
       Point location,
       List<ItemSimple> items,
@@ -762,6 +764,7 @@ class _$StoreDetailCopyWithImpl<$Res, $Val extends StoreDetail>
     Object? id = null,
     Object? name = null,
     Object? profileImageUrl = null,
+    Object? imageUrls = null,
     Object? address = null,
     Object? location = null,
     Object? items = null,
@@ -785,6 +788,10 @@ class _$StoreDetailCopyWithImpl<$Res, $Val extends StoreDetail>
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrls: null == imageUrls
+          ? _value.imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -845,6 +852,7 @@ abstract class _$$StoreDetailImplCopyWith<$Res>
       {int id,
       String name,
       String profileImageUrl,
+      List<String> imageUrls,
       String address,
       Point location,
       List<ItemSimple> items,
@@ -873,6 +881,7 @@ class __$$StoreDetailImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? profileImageUrl = null,
+    Object? imageUrls = null,
     Object? address = null,
     Object? location = null,
     Object? items = null,
@@ -896,6 +905,10 @@ class __$$StoreDetailImplCopyWithImpl<$Res>
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrls: null == imageUrls
+          ? _value._imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -943,6 +956,7 @@ class _$StoreDetailImpl implements _StoreDetail {
       {required this.id,
       required this.name,
       required this.profileImageUrl,
+      required final List<String> imageUrls,
       required this.address,
       required this.location,
       required final List<ItemSimple> items,
@@ -952,7 +966,8 @@ class _$StoreDetailImpl implements _StoreDetail {
       required this.operationTime,
       required this.breakTime,
       required this.lastOrderTime})
-      : _items = items;
+      : _imageUrls = imageUrls,
+        _items = items;
 
   factory _$StoreDetailImpl.fromJson(Map<String, dynamic> json) =>
       _$$StoreDetailImplFromJson(json);
@@ -963,6 +978,14 @@ class _$StoreDetailImpl implements _StoreDetail {
   final String name;
   @override
   final String profileImageUrl;
+  final List<String> _imageUrls;
+  @override
+  List<String> get imageUrls {
+    if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_imageUrls);
+  }
+
   @override
   final String address;
   @override
@@ -990,7 +1013,7 @@ class _$StoreDetailImpl implements _StoreDetail {
 
   @override
   String toString() {
-    return 'StoreDetail(id: $id, name: $name, profileImageUrl: $profileImageUrl, address: $address, location: $location, items: $items, phone: $phone, oneLineIntroduce: $oneLineIntroduce, introduce: $introduce, operationTime: $operationTime, breakTime: $breakTime, lastOrderTime: $lastOrderTime)';
+    return 'StoreDetail(id: $id, name: $name, profileImageUrl: $profileImageUrl, imageUrls: $imageUrls, address: $address, location: $location, items: $items, phone: $phone, oneLineIntroduce: $oneLineIntroduce, introduce: $introduce, operationTime: $operationTime, breakTime: $breakTime, lastOrderTime: $lastOrderTime)';
   }
 
   @override
@@ -1002,6 +1025,8 @@ class _$StoreDetailImpl implements _StoreDetail {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.profileImageUrl, profileImageUrl) ||
                 other.profileImageUrl == profileImageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._imageUrls, _imageUrls) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.location, location) ||
                 other.location == location) &&
@@ -1026,6 +1051,7 @@ class _$StoreDetailImpl implements _StoreDetail {
       id,
       name,
       profileImageUrl,
+      const DeepCollectionEquality().hash(_imageUrls),
       address,
       location,
       const DeepCollectionEquality().hash(_items),
@@ -1055,6 +1081,7 @@ abstract class _StoreDetail implements StoreDetail {
       {required final int id,
       required final String name,
       required final String profileImageUrl,
+      required final List<String> imageUrls,
       required final String address,
       required final Point location,
       required final List<ItemSimple> items,
@@ -1074,6 +1101,8 @@ abstract class _StoreDetail implements StoreDetail {
   String get name;
   @override
   String get profileImageUrl;
+  @override
+  List<String> get imageUrls;
   @override
   String get address;
   @override

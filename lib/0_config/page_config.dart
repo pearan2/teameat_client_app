@@ -3,14 +3,22 @@ import 'package:teameat/1_presentation/core/auth/login_page.dart';
 import 'package:teameat/1_presentation/core/auth/login_page_binding.dart';
 import 'package:teameat/1_presentation/core/payment/payment_page.dart';
 import 'package:teameat/1_presentation/core/payment/payment_page_binding.dart';
+import 'package:teameat/1_presentation/core/payment/payment_result_page.dart';
+import 'package:teameat/1_presentation/core/payment/payment_result_page_binding.dart';
 import 'package:teameat/1_presentation/core/root_page.dart';
 import 'package:teameat/1_presentation/core/root_page_binding.dart';
 import 'package:teameat/1_presentation/home/home_page.dart';
 import 'package:teameat/1_presentation/home/home_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page_binding.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
+import 'package:teameat/1_presentation/store/store_page.dart';
+import 'package:teameat/1_presentation/store/store_page_binding.dart';
+import 'package:teameat/1_presentation/user/customer_service_page.dart';
+import 'package:teameat/1_presentation/user/customer_service_page_binding.dart';
+import 'package:teameat/1_presentation/voucher/voucher_detail_page.dart';
+import 'package:teameat/1_presentation/voucher/voucher_detail_page_binding.dart';
+import 'package:teameat/1_presentation/voucher/voucher_page.dart';
+import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
 
 List<GetPage> allPages() => [
       GetPage(
@@ -26,9 +34,22 @@ List<GetPage> allPages() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/store/item",
-        binding: StoreItemPageBinding(),
-        page: () => const StoreItemPage(),
+        name: "/voucher",
+        binding: VoucherPageBinding(),
+        page: () => const VoucherPage(),
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/voucher/detail",
+        binding: VoucherDetailPageBinding(),
+        page: () => const VoucherDetailPage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/store",
+        binding: StorePageBinding(),
+        page: () => const StorePage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),
@@ -43,13 +64,24 @@ List<GetPage> allPages() => [
         name: "/payment",
         binding: PaymentPageBinding(),
         page: () => const PaymentPage(),
-        transitionDuration: const Duration(milliseconds: 200),
-        transition: Transition.rightToLeft,
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/payment/result",
+        binding: PaymentResultPageBinding(),
+        page: () => const PaymentResultPage(),
+        transition: Transition.noTransition,
       ),
       GetPage(
         name: "/login",
         binding: LoginPageBinding(),
         page: () => const LoginPage(),
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/customer-service",
+        binding: CustomerServicePageBinding(),
+        page: () => const CustomerServicePage(),
         transition: Transition.noTransition,
       ),
     ];

@@ -28,6 +28,7 @@ mixin _$Failure {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +42,7 @@ mixin _$Failure {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,6 +56,7 @@ mixin _$Failure {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +72,7 @@ mixin _$Failure {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -82,6 +86,7 @@ mixin _$Failure {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -95,6 +100,7 @@ mixin _$Failure {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -210,6 +216,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return networkError(desc);
   }
@@ -226,6 +233,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return networkError?.call(desc);
   }
@@ -242,6 +250,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (networkError != null) {
@@ -263,6 +272,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return networkError(this);
   }
@@ -279,6 +289,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return networkError?.call(this);
   }
@@ -295,6 +306,7 @@ class _$NetworkErrorImpl implements _NetworkError {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (networkError != null) {
@@ -390,6 +402,7 @@ class _$RequestFailImpl implements _RequestFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return requestFail(desc);
   }
@@ -406,6 +419,7 @@ class _$RequestFailImpl implements _RequestFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return requestFail?.call(desc);
   }
@@ -422,6 +436,7 @@ class _$RequestFailImpl implements _RequestFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (requestFail != null) {
@@ -443,6 +458,7 @@ class _$RequestFailImpl implements _RequestFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return requestFail(this);
   }
@@ -459,6 +475,7 @@ class _$RequestFailImpl implements _RequestFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return requestFail?.call(this);
   }
@@ -475,6 +492,7 @@ class _$RequestFailImpl implements _RequestFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (requestFail != null) {
@@ -571,6 +589,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return invalidValueProvide(desc);
   }
@@ -587,6 +606,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return invalidValueProvide?.call(desc);
   }
@@ -603,6 +623,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (invalidValueProvide != null) {
@@ -624,6 +645,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return invalidValueProvide(this);
   }
@@ -640,6 +662,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return invalidValueProvide?.call(this);
   }
@@ -656,6 +679,7 @@ class _$InvalidValueProvideImpl implements _InvalidValueProvide {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (invalidValueProvide != null) {
@@ -753,6 +777,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return jsonConvertFail(desc);
   }
@@ -769,6 +794,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return jsonConvertFail?.call(desc);
   }
@@ -785,6 +811,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (jsonConvertFail != null) {
@@ -806,6 +833,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return jsonConvertFail(this);
   }
@@ -822,6 +850,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return jsonConvertFail?.call(this);
   }
@@ -838,6 +867,7 @@ class _$JsonConvertFailImpl implements _JsonConvertFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (jsonConvertFail != null) {
@@ -933,6 +963,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return fetchCodeFail(desc);
   }
@@ -949,6 +980,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return fetchCodeFail?.call(desc);
   }
@@ -965,6 +997,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchCodeFail != null) {
@@ -986,6 +1019,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return fetchCodeFail(this);
   }
@@ -1002,6 +1036,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return fetchCodeFail?.call(this);
   }
@@ -1018,6 +1053,7 @@ class _$FetchCodeFailImpl implements _FetchCodeFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchCodeFail != null) {
@@ -1114,6 +1150,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return fetchStoreFail(desc);
   }
@@ -1130,6 +1167,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return fetchStoreFail?.call(desc);
   }
@@ -1146,6 +1184,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchStoreFail != null) {
@@ -1167,6 +1206,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return fetchStoreFail(this);
   }
@@ -1183,6 +1223,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return fetchStoreFail?.call(this);
   }
@@ -1199,6 +1240,7 @@ class _$FetchStoreFailImpl implements _FetchStoreFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchStoreFail != null) {
@@ -1295,6 +1337,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return fetchStoreItemFail(desc);
   }
@@ -1311,6 +1354,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return fetchStoreItemFail?.call(desc);
   }
@@ -1327,6 +1371,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchStoreItemFail != null) {
@@ -1348,6 +1393,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return fetchStoreItemFail(this);
   }
@@ -1364,6 +1410,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return fetchStoreItemFail?.call(this);
   }
@@ -1380,6 +1427,7 @@ class _$FetchStoreItemFailImpl implements _FetchStoreItemFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchStoreItemFail != null) {
@@ -1478,6 +1526,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return fetchSocialLoginUrlFail(desc);
   }
@@ -1494,6 +1543,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return fetchSocialLoginUrlFail?.call(desc);
   }
@@ -1510,6 +1560,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchSocialLoginUrlFail != null) {
@@ -1531,6 +1582,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return fetchSocialLoginUrlFail(this);
   }
@@ -1547,6 +1599,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return fetchSocialLoginUrlFail?.call(this);
   }
@@ -1563,6 +1616,7 @@ class _$FetchSocialLoginFailImpl implements _FetchSocialLoginFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (fetchSocialLoginUrlFail != null) {
@@ -1660,6 +1714,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     required TResult Function(String desc) fetchStoreItemFail,
     required TResult Function(String desc) fetchSocialLoginUrlFail,
     required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
   }) {
     return registerOrderFail(desc);
   }
@@ -1676,6 +1731,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     TResult? Function(String desc)? fetchStoreItemFail,
     TResult? Function(String desc)? fetchSocialLoginUrlFail,
     TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
   }) {
     return registerOrderFail?.call(desc);
   }
@@ -1692,6 +1748,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     TResult Function(String desc)? fetchStoreItemFail,
     TResult Function(String desc)? fetchSocialLoginUrlFail,
     TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (registerOrderFail != null) {
@@ -1713,6 +1770,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     required TResult Function(_FetchSocialLoginFail value)
         fetchSocialLoginUrlFail,
     required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
   }) {
     return registerOrderFail(this);
   }
@@ -1729,6 +1787,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
   }) {
     return registerOrderFail?.call(this);
   }
@@ -1745,6 +1804,7 @@ class _$RegisterOrderFailImpl implements _RegisterOrderFail {
     TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
     TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
     TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
     required TResult orElse(),
   }) {
     if (registerOrderFail != null) {
@@ -1762,5 +1822,192 @@ abstract class _RegisterOrderFail implements Failure {
   @override
   @JsonKey(ignore: true)
   _$$RegisterOrderFailImplCopyWith<_$RegisterOrderFailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FetchVoucherFailImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$FetchVoucherFailImplCopyWith(_$FetchVoucherFailImpl value,
+          $Res Function(_$FetchVoucherFailImpl) then) =
+      __$$FetchVoucherFailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String desc});
+}
+
+/// @nodoc
+class __$$FetchVoucherFailImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$FetchVoucherFailImpl>
+    implements _$$FetchVoucherFailImplCopyWith<$Res> {
+  __$$FetchVoucherFailImplCopyWithImpl(_$FetchVoucherFailImpl _value,
+      $Res Function(_$FetchVoucherFailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? desc = null,
+  }) {
+    return _then(_$FetchVoucherFailImpl(
+      null == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FetchVoucherFailImpl implements _FetchVoucherFail {
+  const _$FetchVoucherFailImpl(this.desc);
+
+  @override
+  final String desc;
+
+  @override
+  String toString() {
+    return 'Failure.fetchVoucherFail(desc: $desc)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchVoucherFailImpl &&
+            (identical(other.desc, desc) || other.desc == desc));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, desc);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchVoucherFailImplCopyWith<_$FetchVoucherFailImpl> get copyWith =>
+      __$$FetchVoucherFailImplCopyWithImpl<_$FetchVoucherFailImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String desc) networkError,
+    required TResult Function(String desc) requestFail,
+    required TResult Function(String desc) invalidValueProvide,
+    required TResult Function(String desc) jsonConvertFail,
+    required TResult Function(String desc) fetchCodeFail,
+    required TResult Function(String desc) fetchStoreFail,
+    required TResult Function(String desc) fetchStoreItemFail,
+    required TResult Function(String desc) fetchSocialLoginUrlFail,
+    required TResult Function(String desc) registerOrderFail,
+    required TResult Function(String desc) fetchVoucherFail,
+  }) {
+    return fetchVoucherFail(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String desc)? networkError,
+    TResult? Function(String desc)? requestFail,
+    TResult? Function(String desc)? invalidValueProvide,
+    TResult? Function(String desc)? jsonConvertFail,
+    TResult? Function(String desc)? fetchCodeFail,
+    TResult? Function(String desc)? fetchStoreFail,
+    TResult? Function(String desc)? fetchStoreItemFail,
+    TResult? Function(String desc)? fetchSocialLoginUrlFail,
+    TResult? Function(String desc)? registerOrderFail,
+    TResult? Function(String desc)? fetchVoucherFail,
+  }) {
+    return fetchVoucherFail?.call(desc);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String desc)? networkError,
+    TResult Function(String desc)? requestFail,
+    TResult Function(String desc)? invalidValueProvide,
+    TResult Function(String desc)? jsonConvertFail,
+    TResult Function(String desc)? fetchCodeFail,
+    TResult Function(String desc)? fetchStoreFail,
+    TResult Function(String desc)? fetchStoreItemFail,
+    TResult Function(String desc)? fetchSocialLoginUrlFail,
+    TResult Function(String desc)? registerOrderFail,
+    TResult Function(String desc)? fetchVoucherFail,
+    required TResult orElse(),
+  }) {
+    if (fetchVoucherFail != null) {
+      return fetchVoucherFail(desc);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_RequestFail value) requestFail,
+    required TResult Function(_InvalidValueProvide value) invalidValueProvide,
+    required TResult Function(_JsonConvertFail value) jsonConvertFail,
+    required TResult Function(_FetchCodeFail value) fetchCodeFail,
+    required TResult Function(_FetchStoreFail value) fetchStoreFail,
+    required TResult Function(_FetchStoreItemFail value) fetchStoreItemFail,
+    required TResult Function(_FetchSocialLoginFail value)
+        fetchSocialLoginUrlFail,
+    required TResult Function(_RegisterOrderFail value) registerOrderFail,
+    required TResult Function(_FetchVoucherFail value) fetchVoucherFail,
+  }) {
+    return fetchVoucherFail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_RequestFail value)? requestFail,
+    TResult? Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult? Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult? Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult? Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult? Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+    TResult? Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
+    TResult? Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult? Function(_FetchVoucherFail value)? fetchVoucherFail,
+  }) {
+    return fetchVoucherFail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_RequestFail value)? requestFail,
+    TResult Function(_InvalidValueProvide value)? invalidValueProvide,
+    TResult Function(_JsonConvertFail value)? jsonConvertFail,
+    TResult Function(_FetchCodeFail value)? fetchCodeFail,
+    TResult Function(_FetchStoreFail value)? fetchStoreFail,
+    TResult Function(_FetchStoreItemFail value)? fetchStoreItemFail,
+    TResult Function(_FetchSocialLoginFail value)? fetchSocialLoginUrlFail,
+    TResult Function(_RegisterOrderFail value)? registerOrderFail,
+    TResult Function(_FetchVoucherFail value)? fetchVoucherFail,
+    required TResult orElse(),
+  }) {
+    if (fetchVoucherFail != null) {
+      return fetchVoucherFail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchVoucherFail implements Failure {
+  const factory _FetchVoucherFail(final String desc) = _$FetchVoucherFailImpl;
+
+  @override
+  String get desc;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchVoucherFailImplCopyWith<_$FetchVoucherFailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

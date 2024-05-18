@@ -54,7 +54,7 @@ class TeameatIntroduce extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            DS.getImage().mainIconNoBg,
+            DS.getImage().mainLargeIconNoBg,
             DS.getSpace().hSmall,
             Text(DS.getText().teameatIntroduce1,
                 style: DS.getTextStyle().title3)
@@ -96,6 +96,7 @@ class SnsLoginButton extends StatelessWidget {
   final Color backgroundColor;
   final String text;
   final void Function() onTap;
+  final double? borderRadius;
 
   const SnsLoginButton({
     super.key,
@@ -103,6 +104,7 @@ class SnsLoginButton extends StatelessWidget {
     required this.backgroundColor,
     required this.text,
     required this.onTap,
+    this.borderRadius,
   });
 
   @override
@@ -115,7 +117,7 @@ class SnsLoginButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(
-            DS.getSpace().tiny,
+            borderRadius ?? DS.getSpace().tiny,
           ),
         ),
         child: Row(

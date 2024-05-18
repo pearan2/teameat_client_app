@@ -5,6 +5,17 @@ abstract class IImageSystem {
   Image get splashBackground;
   SvgPicture get mainIconWithText;
   Image get nearbyMeIcon;
-  Image get mainIconNoBg;
+  Image get mainLargeIconNoBg;
+  Image get mainMediumIconNoBg;
   Image get kakaoLogo;
+  Image get iconHome;
+  Image get bottomIconHome;
+  Image get bottomIconVoucher;
+  Image get bottomIconUser;
+  Image get storeLocation;
+  Image get storeOperationInfo;
+  Image get storeIntroduce;
+  Image get storePhone;
+  Image get customerService;
+  Image get storeItemExpired;
 }

@@ -7,6 +7,7 @@ class PurchasePageBinding implements Bindings {
   void dependencies() {
     final argMap = Get.arguments as Map<String, dynamic>;
     final items = argMap['items'] as Map<ItemDetail, int>;
+
     Get.put(PurchasePageController(items: items));
   }
 }

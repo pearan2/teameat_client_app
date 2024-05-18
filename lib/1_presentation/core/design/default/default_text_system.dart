@@ -91,4 +91,119 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get quantityFormat => '수량 ##개';
+
+  @override
+  String get errorOccurred => '문제가 발생했어요';
+
+  @override
+  String get success => '정상적으로 처리되었어요';
+
+  @override
+  String get pleaseSelectPaymentMethod => '결제 수단을 선택해주세요.';
+
+  @override
+  String get paymentCancelledByUser => '결제가 취소되었어요.';
+
+  @override
+  String get pleaseWait => '잠시만 기다려주세요.';
+
+  @override
+  String get payment => '결제';
+
+  @override
+  String get initPageFail => '페이지 로딩에 실패했습니다. 반복된다면 앱을 완전히 종료 후 실행해주세요.';
+
+  @override
+  String get address => '주소';
+
+  @override
+  String get operationInformation => '영업 정보';
+
+  @override
+  String get question => '문의';
+
+  @override
+  String get reservation => '예약';
+
+  @override
+  String get storeIntroduce => '가게 소개';
+
+  @override
+  String get inventory => '보관함';
+
+  @override
+  String get numberOfRemainVoucherFormat => '이용 하실 수 있는\n이용권이 ###개 남아있어요.';
+
+  @override
+  String get all => '전체';
+
+  @override
+  String get order => '정렬';
+
+  @override
+  String get paymentFinished => '구매가 완료되었어요';
+
+  @override
+  String get shoppingContinue => '이어서 쇼핑하기';
+
+  @override
+  String get thanks => '감사합니다';
+
+  @override
+  String get toVoucherInventory => '보관함으로 이동하기';
+
+  @override
+  String get customerQuestion => '고객문의';
+
+  @override
+  String get customerServiceContent =>
+      '아래 카카오톡으로 문의해 주시면\n누구보다 빠르게 안내해 드리겠습니다.';
+
+  @override
+  String get customerServiceKakaoQuestion => '카카오톡 문의';
+
+  @override
+  String get customerServiceOperationTime => '운영 시간 : 평일 10:00 ~ 18:00';
+
+  @override
+  String get customerServiceTitle => '도움이 필요하신가요?';
+
+  @override
+  String get voucherGoToCustomerService => '고객문의 하러가기';
+
+  @override
+  String get voucherGoToPurchaseVoucher => '이용권 구매하러 가기';
+
+  @override
+  String get voucherIfYouNeedHelp => '혹시! 구매를 완료하셨는데\n이용권을 못받으셨나요?';
+
+  @override
+  String get voucherNotFound => '검색된 이용권이 없어요';
+
+  @override
+  String get voucherExpiredAtFormat => 'yyyy.MM.dd aa HH:mm 까지';
+
+  @override
+  String get allUsed => '사용완료';
+
+  @override
+  String get voucherRemainQuantityFormat => '###개 남음';
+
+  @override
+  String get expiredDuration => '만료기한';
+
+  @override
+  String get use => '사용하기';
+
+  @override
+  String get voucher => '이용권';
+
+  @override
+  String get voucherUseLog => '사용 기록';
+
+  @override
+  String get voucherUsedAtFormat => 'yyyy.MM.dd aa HH:mm';
+
+  @override
+  String get voucherCountFormat => '###개';
 }

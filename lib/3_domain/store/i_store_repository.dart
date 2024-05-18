@@ -5,4 +5,6 @@ import 'package:teameat/3_domain/store/store.dart';
 abstract class IStoreRepository {
   Future<Either<Failure, List<StoreSimple>>> getStores(
       SearchStoreSimpleList searchOption);
+
+  Future<Either<Failure, StoreDetail>> getStoreDetail(int storeId);
 }

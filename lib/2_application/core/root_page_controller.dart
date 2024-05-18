@@ -9,6 +9,8 @@ class RootPageController extends PageController {
   Future<void> _loadCode() {
     return Future.wait([
       _codeRepo.getCode(CodeKey.storeCategory()),
+      _codeRepo.getCode(CodeKey.storeHashTag()),
+      _codeRepo.getCode(CodeKey.storeHashTag()),
       _codeRepo.getCode(CodeKey.storeHashTag())
     ]);
   }

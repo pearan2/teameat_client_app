@@ -1,3 +1,14 @@
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/2_application/core/payment/payment_method.dart';
+import 'package:teameat/3_domain/order/order.dart';
 
-class PaymentPageController extends PageController {}
+class PaymentPageController extends PageController {
+  final Order order;
+  final PaymentMethod paymentMethod;
+
+  PaymentPageController({required this.order, required this.paymentMethod});
+
+  void paymentResultCallback(Map<String, String> result) {
+    react.toPaymentResultOff(result);
+  }
+}

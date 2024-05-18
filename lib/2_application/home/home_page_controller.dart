@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
@@ -19,6 +20,12 @@ class HomePageController extends PageController {
   /// getter
   bool get isNearbyMe => _isNearbyMe.value;
 
+  SearchStoreSimpleList get searchOption => _searchOption.value;
+
+  void onStoreItemCardClickHandler(int itemId) {
+    return react.toStoreItemDetail(itemId);
+  }
+
   /// 상태 변경 함수
   Future<void> onNearbyMeClickHandler() async {
     _isNearbyMe.value = !isNearbyMe;
@@ -26,11 +33,14 @@ class HomePageController extends PageController {
 
   Future<void> loadStores(int currentPageNumber) async {
     final ret = await _storeRepo.getStores(_searchOption.value);
-    ret.fold((l) => null, (r) {
+    ret.fold((l) => showError(l.desc), (r) {
       if (r.isEmpty) {
         pagingController.appendLastPage([]);
+      } else {
+        pagingController.appendPage(r, currentPageNumber + 1);
+        _searchOption.value =
+            searchOption.copyWith(pageNumber: currentPageNumber + 1);
       }
-      pagingController.appendPage(r, currentPageNumber + 1);
     });
   }
 

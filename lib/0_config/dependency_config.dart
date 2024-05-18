@@ -11,6 +11,7 @@ import 'package:teameat/3_domain/message/i_message_repository.dart';
 import 'package:teameat/3_domain/order/i_order_repository.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
+import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/4_infra/auth/auth_service.dart';
 import 'package:teameat/4_infra/connection/connection.dart';
 import 'package:teameat/4_infra/core/code/code_repository.dart';
@@ -18,6 +19,7 @@ import 'package:teameat/4_infra/message/message_repository.dart';
 import 'package:teameat/4_infra/order/order_repository.dart';
 import 'package:teameat/4_infra/store/item/item_repository.dart';
 import 'package:teameat/4_infra/store/store_repository.dart';
+import 'package:teameat/4_infra/voucher/voucher_repository.dart';
 
 Future<void> configDependency() async {
   final env = Environment();
@@ -31,6 +33,7 @@ Future<void> configDependency() async {
   Get.put<IStoreRepository>(StoreRepository());
   Get.put<IStoreItemRepository>(StoreItemRepository());
   Get.put<IOrderRepository>(OrderRepository());
+  Get.put<IVoucherRepository>(VoucherRepository());
 
   // service
   Get.put<IAuthService>(AuthService());

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -18,41 +17,40 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return TEScaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: DS.getSpace().xSmall),
-        child: SafeArea(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              controller.pagingController.refresh();
-            },
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: DS.getColor().background000,
-                  surfaceTintColor: DS.getColor().background000,
-                  snap: true,
-                  floating: true,
-                  expandedHeight: HomePageSearcher.homePageSearcherMaxHeight,
-                  flexibleSpace: const HomePageSearcher(),
+      withBottomNavigator: true,
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.pagingController.refresh();
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: DS.getColor().background000,
+                surfaceTintColor: DS.getColor().background000,
+                snap: true,
+                floating: true,
+                expandedHeight: HomePageSearcher.homePageSearcherMaxHeight,
+                flexibleSpace: const HomePageSearcher(),
+              ),
+              PagedSliverList.separated(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
+                  itemBuilder: (_, store, idx) =>
+                      idx == 0 ? const SizedBox() : StoreCard(store: store),
                 ),
-                PagedSliverList.separated(
-                  pagingController: controller.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
-                    itemBuilder: (_, store, idx) =>
-                        idx == 0 ? const SizedBox() : StoreCard(store: store),
-                  ),
-                  separatorBuilder: (_, idx) => idx == 0
-                      ? DS.getSpace().vBase
-                      : Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: DS.getSpace().xSmall),
-                          child: Divider(
-                            color: DS.getColor().background600,
-                          ),
+                separatorBuilder: (_, idx) => idx == 0
+                    ? DS.getSpace().vBase
+                    : Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: DS.getSpace().xSmall),
+                        child: Divider(
+                          color: DS.getColor().background600,
                         ),
-                )
-              ],
-            ),
+                      ),
+              ),
+              SliverToBoxAdapter(child: DS.getSpace().vSmall),
+            ],
           ),
         ),
       ),
@@ -75,9 +73,10 @@ class StoreCard extends StatelessWidget {
             DS.getSpace().hSmall,
             Expanded(
               child: StoreSimpleInfoRow(
+                storeId: store.id,
                 profileImageUrl: store.profileImageUrl,
                 name: store.name,
-                address: store.address,
+                subInfo: store.address,
               ),
             ),
             DS.getSpace().hLarge,
@@ -90,70 +89,7 @@ class StoreCard extends StatelessWidget {
   }
 }
 
-class StoreItemCard extends GetView<HomePageController> {
-  final ItemSimple item;
-
-  const StoreItemCard({super.key, required this.item});
-
-  @override
-  Widget build(BuildContext context) {
-    final imageWidth = MediaQuery.of(context).size.width / 2;
-
-    return TEonTap(
-      onTap: () => controller.react.toStoreItemDetail(item.id),
-      child: SizedBox(
-        width: imageWidth,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                TENetworkImage(url: item.imageUrl, width: imageWidth),
-                // Todo 좋아요 버튼
-                // Positioned(
-                //   right: DS.getSpace().tiny,
-                //   bottom: DS.getSpace().tiny,
-                //   child: ItemLike(
-                //     item: item,
-                //     isLike: true,
-                //   ),
-                // )
-              ],
-            ),
-            DS.getSpace().vTiny,
-            Text(
-              item.name,
-              style: DS.getTextStyle().caption1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            DS.getSpace().vTiny,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ItemSaleRemainDurationText(
-                    salesWillBeEndedAt: item.salesWillBeEndedAt),
-                StoreItemSellTypeText(sellType: item.sellType)
-              ],
-            ),
-            DS.getSpace().vTiny,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ItemPriceDiscountRateText(
-                  price: item.price,
-                  originalPrice: item.originalPrice,
-                ),
-                StoreItemPriceText(price: item.price)
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class StoreItemList extends StatelessWidget {
+class StoreItemList extends GetView<HomePageController> {
   final List<ItemSimple> items;
 
   const StoreItemList({super.key, required this.items});
@@ -167,7 +103,9 @@ class StoreItemList extends StatelessWidget {
         children: items
             .map((item) => Padding(
                   padding: EdgeInsets.only(right: DS.getSpace().small),
-                  child: StoreItemCard(item: item),
+                  child: StoreItemColumnCard(
+                      item: item,
+                      onTap: controller.onStoreItemCardClickHandler),
                 ))
             .toList(),
       ),
@@ -204,10 +142,6 @@ class HomePageSearcher extends StatelessWidget {
             ),
             DS.getSpace().vBase,
             const TextSearcher(),
-            // DS.getSpace().vXSmall,
-            // Row(
-            // children: [NearbyMe()],
-            // )
           ],
         ),
       ),

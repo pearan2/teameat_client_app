@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:teameat/1_presentation/core/design/design_system.dart';
-import 'package:teameat/1_presentation/core/layout/dialog.dart';
-import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
-import 'package:teameat/3_domain/connection/i_connection.dart';
+import 'package:teameat/2_application/core/login_checker.dart';
 
 class TEonTap extends GetView<LoadingProvider> {
   final Widget child;
@@ -17,20 +14,6 @@ class TEonTap extends GetView<LoadingProvider> {
       required this.onTap,
       this.isLoginRequired = false});
 
-  Future<bool> checkLoginIfNotTryLogin() async {
-    if (Get.find<IConnection>().isLogined) return true;
-
-    final isToLoginConfirm = await showTEConfirmDialog(
-      content: DS.getText().needToLoginContent,
-      leftButtonText: DS.getText().refuseToLogin,
-      rightButtonText: DS.getText().confirmToLogin,
-    );
-    if (!isToLoginConfirm) return false;
-    final react = Get.find<IReact>();
-    await react.toLogin();
-    return Get.find<IConnection>().isLogined;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -40,7 +23,8 @@ class TEonTap extends GetView<LoadingProvider> {
             controller.isEventLoading) {
           return;
         }
-        if (isLoginRequired && !await checkLoginIfNotTryLogin()) {
+        if (isLoginRequired) {
+          loginWrapper(() => onTap());
           return;
         }
         onTap.call();

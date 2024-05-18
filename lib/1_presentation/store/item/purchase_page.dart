@@ -6,7 +6,7 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/store/item/purchase_method.dart';
+import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/store/item/purchase_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension.dart';
@@ -20,6 +20,7 @@ class PurchasePage extends GetView<PurchasePageController> {
       bottomSheet: const PurchaseButton(),
       appBar: TEAppBar(
         leadingIconOnPressed: controller.react.back,
+        homeOnPressed: controller.react.toHomeOffAll,
         title: DS.getText().purchase,
       ),
       body: SingleChildScrollView(
@@ -70,12 +71,12 @@ class PurchaseMethodSelector extends GetView<PurchasePageController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => TESelectorGrid<PurchaseMethod>(
+      () => TESelectorGrid<PaymentMethod>(
         selectedValues: controller.purchaseMethod == null
             ? []
             : [controller.purchaseMethod!],
         candidates: controller.purchaseMethods,
-        numberOfRowChild: 2,
+        numberOfRowChildren: 2,
         onTap: controller.onPurchaseMethodClick,
         builder: (value, isSelected) => TEToggle(
           text: value.method,
@@ -180,6 +181,7 @@ class PurchaseButton extends GetView<PurchasePageController> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
       child: TEPrimaryButton(
+        listenEventLoading: true,
         onTap: controller.onPurchaseClick,
         text:
             '${controller.totalPrice.format(DS.getText().priceFormat)} ${DS.getText().purchase}',

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -31,6 +32,7 @@ class ItemPriceDiscountRateText extends StatelessWidget {
       return const SizedBox();
     }
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           originalPrice.format(DS.getText().priceFormat),
@@ -123,6 +125,7 @@ class _ItemSaleRemainDurationTextState
       color: DS.getColor().secondary500,
       padding: EdgeInsets.all(DS.getSpace().xxTiny),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           DS.getSpace().hXXTiny,
           Icon(
@@ -208,14 +211,12 @@ class StoreItemImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         CarouselSlider(
           items: item.imageUrls
               .map((e) => PageLoadingWrapper(
-                    child: Image.network(
-                      e,
-                      fit: BoxFit.fill,
-                    ),
+                    child: TENetworkImage(url: e, width: width),
                   ))
               .toList(),
           options: CarouselOptions(
@@ -332,6 +333,126 @@ class StoreItemQuantityPicker extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
               onTap: () => onClickHandler(1),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class StoreItemColumnCard extends StatelessWidget {
+  final ItemSimple item;
+  final void Function(int itemId) onTap;
+
+  const StoreItemColumnCard(
+      {super.key, required this.item, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final imageWidth = MediaQuery.of(context).size.width / 2;
+
+    return TEonTap(
+      onTap: () => onTap(item.id),
+      child: SizedBox(
+        width: imageWidth,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TENetworkImage(url: item.imageUrl, width: imageWidth),
+            DS.getSpace().vTiny,
+            Text(
+              item.name,
+              style: DS
+                  .getTextStyle()
+                  .paragraph2
+                  .copyWith(fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+            ),
+            DS.getSpace().vTiny,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ItemSaleRemainDurationText(
+                    salesWillBeEndedAt: item.salesWillBeEndedAt),
+                StoreItemSellTypeText(sellType: item.sellType)
+              ],
+            ),
+            DS.getSpace().vTiny,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ItemPriceDiscountRateText(
+                  price: item.price,
+                  originalPrice: item.originalPrice,
+                ),
+                StoreItemPriceText(price: item.price)
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class StoreItemRowCard extends StatelessWidget {
+  final ItemSimple item;
+  final void Function(int itemId) onTap;
+
+  const StoreItemRowCard({super.key, required this.item, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final imageWidth = MediaQuery.of(context).size.width / 2.5;
+
+    return TEonTap(
+      onTap: () => onTap(item.id),
+      child: SizedBox(
+        height: imageWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TENetworkImage(
+              url: item.imageUrl,
+              width: imageWidth,
+              borderRadius: DS.getSpace().small,
+            ),
+            DS.getSpace().hBase,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item.name,
+                    style: DS
+                        .getTextStyle()
+                        .paragraph2
+                        .copyWith(fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.end,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      StoreItemSellTypeText(sellType: item.sellType),
+                      DS.getSpace().vTiny,
+                      StoreItemPriceText(price: item.price),
+                      DS.getSpace().vTiny,
+                      ItemPriceDiscountRateText(
+                        price: item.price,
+                        originalPrice: item.originalPrice,
+                      ),
+                      DS.getSpace().vTiny,
+                      ItemSaleRemainDurationText(
+                          salesWillBeEndedAt: item.salesWillBeEndedAt),
+                    ],
+                  )
+                ],
+              ),
             ),
           ],
         ),

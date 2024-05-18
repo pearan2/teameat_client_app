@@ -70,6 +70,8 @@ _$StoreDetailImpl _$$StoreDetailImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       profileImageUrl: json['profileImageUrl'] as String,
+      imageUrls:
+          (json['imageUrls'] as List<dynamic>).map((e) => e as String).toList(),
       address: json['address'] as String,
       location: Point.fromJson(json['location'] as Map<String, dynamic>),
       items: (json['items'] as List<dynamic>)
@@ -88,6 +90,7 @@ Map<String, dynamic> _$$StoreDetailImplToJson(_$StoreDetailImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'profileImageUrl': instance.profileImageUrl,
+      'imageUrls': instance.imageUrls,
       'address': instance.address,
       'location': instance.location,
       'items': instance.items,

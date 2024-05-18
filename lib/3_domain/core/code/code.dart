@@ -24,6 +24,14 @@ class Code with _$Code {
   }) = _Code;
 
   factory Code.fromJson(Map<String, Object?> json) => _$CodeFromJson(json);
+
+  factory Code.empty() {
+    return const Code(code: 'ALL', title: 'All');
+  }
+
+  factory Code.orderEmpty() {
+    return const Code(code: 'RECENT', title: 'Recent');
+  }
 }
 
 @freezed
@@ -32,4 +40,6 @@ class CodeKey with _$CodeKey {
 
   factory CodeKey.storeCategory() => const CodeKey(key: 'STORE_CATEGORY');
   factory CodeKey.storeHashTag() => const CodeKey(key: 'STORE_HASHTAG');
+  factory CodeKey.voucherFilter() => const CodeKey(key: 'VOUCHER_FILTER');
+  factory CodeKey.voucherOrder() => const CodeKey(key: 'VOUCHER_ORDER');
 }

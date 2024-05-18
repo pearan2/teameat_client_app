@@ -18,6 +18,4 @@ abstract class IReact extends IRouter {
   // loading end
 
   // reaction
-
-  void showError();
 }

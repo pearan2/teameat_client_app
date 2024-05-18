@@ -13,15 +13,22 @@ import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension.dart';
 
 class StoreItemPage extends GetView<StoreItemPageController> {
-  const StoreItemPage({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const StoreItemPage(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return TEScaffold(
-      appBar: TEAppBar(leadingIconOnPressed: controller.react.back),
-      bottomSheet: const StoreItemBuyButton(),
+      appBar: TEAppBar(
+        leadingIconOnPressed: controller.react.back,
+        homeOnPressed: controller.react.toHomeOffAll,
+      ),
+      bottomSheet: StoreItemBuyButton(tag: tag),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -32,12 +39,10 @@ class StoreItemPage extends GetView<StoreItemPageController> {
             floating: true,
             expandedHeight: width,
             flexibleSpace: Obx(
-              () => Center(
-                child: StoreItemImageCarousel(
-                  width: width,
-                  height: width,
-                  item: controller.item,
-                ),
+              () => StoreItemImageCarousel(
+                width: width,
+                height: width,
+                item: controller.item,
               ),
             ),
           ),
@@ -51,9 +56,10 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                       DS.getSpace().vTiny,
                       PageLoadingWrapper(
                           child: StoreSimpleInfoRow(
+                        storeId: controller.item.store.id,
                         profileImageUrl: controller.item.store.profileImageUrl,
                         name: controller.item.store.name,
-                        address: controller.item.store.address,
+                        subInfo: controller.item.store.address,
                       )),
                       DS.getSpace().vSmall,
                       PageLoadingWrapper(
@@ -158,7 +164,10 @@ class StoreItemUsageInfo extends StatelessWidget {
 }
 
 class StoreItemBuyBottomSheet extends GetView<StoreItemPageController> {
-  const StoreItemBuyBottomSheet({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const StoreItemBuyBottomSheet(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -195,15 +204,17 @@ class StoreItemBuyBottomSheet extends GetView<StoreItemPageController> {
 }
 
 class StoreItemBuyButton extends StatelessWidget {
-  const StoreItemBuyButton({super.key});
+  final String tag;
+  const StoreItemBuyButton({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
       child: TEPrimaryButton(
+        listenEventLoading: false,
         onTap: () {
-          showTEBottomSheet(const StoreItemBuyBottomSheet());
+          showTEBottomSheet(StoreItemBuyBottomSheet(tag));
         },
         text: DS.getText().buy,
       ),

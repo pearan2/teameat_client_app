@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/2_application/core/i_react.dart';
+import 'package:teameat/2_application/core/payment/payment_method.dart';
+import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 
 class React extends IReact {
@@ -14,13 +18,15 @@ class React extends IReact {
   }
 
   @override
-  void showError() {
-    throw "NOT IMPLEMENTED";
-  }
-
-  @override
   void toStoreItemDetail(int itemId) {
-    Get.toNamed('/store/item', arguments: {'itemId': itemId});
+    Get.to(
+      () => StoreItemPage(itemId.toString()),
+      arguments: {'itemId': itemId},
+      preventDuplicates: false,
+      binding: StoreItemPageBinding(),
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
   }
 
   @override
@@ -36,11 +42,42 @@ class React extends IReact {
   @override
   void toItemPurchase(Map<ItemDetail, int> items) {
     Get.toNamed('/store/item/purchase',
-        preventDuplicates: false, arguments: {'items': items});
+        arguments: {'items': items}, preventDuplicates: false);
   }
 
   @override
-  void toPayment() {
-    Get.offNamed('/payment');
+  void toPaymentOff(Order order, PaymentMethod paymentMethod) {
+    Get.offNamed('/payment',
+        arguments: {'order': order, 'paymentMethod': paymentMethod});
+  }
+
+  @override
+  void toPaymentResultOff(Map<String, String> result) {
+    Get.offNamed('/payment/result', arguments: {'result': result});
+  }
+
+  @override
+  void toUserOffAll() {
+    // TODO: implement toUserOffAll
+  }
+
+  @override
+  void toVoucherOffAll() {
+    Get.offAllNamed('/voucher');
+  }
+
+  @override
+  void toStoreDetail(int storeId) {
+    Get.toNamed('/store', arguments: {'storeId': storeId});
+  }
+
+  @override
+  void toCustomerService() {
+    Get.toNamed('/customer-service');
+  }
+
+  @override
+  void toVoucherDetailPage(int voucherId) {
+    Get.toNamed('/voucher/detail', arguments: {'voucherId': voucherId});
   }
 }

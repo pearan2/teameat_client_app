@@ -20,6 +20,7 @@ class VoucherPage extends GetView<VoucherPageController> {
     final cardWith = MediaQuery.of(context).size.width / 2;
 
     return TEScaffold(
+        onPop: (didPop) => controller.react.toHomeOffAll(),
         appBar: TEAppBar(
           leadingIconOnPressed: null,
           title: DS.getText().inventory,

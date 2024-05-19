@@ -15,6 +15,8 @@ import 'package:teameat/1_presentation/store/store_page.dart';
 import 'package:teameat/1_presentation/store/store_page_binding.dart';
 import 'package:teameat/1_presentation/user/customer_service_page.dart';
 import 'package:teameat/1_presentation/user/customer_service_page_binding.dart';
+import 'package:teameat/1_presentation/user/user_page.dart';
+import 'package:teameat/1_presentation/user/user_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_detail_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_detail_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_page.dart';
@@ -31,6 +33,12 @@ List<GetPage> allPages() => [
         name: "/home",
         binding: HomePageBinding(),
         page: () => const HomePage(),
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/user",
+        binding: UserPageBinding(),
+        page: () => const UserPage(),
         transition: Transition.noTransition,
       ),
       GetPage(

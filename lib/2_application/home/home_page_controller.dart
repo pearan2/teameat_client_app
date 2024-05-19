@@ -26,7 +26,7 @@ class HomePageController extends PageController {
     return react.toStoreItemDetail(itemId);
   }
 
-  void refresh() {
+  void pageRefresh() {
     _searchOption.value = searchOption.copyWith(pageNumber: 0);
     pagingController.refresh();
   }

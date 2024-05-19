@@ -218,4 +218,19 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get successUseVoucher => '이용권을 정상적으로 사용했어요 :)';
+
+  @override
+  String get businessRegistrationInformation => '사업자등록정보';
+
+  @override
+  String get logOut => '로그아웃';
+
+  @override
+  String get privacyPolicy => '개인정보 처리 방침';
+
+  @override
+  String get servicePolicy => '서비스 이용약관';
+
+  @override
+  String get signOut => '회원 탈퇴';
 }

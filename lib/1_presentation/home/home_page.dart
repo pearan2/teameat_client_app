@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -16,14 +17,26 @@ class HomePage extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = ScrollController();
     return TEScaffold(
+      onPop: (didPop) {
+        final isTop = scrollController.position.pixels == 0;
+        if (!isTop) {
+          scrollController.animateTo(0,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.bounceInOut);
+        } else {
+          SystemNavigator.pop();
+        }
+      },
       withBottomNavigator: true,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.refresh();
+            controller.pageRefresh();
           },
           child: CustomScrollView(
+            controller: scrollController,
             slivers: [
               SliverAppBar(
                 backgroundColor: DS.getColor().background000,

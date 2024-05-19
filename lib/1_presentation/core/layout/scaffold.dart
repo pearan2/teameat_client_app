@@ -11,6 +11,7 @@ class TEScaffold extends StatelessWidget {
   final Widget? bottomSheet;
   final bool withBottomNavigator;
   final bool loading;
+  final void Function(bool didPop)? onPop;
 
   const TEScaffold({
     super.key,
@@ -19,6 +20,7 @@ class TEScaffold extends StatelessWidget {
     this.bottomSheet,
     this.withBottomNavigator = false,
     this.loading = false,
+    this.onPop,
   });
 
   Widget _buildChild() {
@@ -48,22 +50,26 @@ class TEScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _buildChild(),
-        Visibility(
-          visible: loading,
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: DS.getColor().background800.withOpacity(0.7),
-            child: Center(
-                child: TELoading(
-              size: DS.getSpace().large,
-            )),
-          ),
-        )
-      ],
+    return PopScope(
+      canPop: onPop == null,
+      onPopInvoked: onPop,
+      child: Stack(
+        children: [
+          _buildChild(),
+          Visibility(
+            visible: loading,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: DS.getColor().background800.withOpacity(0.7),
+              child: Center(
+                  child: TELoading(
+                size: DS.getSpace().large,
+              )),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -133,7 +139,6 @@ class _TEBottomNavigator extends StatelessWidget {
           ),
           TEonTap(
             onTap: react.toUserOffAll,
-            isLoginRequired: true,
             child: DS.getImage().bottomIconUser,
           ),
         ],

@@ -71,4 +71,9 @@ abstract class ITextSystem {
   String get useVoucherCountFormat;
   String get pleaseInputStoreVoucherPassword;
   String get successUseVoucher;
+  String get logOut;
+  String get signOut;
+  String get privacyPolicy;
+  String get servicePolicy;
+  String get businessRegistrationInformation;
 }

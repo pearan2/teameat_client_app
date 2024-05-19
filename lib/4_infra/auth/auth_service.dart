@@ -24,4 +24,9 @@ class AuthService extends IAuthService {
   void login(String accessToken) {
     return _conn.setAuthentication(accessToken);
   }
+
+  @override
+  void logOut() {
+    return _conn.removeAuthentication();
+  }
 }

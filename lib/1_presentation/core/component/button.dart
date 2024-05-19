@@ -437,3 +437,43 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     );
   }
 }
+
+class TERowButton extends StatelessWidget {
+  final EdgeInsetsGeometry? padding;
+  final bool isLoginRequired;
+  final String text;
+  final void Function() onTap;
+
+  const TERowButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.padding,
+    this.isLoginRequired = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: onTap,
+      isLoginRequired: isLoginRequired,
+      child: Padding(
+        padding: padding ??
+            EdgeInsets.symmetric(
+                horizontal: DS.getSpace().xBase, vertical: DS.getSpace().small),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: DS.getTextStyle().paragraph3.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            const Icon(Icons.keyboard_arrow_right),
+          ],
+        ),
+      ),
+    );
+  }
+}

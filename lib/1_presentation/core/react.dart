@@ -58,7 +58,7 @@ class React extends IReact {
 
   @override
   void toUserOffAll() {
-    // TODO: implement toUserOffAll
+    Get.offAllNamed('/user');
   }
 
   @override

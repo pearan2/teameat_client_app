@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 class TENetworkImage extends StatelessWidget {
   final String url;

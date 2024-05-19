@@ -44,6 +44,7 @@ class VoucherPageController extends PageController {
     final needToUpdate = ret == null ? false : (ret as bool);
     if (needToUpdate) {
       _searchOption.value = SearchVoucherSimpleList.empty();
+      _loadNumberOfRemainVouchers();
       pagingController.refresh();
     }
   }

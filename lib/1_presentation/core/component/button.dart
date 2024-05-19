@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
@@ -103,8 +103,7 @@ class TEMainButton extends GetView<LoadingProvider> {
         child: listenEventLoading
             ? Obx(() {
                 if (controller.isEventLoading) {
-                  return LoadingAnimationWidget.waveDots(
-                      color: contentColor, size: DS.getSpace().base);
+                  return TELoading(color: contentColor);
                 } else {
                   return _buildContent();
                 }

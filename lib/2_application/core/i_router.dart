@@ -27,5 +27,9 @@ abstract class IRouter {
 
   void toCustomerService();
 
-  void toVoucherDetailPage(int voucherId);
+  Future<T?> toVoucherDetailPage<T>(int voucherId);
+
+  void closeBottomSheet();
+
+  void closeDialog();
 }

@@ -1064,3 +1064,160 @@ abstract class _VoucherDetail implements VoucherDetail {
   _$$VoucherDetailImplCopyWith<_$VoucherDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UseVoucher _$UseVoucherFromJson(Map<String, dynamic> json) {
+  return _UseVoucher.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UseVoucher {
+  String get storeVoucherPassword => throw _privateConstructorUsedError;
+  int get quantity => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UseVoucherCopyWith<UseVoucher> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UseVoucherCopyWith<$Res> {
+  factory $UseVoucherCopyWith(
+          UseVoucher value, $Res Function(UseVoucher) then) =
+      _$UseVoucherCopyWithImpl<$Res, UseVoucher>;
+  @useResult
+  $Res call({String storeVoucherPassword, int quantity});
+}
+
+/// @nodoc
+class _$UseVoucherCopyWithImpl<$Res, $Val extends UseVoucher>
+    implements $UseVoucherCopyWith<$Res> {
+  _$UseVoucherCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? storeVoucherPassword = null,
+    Object? quantity = null,
+  }) {
+    return _then(_value.copyWith(
+      storeVoucherPassword: null == storeVoucherPassword
+          ? _value.storeVoucherPassword
+          : storeVoucherPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UseVoucherImplCopyWith<$Res>
+    implements $UseVoucherCopyWith<$Res> {
+  factory _$$UseVoucherImplCopyWith(
+          _$UseVoucherImpl value, $Res Function(_$UseVoucherImpl) then) =
+      __$$UseVoucherImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String storeVoucherPassword, int quantity});
+}
+
+/// @nodoc
+class __$$UseVoucherImplCopyWithImpl<$Res>
+    extends _$UseVoucherCopyWithImpl<$Res, _$UseVoucherImpl>
+    implements _$$UseVoucherImplCopyWith<$Res> {
+  __$$UseVoucherImplCopyWithImpl(
+      _$UseVoucherImpl _value, $Res Function(_$UseVoucherImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? storeVoucherPassword = null,
+    Object? quantity = null,
+  }) {
+    return _then(_$UseVoucherImpl(
+      storeVoucherPassword: null == storeVoucherPassword
+          ? _value.storeVoucherPassword
+          : storeVoucherPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UseVoucherImpl implements _UseVoucher {
+  const _$UseVoucherImpl(
+      {required this.storeVoucherPassword, required this.quantity});
+
+  factory _$UseVoucherImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UseVoucherImplFromJson(json);
+
+  @override
+  final String storeVoucherPassword;
+  @override
+  final int quantity;
+
+  @override
+  String toString() {
+    return 'UseVoucher(storeVoucherPassword: $storeVoucherPassword, quantity: $quantity)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UseVoucherImpl &&
+            (identical(other.storeVoucherPassword, storeVoucherPassword) ||
+                other.storeVoucherPassword == storeVoucherPassword) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, storeVoucherPassword, quantity);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UseVoucherImplCopyWith<_$UseVoucherImpl> get copyWith =>
+      __$$UseVoucherImplCopyWithImpl<_$UseVoucherImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UseVoucherImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UseVoucher implements UseVoucher {
+  const factory _UseVoucher(
+      {required final String storeVoucherPassword,
+      required final int quantity}) = _$UseVoucherImpl;
+
+  factory _UseVoucher.fromJson(Map<String, dynamic> json) =
+      _$UseVoucherImpl.fromJson;
+
+  @override
+  String get storeVoucherPassword;
+  @override
+  int get quantity;
+  @override
+  @JsonKey(ignore: true)
+  _$$UseVoucherImplCopyWith<_$UseVoucherImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

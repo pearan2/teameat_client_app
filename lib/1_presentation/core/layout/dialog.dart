@@ -4,15 +4,11 @@ import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 
-Future<bool> showTEConfirmDialog(
-    {required String content,
-    required String leftButtonText,
-    required String rightButtonText,
-    double dialogWidth = 328.0,
-    double dialogMinHeight = 162.0}) async {
-  final react = Get.find<IReact>();
-
-  final ret = await Get.dialog<bool>(Dialog(
+Future<T?> showTEDialog<T>(
+    {double dialogWidth = 328.0,
+    double dialogMinHeight = 162.0,
+    required Widget child}) async {
+  return Get.dialog<T>(Dialog(
     insetPadding: EdgeInsets.zero,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(
@@ -26,6 +22,21 @@ Future<bool> showTEConfirmDialog(
           color: DS.getColor().background000,
           borderRadius: BorderRadius.circular(DS.getSpace().small)),
       padding: EdgeInsets.all(DS.getSpace().tiny),
+      child: child,
+    ),
+  ));
+}
+
+Future<bool> showTEConfirmDialog(
+    {required String content,
+    required String leftButtonText,
+    required String rightButtonText,
+    double dialogWidth = 328.0,
+    double dialogMinHeight = 162.0}) async {
+  final react = Get.find<IReact>();
+  final ret = await showTEDialog(
+      dialogMinHeight: dialogMinHeight,
+      dialogWidth: dialogWidth,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,9 +71,7 @@ Future<bool> showTEConfirmDialog(
             ],
           )
         ],
-      ),
-    ),
-  ));
+      ));
   if (ret == null) return false;
   return ret;
 }

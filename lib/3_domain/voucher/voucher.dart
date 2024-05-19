@@ -116,6 +116,17 @@ class VoucherDetail with _$VoucherDetail {
   }
 }
 
+@freezed
+class UseVoucher with _$UseVoucher {
+  const factory UseVoucher({
+    required String storeVoucherPassword,
+    required int quantity,
+  }) = _UseVoucher;
+
+  factory UseVoucher.fromJson(Map<String, Object?> json) =>
+      _$UseVoucherFromJson(json);
+}
+
 
 // @freezed
 // class VoucherDetail with _$VoucherDetail {

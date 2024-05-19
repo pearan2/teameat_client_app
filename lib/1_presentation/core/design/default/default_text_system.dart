@@ -206,4 +206,16 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get voucherCountFormat => '###개';
+
+  @override
+  String get useVoucherCount => '개 사용';
+
+  @override
+  String get useVoucherCountFormat => '###개 사용';
+
+  @override
+  String get pleaseInputStoreVoucherPassword => '매장의 이용권 비밀번호를 입력해주세요';
+
+  @override
+  String get successUseVoucher => '이용권을 정상적으로 사용했어요 :)';
 }

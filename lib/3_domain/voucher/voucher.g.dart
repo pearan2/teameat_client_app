@@ -94,3 +94,15 @@ Map<String, dynamic> _$$VoucherDetailImplToJson(_$VoucherDetailImpl instance) =>
       'itemImageUrls': instance.itemImageUrls,
       'useLogs': instance.useLogs,
     };
+
+_$UseVoucherImpl _$$UseVoucherImplFromJson(Map<String, dynamic> json) =>
+    _$UseVoucherImpl(
+      storeVoucherPassword: json['storeVoucherPassword'] as String,
+      quantity: (json['quantity'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$UseVoucherImplToJson(_$UseVoucherImpl instance) =>
+    <String, dynamic>{
+      'storeVoucherPassword': instance.storeVoucherPassword,
+      'quantity': instance.quantity,
+    };

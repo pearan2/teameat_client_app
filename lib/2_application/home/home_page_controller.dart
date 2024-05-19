@@ -26,6 +26,11 @@ class HomePageController extends PageController {
     return react.toStoreItemDetail(itemId);
   }
 
+  void refresh() {
+    _searchOption.value = searchOption.copyWith(pageNumber: 0);
+    pagingController.refresh();
+  }
+
   /// 상태 변경 함수
   Future<void> onNearbyMeClickHandler() async {
     _isNearbyMe.value = !isNearbyMe;

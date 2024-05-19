@@ -50,4 +50,18 @@ class VoucherRepository extends IVoucherRepository {
           '이용권 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
+
+  @override
+  Future<Either<Failure, VoucherDetail>> useVoucher(
+      int id, UseVoucher useVoucher) async {
+    try {
+      final path = 'api/voucher/use/$id';
+      final ret = await _conn.post(path, useVoucher.toJson());
+      return ret.fold(
+          (l) => left(l), (r) => right(VoucherDetail.fromJson(r as JsonMap)));
+    } catch (_) {
+      return left(const Failure.useVoucherFail(
+          '이용권을 사용하는데 실패하였습니다. 비밀번호를 다시 확인해주세요. 문제가 지속된다면 고객센터로 문의해주세요.'));
+    }
+  }
 }

@@ -7,4 +7,6 @@ abstract class IVoucherRepository {
   Future<Either<Failure, List<VoucherSimple>>> findAllVouchers(
       SearchVoucherSimpleList searchOption);
   Future<Either<Failure, VoucherDetail>> findById(int id);
+  Future<Either<Failure, VoucherDetail>> useVoucher(
+      int id, UseVoucher useVoucher);
 }

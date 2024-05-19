@@ -77,7 +77,21 @@ class React extends IReact {
   }
 
   @override
-  void toVoucherDetailPage(int voucherId) {
-    Get.toNamed('/voucher/detail', arguments: {'voucherId': voucherId});
+  Future<T?> toVoucherDetailPage<T>(int voucherId) async {
+    return Get.toNamed('/voucher/detail', arguments: {'voucherId': voucherId});
+  }
+
+  @override
+  void closeBottomSheet() {
+    if (Get.isBottomSheetOpen ?? false) {
+      Get.back();
+    }
+  }
+
+  @override
+  void closeDialog() {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
+    }
   }
 }

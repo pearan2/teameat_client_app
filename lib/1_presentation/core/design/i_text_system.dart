@@ -67,4 +67,8 @@ abstract class ITextSystem {
   String get voucherUseLog;
   String get voucherUsedAtFormat;
   String get voucherCountFormat;
+  String get useVoucherCount;
+  String get useVoucherCountFormat;
+  String get pleaseInputStoreVoucherPassword;
+  String get successUseVoucher;
 }

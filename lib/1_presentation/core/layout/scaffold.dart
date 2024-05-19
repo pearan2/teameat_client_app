@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -9,6 +10,7 @@ class TEScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
   final bool withBottomNavigator;
+  final bool loading;
 
   const TEScaffold({
     super.key,
@@ -16,10 +18,10 @@ class TEScaffold extends StatelessWidget {
     this.appBar,
     this.bottomSheet,
     this.withBottomNavigator = false,
+    this.loading = false,
   });
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildChild() {
     if (withBottomNavigator) {
       return Column(
         children: [
@@ -42,6 +44,27 @@ class TEScaffold extends StatelessWidget {
         bottomSheet: bottomSheet,
       );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _buildChild(),
+        Visibility(
+          visible: loading,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: DS.getColor().background800.withOpacity(0.7),
+            child: Center(
+                child: TELoading(
+              size: DS.getSpace().large,
+            )),
+          ),
+        )
+      ],
+    );
   }
 }
 

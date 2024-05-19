@@ -106,7 +106,7 @@ class VoucherPage extends GetView<VoucherPageController> {
                     itemBuilder: (_, voucher, idx) => TEonTap(
                         isLoginRequired: true,
                         onTap: () =>
-                            controller.react.toVoucherDetailPage(voucher.id),
+                            controller.onVoucherCardClickHandler(voucher.id),
                         child: VoucherCard(voucher: voucher)),
                     noItemsFoundIndicatorBuilder: (context) =>
                         const VoucherNotFound(),

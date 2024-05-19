@@ -39,6 +39,15 @@ class VoucherPageController extends PageController {
     pagingController.refresh();
   }
 
+  Future<void> onVoucherCardClickHandler(int voucherId) async {
+    final ret = await react.toVoucherDetailPage(voucherId);
+    final needToUpdate = ret == null ? false : (ret as bool);
+    if (needToUpdate) {
+      _searchOption.value = SearchVoucherSimpleList.empty();
+      pagingController.refresh();
+    }
+  }
+
   Future<void> _loadCodes() async {
     await Future.wait([
       resolve(_codeRepo.getCode(CodeKey.voucherFilter()), (codes) {
@@ -53,7 +62,7 @@ class VoucherPageController extends PageController {
   Future<void> _loadVouchers(int currentPageNumber) async {
     final ret = await _voucherRepo.findAllVouchers(_searchOption.value);
     return ret.fold((l) => showError(l.desc), (r) {
-      if (r.length < numberOfRemainVoucher) {
+      if (r.length < numberOfVouchersPerPage) {
         pagingController.appendLastPage(r);
       } else {
         pagingController.appendPage(r, currentPageNumber + 1);

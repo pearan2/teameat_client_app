@@ -21,7 +21,7 @@ class HomePage extends GetView<HomePageController> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.pagingController.refresh();
+            controller.refresh();
           },
           child: CustomScrollView(
             slivers: [

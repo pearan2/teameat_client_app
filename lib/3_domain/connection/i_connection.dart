@@ -9,4 +9,5 @@ abstract class IConnection<T, F> {
   Future<Either<F, Object>> get(String path, JsonMap? params);
   Future<Either<F, Object>> put(String path, JsonMap params);
   Future<Either<F, Object>> post(String path, JsonMap params);
+  Future<Either<F, Object>> delete(String path, JsonMap? params);
 }

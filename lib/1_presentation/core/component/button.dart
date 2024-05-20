@@ -7,6 +7,7 @@ import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/99_util/text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TEMainButton extends GetView<LoadingProvider> {
   final void Function()? onTap;
@@ -474,6 +475,38 @@ class TERowButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TEServicePolicyButton extends StatelessWidget {
+  const TEServicePolicyButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TERowButton(
+      onTap: () {
+        final url = Uri.https(
+            '80000coding.notion.site', '/a12fbdc3259c49158e93ff99fbdc173b');
+        launchUrl(url);
+      },
+      text: DS.getText().servicePolicy,
+    );
+  }
+}
+
+class TEPrivacyPolicyButton extends StatelessWidget {
+  const TEPrivacyPolicyButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TERowButton(
+      onTap: () {
+        final url = Uri.https(
+            '80000coding.notion.site', '/6c327d4888414099b737cce42add2de5');
+        launchUrl(url);
+      },
+      text: DS.getText().privacyPolicy,
     );
   }
 }

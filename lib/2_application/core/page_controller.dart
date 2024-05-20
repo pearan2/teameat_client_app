@@ -21,7 +21,7 @@ abstract class PageController extends GetxController {
 
   Future<void> resolve<T>(
     Future<Either<Failure, T>> future,
-    void Function(T) rightCallback,
+    void Function(T r) rightCallback,
   ) async {
     react.isEventLoading = true;
     final ret = await future;

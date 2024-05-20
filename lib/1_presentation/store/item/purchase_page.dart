@@ -1,5 +1,7 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -57,6 +59,13 @@ class PurchasePage extends GetView<PurchasePageController> {
             ),
             DS.getSpace().vBase,
             const PurchaseDivider(),
+            DS.getSpace().vBase,
+            const TEServicePolicyButton(),
+            const TEPrivacyPolicyButton(),
+            DS.getSpace().vBase,
+            const DottedLine(),
+            DS.getSpace().vBase,
+            const BusinessRegistrationInformation(),
             DS.getSpace().vLarge,
           ],
         ),

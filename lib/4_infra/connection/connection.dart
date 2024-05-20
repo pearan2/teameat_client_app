@@ -118,4 +118,23 @@ class HttpClient extends IConnection<String, Failure> {
           const Failure.networkError("서버와 통신에 실패 하였습니다. 잠시 후 다시 시도해주세요."));
     }
   }
+
+  @override
+  Future<Either<Failure, Object>> delete(String path, JsonMap? params) async {
+    final uri = Uri.https(endPoint, path);
+    try {
+      final res = await http
+          .delete(uri, headers: _headers, body: jsonEncode(params))
+          .timeout(Duration(seconds: connectionTimeout));
+      final ret = _convert(utf8.decode(res.bodyBytes));
+      if (res.statusCode != HttpStatus.ok) {
+        final errorResponse = ErrorResponse.fromJson(ret as JsonMap);
+        return left(Failure.networkError(errorResponse.message));
+      }
+      return right(ret);
+    } catch (e) {
+      return left(
+          const Failure.networkError("서버와 통신에 실패 하였습니다. 잠시 후 다시 시도해주세요."));
+    }
+  }
 }

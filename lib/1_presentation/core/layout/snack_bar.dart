@@ -8,6 +8,10 @@ void _showSnackBar({
   Duration duration = const Duration(seconds: 3),
   SnackPosition position = SnackPosition.TOP,
 }) {
+  if (Get.isSnackbarOpen) {
+    return;
+  }
+
   Get.snackbar(
     '',
     '',

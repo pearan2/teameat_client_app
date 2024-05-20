@@ -29,4 +29,9 @@ class AuthService extends IAuthService {
   void logOut() {
     return _conn.removeAuthentication();
   }
+
+  @override
+  bool isLogined() {
+    return _conn.isLogined;
+  }
 }

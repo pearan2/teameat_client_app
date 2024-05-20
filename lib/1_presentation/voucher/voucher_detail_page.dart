@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -93,7 +94,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 const DottedLine(),
                 DS.getSpace().vSmall,
                 Obx(() => PageLoadingWrapper(
-                        child: StoreInfoRow(
+                        child: InfoRow(
                       icon: DS.getImage().storeItemExpired,
                       title: DS.getText().expiredDuration,
                       content: controller.voucher.willBeExpiredAt
@@ -101,14 +102,14 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                     ))),
                 DS.getSpace().vTiny,
                 Obx(() => PageLoadingWrapper(
-                        child: StoreInfoRow(
+                        child: InfoRow(
                       icon: DS.getImage().storeLocation,
                       title: DS.getText().address,
                       content: controller.voucher.storeAddress,
                     ))),
                 DS.getSpace().vTiny,
                 Obx(() => PageLoadingWrapper(
-                        child: StoreInfoRow(
+                        child: InfoRow(
                       icon: DS.getImage().storeOperationInfo,
                       title: DS.getText().operationTime,
                       content: controller.voucher.storeOperationTime,
@@ -117,7 +118,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 const DottedLine(),
                 DS.getSpace().vSmall,
                 Obx(() => PageLoadingWrapper(
-                        child: StoreInfoRow(
+                        child: InfoRow(
                       icon: const Icon(Icons.info),
                       title: DS.getText().voucherUseLog,
                       content: controller.voucher.useLogs.fold(

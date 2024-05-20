@@ -233,4 +233,37 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get signOut => '회원 탈퇴';
+
+  @override
+  String get businessAddress => '주소';
+
+  @override
+  String get businessCEO => '대표이사';
+
+  @override
+  String get businessCOCEO => '공동대표';
+
+  @override
+  String get businessEmail => '이메일';
+
+  @override
+  String get businessMailOrderSalesRegistrationNumber => '통신판매업신고번호';
+
+  @override
+  String get businessName => '상호명';
+
+  @override
+  String get businessPhone => '전화번호';
+
+  @override
+  String get businessRegistrationNumber => '사업자등록번호';
+
+  @override
+  String get notLogined => '로그인 되어있지 않아요';
+
+  @override
+  String get apiFail => '서버와의 통신에 실패하였습니다. 지속 된다면 어플리케이션을 완전히 삭제 후 다시 설치해주세요.';
+
+  @override
+  String get deleteUserSuccessSeeYouAgain => '정상적으로 탈퇴되었어요! 다음에 꼭! 다시 만나요 :)';
 }

@@ -1,9 +1,11 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/user.dart';
@@ -20,22 +22,18 @@ class UserPage extends GetView<UserPageController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                UserCard(user: controller.user),
+                Obx(() => UserCard(user: controller.user)),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.react.toCustomerService,
                   text: DS.getText().customerQuestion,
                 ),
+                const TEServicePolicyButton(),
+                const TEPrivacyPolicyButton(),
                 TERowButton(
-                  onTap: controller.toServicePolicy,
-                  text: DS.getText().servicePolicy,
-                ),
-                TERowButton(
-                  onTap: controller.toPrivacyPolicy,
-                  text: DS.getText().privacyPolicy,
-                ),
-                TERowButton(
-                  onTap: controller.toBusinessRegistrationInformation,
+                  onTap: () {
+                    showTEBottomSheet(const BusinessRegistrationInformation());
+                  },
                   text: DS.getText().businessRegistrationInformation,
                 ),
                 const UserPageDivider(),
@@ -44,12 +42,10 @@ class UserPage extends GetView<UserPageController> {
                 //
                 const UserPageDivider(),
                 TERowButton(
-                  isLoginRequired: true,
                   onTap: controller.onLogOut,
                   text: DS.getText().logOut,
                 ),
                 TERowButton(
-                  isLoginRequired: true,
                   onTap: controller.onSignOut,
                   text: DS.getText().signOut,
                 ),

@@ -76,4 +76,15 @@ abstract class ITextSystem {
   String get privacyPolicy;
   String get servicePolicy;
   String get businessRegistrationInformation;
+  String get businessName;
+  String get businessRegistrationNumber;
+  String get businessMailOrderSalesRegistrationNumber;
+  String get businessCEO;
+  String get businessCOCEO;
+  String get businessEmail;
+  String get businessAddress;
+  String get businessPhone;
+  String get notLogined;
+  String get apiFail;
+  String get deleteUserSuccessSeeYouAgain;
 }

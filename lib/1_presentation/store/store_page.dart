@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/divider.dart';
+import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -65,29 +67,29 @@ class StorePage extends GetView<StorePageController> {
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storeLocation,
                         title: DS.getText().address,
                         content: controller.store.address,
                       ),
                     ),
                   ),
-                  const StorePageDivider(),
+                  const TEDivider(),
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storeIntroduce,
                         title: DS.getText().storeIntroduce,
                         content: controller.store.introduce,
                       ),
                     ),
                   ),
-                  const StorePageDivider(),
+                  const TEDivider(),
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storePhone,
                         title:
                             '${DS.getText().reservation} / ${DS.getText().question}',
@@ -95,40 +97,40 @@ class StorePage extends GetView<StorePageController> {
                       ),
                     ),
                   ),
-                  const StorePageDivider(),
+                  const TEDivider(),
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storeOperationInfo,
                         title: DS.getText().operationTime,
                         content: controller.store.operationTime,
                       ),
                     ),
                   ),
-                  const StorePageDivider(),
+                  const TEDivider(),
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storeOperationInfo,
                         title: DS.getText().breakTime,
                         content: controller.store.breakTime,
                       ),
                     ),
                   ),
-                  const StorePageDivider(),
+                  const TEDivider(),
                   Padding(
                     padding: EdgeInsets.all(DS.getSpace().xBase),
                     child: PageLoadingWrapper(
-                      child: StoreInfoRow(
+                      child: InfoRow(
                         icon: DS.getImage().storeOperationInfo,
                         title: DS.getText().lastOrderTime,
                         content: controller.store.lastOrderTime,
                       ),
                     ),
                   ),
-                  const StorePageDivider()
+                  const TEDivider()
                 ],
               )),
         ),
@@ -146,14 +148,5 @@ class StorePage extends GetView<StorePageController> {
                 )))
       ],
     ));
-  }
-}
-
-class StorePageDivider extends StatelessWidget {
-  const StorePageDivider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(color: DS.getColor().background400, height: 1, thickness: 1);
   }
 }

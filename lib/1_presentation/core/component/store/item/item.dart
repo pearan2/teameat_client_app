@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension.dart';
 
@@ -344,9 +346,13 @@ class StoreItemQuantityPicker extends StatelessWidget {
 class StoreItemColumnCard extends StatelessWidget {
   final ItemSimple item;
   final void Function(int itemId) onTap;
+  final double borderRadius;
 
   const StoreItemColumnCard(
-      {super.key, required this.item, required this.onTap});
+      {super.key,
+      required this.item,
+      required this.onTap,
+      this.borderRadius = 0.0});
 
   @override
   Widget build(BuildContext context) {
@@ -359,7 +365,11 @@ class StoreItemColumnCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TENetworkImage(url: item.imageUrl, width: imageWidth),
+            TENetworkImage(
+              url: item.imageUrl,
+              width: imageWidth,
+              borderRadius: borderRadius,
+            ),
             DS.getSpace().vTiny,
             Text(
               item.name,
@@ -456,6 +466,34 @@ class StoreItemRowCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class StoreItemList extends GetView<IReact> {
+  final List<ItemSimple> items;
+  final double borderRadius;
+
+  const StoreItemList(
+      {super.key, required this.items, this.borderRadius = 0.0});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(left: DS.getSpace().small),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: items
+            .map((item) => Padding(
+                  padding: EdgeInsets.only(right: DS.getSpace().small),
+                  child: StoreItemColumnCard(
+                    borderRadius: borderRadius,
+                    item: item,
+                    onTap: controller.toStoreItemDetail,
+                  ),
+                ))
+            .toList(),
       ),
     );
   }

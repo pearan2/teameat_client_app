@@ -87,4 +87,5 @@ abstract class ITextSystem {
   String get notLogined;
   String get apiFail;
   String get deleteUserSuccessSeeYouAgain;
+  String get recentSeeStoreItem;
 }

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
+import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
@@ -22,7 +24,8 @@ class UserPage extends GetView<UserPageController> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Obx(() => UserCard(user: controller.user)),
+                Obx(() =>
+                    PageLoadingWrapper(child: UserCard(user: controller.user))),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.react.toCustomerService,
@@ -37,8 +40,25 @@ class UserPage extends GetView<UserPageController> {
                   text: DS.getText().businessRegistrationInformation,
                 ),
                 const UserPageDivider(),
-                // Todo 최근 본 상품
-
+                DS.getSpace().vSmall,
+                Row(
+                  children: [
+                    DS.getSpace().hXBase,
+                    Text(
+                      DS.getText().recentSeeStoreItem,
+                      style: DS
+                          .getTextStyle()
+                          .paragraph3
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                DS.getSpace().vTiny,
+                Obx(() => PageLoadingWrapper(
+                        child: StoreItemList(
+                      items: controller.recentSeeItems,
+                      borderRadius: DS.getSpace().tiny,
+                    ))),
                 //
                 const UserPageDivider(),
                 TERowButton(

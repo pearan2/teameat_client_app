@@ -31,6 +31,12 @@ class HomePageController extends PageController {
     pagingController.refresh();
   }
 
+  void onSearchTextCompleted(String searchText) {
+    _searchOption.value =
+        searchOption.copyWith(searchText: searchText, pageNumber: 0);
+    pagingController.refresh();
+  }
+
   /// 상태 변경 함수
   Future<void> onNearbyMeClickHandler() async {
     _isNearbyMe.value = !isNearbyMe;

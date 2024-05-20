@@ -4,4 +4,5 @@ import 'package:teameat/3_domain/store/item/item.dart';
 
 abstract class IStoreItemRepository {
   Future<Either<Failure, ItemDetail>> findById(int id);
+  Future<Either<Failure, List<ItemSimple>>> findRecentSeeItems();
 }

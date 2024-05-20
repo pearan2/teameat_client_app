@@ -266,4 +266,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get deleteUserSuccessSeeYouAgain => '정상적으로 탈퇴되었어요! 다음에 꼭! 다시 만나요 :)';
+
+  @override
+  String get recentSeeStoreItem => '최근 본 상품';
 }

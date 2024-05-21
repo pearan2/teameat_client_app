@@ -49,7 +49,9 @@ class ItemDetail with _$ItemDetail {
     required StoreDetail store,
     required String introduce,
     required int numberOfLikes,
-    required DateTime willBeExpiredAt,
+    DateTime? willBeExpiredAt,
+    int? willBeExpiredAfterDay,
+    int? weight,
     required String originInformation,
     required List<String> imageUrls,
   }) = _ItemDetail;

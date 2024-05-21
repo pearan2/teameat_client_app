@@ -34,6 +34,13 @@ class StoreItemRepository extends IStoreItemRepository {
 
   void _addRecentSeeItemId(int id) {
     final ids = _getRecentSeeItemIds();
+    final alreadyExistsIdx = ids.indexOf(id.toString());
+
+    /// 이미 들어있다는 뜻
+    if (alreadyExistsIdx >= 0) {
+      ids.removeAt(alreadyExistsIdx);
+    }
+
     ids.insert(0, id.toString());
     if (ids.length > _recentItemMaxCount) {
       ids.removeLast();
@@ -62,6 +69,25 @@ class StoreItemRepository extends IStoreItemRepository {
         }
         return right(sortedItems);
       });
+    } catch (e) {
+      return left(const Failure.fetchStoreItemFail(
+          '상품 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ItemSimple>>> findRecommendedItems(
+      int numberOfItems) async {
+    try {
+      const path = '/api/store/item/recommended';
+      final ids = _getRecentSeeItemIds();
+      final ret = await _conn.get(
+          path, {'itemIds': ids, 'numberOfItems': numberOfItems.toString()});
+      return ret.fold(
+          (l) => left(l),
+          (r) => right((r as Iterable)
+              .map((json) => ItemSimple.fromJson(json))
+              .toList()));
     } catch (e) {
       return left(const Failure.fetchStoreItemFail(
           '상품 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));

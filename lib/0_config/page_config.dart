@@ -21,6 +21,8 @@ import 'package:teameat/1_presentation/voucher/voucher_detail_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_detail_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
+import 'package:teameat/1_presentation/voucher/voucher_used_page.dart';
+import 'package:teameat/1_presentation/voucher/voucher_used_page_binding.dart';
 
 List<GetPage> allPages() => [
       GetPage(
@@ -53,6 +55,12 @@ List<GetPage> allPages() => [
         page: () => const VoucherDetailPage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/voucher/used",
+        binding: VoucherUsedPageBinding(),
+        page: () => const VoucherUsedPage(),
+        transition: Transition.noTransition,
       ),
       GetPage(
         name: "/store",

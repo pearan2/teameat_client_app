@@ -5,6 +5,7 @@ import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/voucher/voucher.dart';
 
 class React extends IReact {
   @override
@@ -93,5 +94,12 @@ class React extends IReact {
     if (Get.isDialogOpen ?? false) {
       Get.back();
     }
+  }
+
+  @override
+  void toVoucherUsedOffAll(
+      {required VoucherDetail voucher, required int usedQuantity}) {
+    Get.offAllNamed('/voucher/used',
+        arguments: {'voucher': voucher, 'usedQuantity': usedQuantity});
   }
 }

@@ -134,6 +134,17 @@ class StoreItemUsageInfo extends StatelessWidget {
     );
   }
 
+  String getExpiredAtString() {
+    if (item.willBeExpiredAfterDay == null && item.willBeExpiredAt == null) {
+      return DS.getText().noData;
+    }
+    if (item.willBeExpiredAt != null) {
+      return item.willBeExpiredAt!.format(DS.getText().willBeExpiredAtFormat);
+    }
+    return item.willBeExpiredAfterDay!
+        .format(DS.getText().willBeExpiredAfterDayFormat);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -151,13 +162,17 @@ class StoreItemUsageInfo extends StatelessWidget {
         Divider(
           color: DS.getColor().background800,
         ),
-        buildInfo(DS.getText().expiredAt,
-            item.willBeExpiredAt.format(DS.getText().yyyyMMddBasicFormat)),
+        buildInfo(DS.getText().expiredAt, getExpiredAtString()),
         buildInfo(DS.getText().phone, item.store.phone),
         buildInfo(DS.getText().operationTime, item.store.operationTime),
         buildInfo(DS.getText().breakTime, item.store.breakTime),
         buildInfo(DS.getText().lastOrderTime, item.store.lastOrderTime),
         buildInfo(DS.getText().originInformation, item.originInformation),
+        item.weight != null
+            ? buildInfo(DS.getText().weight,
+                item.weight!.format(DS.getText().weightGramFormat))
+            : const SizedBox(),
+        DS.getSpace().vSmall,
       ],
     );
   }

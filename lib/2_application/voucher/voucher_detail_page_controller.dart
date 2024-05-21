@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
-import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
 class VoucherDetailPageController extends PageController {
-  bool _isUpdated = false;
+  final bool _isUpdated = false;
 
   final useVoucherPasswordMaxLength = 4;
 
@@ -56,10 +55,8 @@ class VoucherDetailPageController extends PageController {
       showError(l.desc);
       initValues();
     }, (r) {
-      showSuccess(DS.getText().successUseVoucher);
-      initValues();
-      _isUpdated = true;
-      _voucher.value = r;
+      react.toVoucherUsedOffAll(
+          voucher: voucher, usedQuantity: useVoucherQuantity);
     });
   }
 

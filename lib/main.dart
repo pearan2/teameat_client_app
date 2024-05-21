@@ -1,6 +1,7 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
 import 'package:teameat/0_config/dependency_config.dart';
 import 'package:teameat/0_config/environment.dart';
@@ -16,6 +17,10 @@ Future<void> main() async {
   // 추후 첫 로딩 속도가 너무 느릴 경우 Splash Controller 쪽으로 이동시킬 것
   // V1 단계에서는 FB 가 필요하지 않다.
   WidgetsFlutterBinding.ensureInitialized();
+  await NaverMapSdk.instance
+      .initialize(clientId: "m6rvxbcwsx", onAuthFailed: print);
+  // m6rvxbcwsx
+
   initializeDateFormatting();
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,

@@ -5,21 +5,49 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 class TextSearcher extends StatefulWidget {
   final void Function(String) onCompleted;
   final FocusNode? focusNode;
+  final TextEditingController? controller;
+  final String? value;
 
-  const TextSearcher({super.key, required this.onCompleted, this.focusNode});
+  const TextSearcher(
+      {super.key,
+      required this.onCompleted,
+      this.focusNode,
+      this.controller,
+      this.value});
 
   @override
   State<TextSearcher> createState() => _TextSearcherState();
 }
 
 class _TextSearcherState extends State<TextSearcher> {
-  String value = '';
   late final focusNode = widget.focusNode ?? FocusNode();
+  late final controller = widget.controller ?? TextEditingController();
+
+  void init() {
+    controller.text = widget.value ?? '';
+  }
+
+  @override
+  void didUpdateWidget(covariant TextSearcher oldWidget) {
+    if (oldWidget.value != widget.value) {
+      init();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
 
   @override
   void dispose() {
     if (widget.focusNode == null) {
       focusNode.dispose();
+    }
+    if (widget.controller == null) {
+      controller.dispose();
     }
     super.dispose();
   }
@@ -27,11 +55,11 @@ class _TextSearcherState extends State<TextSearcher> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      controller: controller,
       focusNode: focusNode,
-      onChanged: (newValue) => value = newValue,
       onEditingComplete: () {
         focusNode.unfocus();
-        widget.onCompleted(value);
+        widget.onCompleted(controller.text);
       },
       cursorColor: DS.getColor().primary500,
       padding: EdgeInsets.symmetric(

@@ -23,6 +23,7 @@ class UserPage extends GetView<UserPageController> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Obx(() =>
                     PageLoadingWrapper(child: UserCard(user: controller.user))),
@@ -56,6 +57,7 @@ class UserPage extends GetView<UserPageController> {
                 DS.getSpace().vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: StoreItemList(
+                      notFound: const RecentSeeItemsNotFound(),
                       items: controller.recentSeeItems,
                       borderRadius: DS.getSpace().tiny,
                     ))),
@@ -120,6 +122,36 @@ class UserCard extends StatelessWidget {
             onTap: () async {
               FlutterClipboard.copy(user.id);
             },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RecentSeeItemsNotFound extends GetView<UserPageController> {
+  const RecentSeeItemsNotFound({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(DS.getSpace().xBase),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            DS.getText().recentSeeStoreItemsNotFound,
+            style: DS.getTextStyle().paragraph2.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+          DS.getSpace().vTiny,
+          TEPrimaryButton(
+            onTap: controller.react.toHomeOffAll,
+            text: DS.getText().goToSeeStoreItems,
+            contentHorizontalPadding: DS.getSpace().small,
+            fitContentWidth: true,
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/voucher/voucher.dart';
 
 abstract class IRouter {
   void toRoot();
@@ -32,4 +33,7 @@ abstract class IRouter {
   void closeBottomSheet();
 
   void closeDialog();
+
+  void toVoucherUsedOffAll(
+      {required VoucherDetail voucher, required int usedQuantity});
 }

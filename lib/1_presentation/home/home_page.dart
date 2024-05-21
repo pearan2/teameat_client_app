@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -48,6 +49,7 @@ class HomePage extends GetView<HomePageController> {
               PagedSliverList.separated(
                 pagingController: controller.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
+                  noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
                   itemBuilder: (_, store, idx) => Padding(
                     padding: EdgeInsets.only(
                         top: idx == 0 ? DS.getSpace().xBase : 0),
@@ -129,7 +131,12 @@ class HomePageSearcher extends GetView<HomePageController> {
               children: [DS.getImage().mainIconWithText],
             ),
             DS.getSpace().vBase,
-            TextSearcher(onCompleted: controller.onSearchTextCompleted),
+            Obx(
+              () => TextSearcher(
+                onCompleted: controller.onSearchTextCompleted,
+                value: controller.searchOption.searchText,
+              ),
+            ),
           ],
         ),
       ),
@@ -165,5 +172,60 @@ class NearbyMe extends GetView<HomePageController> {
             ),
           ),
         ));
+  }
+}
+
+class SearchNotFound extends GetView<HomePageController> {
+  const SearchNotFound({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            DS.getText().searchNotFound,
+            style: DS.getTextStyle().paragraph2.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+          DS.getSpace().vTiny,
+          TEPrimaryButton(
+            onTap: controller.clearSearchOption,
+            text: DS.getText().clearSearchOption,
+            contentHorizontalPadding: DS.getSpace().small,
+            fitContentWidth: true,
+          ),
+          Obx(() {
+            if (controller.recommendedItem == null) {
+              return const SizedBox();
+            }
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DS.getSpace().vBase,
+                Text(
+                  DS.getText().howAboutThisItem,
+                  style: DS.getTextStyle().paragraph2,
+                ),
+                DS.getSpace().vTiny,
+                Container(
+                  padding: EdgeInsets.all(DS.getSpace().tiny),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: DS.getColor().background600),
+                      borderRadius: BorderRadius.circular(DS.getSpace().xBase)),
+                  child: StoreItemColumnCard(
+                    item: controller.recommendedItem!,
+                    borderRadius: DS.getSpace().xBase,
+                    onTap: controller.react.toStoreItemDetail,
+                  ),
+                ),
+              ],
+            );
+          })
+        ],
+      ),
+    );
   }
 }

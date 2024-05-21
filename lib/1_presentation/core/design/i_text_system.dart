@@ -88,4 +88,16 @@ abstract class ITextSystem {
   String get apiFail;
   String get deleteUserSuccessSeeYouAgain;
   String get recentSeeStoreItem;
+  String get recentSeeStoreItemsNotFound;
+  String get goToSeeStoreItems;
+  String get searchNotFound;
+  String get howAboutThisItem;
+  String get clearSearchOption;
+  String get saleEnd;
+  String get noData;
+  String get willBeExpiredAfterDayFormat;
+  String get willBeExpiredAtFormat;
+  String get weight;
+  String get weightGramFormat;
+  String get voucherUsedCountFormat;
 }

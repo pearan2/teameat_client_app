@@ -269,4 +269,40 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get recentSeeStoreItem => '최근 본 상품';
+
+  @override
+  String get goToSeeStoreItems => '음식 구경하러 가기';
+
+  @override
+  String get recentSeeStoreItemsNotFound => '최근 본 상품이 없어요';
+
+  @override
+  String get howAboutThisItem => '혹시 이런 상품은 어떠세요?';
+
+  @override
+  String get searchNotFound => '검색된 상품이 없어요';
+
+  @override
+  String get clearSearchOption => '검색 조건 초기화 하기';
+
+  @override
+  String get saleEnd => '판매 종료';
+
+  @override
+  String get noData => '정보 없음';
+
+  @override
+  String get willBeExpiredAfterDayFormat => '구매일로 부터 #일';
+
+  @override
+  String get willBeExpiredAtFormat => 'yyyy년 M월 d일 hh시 mm분';
+
+  @override
+  String get weight => '중량';
+
+  @override
+  String get weightGramFormat => '###,###,###g';
+
+  @override
+  String get voucherUsedCountFormat => '###개 사용완료';
 }

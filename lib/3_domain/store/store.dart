@@ -18,6 +18,38 @@ class Point with _$Point {
 }
 
 @freezed
+class StorePoint with _$StorePoint {
+  const factory StorePoint({
+    required int id,
+    required String profileImageUrl,
+    required Point location,
+  }) = _StorePoint;
+
+  factory StorePoint.fromJson(Map<String, Object?> json) =>
+      _$StorePointFromJson(json);
+
+  factory StorePoint.empty() {
+    return StorePoint.fromDetail(StoreDetail.empty());
+  }
+
+  factory StorePoint.fromSimple(StoreSimple store) {
+    return StorePoint(
+      id: store.id,
+      profileImageUrl: store.profileImageUrl,
+      location: store.location,
+    );
+  }
+
+  factory StorePoint.fromDetail(StoreDetail store) {
+    return StorePoint(
+      id: store.id,
+      profileImageUrl: store.profileImageUrl,
+      location: store.location,
+    );
+  }
+}
+
+@freezed
 class SearchStoreSimpleList with _$SearchStoreSimpleList {
   const factory SearchStoreSimpleList({
     String? searchText,

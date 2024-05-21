@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -29,7 +30,10 @@ class StoreItemPageController extends PageController {
 
   Future<void> _loadStoreItemInfo() async {
     final ret = await _storeItemRepo.findById(itemId);
-    return ret.fold((l) => react.back(), (r) => _item.value = r);
+    return ret.fold((l) {
+      react.back();
+      showError(l.desc);
+    }, (r) => _item.value = r);
   }
 
   @override

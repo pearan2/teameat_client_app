@@ -252,8 +252,10 @@ class VoucherUseDialog extends GetView<VoucherDetailPageController> {
         DS.getSpace().vSmall,
         Text(
           controller.voucher.storeName,
+          textAlign: TextAlign.center,
           style: DS.getTextStyle().paragraph2,
         ),
+        DS.getSpace().vTiny,
         Text(
           DS.getText().pleaseInputStoreVoucherPassword,
           style: DS

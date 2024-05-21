@@ -75,18 +75,34 @@ class _ItemSaleRemainDurationTextState
     extends State<ItemSaleRemainDurationText> {
   int sec = 0;
   Timer? timer;
-  late final diff = widget.salesWillBeEndedAt.difference(DateTime.now());
+  late Duration diff;
+
+  @override
+  void didUpdateWidget(covariant ItemSaleRemainDurationText oldWidget) {
+    if (widget.salesWillBeEndedAt != oldWidget.salesWillBeEndedAt) {
+      init();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   void timerCallback() {
     setState(() {
       sec++;
     });
   }
 
-  @override
-  void initState() {
+  void init() {
+    sec = 0;
+    diff = widget.salesWillBeEndedAt.difference(DateTime.now());
+    timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       timerCallback();
     });
+  }
+
+  @override
+  void initState() {
+    init();
     super.initState();
   }
 
@@ -117,37 +133,60 @@ class _ItemSaleRemainDurationTextState
     return '$hourString:$minString:$secString';
   }
 
+  Widget _buildRemainDuration() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DS.getSpace().hXXTiny,
+        Icon(
+          Icons.timer_sharp,
+          color: DS.getColor().background000,
+          size: DS.getSpace().xSmall,
+        ),
+        DS.getSpace().hXTiny,
+        SizedBox(
+          width: DS.getSpace().medium + DS.getSpace().base,
+          child: Text(
+            calcRemainSaleDuration(),
+            style: DS.getTextStyle().caption1.copyWith(
+                  color: DS.getColor().background000,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSaleEndText() {
+    return Text(
+      DS.getText().saleEnd,
+      style: DS.getTextStyle().caption1.copyWith(
+            color: DS.getColor().background000,
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final remainHours = diff.inHours;
     if (remainHours > 100) {
       return const SizedBox();
     }
+    if (remainHours < 0) {
+      return Container(
+        color: DS.getColor().secondary500,
+        padding: EdgeInsets.symmetric(
+            vertical: DS.getSpace().xxTiny, horizontal: DS.getSpace().tiny),
+        child: _buildSaleEndText(),
+      );
+    }
+
     return Container(
       color: DS.getColor().secondary500,
       padding: EdgeInsets.all(DS.getSpace().xxTiny),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DS.getSpace().hXXTiny,
-          Icon(
-            Icons.timer_sharp,
-            color: DS.getColor().background000,
-            size: DS.getSpace().xSmall,
-          ),
-          DS.getSpace().hXTiny,
-          SizedBox(
-            width: DS.getSpace().medium + DS.getSpace().base,
-            child: Text(
-              calcRemainSaleDuration(),
-              style: DS.getTextStyle().caption1.copyWith(
-                    color: DS.getColor().background000,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ),
-        ],
-      ),
+      child: _buildRemainDuration(),
     );
   }
 }
@@ -472,14 +511,18 @@ class StoreItemRowCard extends StatelessWidget {
 }
 
 class StoreItemList extends GetView<IReact> {
+  final Widget? notFound;
   final List<ItemSimple> items;
   final double borderRadius;
 
   const StoreItemList(
-      {super.key, required this.items, this.borderRadius = 0.0});
+      {super.key, required this.items, this.borderRadius = 0.0, this.notFound});
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty && notFound != null) {
+      return notFound!;
+    }
     return SingleChildScrollView(
       padding: EdgeInsets.only(left: DS.getSpace().small),
       scrollDirection: Axis.horizontal,

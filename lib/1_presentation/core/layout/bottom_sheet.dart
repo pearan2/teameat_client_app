@@ -7,16 +7,16 @@ Future<void> showTEBottomSheet(Widget child) async {
       Container(
         width: double.infinity,
         padding: EdgeInsets.only(
-          top: DS.getSpace().xBase,
-          left: DS.getSpace().xBase,
-          right: DS.getSpace().xBase,
-          bottom: GetPlatform.isIOS ? DS.getSpace().xBase : 0.0,
+          top: DS.space.xBase,
+          left: DS.space.xBase,
+          right: DS.space.xBase,
+          bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0,
         ),
         decoration: BoxDecoration(
-          color: DS.getColor().background000,
+          color: DS.color.background000,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(DS.getSpace().xBase),
-            topRight: Radius.circular(DS.getSpace().xBase),
+            topLeft: Radius.circular(DS.space.xBase),
+            topRight: Radius.circular(DS.space.xBase),
           ),
         ),
         child: child,

@@ -23,34 +23,32 @@ class VoucherPage extends GetView<VoucherPageController> {
         onPop: (didPop) => controller.react.toHomeOffAll(),
         appBar: TEAppBar(
           leadingIconOnPressed: null,
-          title: DS.getText().inventory,
-          height: DS.getSpace().medium,
+          title: DS.text.inventory,
+          height: DS.space.medium,
         ),
         withBottomNavigator: true,
         body: Padding(
           padding: EdgeInsets.only(
-            left: DS.getSpace().xBase,
-            right: DS.getSpace().xBase,
-            bottom: DS.getSpace().small,
+            left: DS.space.xBase,
+            right: DS.space.xBase,
+            bottom: DS.space.small,
           ),
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
                 leading: const SizedBox(),
-                backgroundColor: DS.getColor().background000,
-                surfaceTintColor: DS.getColor().background000,
+                backgroundColor: DS.color.background000,
+                surfaceTintColor: DS.color.background000,
                 snap: true,
                 floating: true,
-                toolbarHeight: DS.getSpace().large,
+                toolbarHeight: DS.space.large,
                 flexibleSpace: Obx(
                   () => Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       controller.numberOfRemainVoucher
-                          .format(DS.getText().numberOfRemainVoucherFormat),
-                      style: DS
-                          .getTextStyle()
-                          .paragraph1
+                          .format(DS.text.numberOfRemainVoucherFormat),
+                      style: DS.textStyle.paragraph1
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -58,10 +56,10 @@ class VoucherPage extends GetView<VoucherPageController> {
               ),
               SliverAppBar(
                 leading: const SizedBox(),
-                backgroundColor: DS.getColor().background000,
-                surfaceTintColor: DS.getColor().background000,
+                backgroundColor: DS.color.background000,
+                surfaceTintColor: DS.color.background000,
                 pinned: true,
-                toolbarHeight: DS.getSpace().medium + DS.getSpace().medium,
+                toolbarHeight: DS.space.medium + DS.space.medium,
                 flexibleSpace: Obx(
                   () => Center(
                     child: Row(
@@ -73,28 +71,28 @@ class VoucherPage extends GetView<VoucherPageController> {
                             candidates: controller.filters,
                             isEqual: (lhs, rhs) => lhs.code == rhs.code,
                             onTap: controller.onFilterChanged,
-                            rowSpacing: DS.getSpace().tiny,
+                            rowSpacing: DS.space.tiny,
                             builder: (value, isSelected) => TEToggle(
                               isTextBold: true,
-                              textUnSelected: DS.getColor().background000,
-                              textSelected: DS.getColor().background000,
-                              boxUnSelected: DS.getColor().background500,
-                              boxSelected: DS.getColor().primary500,
+                              textUnSelected: DS.color.background000,
+                              textSelected: DS.color.background000,
+                              boxUnSelected: DS.color.background500,
+                              boxSelected: DS.color.primary500,
                               borderRadius: 300,
                               text: value.title,
                               isSelected: isSelected,
                             ),
                           ),
                         ),
-                        DS.getSpace().hTiny,
+                        DS.space.hTiny,
                         TESelectorBottomSheet<Code>(
-                          borderRadius: DS.getSpace().tiny,
+                          borderRadius: DS.space.tiny,
                           candidates: controller.orders,
                           onSelected: controller.onOrderChanged,
                           isEqual: (lhs, rhs) => lhs.code == rhs.code,
                           toLabel: (v) => v.title,
                           selectedValue: controller.searchOption.orderBy,
-                          text: DS.getText().order,
+                          text: DS.text.order,
                         ),
                       ],
                     ),
@@ -113,10 +111,10 @@ class VoucherPage extends GetView<VoucherPageController> {
                         const VoucherNotFound(),
                   ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: cardWith /
-                        (cardWith + DS.getSpace().large + DS.getSpace().base),
-                    crossAxisSpacing: DS.getSpace().small,
-                    mainAxisSpacing: DS.getSpace().small,
+                    childAspectRatio:
+                        cardWith / (cardWith + DS.space.large + DS.space.base),
+                    crossAxisSpacing: DS.space.small,
+                    mainAxisSpacing: DS.space.small,
                     crossAxisCount: 2,
                   ))
             ],
@@ -144,29 +142,26 @@ class VoucherCard extends StatelessWidget {
           willBeExpiredAt: voucher.willBeExpiredAt,
           quantity: voucher.quantity,
         ),
-        DS.getSpace().vXTiny,
+        DS.space.vXTiny,
         Text(
           voucher.storeName,
-          style: DS.getTextStyle().paragraph2.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: DS.textStyle.paragraph2.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        DS.getSpace().vXTiny,
+        DS.space.vXTiny,
         Text(
           voucher.itemName,
-          style: DS.getTextStyle().paragraph3,
+          style: DS.textStyle.paragraph3,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        DS.getSpace().vXTiny,
+        DS.space.vXTiny,
         Text(
-          voucher.willBeExpiredAt.format(DS.getText().voucherExpiredAtFormat),
-          style: DS
-              .getTextStyle()
-              .caption2
-              .copyWith(color: DS.getColor().background600),
+          voucher.willBeExpiredAt.format(DS.text.voucherExpiredAtFormat),
+          style: DS.textStyle.caption2.copyWith(color: DS.color.background600),
         )
       ],
     );
@@ -184,31 +179,31 @@ class VoucherNotFound extends GetView<VoucherPageController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            DS.getText().voucherNotFound,
-            style: DS.getTextStyle().paragraph2.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            DS.text.voucherNotFound,
+            style: DS.textStyle.paragraph2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          DS.getSpace().vTiny,
+          DS.space.vTiny,
           TEPrimaryButton(
             onTap: controller.react.toHomeOffAll,
-            text: DS.getText().voucherGoToPurchaseVoucher,
-            contentHorizontalPadding: DS.getSpace().small,
+            text: DS.text.voucherGoToPurchaseVoucher,
+            contentHorizontalPadding: DS.space.small,
             fitContentWidth: true,
           ),
-          DS.getSpace().vBase,
+          DS.space.vBase,
           Text(
-            DS.getText().voucherIfYouNeedHelp,
-            style: DS.getTextStyle().paragraph2.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            DS.text.voucherIfYouNeedHelp,
+            style: DS.textStyle.paragraph2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
             textAlign: TextAlign.center,
           ),
-          DS.getSpace().vTiny,
+          DS.space.vTiny,
           TESecondaryButton(
             onTap: controller.react.toCustomerService,
-            text: DS.getText().voucherGoToCustomerService,
-            contentHorizontalPadding: DS.getSpace().small,
+            text: DS.text.voucherGoToCustomerService,
+            contentHorizontalPadding: DS.space.small,
             fitContentWidth: true,
           ),
         ],

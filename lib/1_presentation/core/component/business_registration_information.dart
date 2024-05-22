@@ -15,51 +15,51 @@ class BusinessRegistrationInformation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DS.getText().businessRegistrationInformation,
-              style: DS.getTextStyle().paragraph1.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              DS.text.businessRegistrationInformation,
+              style: DS.textStyle.paragraph1.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),
-        DS.getSpace().vTiny,
+        DS.space.vTiny,
         PaddingInfoRow(
-          title: DS.getText().businessName,
+          title: DS.text.businessName,
           content: '파이어니어스',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessMailOrderSalesRegistrationNumber,
+          title: DS.text.businessMailOrderSalesRegistrationNumber,
           content: '309-30-01543',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessMailOrderSalesRegistrationNumber,
+          title: DS.text.businessMailOrderSalesRegistrationNumber,
           content: '2023-대구수성구-0883',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessCEO,
+          title: DS.text.businessCEO,
           content: '이세웅',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessCOCEO,
+          title: DS.text.businessCOCEO,
           content: '황재용',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessEmail,
+          title: DS.text.businessEmail,
           content: 'sadol7797@teameat.kr',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessAddress,
+          title: DS.text.businessAddress,
           content: '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
         ),
         const TEDivider(),
         PaddingInfoRow(
-          title: DS.getText().businessPhone,
+          title: DS.text.businessPhone,
           content: '010-2995-2797',
         ),
       ],
@@ -81,8 +81,8 @@ class PaddingInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: DS.getSpace().xSmall,
-        horizontal: DS.getSpace().xBase,
+        vertical: DS.space.xSmall,
+        horizontal: DS.space.xBase,
       ),
       child: InfoRow(
         title: title,

@@ -23,7 +23,7 @@ class UserPageController extends PageController {
 
   void onLogOut() {
     if (!_authService.isLogined()) {
-      return showError(DS.getText().notLogined);
+      return showError(DS.text.notLogined);
     }
     _authService.logOut();
     _user.value = User.visitor();
@@ -31,16 +31,16 @@ class UserPageController extends PageController {
 
   Future<void> onSignOut() async {
     if (!_authService.isLogined()) {
-      return showError(DS.getText().notLogined);
+      return showError(DS.text.notLogined);
     }
     final ret = await _userRepo.deleteMe();
     return ret.fold((l) => showError(l.desc), (r) {
       if (r) {
-        showSuccess(DS.getText().deleteUserSuccessSeeYouAgain);
+        showSuccess(DS.text.deleteUserSuccessSeeYouAgain);
         _authService.logOut();
         _user.value = User.visitor();
       } else {
-        showError(DS.getText().apiFail);
+        showError(DS.text.apiFail);
       }
     });
   }

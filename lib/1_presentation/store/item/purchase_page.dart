@@ -23,50 +23,46 @@ class PurchasePage extends GetView<PurchasePageController> {
       appBar: TEAppBar(
         leadingIconOnPressed: controller.react.back,
         homeOnPressed: controller.react.toHomeOffAll,
-        title: DS.getText().purchase,
+        title: DS.text.purchase,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            DS.getSpace().vTiny,
+            DS.space.vTiny,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
-              child: Text(DS.getText().purchaseItemInfo,
-                  style: DS
-                      .getTextStyle()
-                      .paragraph3
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+              child: Text(DS.text.purchaseItemInfo,
+                  style: DS.textStyle.paragraph3
                       .copyWith(fontWeight: FontWeight.bold)),
             ),
-            DS.getSpace().vSmall,
+            DS.space.vSmall,
             const PurchaseItemInfoList(),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             const PurchaseDivider(),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
-              child: Text(DS.getText().purchaseMethod,
-                  style: DS
-                      .getTextStyle()
-                      .paragraph3
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+              child: Text(DS.text.purchaseMethod,
+                  style: DS.textStyle.paragraph3
                       .copyWith(fontWeight: FontWeight.bold)),
             ),
-            DS.getSpace().vSmall,
+            DS.space.vSmall,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
               child: const PurchaseMethodSelector(),
             ),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             const PurchaseDivider(),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             const TEServicePolicyButton(),
             const TEPrivacyPolicyButton(),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             const DottedLine(),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             const BusinessRegistrationInformation(),
-            DS.getSpace().vLarge,
+            DS.space.vLarge,
           ],
         ),
       ),
@@ -103,8 +99,8 @@ class PurchaseDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: DS.getSpace().tiny,
-      color: DS.getColor().background200,
+      height: DS.space.tiny,
+      color: DS.color.background200,
     );
   }
 }
@@ -125,36 +121,34 @@ class PurchaseItemInfoCard extends StatelessWidget {
         TENetworkImage(
           url: item.imageUrl,
           width: imageWith,
-          borderRadius: DS.getSpace().small,
+          borderRadius: DS.space.small,
         ),
-        DS.getSpace().hSmall,
+        DS.space.hSmall,
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               item.store.name,
-              style: DS
-                  .getTextStyle()
-                  .paragraph3
-                  .copyWith(fontWeight: FontWeight.bold),
+              style:
+                  DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
             ),
-            DS.getSpace().vXTiny,
+            DS.space.vXTiny,
             Text(item.store.address,
-                style: DS.getTextStyle().caption1.copyWith(
-                      color: DS.getColor().background600,
-                    )),
-            DS.getSpace().vBase,
-            Text(item.name, style: DS.getTextStyle().paragraph2),
-            DS.getSpace().vXTiny,
+                style: DS.textStyle.caption1.copyWith(
+                  color: DS.color.background600,
+                )),
+            DS.space.vBase,
+            Text(item.name, style: DS.textStyle.paragraph2),
+            DS.space.vXTiny,
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 StoreItemPriceText(price: item.price * quantity),
-                DS.getSpace().hXXTiny,
+                DS.space.hXXTiny,
                 Text(
-                  '/ ${quantity.format(DS.getText().quantityFormat)}',
-                  style: DS.getTextStyle().caption1,
+                  '/ ${quantity.format(DS.text.quantityFormat)}',
+                  style: DS.textStyle.caption1,
                 )
               ],
             )
@@ -171,13 +165,13 @@ class PurchaseItemInfoList extends GetView<PurchasePageController> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+        padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (_, idx) => PurchaseItemInfoCard(
             item: controller.items.keys.toList()[idx],
             quantity: controller.items.values.toList()[idx]),
-        separatorBuilder: (_, __) => DS.getSpace().vBase,
+        separatorBuilder: (_, __) => DS.space.vBase,
         itemCount: controller.items.length);
   }
 }
@@ -188,12 +182,12 @@ class PurchaseButton extends GetView<PurchasePageController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
       child: TEPrimaryButton(
         listenEventLoading: true,
         onTap: controller.onPurchaseClick,
         text:
-            '${controller.totalPrice.format(DS.getText().priceFormat)} ${DS.getText().purchase}',
+            '${controller.totalPrice.format(DS.text.priceFormat)} ${DS.text.purchase}',
       ),
     );
   }

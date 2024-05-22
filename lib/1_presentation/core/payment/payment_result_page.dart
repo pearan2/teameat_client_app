@@ -15,30 +15,30 @@ class PaymentResultPage extends GetView<PaymentResultPageController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DS.getImage().mainIconWithText,
-          DS.getSpace().vXSmall,
+          DS.image.mainIconWithText,
+          DS.space.vXSmall,
           Text(
-            '${DS.getText().paymentFinished}!',
-            style: DS.getTextStyle().paragraph1,
+            '${DS.text.paymentFinished}!',
+            style: DS.textStyle.paragraph1,
           ),
-          DS.getSpace().vTiny,
+          DS.space.vTiny,
           Text(
-            '${DS.getText().thanks}!',
-            style: DS.getTextStyle().paragraph1,
+            '${DS.text.thanks}!',
+            style: DS.textStyle.paragraph1,
           ),
-          DS.getSpace().vBase,
+          DS.space.vBase,
           SizedBox(
-            width: DS.getSpace().large * 4,
+            width: DS.space.large * 4,
             child: TESecondaryButton(
                 onTap: controller.react.toHomeOffAll,
-                text: DS.getText().shoppingContinue),
+                text: DS.text.shoppingContinue),
           ),
-          DS.getSpace().vSmall,
+          DS.space.vSmall,
           SizedBox(
-            width: DS.getSpace().large * 4,
+            width: DS.space.large * 4,
             child: TEPrimaryButton(
                 onTap: controller.react.toVoucherOffAll,
-                text: DS.getText().toVoucherInventory),
+                text: DS.text.toVoucherInventory),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:teameat/1_presentation/core/design/i_color_system.dart';
+import 'package:teameat/1_presentation/core/design/i_image_system.dart';
 import 'package:teameat/1_presentation/core/design/i_space_system.dart';
 import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 import 'package:teameat/1_presentation/core/design/i_text_system.dart';
@@ -8,4 +9,5 @@ abstract class IDesignSystem {
   ISpaceSystem get ss;
   ITextStyleSystem get tss;
   ITextSystem get ts;
+  IImageSystem get ims;
 }

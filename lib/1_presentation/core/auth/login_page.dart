@@ -14,10 +14,9 @@ class LoginPage extends GetView<LoginPageController> {
   Widget build(BuildContext context) {
     return TEScaffold(
         appBar: TEAppBar(
-            leadingIconOnPressed: controller.react.back,
-            title: DS.getText().login),
+            leadingIconOnPressed: controller.react.back, title: DS.text.login),
         body: Padding(
-          padding: EdgeInsets.all(DS.getSpace().xBase),
+          padding: EdgeInsets.all(DS.space.xBase),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,12 +25,12 @@ class LoginPage extends GetView<LoginPageController> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(DS.getText().trySnsJoinOrLogin),
-                  DS.getSpace().vSmall,
+                  Text(DS.text.trySnsJoinOrLogin),
+                  DS.space.vSmall,
                   SnsLoginButton(
-                    logoImage: DS.getImage().kakaoLogo,
+                    logoImage: DS.image.kakaoLogo,
                     backgroundColor: const Color(0xFFF7E409),
-                    text: DS.getText().loginWithKakao,
+                    text: DS.text.loginWithKakao,
                     onTap: controller.loginWithKakao,
                   ),
                 ],
@@ -54,38 +53,30 @@ class TeameatIntroduce extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            DS.getImage().mainLargeIconNoBg,
-            DS.getSpace().hSmall,
-            Text(DS.getText().teameatIntroduce1,
-                style: DS.getTextStyle().title3)
+            DS.image.mainLargeIconNoBg,
+            DS.space.hSmall,
+            Text(DS.text.teameatIntroduce1, style: DS.textStyle.title3)
           ],
         ),
-        DS.getSpace().vSmall,
+        DS.space.vSmall,
         Text(
-          DS.getText().teameatIntroduce2,
-          style: DS
-              .getTextStyle()
-              .paragraph2
-              .copyWith(fontWeight: FontWeight.bold),
+          DS.text.teameatIntroduce2,
+          style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
-          DS.getText().teameatIntroduce3,
-          style: DS
-              .getTextStyle()
-              .paragraph2
-              .copyWith(color: DS.getColor().background600),
+          DS.text.teameatIntroduce3,
+          style:
+              DS.textStyle.paragraph2.copyWith(color: DS.color.background600),
         ),
-        DS.getSpace().vXBase,
+        DS.space.vXBase,
         Text(
-          DS.getText().teameatIntroduce4,
-          style: DS.getTextStyle().paragraph2,
+          DS.text.teameatIntroduce4,
+          style: DS.textStyle.paragraph2,
         ),
-        DS.getSpace().vXBase,
-        Text(DS.getText().willYouJoinUs,
-            style: DS
-                .getTextStyle()
-                .paragraph2
-                .copyWith(fontWeight: FontWeight.bold))
+        DS.space.vXBase,
+        Text(DS.text.willYouJoinUs,
+            style:
+                DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold))
       ],
     );
   }
@@ -112,24 +103,24 @@ class SnsLoginButton extends StatelessWidget {
     return TEonTap(
       onTap: onTap,
       child: Container(
-        height: DS.getSpace().large,
+        height: DS.space.large,
         width: double.infinity,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(
-            borderRadius ?? DS.getSpace().tiny,
+            borderRadius ?? DS.space.tiny,
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             logoImage,
-            DS.getSpace().hXTiny,
+            DS.space.hXTiny,
             Text(
               text,
-              style: DS.getTextStyle().paragraph3.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: DS.textStyle.paragraph3.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),

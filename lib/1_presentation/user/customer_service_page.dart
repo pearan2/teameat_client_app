@@ -15,31 +15,31 @@ class CustomerServicePage extends GetView<CustomerServicePageController> {
         appBar: TEAppBar(
           leadingIconOnPressed: controller.react.back,
           homeOnPressed: controller.react.toHomeOffAll,
-          title: DS.getText().customerQuestion,
+          title: DS.text.customerQuestion,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Divider(
-                    color: DS.getColor().background300,
+                    color: DS.color.background300,
                   ),
-                  DS.getSpace().vMedium,
+                  DS.space.vMedium,
                   Text(
-                    DS.getText().customerServiceTitle,
-                    style: DS.getTextStyle().paragraph1.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    DS.text.customerServiceTitle,
+                    style: DS.textStyle.paragraph1.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  DS.getSpace().vBase,
+                  DS.space.vBase,
                   Text(
-                    DS.getText().customerServiceContent,
-                    style: DS.getTextStyle().paragraph3,
+                    DS.text.customerServiceContent,
+                    style: DS.textStyle.paragraph3,
                   )
                 ],
               ),
@@ -48,26 +48,24 @@ class CustomerServicePage extends GetView<CustomerServicePageController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                DS.getImage().customerService,
-                DS.getSpace().vTiny,
+                DS.image.customerService,
+                DS.space.vTiny,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      DS.getText().customerServiceOperationTime,
-                      style: DS
-                          .getTextStyle()
-                          .paragraph3
-                          .copyWith(color: DS.getColor().background600),
+                      DS.text.customerServiceOperationTime,
+                      style: DS.textStyle.paragraph3
+                          .copyWith(color: DS.color.background600),
                     ),
-                    DS.getSpace().hXBase,
+                    DS.space.hXBase,
                   ],
                 ),
-                DS.getSpace().vTiny,
+                DS.space.vTiny,
                 SnsLoginButton(
-                  logoImage: DS.getImage().kakaoLogo,
+                  logoImage: DS.image.kakaoLogo,
                   backgroundColor: const Color(0xFFF7E409),
-                  text: DS.getText().customerServiceKakaoQuestion,
+                  text: DS.text.customerServiceKakaoQuestion,
                   onTap: controller.onCustomerServiceClickHandler,
                   borderRadius: 0.0,
                 ),

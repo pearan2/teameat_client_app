@@ -8,9 +8,9 @@ Future<T?> loginWrapper<T>(T Function() callback) async {
   if (Get.find<IConnection>().isLogined) return callback();
 
   final isToLoginConfirm = await showTEConfirmDialog(
-    content: DS.getText().needToLoginContent,
-    leftButtonText: DS.getText().refuseToLogin,
-    rightButtonText: DS.getText().confirmToLogin,
+    content: DS.text.needToLoginContent,
+    leftButtonText: DS.text.refuseToLogin,
+    rightButtonText: DS.text.confirmToLogin,
   );
   if (!isToLoginConfirm) return null;
   final react = Get.find<IReact>();

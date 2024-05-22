@@ -33,8 +33,8 @@ class StoreItemPage extends GetView<StoreItemPageController> {
         slivers: [
           SliverAppBar(
             leading: const SizedBox(),
-            backgroundColor: DS.getColor().background000,
-            surfaceTintColor: DS.getColor().background000,
+            backgroundColor: DS.color.background000,
+            surfaceTintColor: DS.color.background000,
             snap: true,
             floating: true,
             expandedHeight: width,
@@ -48,12 +48,12 @@ class StoreItemPage extends GetView<StoreItemPageController> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
               child: Obx(() => Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DS.getSpace().vTiny,
+                      DS.space.vTiny,
                       PageLoadingWrapper(
                           child: StoreSimpleInfoRow(
                         storeId: controller.item.store.id,
@@ -61,25 +61,23 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                         name: controller.item.store.name,
                         subInfo: controller.item.store.address,
                       )),
-                      DS.getSpace().vSmall,
+                      DS.space.vSmall,
                       PageLoadingWrapper(
                           child: Text(controller.item.name,
-                              style: DS.getTextStyle().title3)),
-                      DS.getSpace().vTiny,
+                              style: DS.textStyle.title3)),
+                      DS.space.vTiny,
                       PageLoadingWrapper(
                           child: Text(
                         controller.item.introduce,
-                        style: DS
-                            .getTextStyle()
-                            .paragraph3
+                        style: DS.textStyle.paragraph3
                             .copyWith(fontWeight: FontWeight.normal),
                       )),
-                      DS.getSpace().vTiny,
+                      DS.space.vTiny,
                       PageLoadingWrapper(
                         child: StoreItemSellTypeText(
                             sellType: controller.item.sellType),
                       ),
-                      DS.getSpace().vTiny,
+                      DS.space.vTiny,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -87,7 +85,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                             child: StoreItemPriceText(
                                 price: controller.item.price, isTitle: true),
                           ),
-                          DS.getSpace().hXTiny,
+                          DS.space.hXTiny,
                           PageLoadingWrapper(
                             child: ItemPriceDiscountRateText(
                               price: controller.item.price,
@@ -97,9 +95,9 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                           )
                         ],
                       ),
-                      DS.getSpace().vSmall,
+                      DS.space.vSmall,
                       StoreItemUsageInfo(item: controller.item),
-                      DS.getSpace().vLarge
+                      DS.space.vLarge
                     ],
                   )),
             ),
@@ -117,18 +115,18 @@ class StoreItemUsageInfo extends StatelessWidget {
 
   Widget buildInfo(String title, String info) {
     return Padding(
-      padding: EdgeInsets.only(top: DS.getSpace().small),
+      padding: EdgeInsets.only(top: DS.space.small),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: DS.getTextStyle().paragraph3.copyWith(
-                  color: DS.getColor().background400,
-                ),
+            style: DS.textStyle.paragraph3.copyWith(
+              color: DS.color.background400,
+            ),
           ),
-          Text(info, style: DS.getTextStyle().paragraph3)
+          Text(info, style: DS.textStyle.paragraph3)
         ],
       ),
     );
@@ -136,13 +134,13 @@ class StoreItemUsageInfo extends StatelessWidget {
 
   String getExpiredAtString() {
     if (item.willBeExpiredAfterDay == null && item.willBeExpiredAt == null) {
-      return DS.getText().noData;
+      return DS.text.noData;
     }
     if (item.willBeExpiredAt != null) {
-      return item.willBeExpiredAt!.format(DS.getText().willBeExpiredAtFormat);
+      return item.willBeExpiredAt!.format(DS.text.willBeExpiredAtFormat);
     }
     return item.willBeExpiredAfterDay!
-        .format(DS.getText().willBeExpiredAfterDayFormat);
+        .format(DS.text.willBeExpiredAfterDayFormat);
   }
 
   @override
@@ -152,27 +150,24 @@ class StoreItemUsageInfo extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          DS.getText().itemUsageInfo,
-          style: DS
-              .getTextStyle()
-              .paragraph3
-              .copyWith(fontWeight: FontWeight.bold),
+          DS.text.itemUsageInfo,
+          style: DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
         ),
-        DS.getSpace().vSmall,
+        DS.space.vSmall,
         Divider(
-          color: DS.getColor().background800,
+          color: DS.color.background800,
         ),
-        buildInfo(DS.getText().expiredAt, getExpiredAtString()),
-        buildInfo(DS.getText().phone, item.store.phone),
-        buildInfo(DS.getText().operationTime, item.store.operationTime),
-        buildInfo(DS.getText().breakTime, item.store.breakTime),
-        buildInfo(DS.getText().lastOrderTime, item.store.lastOrderTime),
-        buildInfo(DS.getText().originInformation, item.originInformation),
+        buildInfo(DS.text.expiredAt, getExpiredAtString()),
+        buildInfo(DS.text.phone, item.store.phone),
+        buildInfo(DS.text.operationTime, item.store.operationTime),
+        buildInfo(DS.text.breakTime, item.store.breakTime),
+        buildInfo(DS.text.lastOrderTime, item.store.lastOrderTime),
+        buildInfo(DS.text.originInformation, item.originInformation),
         item.weight != null
-            ? buildInfo(DS.getText().weight,
-                item.weight!.format(DS.getText().weightGramFormat))
+            ? buildInfo(
+                DS.text.weight, item.weight!.format(DS.text.weightGramFormat))
             : const SizedBox(),
-        DS.getSpace().vSmall,
+        DS.space.vSmall,
       ],
     );
   }
@@ -192,9 +187,9 @@ class StoreItemBuyBottomSheet extends GetView<StoreItemPageController> {
       children: [
         Text(
           controller.item.name,
-          style: DS.getTextStyle().paragraph2,
+          style: DS.textStyle.paragraph2,
         ),
-        DS.getSpace().vBase,
+        DS.space.vBase,
         Obx(
           () => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,11 +202,11 @@ class StoreItemBuyBottomSheet extends GetView<StoreItemPageController> {
             ],
           ),
         ),
-        DS.getSpace().vBase,
+        DS.space.vBase,
         TEPrimaryButton(
           isLoginRequired: true,
           onTap: controller.onBuyClickHandler,
-          text: DS.getText().buy,
+          text: DS.text.buy,
         )
       ],
     );
@@ -225,13 +220,13 @@ class StoreItemBuyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
       child: TEPrimaryButton(
         listenEventLoading: false,
         onTap: () {
           showTEBottomSheet(StoreItemBuyBottomSheet(tag));
         },
-        text: DS.getText().buy,
+        text: DS.text.buy,
       ),
     );
   }

@@ -1,12 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
-import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
-import 'package:teameat/3_domain/store/store.dart';
 
 class StoreSimpleInfoRow extends GetView<IReact> {
   final int storeId;
@@ -42,10 +39,9 @@ class StoreSimpleInfoRow extends GetView<IReact> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(300),
-            child: TENetworkImage(
-                url: profileImageUrl, width: DS.getSpace().large),
+            child: TENetworkImage(url: profileImageUrl, width: DS.space.large),
           ),
-          DS.getSpace().hTiny,
+          DS.space.hTiny,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,53 +50,20 @@ class StoreSimpleInfoRow extends GetView<IReact> {
                 Text(
                   name,
                   overflow: TextOverflow.ellipsis,
-                  style: DS
-                      .getTextStyle()
-                      .paragraph2
+                  style: DS.textStyle.paragraph2
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                DS.getSpace().vXTiny,
+                DS.space.vXTiny,
                 Text(
                   subInfo,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.getTextStyle().caption1,
+                  style: DS.textStyle.caption1,
                 ),
               ],
             ),
           ),
           _buildButton(),
         ],
-      ),
-    );
-  }
-}
-
-class StoreImageCarousel extends StatelessWidget {
-  final double width;
-  final double height;
-
-  final StoreDetail store;
-
-  const StoreImageCarousel({
-    super.key,
-    required this.width,
-    required this.height,
-    required this.store,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: store.imageUrls
-          .map((e) => PageLoadingWrapper(
-                child: TENetworkImage(url: e, width: width),
-              ))
-          .toList(),
-      options: CarouselOptions(
-        autoPlay: false,
-        enlargeCenterPage: true,
-        viewportFraction: 1.0,
-        aspectRatio: 1.0,
       ),
     );
   }

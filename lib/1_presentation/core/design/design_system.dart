@@ -11,21 +11,24 @@ import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 import 'package:teameat/1_presentation/core/design/i_text_system.dart';
 
 class DS extends IDesignSystem {
-  static DS? _ds;
-  static DS get _instance {
-    _ds ??= DS.base();
-    return _ds!;
+  static void init({IDesignSystem? designSystem}) {
+    final system = designSystem ?? DS.base();
+    color = system.cs;
+    space = system.ss;
+    text = system.ts;
+    textStyle = system.tss;
+    image = system.ims;
   }
 
   static void change(DS newDesignSystem) {
-    _ds = newDesignSystem;
+    init(designSystem: newDesignSystem);
   }
 
-  static IColorSystem getColor() => _instance.colorSystem;
-  static ITextSystem getText() => _instance.textSystem;
-  static ITextStyleSystem getTextStyle() => _instance.textStyleSystem;
-  static ISpaceSystem getSpace() => _instance.spaceSystem;
-  static IImageSystem getImage() => _instance.imageSystem;
+  static late IColorSystem color;
+  static late ISpaceSystem space;
+  static late ITextSystem text;
+  static late ITextStyleSystem textStyle;
+  static late IImageSystem image;
 
   final IColorSystem colorSystem;
   final ISpaceSystem spaceSystem;
@@ -60,4 +63,7 @@ class DS extends IDesignSystem {
 
   @override
   ITextStyleSystem get tss => textStyleSystem;
+
+  @override
+  IImageSystem get ims => imageSystem;
 }

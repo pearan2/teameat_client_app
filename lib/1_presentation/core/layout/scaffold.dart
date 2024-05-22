@@ -61,10 +61,10 @@ class TEScaffold extends StatelessWidget {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: DS.getColor().background800.withOpacity(0.7),
+              color: DS.color.background800.withOpacity(0.7),
               child: Center(
                   child: TELoading(
-                size: DS.getSpace().large,
+                size: DS.space.large,
               )),
             ),
           )
@@ -89,17 +89,17 @@ class _InnerScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      backgroundColor: DS.getColor().background000,
+      backgroundColor: DS.color.background000,
       body: Padding(
         padding: EdgeInsets.only(
             bottom: GetPlatform.isIOS && bottomSheet != null
-                ? DS.getSpace().xBase
+                ? DS.space.xBase
                 : 0.0),
         child: body,
       ),
       bottomSheet: Padding(
-        padding: EdgeInsets.only(
-            bottom: GetPlatform.isIOS ? DS.getSpace().xBase : 0.0),
+        padding:
+            EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
         child: bottomSheet,
       ),
     );
@@ -114,15 +114,17 @@ class _TEBottomNavigator extends StatelessWidget {
     final react = Get.find<IReact>();
 
     return Container(
-      height: DS.getSpace().large,
+      height: DS.space.large + (GetPlatform.isIOS ? DS.space.xBase : 0.0),
+      padding:
+          EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
       decoration: BoxDecoration(
-        color: DS.getColor().background000,
+        color: DS.color.background000,
         boxShadow: [
           BoxShadow(
-              color: DS.getColor().background800.withOpacity(0.15),
-              spreadRadius: DS.getSpace().xxTiny,
-              blurRadius: DS.getSpace().tiny,
-              offset: Offset(0, -DS.getSpace().xTiny))
+              color: DS.color.background800.withOpacity(0.15),
+              spreadRadius: DS.space.xxTiny,
+              blurRadius: DS.space.tiny,
+              offset: Offset(0, -DS.space.xTiny))
         ],
       ),
       child: Row(
@@ -130,16 +132,16 @@ class _TEBottomNavigator extends StatelessWidget {
         children: [
           TEonTap(
             onTap: react.toHomeOffAll,
-            child: DS.getImage().bottomIconHome,
+            child: DS.image.bottomIconHome,
           ),
           TEonTap(
             onTap: react.toVoucherOffAll,
             isLoginRequired: true,
-            child: DS.getImage().bottomIconVoucher,
+            child: DS.image.bottomIconVoucher,
           ),
           TEonTap(
             onTap: react.toUserOffAll,
-            child: DS.getImage().bottomIconUser,
+            child: DS.image.bottomIconUser,
           ),
         ],
       ),

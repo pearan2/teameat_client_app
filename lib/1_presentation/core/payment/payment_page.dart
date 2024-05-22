@@ -13,15 +13,14 @@ class PaymentPage extends GetView<PaymentPageController> {
   Widget build(BuildContext context) {
     return IamportPayment(
       appBar: TEAppBar(
-          title: DS.getText().payment,
-          leadingIconOnPressed: controller.react.back),
+          title: DS.text.payment, leadingIconOnPressed: controller.react.back),
       initialChild: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DS.getImage().mainLargeIconNoBg,
-            DS.getSpace().vBase,
-            Text(DS.getText().pleaseWait, style: DS.getTextStyle().paragraph3),
+            DS.image.mainLargeIconNoBg,
+            DS.space.vBase,
+            Text(DS.text.pleaseWait, style: DS.textStyle.paragraph3),
           ],
         ),
       ),

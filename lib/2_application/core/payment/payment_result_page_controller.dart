@@ -13,7 +13,7 @@ class PaymentResultPageController extends PageController {
 
   void paymentFailCallback() {
     react.back();
-    showError(DS.getText().paymentCancelledByUser);
+    showError(DS.text.paymentCancelledByUser);
   }
 
   @override

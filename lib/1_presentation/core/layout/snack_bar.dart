@@ -16,20 +16,19 @@ void _showSnackBar({
     '',
     '',
     titleText: Text(title,
-        style:
-            DS.getTextStyle().paragraph2.copyWith(fontWeight: FontWeight.bold)),
-    messageText: Text(message, style: DS.getTextStyle().paragraph3),
-    backgroundColor: DS.getColor().background300,
+        style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold)),
+    messageText: Text(message, style: DS.textStyle.paragraph3),
+    backgroundColor: DS.color.background300,
     duration: duration,
     snackPosition: position,
-    margin: EdgeInsets.symmetric(horizontal: DS.getSpace().small),
+    margin: EdgeInsets.symmetric(horizontal: DS.space.small),
   );
 }
 
 void showError(String message) {
-  return _showSnackBar(title: DS.getText().errorOccurred, message: message);
+  return _showSnackBar(title: DS.text.errorOccurred, message: message);
 }
 
 void showSuccess(String message) {
-  return _showSnackBar(title: DS.getText().success, message: message);
+  return _showSnackBar(title: DS.text.success, message: message);
 }

@@ -38,7 +38,7 @@ class _PageLoadingWrapperState extends State<PageLoadingWrapper> {
           });
         });
       }
-      return Shimmer.fromColors(
+      return TEShimmer(
         baseColor: widget.baseColor,
         highlightColor: widget.highlightColor,
         child: Stack(
@@ -56,5 +56,38 @@ class _PageLoadingWrapperState extends State<PageLoadingWrapper> {
         ),
       );
     });
+  }
+}
+
+class TEShimmer extends StatelessWidget {
+  final Color baseColor;
+  final Color highlightColor;
+  final Widget child;
+  const TEShimmer({
+    super.key,
+    this.baseColor = Colors.grey,
+    this.highlightColor = Colors.white,
+    required this.child,
+  });
+
+  factory TEShimmer.fromSize({
+    required double width,
+    required double height,
+  }) {
+    return TEShimmer(
+        child: Container(
+      width: width,
+      height: height,
+      color: Colors.grey,
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+      child: child,
+    );
   }
 }

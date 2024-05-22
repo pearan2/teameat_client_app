@@ -12,16 +12,16 @@ Future<T?> showTEDialog<T>(
     insetPadding: EdgeInsets.zero,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(
-        DS.getSpace().small,
+        DS.space.small,
       ),
     ),
     child: Container(
       width: dialogWidth,
       constraints: BoxConstraints(minHeight: dialogMinHeight),
       decoration: BoxDecoration(
-          color: DS.getColor().background000,
-          borderRadius: BorderRadius.circular(DS.getSpace().small)),
-      padding: EdgeInsets.all(DS.getSpace().tiny),
+          color: DS.color.background000,
+          borderRadius: BorderRadius.circular(DS.space.small)),
+      padding: EdgeInsets.all(DS.space.tiny),
       child: child,
     ),
   ));
@@ -42,12 +42,12 @@ Future<bool> showTEConfirmDialog(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: EdgeInsets.all(DS.getSpace().base),
+            padding: EdgeInsets.all(DS.space.base),
             child: Text(content,
                 textAlign: TextAlign.center,
-                style: DS.getTextStyle().paragraph2.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+                style: DS.textStyle.paragraph2.copyWith(
+                  fontWeight: FontWeight.bold,
+                )),
           ),
           Row(
             children: [
@@ -59,7 +59,7 @@ Future<bool> showTEConfirmDialog(
                   text: leftButtonText,
                 ),
               ),
-              DS.getSpace().hTiny,
+              DS.space.hTiny,
               Expanded(
                 child: TEPrimaryButton(
                   onTap: () {

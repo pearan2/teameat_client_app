@@ -22,9 +22,8 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> _buildActions() {
     if (homeOnPressed == null) return [];
     return [
-      TEonTap(
-          onTap: homeOnPressed!, child: Center(child: DS.getImage().iconHome)),
-      DS.getSpace().hSmall,
+      TEonTap(onTap: homeOnPressed!, child: Center(child: DS.image.iconHome)),
+      DS.space.hSmall,
     ];
   }
 
@@ -37,8 +36,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Text(
         title!,
         overflow: TextOverflow.ellipsis,
-        style:
-            DS.getTextStyle().paragraph2.copyWith(fontWeight: FontWeight.bold),
+        style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold),
       ),
     );
     return titleWidth;
@@ -57,8 +55,8 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: DS.getColor().background000,
-      surfaceTintColor: DS.getColor().background000,
+      backgroundColor: DS.color.background000,
+      surfaceTintColor: DS.color.background000,
       leading: _buildLeading(),
       actions: _buildActions(),
       centerTitle: true,

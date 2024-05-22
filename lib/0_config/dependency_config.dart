@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teameat/0_config/environment.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/react.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
@@ -25,6 +26,9 @@ import 'package:teameat/4_infra/voucher/voucher_repository.dart';
 
 Future<void> configDependency() async {
   final env = Environment();
+  // design system
+  DS.init();
+
   Get.put<Environment>(Environment());
   Get.put<SharedPreferences>(await SharedPreferences.getInstance());
 

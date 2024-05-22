@@ -34,7 +34,7 @@ class PurchasePageController extends PageController {
 
   Future<void> onPurchaseClick() async {
     if (purchaseMethod == null) {
-      showError(DS.getText().pleaseSelectPaymentMethod);
+      showError(DS.text.pleaseSelectPaymentMethod);
       return;
     }
     resolve<Order>(

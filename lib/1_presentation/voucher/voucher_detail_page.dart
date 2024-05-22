@@ -25,7 +25,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
     return Obx(() => TEScaffold(
         loading: controller.isLoading,
         appBar: TEAppBar(
-          title: DS.getText().voucher,
+          title: DS.text.voucher,
           leadingIconOnPressed: () =>
               controller.react.back(result: controller.isUpdated),
           homeOnPressed: controller.react.toHomeOffAll,
@@ -36,40 +36,40 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                     controller.voucher.quantity)
                 ? () => showTEBottomSheet(const VoucherUseBottomSheet())
                 : null,
-            text: DS.getText().use,
+            text: DS.text.use,
             borderRadius: 0,
             listenEventLoading: false,
           ),
         ),
         body: Container(
           margin: EdgeInsets.only(
-            left: DS.getSpace().xBase,
-            right: DS.getSpace().xBase,
-            top: DS.getSpace().xBase,
-            bottom: DS.getSpace().large + DS.getSpace().xBase,
+            left: DS.space.xBase,
+            right: DS.space.xBase,
+            top: DS.space.xBase,
+            bottom: DS.space.large + DS.space.xBase,
           ),
-          padding: EdgeInsets.all(DS.getSpace().small),
+          padding: EdgeInsets.all(DS.space.small),
           decoration: BoxDecoration(
-            border: Border.all(color: DS.getColor().background700),
-            borderRadius: BorderRadius.circular(DS.getSpace().medium),
-            color: DS.getColor().background000,
+            border: Border.all(color: DS.color.background700),
+            borderRadius: BorderRadius.circular(DS.space.medium),
+            color: DS.color.background000,
             boxShadow: [
               BoxShadow(
-                  color: DS.getColor().background800.withOpacity(0.25),
-                  blurRadius: DS.getSpace().xTiny,
-                  offset: Offset(0, DS.getSpace().xTiny))
+                  color: DS.color.background800.withOpacity(0.25),
+                  blurRadius: DS.space.xTiny,
+                  offset: Offset(0, DS.space.xTiny))
             ],
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: DS.getImage().mainMediumIconNoBg),
-                DS.getSpace().vSmall,
+                Center(child: DS.image.mainMediumIconNoBg),
+                DS.space.vSmall,
                 const DottedLine(),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 const VoucherShadowCard(),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                       child: StoreSimpleInfoRow(
                         profileImageUrl:
@@ -80,51 +80,49 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                         isButton: true,
                       ),
                     )),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                       child: Text(
                         controller.voucher.itemName,
-                        style: DS
-                            .getTextStyle()
-                            .paragraph2
+                        style: DS.textStyle.paragraph2
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                     )),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 const DottedLine(),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.getImage().storeItemExpired,
-                      title: DS.getText().expiredDuration,
+                      icon: DS.image.storeItemExpired,
+                      title: DS.text.expiredDuration,
                       content: controller.voucher.willBeExpiredAt
-                          .format(DS.getText().voucherExpiredAtFormat),
+                          .format(DS.text.voucherExpiredAtFormat),
                     ))),
-                DS.getSpace().vTiny,
+                DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.getImage().storeLocation,
-                      title: DS.getText().address,
+                      icon: DS.image.storeLocation,
+                      title: DS.text.address,
                       content: controller.voucher.storeAddress,
                     ))),
-                DS.getSpace().vTiny,
+                DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.getImage().storeOperationInfo,
-                      title: DS.getText().operationTime,
+                      icon: DS.image.storeOperationInfo,
+                      title: DS.text.operationTime,
                       content: controller.voucher.storeOperationTime,
                     ))),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 const DottedLine(),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
                       icon: const Icon(Icons.info),
-                      title: DS.getText().voucherUseLog,
+                      title: DS.text.voucherUseLog,
                       content: controller.voucher.useLogs.fold(
                           '',
                           (prev, e) =>
-                              '$prev${e.usedAt.format(DS.getText().voucherUsedAtFormat)}\n${e.quantity.format(DS.getText().voucherCountFormat)} ${e.reason}\n\n'),
+                              '$prev${e.usedAt.format(DS.text.voucherUsedAtFormat)}\n${e.quantity.format(DS.text.voucherCountFormat)} ${e.reason}\n\n'),
                     ))),
               ],
             ),
@@ -138,12 +136,12 @@ class VoucherShadowCard extends GetView<VoucherDetailPageController> {
   List<BoxShadow> _buildShadow() {
     return [
       BoxShadow(
-        color: DS.getColor().background800.withOpacity(0.40),
-        blurRadius: DS.getSpace().xTiny,
-        spreadRadius: DS.getSpace().xxTiny,
+        color: DS.color.background800.withOpacity(0.40),
+        blurRadius: DS.space.xTiny,
+        spreadRadius: DS.space.xxTiny,
         offset: Offset(
           0,
-          DS.getSpace().xTiny,
+          DS.space.xTiny,
         ),
       )
     ];
@@ -155,14 +153,14 @@ class VoucherShadowCard extends GetView<VoucherDetailPageController> {
           child: Container(
             decoration: BoxDecoration(
                 boxShadow: _buildShadow(),
-                color: DS.getColor().background000,
-                borderRadius: BorderRadius.circular(DS.getSpace().medium)),
+                color: DS.color.background000,
+                borderRadius: BorderRadius.circular(DS.space.medium)),
             child: VoucherImage(
               willBeExpiredAt: controller.voucher.willBeExpiredAt,
               quantity: controller.voucher.quantity,
               imageUrls: controller.voucher.itemImageUrls,
-              stackVerticalOffset: DS.getSpace().medium,
-              borderRadius: DS.getSpace().medium,
+              stackVerticalOffset: DS.space.medium,
+              borderRadius: DS.space.medium,
             ),
           ),
         ));
@@ -183,7 +181,7 @@ class VoucherUseDialogGridButton extends StatelessWidget {
     } else {
       return Text(
         content as String,
-        style: DS.getTextStyle().title3,
+        style: DS.textStyle.title3,
       );
     }
   }
@@ -207,22 +205,22 @@ class VoucherUsePasswordLengthChecker
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: DS.getSpace().small,
+      height: DS.space.small,
       child: ListView.separated(
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (_, idx) => Obx(() => Container(
-              width: DS.getSpace().small,
-              height: DS.getSpace().small,
+              width: DS.space.small,
+              height: DS.space.small,
               decoration: BoxDecoration(
                   color: (idx < controller.useVoucherPasswordLength)
-                      ? DS.getColor().primary500
-                      : DS.getColor().background400,
+                      ? DS.color.primary500
+                      : DS.color.background400,
                   borderRadius: BorderRadius.circular(300)),
             )),
-        separatorBuilder: (_, __) => DS.getSpace().hSmall,
+        separatorBuilder: (_, __) => DS.space.hSmall,
         itemCount: controller.useVoucherPasswordMaxLength,
       ),
     );
@@ -237,44 +235,40 @@ class VoucherUseDialog extends GetView<VoucherDetailPageController> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DS.getSpace().vTiny,
-        DS.getImage().mainIconWithText,
-        DS.getSpace().vSmall,
+        DS.space.vTiny,
+        DS.image.mainIconWithText,
+        DS.space.vSmall,
         Text(
           controller.voucher.itemName,
-          style: DS.getTextStyle().paragraph2,
+          style: DS.textStyle.paragraph2,
         ),
-        DS.getSpace().vTiny,
+        DS.space.vTiny,
         Text(
-            controller.useVoucherQuantity
-                .format(DS.getText().useVoucherCountFormat),
-            style: DS.getTextStyle().title2),
-        DS.getSpace().vSmall,
+            controller.useVoucherQuantity.format(DS.text.useVoucherCountFormat),
+            style: DS.textStyle.title2),
+        DS.space.vSmall,
         Text(
           controller.voucher.storeName,
           textAlign: TextAlign.center,
-          style: DS.getTextStyle().paragraph2,
+          style: DS.textStyle.paragraph2,
         ),
-        DS.getSpace().vTiny,
+        DS.space.vTiny,
         Text(
-          DS.getText().pleaseInputStoreVoucherPassword,
-          style: DS
-              .getTextStyle()
-              .paragraph2
-              .copyWith(fontWeight: FontWeight.bold),
+          DS.text.pleaseInputStoreVoucherPassword,
+          style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold),
         ),
-        DS.getSpace().vMedium,
+        DS.space.vMedium,
         const VoucherUsePasswordLengthChecker(),
-        DS.getSpace().vSmall,
+        DS.space.vSmall,
         GridView(
-          padding: EdgeInsets.all(DS.getSpace().tiny),
+          padding: EdgeInsets.all(DS.space.tiny),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
             childAspectRatio: 2 / 1, //item 의 가로 1, 세로 2 의 비율
-            mainAxisSpacing: DS.getSpace().xTiny, // 수직 padding
-            crossAxisSpacing: DS.getSpace().xTiny, // 수평 Padding
+            mainAxisSpacing: DS.space.xTiny, // 수직 padding
+            crossAxisSpacing: DS.space.xTiny, // 수평 Padding
           ),
           children: [
             VoucherUseDialogGridButton(
@@ -343,9 +337,9 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
       children: [
         Text(
           controller.voucher.itemName,
-          style: DS.getTextStyle().paragraph2,
+          style: DS.textStyle.paragraph2,
         ),
-        DS.getSpace().vBase,
+        DS.space.vBase,
         Obx(
           () => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -356,22 +350,22 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
                     quantity: controller.useVoucherQuantity,
                     onQuantityChanged: controller.onUseQuantityChanged,
                   ),
-                  DS.getSpace().hTiny,
+                  DS.space.hTiny,
                   Text(
-                    DS.getText().useVoucherCount,
-                    style: DS.getTextStyle().paragraph2,
+                    DS.text.useVoucherCount,
+                    style: DS.textStyle.paragraph2,
                   ),
                 ],
               ),
               Text(
                 controller.useVoucherRemainQuantity
-                    .format(DS.getText().voucherRemainQuantityFormat),
-                style: DS.getTextStyle().paragraph2,
+                    .format(DS.text.voucherRemainQuantityFormat),
+                style: DS.textStyle.paragraph2,
               ),
             ],
           ),
         ),
-        DS.getSpace().vBase,
+        DS.space.vBase,
         TEPrimaryButton(
           isLoginRequired: true,
           onTap: () {
@@ -379,7 +373,7 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
             controller.onVoucherPasswordReset();
             showTEDialog(child: const VoucherUseDialog());
           },
-          text: DS.getText().use,
+          text: DS.text.use,
         )
       ],
     );

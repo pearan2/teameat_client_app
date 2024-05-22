@@ -30,7 +30,7 @@ class UserPage extends GetView<UserPageController> {
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.react.toCustomerService,
-                  text: DS.getText().customerQuestion,
+                  text: DS.text.customerQuestion,
                 ),
                 const TEServicePolicyButton(),
                 const TEPrivacyPolicyButton(),
@@ -38,38 +38,36 @@ class UserPage extends GetView<UserPageController> {
                   onTap: () {
                     showTEBottomSheet(const BusinessRegistrationInformation());
                   },
-                  text: DS.getText().businessRegistrationInformation,
+                  text: DS.text.businessRegistrationInformation,
                 ),
                 const UserPageDivider(),
-                DS.getSpace().vSmall,
+                DS.space.vSmall,
                 Row(
                   children: [
-                    DS.getSpace().hXBase,
+                    DS.space.hXBase,
                     Text(
-                      DS.getText().recentSeeStoreItem,
-                      style: DS
-                          .getTextStyle()
-                          .paragraph3
+                      DS.text.recentSeeStoreItem,
+                      style: DS.textStyle.paragraph3
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                DS.getSpace().vTiny,
+                DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: StoreItemList(
                       notFound: const RecentSeeItemsNotFound(),
                       items: controller.recentSeeItems,
-                      borderRadius: DS.getSpace().tiny,
+                      borderRadius: DS.space.tiny,
                     ))),
                 //
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.onLogOut,
-                  text: DS.getText().logOut,
+                  text: DS.text.logOut,
                 ),
                 TERowButton(
                   onTap: controller.onSignOut,
-                  text: DS.getText().signOut,
+                  text: DS.text.signOut,
                 ),
               ],
             ),
@@ -83,7 +81,7 @@ class UserPageDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: DS.getColor().background300);
+    return Divider(color: DS.color.background300);
   }
 }
 
@@ -95,7 +93,7 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(DS.getSpace().xBase),
+      padding: EdgeInsets.all(DS.space.xBase),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -105,15 +103,13 @@ class UserCard extends StatelessWidget {
             children: [
               Text(
                 user.email ?? '',
-                style: DS
-                    .getTextStyle()
-                    .paragraph3
+                style: DS.textStyle.paragraph3
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              DS.getSpace().vTiny,
+              DS.space.vTiny,
               Text(
                 user.socialLoginType,
-                style: DS.getTextStyle().caption1,
+                style: DS.textStyle.caption1,
               )
             ],
           ),
@@ -135,22 +131,22 @@ class RecentSeeItemsNotFound extends GetView<UserPageController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(DS.getSpace().xBase),
+      padding: EdgeInsets.all(DS.space.xBase),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            DS.getText().recentSeeStoreItemsNotFound,
-            style: DS.getTextStyle().paragraph2.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            DS.text.recentSeeStoreItemsNotFound,
+            style: DS.textStyle.paragraph2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          DS.getSpace().vTiny,
+          DS.space.vTiny,
           TEPrimaryButton(
             onTap: controller.react.toHomeOffAll,
-            text: DS.getText().goToSeeStoreItems,
-            contentHorizontalPadding: DS.getSpace().small,
+            text: DS.text.goToSeeStoreItems,
+            contentHorizontalPadding: DS.space.small,
             fitContentWidth: true,
           ),
         ],

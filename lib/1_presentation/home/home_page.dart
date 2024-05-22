@@ -39,8 +39,8 @@ class HomePage extends GetView<HomePageController> {
             controller: scrollController,
             slivers: [
               SliverAppBar(
-                backgroundColor: DS.getColor().background000,
-                surfaceTintColor: DS.getColor().background000,
+                backgroundColor: DS.color.background000,
+                surfaceTintColor: DS.color.background000,
                 snap: true,
                 floating: true,
                 expandedHeight: HomePageSearcher.homePageSearcherMaxHeight,
@@ -51,19 +51,19 @@ class HomePage extends GetView<HomePageController> {
                 builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
                   noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
                   itemBuilder: (_, store, idx) => Padding(
-                    padding: EdgeInsets.only(
-                        top: idx == 0 ? DS.getSpace().xBase : 0),
+                    padding:
+                        EdgeInsets.only(top: idx == 0 ? DS.space.xBase : 0),
                     child: StoreCard(store: store),
                   ),
                 ),
                 separatorBuilder: (_, idx) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: DS.getSpace().xSmall),
+                  padding: EdgeInsets.symmetric(vertical: DS.space.xSmall),
                   child: Divider(
-                    color: DS.getColor().background600,
+                    color: DS.color.background600,
                   ),
                 ),
               ),
-              SliverToBoxAdapter(child: DS.getSpace().vSmall),
+              SliverToBoxAdapter(child: DS.space.vSmall),
             ],
           ),
         ),
@@ -84,7 +84,7 @@ class StoreCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            DS.getSpace().hSmall,
+            DS.space.hSmall,
             Expanded(
               child: StoreSimpleInfoRow(
                 storeId: store.id,
@@ -93,10 +93,10 @@ class StoreCard extends StatelessWidget {
                 subInfo: store.address,
               ),
             ),
-            DS.getSpace().hLarge,
+            DS.space.hLarge,
           ],
         ),
-        DS.getSpace().vTiny,
+        DS.space.vTiny,
         StoreItemList(items: store.items)
       ],
     );
@@ -113,24 +113,24 @@ class HomePageSearcher extends GetView<HomePageController> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: DS.getColor().background000,
+        color: DS.color.background000,
         boxShadow: [
           BoxShadow(
-              color: DS.getColor().background800.withOpacity(0.25),
-              blurRadius: DS.getSpace().xTiny,
-              offset: Offset(0, DS.getSpace().xTiny))
+              color: DS.color.background800.withOpacity(0.25),
+              blurRadius: DS.space.xTiny,
+              offset: Offset(0, DS.space.xTiny))
         ],
       ),
       child: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: DS.getSpace().small),
+        padding: EdgeInsets.symmetric(horizontal: DS.space.small),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [DS.getImage().mainIconWithText],
+              children: [DS.image.mainIconWithText],
             ),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             Obx(
               () => TextSearcher(
                 onCompleted: controller.onSearchTextCompleted,
@@ -154,20 +154,19 @@ class NearbyMe extends GetView<HomePageController> {
           child: Container(
             decoration: BoxDecoration(
                 color: controller.isNearbyMe
-                    ? DS.getColor().primary500
-                    : DS.getColor().background500,
+                    ? DS.color.primary500
+                    : DS.color.background500,
                 borderRadius: BorderRadius.circular(300)),
             padding: EdgeInsets.symmetric(
-                vertical: DS.getSpace().xTiny,
-                horizontal: DS.getSpace().xSmall),
+                vertical: DS.space.xTiny, horizontal: DS.space.xSmall),
             child: Row(
               children: [
-                Text(DS.getText().nearbyMe,
-                    style: DS.getTextStyle().caption3.copyWith(
-                        color: DS.getColor().background000,
+                Text(DS.text.nearbyMe,
+                    style: DS.textStyle.caption3.copyWith(
+                        color: DS.color.background000,
                         fontWeight: FontWeight.bold)),
-                DS.getSpace().hXTiny,
-                DS.getImage().nearbyMeIcon,
+                DS.space.hXTiny,
+                DS.image.nearbyMeIcon,
               ],
             ),
           ),
@@ -185,16 +184,16 @@ class SearchNotFound extends GetView<HomePageController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            DS.getText().searchNotFound,
-            style: DS.getTextStyle().paragraph2.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+            DS.text.searchNotFound,
+            style: DS.textStyle.paragraph2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          DS.getSpace().vTiny,
+          DS.space.vTiny,
           TEPrimaryButton(
             onTap: controller.clearSearchOption,
-            text: DS.getText().clearSearchOption,
-            contentHorizontalPadding: DS.getSpace().small,
+            text: DS.text.clearSearchOption,
+            contentHorizontalPadding: DS.space.small,
             fitContentWidth: true,
           ),
           Obx(() {
@@ -204,20 +203,20 @@ class SearchNotFound extends GetView<HomePageController> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                DS.getSpace().vBase,
+                DS.space.vBase,
                 Text(
-                  DS.getText().howAboutThisItem,
-                  style: DS.getTextStyle().paragraph2,
+                  DS.text.howAboutThisItem,
+                  style: DS.textStyle.paragraph2,
                 ),
-                DS.getSpace().vTiny,
+                DS.space.vTiny,
                 Container(
-                  padding: EdgeInsets.all(DS.getSpace().tiny),
+                  padding: EdgeInsets.all(DS.space.tiny),
                   decoration: BoxDecoration(
-                      border: Border.all(color: DS.getColor().background600),
-                      borderRadius: BorderRadius.circular(DS.getSpace().xBase)),
+                      border: Border.all(color: DS.color.background600),
+                      borderRadius: BorderRadius.circular(DS.space.xBase)),
                   child: StoreItemColumnCard(
                     item: controller.recommendedItem!,
-                    borderRadius: DS.getSpace().xBase,
+                    borderRadius: DS.space.xBase,
                     onTap: controller.react.toStoreItemDetail,
                   ),
                 ),

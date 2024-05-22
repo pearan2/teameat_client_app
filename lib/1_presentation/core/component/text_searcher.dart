@@ -61,26 +61,26 @@ class _TextSearcherState extends State<TextSearcher> {
         focusNode.unfocus();
         widget.onCompleted(controller.text);
       },
-      cursorColor: DS.getColor().primary500,
+      cursorColor: DS.color.primary500,
       padding: EdgeInsets.symmetric(
-          horizontal: DS.getSpace().base, vertical: DS.getSpace().tiny),
+          horizontal: DS.space.base, vertical: DS.space.tiny),
       prefix: Padding(
-        padding: EdgeInsets.only(left: DS.getSpace().base),
+        padding: EdgeInsets.only(left: DS.space.base),
         child: Icon(
           Icons.search,
-          size: DS.getSpace().base,
+          size: DS.space.base,
         ),
       ),
-      placeholder: DS.getText().textSearcherPlaceHolder,
-      style: DS.getTextStyle().paragraph3,
+      placeholder: DS.text.textSearcherPlaceHolder,
+      style: DS.textStyle.paragraph3,
       decoration: BoxDecoration(
-        color: DS.getColor().background000,
+        color: DS.color.background000,
         borderRadius: BorderRadius.circular(300),
         boxShadow: [
           BoxShadow(
-              color: DS.getColor().background300.withOpacity(0.5),
-              blurRadius: DS.getSpace().xBase,
-              offset: Offset(0, DS.getSpace().xTiny))
+              color: DS.color.background300.withOpacity(0.5),
+              blurRadius: DS.space.xBase,
+              offset: Offset(0, DS.space.xTiny))
         ],
       ),
     );

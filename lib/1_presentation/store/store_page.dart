@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
@@ -29,30 +30,25 @@ class StorePage extends GetView<StorePageController> {
           SliverAppBar(
             automaticallyImplyLeading: false,
             leading: const SizedBox(),
-            backgroundColor: DS.getColor().background000,
-            surfaceTintColor: DS.getColor().background000,
-            // snap: true,  /// 지도 사용하기가 너무 불편해져서 제거해둠
-            // floating: true,
+            backgroundColor: DS.color.background000,
+            surfaceTintColor: DS.color.background000,
             expandedHeight: width - topAreaHeight,
             flexibleSpace: Obx(
-              () => StoreImageCarousel(
-                width: width,
-                height: width,
-                store: controller.store,
-              ),
+              () => TEImageCarousel(
+                  width: width, imageUrls: controller.store.imageUrls),
             ),
           ),
           SliverAppBar(
             leading: const SizedBox(),
-            backgroundColor: DS.getColor().background000,
-            surfaceTintColor: DS.getColor().background000,
+            backgroundColor: DS.color.background000,
+            surfaceTintColor: DS.color.background000,
             pinned: true,
-            toolbarHeight: DS.getSpace().large + topAreaHeight,
+            toolbarHeight: DS.space.large + topAreaHeight,
             flexibleSpace: Container(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
               decoration: BoxDecoration(
                   border: Border(
-                      bottom: BorderSide(color: DS.getColor().background400))),
+                      bottom: BorderSide(color: DS.color.background400))),
               child: Obx(
                 () => PageLoadingWrapper(
                   child: StoreSimpleInfoRow(
@@ -71,11 +67,11 @@ class StorePage extends GetView<StorePageController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storeLocation,
-                          title: DS.getText().address,
+                          icon: DS.image.storeLocation,
+                          title: DS.text.address,
                           content: controller.store.address,
                         ),
                       ),
@@ -83,56 +79,55 @@ class StorePage extends GetView<StorePageController> {
                     TEStoreMap(center: StorePoint.fromDetail(controller.store)),
                     const TEDivider(),
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storeIntroduce,
-                          title: DS.getText().storeIntroduce,
+                          icon: DS.image.storeIntroduce,
+                          title: DS.text.storeIntroduce,
                           content: controller.store.introduce,
                         ),
                       ),
                     ),
                     const TEDivider(),
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storePhone,
-                          title:
-                              '${DS.getText().reservation} / ${DS.getText().question}',
+                          icon: DS.image.storePhone,
+                          title: '${DS.text.reservation} / ${DS.text.question}',
                           content: controller.store.phone,
                         ),
                       ),
                     ),
                     const TEDivider(),
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storeOperationInfo,
-                          title: DS.getText().operationTime,
+                          icon: DS.image.storeOperationInfo,
+                          title: DS.text.operationTime,
                           content: controller.store.operationTime,
                         ),
                       ),
                     ),
                     const TEDivider(),
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storeOperationInfo,
-                          title: DS.getText().breakTime,
+                          icon: DS.image.storeOperationInfo,
+                          title: DS.text.breakTime,
                           content: controller.store.breakTime,
                         ),
                       ),
                     ),
                     const TEDivider(),
                     Padding(
-                      padding: EdgeInsets.all(DS.getSpace().xBase),
+                      padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
                         child: InfoRow(
-                          icon: DS.getImage().storeOperationInfo,
-                          title: DS.getText().lastOrderTime,
+                          icon: DS.image.storeOperationInfo,
+                          title: DS.text.lastOrderTime,
                           content: controller.store.lastOrderTime,
                         ),
                       ),
@@ -143,14 +138,14 @@ class StorePage extends GetView<StorePageController> {
           ),
           SliverToBoxAdapter(
               child: Obx(() => ListView.separated(
-                    padding: EdgeInsets.all(DS.getSpace().xBase),
+                    padding: EdgeInsets.all(DS.space.xBase),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (_, idx) => StoreItemRowCard(
                       item: controller.store.items[idx],
                       onTap: controller.react.toStoreItemDetail,
                     ),
-                    separatorBuilder: (_, __) => DS.getSpace().vBase,
+                    separatorBuilder: (_, __) => DS.space.vBase,
                     itemCount: controller.store.items.length,
                   )))
         ],

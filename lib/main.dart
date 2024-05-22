@@ -27,6 +27,7 @@ Future<void> main() async {
   // );
   await configDependency();
   // await configMessage();
+
   runApp(const AppWidget());
 }
 
@@ -51,8 +52,8 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: DS.getColor().background000,
-            surfaceTintColor: DS.getColor().background000,
+            backgroundColor: DS.color.background000,
+            surfaceTintColor: DS.color.background000,
           ),
         ),
       ),

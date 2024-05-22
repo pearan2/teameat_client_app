@@ -44,10 +44,10 @@ class TEMainButton extends GetView<LoadingProvider> {
   });
 
   TextStyle getContentStyle() {
-    return DS.getTextStyle().paragraph1.copyWith(
-          color: onTap == null ? contentColor.withOpacity(0.5) : contentColor,
-          fontWeight: FontWeight.bold,
-        );
+    return DS.textStyle.paragraph1.copyWith(
+      color: onTap == null ? contentColor.withOpacity(0.5) : contentColor,
+      fontWeight: FontWeight.bold,
+    );
   }
 
   double getContentWidth() {
@@ -90,16 +90,14 @@ class TEMainButton extends GetView<LoadingProvider> {
             horizontal: contentHorizontalPadding ?? 0.0),
         width: fitContentWidth
             ? getContainerWidth() +
-                DS
-                    .getSpace()
+                DS.space
                     .tiny // Todo 계산완료 후 tiny 정도를 더해준다. 왜 이래야 정상적으로 레이아웃이 1줄로 나오는지 잘 모르겠음.
             : double.infinity,
-        height: DS.getSpace().large,
+        height: DS.space.large,
         decoration: BoxDecoration(
           border: _buildBorder(),
           color: fillColor,
-          borderRadius:
-              BorderRadius.circular(borderRadius ?? DS.getSpace().tiny),
+          borderRadius: BorderRadius.circular(borderRadius ?? DS.space.tiny),
         ),
         child: listenEventLoading
             ? Obx(() {
@@ -144,8 +142,8 @@ class TEPrimaryButton extends StatelessWidget {
       text: text,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
-      fillColor: DS.getColor().primary500,
-      contentColor: DS.getColor().background000,
+      fillColor: DS.color.primary500,
+      contentColor: DS.color.background000,
       contentHorizontalPadding: contentHorizontalPadding,
       contentVerticalPadding: contentVerticalPadding,
       fitContentWidth: fitContentWidth,
@@ -182,10 +180,10 @@ class TESecondaryButton extends GetView<LoadingProvider> {
       text: text,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
-      fillColor: DS.getColor().background000,
-      contentColor: DS.getColor().primary500,
-      borderColor: DS.getColor().primary500,
-      borderWidth: DS.getSpace().xxTiny,
+      fillColor: DS.color.background000,
+      contentColor: DS.color.primary500,
+      borderColor: DS.color.primary500,
+      borderWidth: DS.space.xxTiny,
       contentHorizontalPadding: contentHorizontalPadding,
       contentVerticalPadding: contentVerticalPadding,
       fitContentWidth: fitContentWidth,
@@ -220,10 +218,10 @@ class TEToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxSelected = this.boxSelected ?? DS.getColor().background700;
-    final boxUnSelected = this.boxUnSelected ?? DS.getColor().background100;
-    final textSelected = this.textSelected ?? DS.getColor().background000;
-    final textUnSelected = this.textUnSelected ?? DS.getColor().background800;
+    final boxSelected = this.boxSelected ?? DS.color.background700;
+    final boxUnSelected = this.boxUnSelected ?? DS.color.background100;
+    final textSelected = this.textSelected ?? DS.color.background000;
+    final textUnSelected = this.textUnSelected ?? DS.color.background800;
 
     return Container(
       height: height,
@@ -234,10 +232,10 @@ class TEToggle extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         text,
-        style: DS.getTextStyle().caption1.copyWith(
-              color: isSelected ? textSelected : textUnSelected,
-              fontWeight: isTextBold ? FontWeight.bold : null,
-            ),
+        style: DS.textStyle.caption1.copyWith(
+          color: isSelected ? textSelected : textUnSelected,
+          fontWeight: isTextBold ? FontWeight.bold : null,
+        ),
       ),
     );
   }
@@ -374,12 +372,11 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   }
 
   TextStyle getTextStyle(T value) {
-    return DS.getTextStyle().paragraph2.copyWith(
-          color: isSelected(value)
-              ? DS.getColor().background800
-              : DS.getColor().background700,
-          fontWeight: isSelected(value) ? FontWeight.bold : null,
-        );
+    return DS.textStyle.paragraph2.copyWith(
+      color:
+          isSelected(value) ? DS.color.background800 : DS.color.background700,
+      fontWeight: isSelected(value) ? FontWeight.bold : null,
+    );
   }
 
   void showSelector(double maxHeight) {
@@ -387,9 +384,9 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
 
     showTEBottomSheet(Container(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      padding: EdgeInsets.only(bottom: DS.getSpace().tiny),
+      padding: EdgeInsets.only(bottom: DS.space.tiny),
       child: ListView.separated(
-        padding: EdgeInsets.all(DS.getSpace().xBase),
+        padding: EdgeInsets.all(DS.space.xBase),
         shrinkWrap: true,
         itemBuilder: (_, idx) => TEonTap(
           onTap: () {
@@ -401,7 +398,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
             style: getTextStyle(candidates[idx]),
           ),
         ),
-        separatorBuilder: (_, __) => DS.getSpace().vSmall,
+        separatorBuilder: (_, __) => DS.space.vSmall,
         itemCount: candidates.length,
       ),
     ));
@@ -413,11 +410,11 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
       onTap: () => showSelector(MediaQuery.of(context).size.height / 2),
       child: Container(
         width: width,
-        height: height ?? DS.getSpace().medium,
-        padding: EdgeInsets.symmetric(horizontal: DS.getSpace().tiny),
+        height: height ?? DS.space.medium,
+        padding: EdgeInsets.symmetric(horizontal: DS.space.tiny),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: backgroundColor ?? DS.getColor().background100,
+          color: backgroundColor ?? DS.color.background100,
           borderRadius: BorderRadius.circular(borderRadius ?? 300.0),
         ),
         child: Row(
@@ -425,12 +422,12 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
           children: [
             Text(
               text,
-              style: DS.getTextStyle().caption1,
+              style: DS.textStyle.caption1,
             ),
-            DS.getSpace().hXXTiny,
+            DS.space.hXXTiny,
             Icon(
               icon,
-              size: DS.getSpace().xSmall,
+              size: DS.space.xSmall,
             ),
           ],
         ),
@@ -461,15 +458,15 @@ class TERowButton extends StatelessWidget {
       child: Padding(
         padding: padding ??
             EdgeInsets.symmetric(
-                horizontal: DS.getSpace().xBase, vertical: DS.getSpace().small),
+                horizontal: DS.space.xBase, vertical: DS.space.small),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: DS.getTextStyle().paragraph3.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: DS.textStyle.paragraph3.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const Icon(Icons.keyboard_arrow_right),
           ],
@@ -490,7 +487,7 @@ class TEServicePolicyButton extends StatelessWidget {
             '80000coding.notion.site', '/a12fbdc3259c49158e93ff99fbdc173b');
         launchUrl(url);
       },
-      text: DS.getText().servicePolicy,
+      text: DS.text.servicePolicy,
     );
   }
 }
@@ -506,7 +503,7 @@ class TEPrivacyPolicyButton extends StatelessWidget {
             '80000coding.notion.site', '/6c327d4888414099b737cce42add2de5');
         launchUrl(url);
       },
-      text: DS.getText().privacyPolicy,
+      text: DS.text.privacyPolicy,
     );
   }
 }

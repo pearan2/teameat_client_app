@@ -16,16 +16,16 @@ class VoucherDDay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: DS.getColor().background600,
+      color: DS.color.background600,
       padding: EdgeInsets.symmetric(
-        vertical: DS.getSpace().xxTiny,
-        horizontal: DS.getSpace().xTiny,
+        vertical: DS.space.xxTiny,
+        horizontal: DS.space.xTiny,
       ),
       child: Text(
         willBeExpiredAt.dDay(),
-        style: DS.getTextStyle().paragraph3.copyWith(
-              color: DS.getColor().background000,
-            ),
+        style: DS.textStyle.paragraph3.copyWith(
+          color: DS.color.background000,
+        ),
       ),
     );
   }
@@ -39,7 +39,7 @@ class VoucherBlur extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: DS.getColor().background600.withOpacity(0.5),
+      color: DS.color.background600.withOpacity(0.5),
     );
   }
 }
@@ -53,20 +53,20 @@ class VoucherUsedMark extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         padding: EdgeInsets.symmetric(
-            vertical: DS.getSpace().xTiny, horizontal: DS.getSpace().xSmall),
+            vertical: DS.space.xTiny, horizontal: DS.space.xSmall),
         decoration: BoxDecoration(
             border: Border.all(
-              color: DS.getColor().secondary500,
-              width: DS.getSpace().xxTiny,
+              color: DS.color.secondary500,
+              width: DS.space.xxTiny,
             ),
-            borderRadius: BorderRadius.circular(DS.getSpace().tiny)),
+            borderRadius: BorderRadius.circular(DS.space.tiny)),
         child: Text(
-          DS.getText().allUsed,
-          style: DS.getTextStyle().paragraph1.copyWith(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.5,
-                color: DS.getColor().secondary500,
-              ),
+          DS.text.allUsed,
+          style: DS.textStyle.paragraph1.copyWith(
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+            color: DS.color.secondary500,
+          ),
         ),
       ),
     );
@@ -81,16 +81,16 @@ class VoucherQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: DS.getColor().primary500,
+      color: DS.color.primary500,
       padding: EdgeInsets.symmetric(
-        vertical: DS.getSpace().xxTiny,
-        horizontal: DS.getSpace().xTiny,
+        vertical: DS.space.xxTiny,
+        horizontal: DS.space.xTiny,
       ),
       child: Text(
-        quantity.format(DS.getText().voucherRemainQuantityFormat),
-        style: DS.getTextStyle().caption1.copyWith(
-              color: DS.getColor().background000,
-            ),
+        quantity.format(DS.text.voucherRemainQuantityFormat),
+        style: DS.textStyle.caption1.copyWith(
+          color: DS.color.background000,
+        ),
       ),
     );
   }

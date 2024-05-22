@@ -6,6 +6,6 @@ class TEDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: DS.getColor().background400, height: 1, thickness: 1);
+    return Divider(color: DS.color.background400, height: 1, thickness: 1);
   }
 }

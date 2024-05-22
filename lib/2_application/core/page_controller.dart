@@ -16,7 +16,7 @@ abstract class PageController extends GetxController {
     react.isPageLoading = true;
     final initLoadingResult = await initialLoad();
     react.isPageLoading = false;
-    if (!initLoadingResult) showError(DS.getText().initPageFail);
+    if (!initLoadingResult) showError(DS.text.initPageFail);
   }
 
   Future<void> resolve<T>(

@@ -18,50 +18,50 @@ class VoucherUsedPage extends GetView<VoucherUsedPageController> {
       appBar: TEAppBar(
         leadingIconOnPressed: controller.react.toVoucherOffAll,
         homeOnPressed: controller.react.toHomeOffAll,
-        title: DS.getText().allUsed,
+        title: DS.text.allUsed,
       ),
       body: Padding(
-        padding: EdgeInsets.all(DS.getSpace().xBase),
+        padding: EdgeInsets.all(DS.space.xBase),
         child: Column(
           children: [
             TENetworkImage(
               url: controller.voucher.itemImageUrls.first,
-              borderRadius: DS.getSpace().base,
+              borderRadius: DS.space.base,
             ),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.getSpace().xBase),
+              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
               child: Text(
                 controller.voucher.itemName,
-                style: DS.getTextStyle().title3,
+                style: DS.textStyle.title3,
                 textAlign: TextAlign.center,
               ),
             ),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             Text.rich(
               TextSpan(
                 children: [
                   TextSpan(
                     text: controller.usedQuantity
-                        .format(DS.getText().voucherCountFormat),
-                    style: DS.getTextStyle().title2.copyWith(
-                          color: DS.getColor().secondary500,
-                        ),
+                        .format(DS.text.voucherCountFormat),
+                    style: DS.textStyle.title2.copyWith(
+                      color: DS.color.secondary500,
+                    ),
                   ),
                   const TextSpan(text: ' '),
                   TextSpan(
-                    text: DS.getText().allUsed,
-                    style: DS.getTextStyle().paragraph1,
+                    text: DS.text.allUsed,
+                    style: DS.textStyle.paragraph1,
                   ),
                 ],
               ),
             ),
-            DS.getSpace().vBase,
+            DS.space.vBase,
             TEPrimaryButton(
-              text: DS.getText().toVoucherInventory,
+              text: DS.text.toVoucherInventory,
               onTap: controller.react.toVoucherOffAll,
               fitContentWidth: true,
-              contentHorizontalPadding: DS.getSpace().xBase,
+              contentHorizontalPadding: DS.space.xBase,
             )
           ],
         ),

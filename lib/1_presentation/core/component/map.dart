@@ -60,7 +60,7 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<void> _tryAddMarker(StorePoint storePoint) async {
-    final markerIconSize = Size(DS.getSpace().medium, DS.getSpace().medium * 2);
+    final markerIconSize = Size(DS.space.medium, DS.space.medium * 2);
 
     final point = storePoint.location;
     final overlayImage = await NOverlayImage.fromWidget(

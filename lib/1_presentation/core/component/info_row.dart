@@ -23,27 +23,25 @@ class InfoRow extends StatelessWidget {
         icon ?? const SizedBox(),
         Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: DS.getSpace().xTiny),
+          padding: EdgeInsets.only(top: DS.space.xTiny),
           width: titleWidth,
           child: Text(
             title,
-            style: DS.getTextStyle().paragraph3.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: DS.textStyle.paragraph3.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        DS.getSpace().hBase,
+        DS.space.hBase,
         Expanded(
             child: Container(
           alignment: Alignment.centerRight,
-          padding: EdgeInsets.only(top: DS.getSpace().xTiny),
+          padding: EdgeInsets.only(top: DS.space.xTiny),
           child: Text(
             content,
             textAlign: TextAlign.right,
-            style: DS
-                .getTextStyle()
-                .paragraph3
-                .copyWith(color: DS.getColor().background600),
+            style:
+                DS.textStyle.paragraph3.copyWith(color: DS.color.background600),
           ),
         ))
       ],

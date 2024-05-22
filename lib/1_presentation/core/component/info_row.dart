@@ -6,6 +6,7 @@ class InfoRow extends StatelessWidget {
   final String title;
   final String content;
   final double? titleWidth;
+  final bool withUnderLine;
 
   const InfoRow({
     super.key,
@@ -13,6 +14,7 @@ class InfoRow extends StatelessWidget {
     required this.title,
     required this.content,
     this.titleWidth = 80,
+    this.withUnderLine = false,
   });
 
   @override
@@ -40,8 +42,9 @@ class InfoRow extends StatelessWidget {
           child: Text(
             content,
             textAlign: TextAlign.right,
-            style:
-                DS.textStyle.paragraph3.copyWith(color: DS.color.background600),
+            style: DS.textStyle.paragraph3.copyWith(
+                color: DS.color.background600,
+                decoration: withUnderLine ? TextDecoration.underline : null),
           ),
         ))
       ],

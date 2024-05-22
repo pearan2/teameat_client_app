@@ -11,7 +11,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/store/item/purchase_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/99_util/extension.dart';
+import 'package:teameat/99_util/extension/int.dart';
 
 class PurchasePage extends GetView<PurchasePageController> {
   const PurchasePage({super.key});

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
@@ -21,18 +22,36 @@ class UserPageController extends PageController {
   // ignore: invalid_use_of_protected_member
   List<ItemSimple> get recentSeeItems => _recentSeeItems.value;
 
-  void onLogOut() {
+  Future<void> onLogOut() async {
     if (!_authService.isLogined()) {
       return showError(DS.text.notLogined);
     }
+    final isConfirmed = await showTEConfirmDialog(
+      content: DS.text.logOutConfirm,
+      leftButtonText: DS.text.back,
+      rightButtonText: DS.text.goLogOut,
+    );
+    if (!isConfirmed) {
+      return;
+    }
     _authService.logOut();
     _user.value = User.visitor();
+    showSuccess(DS.text.successLogOut);
   }
 
   Future<void> onSignOut() async {
     if (!_authService.isLogined()) {
       return showError(DS.text.notLogined);
     }
+    final isConfirmed = await showTEConfirmDialog(
+      content: DS.text.signOutConfirm,
+      leftButtonText: DS.text.back,
+      rightButtonText: DS.text.goSignOut,
+    );
+    if (!isConfirmed) {
+      return;
+    }
+
     final ret = await _userRepo.deleteMe();
     return ret.fold((l) => showError(l.desc), (r) {
       if (r) {

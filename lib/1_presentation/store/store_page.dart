@@ -4,6 +4,7 @@ import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -11,6 +12,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/store_page_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class StorePage extends GetView<StorePageController> {
   const StorePage({super.key});
@@ -76,7 +78,12 @@ class StorePage extends GetView<StorePageController> {
                         ),
                       ),
                     ),
-                    TEStoreMap(center: StorePoint.fromDetail(controller.store)),
+                    const TEDivider(),
+                    TEStoreMap.single(
+                      store: StorePoint.fromDetail(controller.store),
+                      height: MediaQuery.of(context).size.height / 3,
+                      isLoading: controller.react.isEventLoading,
+                    ),
                     const TEDivider(),
                     Padding(
                       padding: EdgeInsets.all(DS.space.xBase),
@@ -92,10 +99,16 @@ class StorePage extends GetView<StorePageController> {
                     Padding(
                       padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
-                        child: InfoRow(
-                          icon: DS.image.storePhone,
-                          title: '${DS.text.reservation} / ${DS.text.question}',
-                          content: controller.store.phone,
+                        child: TEonTap(
+                          onTap: () =>
+                              launchUrlString('tel:${controller.store.phone}'),
+                          child: InfoRow(
+                            withUnderLine: true,
+                            icon: DS.image.storePhone,
+                            title:
+                                '${DS.text.reservation} / ${DS.text.question}',
+                            content: controller.store.phone,
+                          ),
                         ),
                       ),
                     ),

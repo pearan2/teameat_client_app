@@ -109,4 +109,11 @@ class DefaultImageSystem extends IImageSystem {
         width: 24,
         height: 24,
       );
+
+  @override
+  Image get markerBackground => Image.asset(
+        'assets/image/map_marker.png',
+        height: 41,
+        width: 32,
+      );
 }

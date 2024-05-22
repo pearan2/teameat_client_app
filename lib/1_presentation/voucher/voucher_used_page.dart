@@ -6,7 +6,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/voucher/voucher_used_page_controller.dart';
-import 'package:teameat/99_util/extension.dart';
+import 'package:teameat/99_util/extension/int.dart';
 
 class VoucherUsedPage extends GetView<VoucherUsedPageController> {
   const VoucherUsedPage({super.key});

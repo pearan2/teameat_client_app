@@ -47,7 +47,7 @@ class TENetworkImage extends StatelessWidget {
                 },
                 errorBuilder: (context, error, stackTrace) {
                   return Center(
-                    child: Text(DS.text.errorOccurred),
+                    child: DS.image.mainIconWithText,
                   );
                 },
               );
@@ -68,15 +68,17 @@ class TEImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: imageUrls
-          .map((e) => TENetworkImage(key: ObjectKey(e), url: e, width: width))
-          .toList(),
-      options: CarouselOptions(
-        autoPlay: false,
-        enlargeCenterPage: true,
-        viewportFraction: 1.0,
-        aspectRatio: 1.0,
+    return PageLoadingWrapper(
+      child: CarouselSlider(
+        items: imageUrls
+            .map((e) => TENetworkImage(key: ObjectKey(e), url: e, width: width))
+            .toList(),
+        options: CarouselOptions(
+          autoPlay: false,
+          enlargeCenterPage: true,
+          viewportFraction: 1.0,
+          aspectRatio: 1.0,
+        ),
       ),
     );
   }

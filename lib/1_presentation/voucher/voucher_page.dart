@@ -10,7 +10,8 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
-import 'package:teameat/99_util/extension.dart';
+import 'package:teameat/99_util/extension/date_time.dart';
+import 'package:teameat/99_util/extension/int.dart';
 
 class VoucherPage extends GetView<VoucherPageController> {
   const VoucherPage({super.key});
@@ -138,6 +139,7 @@ class VoucherCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         VoucherImage(
+          borderRadius: DS.space.tiny,
           imageUrls: [voucher.imageUrl],
           willBeExpiredAt: voucher.willBeExpiredAt,
           quantity: voucher.quantity,

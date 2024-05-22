@@ -100,4 +100,10 @@ abstract class ITextSystem {
   String get weight;
   String get weightGramFormat;
   String get voucherUsedCountFormat;
+  String get logOutConfirm;
+  String get back;
+  String get goLogOut;
+  String get signOutConfirm;
+  String get goSignOut;
+  String get successLogOut;
 }

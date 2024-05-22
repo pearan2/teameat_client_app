@@ -18,4 +18,5 @@ abstract class IImageSystem {
   Image get storePhone;
   Image get customerService;
   Image get storeItemExpired;
+  Image get markerBackground;
 }

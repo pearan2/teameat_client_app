@@ -1,94 +1,129 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:teameat/1_presentation/core/component/image.dart';
+import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
+extension _TEPointExtension on Point {
+  NLatLng toNLatLng() {
+    return NLatLng(latitude, longitude);
+  }
+}
+
 class TEStoreMap extends StatefulWidget {
   final double? height;
-  final StorePoint center;
+  final bool isLoading;
+  final Point defaultCameraCenter;
+  final List<StorePoint> stores;
   final double defaultZoomLevel;
 
-  const TEStoreMap({
-    super.key,
-    this.height,
-    required this.center,
-    this.defaultZoomLevel = 15.0,
-  });
+  const TEStoreMap._(
+      {super.key,
+      this.height,
+      required this.defaultCameraCenter,
+      required this.stores,
+      required this.defaultZoomLevel,
+      required this.isLoading});
+
+  factory TEStoreMap.single(
+      {double? height,
+      required StorePoint store,
+      required bool isLoading,
+      double defaultZoomLevel = 15}) {
+    return TEStoreMap._(
+      isLoading: isLoading,
+      height: height,
+      defaultCameraCenter: store.location,
+      stores: [store],
+      defaultZoomLevel: defaultZoomLevel,
+      key: ValueKey(store.id),
+    );
+  }
 
   @override
   State<TEStoreMap> createState() => _TEStoreMapState();
 }
 
 class _TEStoreMapState extends State<TEStoreMap> {
+  late final NaverMapController controller;
+  bool isInit = false;
+
+  late bool isLoading = widget.isLoading;
+
   @override
   void didUpdateWidget(covariant TEStoreMap oldWidget) {
-    if (oldWidget.center != widget.center) {
-      _init();
+    if (oldWidget.isLoading != widget.isLoading) {
+      setState(() => isLoading = widget.isLoading);
     }
     super.didUpdateWidget(oldWidget);
   }
 
-  late final NaverMapController? controller;
-
-  void _init() {
-    controller?.clearOverlays();
-    _tryMoveCameraPosition(widget.center);
-    _tryAddMarker(widget.center);
+  Future<void> _init(NaverMapController nController) async {
+    isInit = true;
+    controller = nController;
+    final iconWidget = await _makeMakerIconWidget(widget.stores.first);
+    final marker = await _makeMarker(iconWidget, widget.stores.first);
+    _addAllMarkers({marker});
   }
 
-  void _tryMoveCameraPosition(StorePoint storePoint) {
-    controller?.updateCamera(NCameraUpdate.fromCameraPosition(_centerCamera()));
-  }
-
-  Widget _icon(StorePoint storePoint, Size size) {
-    return Column(
+  Future<Widget> _makeMakerIconWidget(StorePoint store) async {
+    await precacheImage(NetworkImage(store.profileImageUrl), context);
+    await precacheImage(
+        const AssetImage('assets/image/map_marker.png'), context);
+    return Stack(
       children: [
-        TENetworkImage(
-          url: storePoint.profileImageUrl,
-          width: size.width,
-          height: size.height / 2,
-          borderRadius: 300,
+        Image.asset(
+          'assets/image/map_marker.png',
+          width: 32,
+          height: 42,
         ),
-        Container(
-          width: 10,
-          height: size.height / 2,
-          color: Colors.red,
-        )
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.all(4),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(300),
+                child: Image.network(
+                  store.profileImageUrl,
+                  fit: BoxFit.cover,
+                  width: 24,
+                  height: 24,
+                )),
+          ),
+        ),
       ],
     );
   }
 
-  Future<void> _tryAddMarker(StorePoint storePoint) async {
-    final markerIconSize = Size(DS.space.medium, DS.space.medium * 2);
-
-    final point = storePoint.location;
+  Future<NMarker> _makeMarker(Widget child, StorePoint store) async {
     final overlayImage = await NOverlayImage.fromWidget(
-        widget: _icon(storePoint, markerIconSize),
-        size: markerIconSize,
-        context: context);
+      widget: Container(child: child),
+      size: Size(DS.space.medium, DS.space.large),
+      context: context,
+    );
     final marker = NMarker(
-      id: '${point.latitude.toString()}${point.longitude.toString()}',
-      position: _fromPoint(point),
-      icon: overlayImage,
+      id: store.id.toString(),
+      position: store.location.toNLatLng(),
     );
-    controller?.addOverlay(marker);
+    marker.setIcon(overlayImage);
+    return marker;
   }
 
-  NCameraPosition _centerCamera() {
-    return NCameraPosition(
-      target: _fromPoint(widget.center.location),
-      zoom: widget.defaultZoomLevel,
-    );
-  }
-
-  NLatLng _fromPoint(Point point) {
-    return NLatLng(point.latitude, point.longitude);
+  Future<void> _addAllMarkers(Set<NMarker> markers) {
+    return controller.addOverlayAll(markers);
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    if (isInit) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -96,17 +131,23 @@ class _TEStoreMapState extends State<TEStoreMap> {
   Widget build(BuildContext context) {
     final height = widget.height ?? MediaQuery.of(context).size.height / 2;
 
+    if (isLoading) {
+      return TEShimmer.fromSize(width: double.infinity, height: height);
+    }
+
     return SizedBox(
       height: height,
       child: NaverMap(
         forceGesture: true,
         options: NaverMapViewOptions(
-            initialCameraPosition: _centerCamera(),
+            initialCameraPosition: NCameraPosition(
+              target: widget.defaultCameraCenter.toNLatLng(),
+              zoom: widget.defaultZoomLevel,
+            ),
             zoomGesturesEnable: true,
             zoomGesturesFriction: 0.1),
         onMapReady: (nController) {
-          controller = nController;
-          _init();
+          _init(nController);
         },
       ),
     );

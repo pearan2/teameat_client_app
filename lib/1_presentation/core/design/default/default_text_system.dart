@@ -305,4 +305,23 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get voucherUsedCountFormat => '###개 사용완료';
+
+  @override
+  String get back => '돌아가기';
+
+  @override
+  String get goLogOut => '로그아웃 하기';
+
+  @override
+  String get goSignOut => '회원탈퇴 하기';
+
+  @override
+  String get logOutConfirm => '정말 로그아웃 하시겠어요?';
+
+  @override
+  String get signOutConfirm =>
+      '회원탈퇴 시 회원과 관련된 모든 정보가 삭제되어 복구가 불가능해요. 정말로 탈퇴 하시겠어요?';
+
+  @override
+  String get successLogOut => '정상적으로 로그아웃 되었어요! 다음에 꼭! 다시 만나요 :)';
 }

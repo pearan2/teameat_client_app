@@ -8,7 +8,7 @@ import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart'
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/99_util/extension.dart';
+import 'package:teameat/99_util/extension/int.dart';
 
 class ItemPriceDiscountRateText extends StatelessWidget {
   final int originalPrice;

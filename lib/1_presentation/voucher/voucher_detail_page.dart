@@ -15,7 +15,8 @@ import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/voucher/voucher_detail_page_controller.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
-import 'package:teameat/99_util/extension.dart';
+import 'package:teameat/99_util/extension/date_time.dart';
+import 'package:teameat/99_util/extension/int.dart';
 
 class VoucherDetailPage extends GetView<VoucherDetailPageController> {
   const VoucherDetailPage({super.key});

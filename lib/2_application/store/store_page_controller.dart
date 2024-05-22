@@ -23,7 +23,9 @@ class StorePageController extends PageController {
   }
 
   Future<void> _loadStore() async {
-    return resolve(_storeRepo.getStoreDetail(storeId), (s) => _store.value = s);
+    return resolve(_storeRepo.getStoreDetail(storeId), (s) {
+      _store.value = s;
+    });
   }
 
   @override

@@ -224,7 +224,7 @@ class ItemLike extends GetView<ItemLikeController> {
         const ValueKey(true), DS.color.secondary400, DS.color.background000);
   }
 
-  Widget _buildUnLikeWidget() {
+  Widget _buildUnlikeWidget() {
     return _buildFavorite(
         const ValueKey(false), DS.color.background000, DS.color.secondary400);
   }
@@ -241,7 +241,7 @@ class ItemLike extends GetView<ItemLikeController> {
           duration: const Duration(milliseconds: 200),
           child: controller.isLike(itemId)
               ? _buildLikeWidget()
-              : _buildUnLikeWidget(),
+              : _buildUnlikeWidget(),
         ),
       ),
     );
@@ -382,7 +382,7 @@ class StoreItemQuantityPicker extends StatelessWidget {
   }
 }
 
-class StoreItemImageWithLike extends GetView<ItemLikeController> {
+class StoreItemImageWithLike extends StatelessWidget {
   final String imageUrl;
   final double width;
   final int itemId;
@@ -400,14 +400,10 @@ class StoreItemImageWithLike extends GetView<ItemLikeController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TEonTap(
-          onDoubleTap: () => controller.toggleLike(itemId),
-          onTap: () {},
-          child: TENetworkImage(
-            url: imageUrl,
-            width: width,
-            borderRadius: borderRadius,
-          ),
+        TENetworkImage(
+          url: imageUrl,
+          width: width,
+          borderRadius: borderRadius,
         ),
         Positioned(
           bottom: DS.space.tiny,
@@ -419,7 +415,7 @@ class StoreItemImageWithLike extends GetView<ItemLikeController> {
   }
 }
 
-class StoreItemColumnCard extends StatelessWidget {
+class StoreItemColumnCard extends GetView<ItemLikeController> {
   final ItemSimple item;
   final void Function(int itemId) onTap;
   final double borderRadius;
@@ -436,6 +432,7 @@ class StoreItemColumnCard extends StatelessWidget {
 
     return TEonTap(
       onTap: () => onTap(item.id),
+      onDoubleTap: () => controller.toggleLike(item.id),
       child: SizedBox(
         width: imageWidth,
         child: Column(
@@ -481,7 +478,7 @@ class StoreItemColumnCard extends StatelessWidget {
   }
 }
 
-class StoreItemRowCard extends StatelessWidget {
+class StoreItemRowCard extends GetView<ItemLikeController> {
   final ItemSimple item;
   final double borderRadius;
   final void Function(int itemId) onTap;
@@ -498,6 +495,7 @@ class StoreItemRowCard extends StatelessWidget {
 
     return TEonTap(
       onTap: () => onTap(item.id),
+      onDoubleTap: () => controller.toggleLike(item.id),
       child: SizedBox(
         height: imageWidth,
         child: Row(

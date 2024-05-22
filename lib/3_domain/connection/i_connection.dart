@@ -7,7 +7,8 @@ abstract class IConnection<T, F> {
   void setAuthentication(T token);
   void removeAuthentication();
   Future<Either<F, Object>> get(String path, JsonMap? params);
-  Future<Either<F, Object>> put(String path, JsonMap params);
-  Future<Either<F, Object>> post(String path, JsonMap params);
+  Future<Either<F, Object>> put(String path, JsonMap? params);
+  Future<Either<F, Object>> post(String path, JsonMap? params);
+  Future<Either<F, Object>> patch(String path, JsonMap? params);
   Future<Either<F, Object>> delete(String path, JsonMap? params);
 }

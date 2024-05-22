@@ -10,6 +10,6 @@ abstract class IStoreItemRepository {
   Future<Either<Failure, List<ItemSimple>>> findLikeItems(int pageNumber);
 
   void like(int id);
-  void unLike(int id);
+  void unlike(int id);
   List<int> findMyLikes();
 }

@@ -111,6 +111,13 @@ class StoreItemRepository extends IStoreItemRepository {
     }
   }
 
+  Future<void> _like(int itemId, bool isLike) async {
+    try {
+      final path = '/api/store/item/${isLike ? 'like' : 'unlike'}/$itemId';
+      _conn.patch(path, null);
+    } catch (e) {}
+  }
+
   @override
   void like(int id) {
     final likes = findMyLikes();
@@ -119,13 +126,15 @@ class StoreItemRepository extends IStoreItemRepository {
     }
     likes.insert(0, id);
     _saveLikes(likes);
+    _like(id, true);
   }
 
   @override
-  void unLike(int id) {
+  void unlike(int id) {
     final likes = findMyLikes();
     likes.removeWhere((e) => e == id);
     _saveLikes(likes);
+    _like(id, false);
   }
 
   @override

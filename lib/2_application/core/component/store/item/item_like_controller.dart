@@ -14,14 +14,14 @@ class ItemLikeController {
     _itemRepo.like(itemId);
   }
 
-  void _unLike(int itemId) {
+  void _unlike(int itemId) {
     _likedItemIds.remove(itemId);
-    _itemRepo.unLike(itemId);
+    _itemRepo.unlike(itemId);
   }
 
   void toggleLike(int itemId) {
     if (_likedItemIds.contains(itemId)) {
-      _unLike(itemId);
+      _unlike(itemId);
     } else {
       _like(itemId);
     }

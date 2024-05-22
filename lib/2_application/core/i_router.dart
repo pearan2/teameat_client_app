@@ -36,4 +36,6 @@ abstract class IRouter {
 
   void toVoucherUsedOffAll(
       {required VoucherDetail voucher, required int usedQuantity});
+
+  void toItemLike();
 }

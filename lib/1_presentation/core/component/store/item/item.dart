@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/2_application/core/component/store/item/item_like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/int.dart';
@@ -190,47 +192,58 @@ class _ItemSaleRemainDurationTextState
   }
 }
 
-class ItemLike extends StatefulWidget {
-  final ItemSimple item;
-  final bool isLike;
+class ItemLike extends GetView<ItemLikeController> {
+  final int itemId;
 
-  const ItemLike({super.key, required this.item, this.isLike = false});
+  const ItemLike({super.key, required this.itemId});
 
-  @override
-  State<ItemLike> createState() => _ItemLikeState();
-}
-
-class _ItemLikeState extends State<ItemLike> {
-  late bool isLike = widget.isLike;
-
-  Widget _buildLikeWidget() {
-    return Icon(
-      key: const ValueKey(true),
-      Icons.favorite,
-      size: DS.space.base,
-      color: DS.color.secondary400,
+  Widget _buildFavorite(Key key, Color fillColor, Color borderColor) {
+    return Stack(
+      key: key,
+      children: [
+        Icon(
+          Icons.favorite,
+          size: DS.space.base + DS.space.xTiny,
+          color: borderColor,
+        ),
+        Positioned.fill(
+          child: Center(
+            child: Icon(
+              Icons.favorite,
+              size: DS.space.base,
+              color: fillColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
+  Widget _buildLikeWidget() {
+    return _buildFavorite(
+        const ValueKey(true), DS.color.secondary400, DS.color.background000);
+  }
+
   Widget _buildUnLikeWidget() {
-    return Icon(
-      key: const ValueKey(false),
-      Icons.favorite_outline,
-      size: DS.space.base,
-      color: DS.color.background000,
-    );
+    return _buildFavorite(
+        const ValueKey(false), DS.color.background000, DS.color.secondary400);
   }
 
   @override
   Widget build(BuildContext context) {
     return TEonTap(
-      onTap: () => setState(() => isLike = !isLike),
-      child: AnimatedSwitcher(
+      onTap: () => controller.toggleLike(itemId),
+      child: Obx(
+        () => AnimatedSwitcher(
           transitionBuilder: (Widget child, Animation<double> animation) {
             return ScaleTransition(scale: animation, child: child);
           },
           duration: const Duration(milliseconds: 200),
-          child: isLike ? _buildLikeWidget() : _buildUnLikeWidget()),
+          child: controller.isLike(itemId)
+              ? _buildLikeWidget()
+              : _buildUnLikeWidget(),
+        ),
+      ),
     );
   }
 }
@@ -369,6 +382,43 @@ class StoreItemQuantityPicker extends StatelessWidget {
   }
 }
 
+class StoreItemImageWithLike extends GetView<ItemLikeController> {
+  final String imageUrl;
+  final double width;
+  final int itemId;
+  final double borderRadius;
+
+  const StoreItemImageWithLike({
+    super.key,
+    required this.imageUrl,
+    required this.width,
+    required this.itemId,
+    required this.borderRadius,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        TEonTap(
+          onDoubleTap: () => controller.toggleLike(itemId),
+          onTap: () {},
+          child: TENetworkImage(
+            url: imageUrl,
+            width: width,
+            borderRadius: borderRadius,
+          ),
+        ),
+        Positioned(
+          bottom: DS.space.tiny,
+          right: DS.space.tiny,
+          child: ItemLike(itemId: itemId),
+        ),
+      ],
+    );
+  }
+}
+
 class StoreItemColumnCard extends StatelessWidget {
   final ItemSimple item;
   final void Function(int itemId) onTap;
@@ -391,9 +441,10 @@ class StoreItemColumnCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TENetworkImage(
-              url: item.imageUrl,
+            StoreItemImageWithLike(
+              imageUrl: item.imageUrl,
               width: imageWidth,
+              itemId: item.id,
               borderRadius: borderRadius,
             ),
             DS.space.vTiny,
@@ -432,9 +483,14 @@ class StoreItemColumnCard extends StatelessWidget {
 
 class StoreItemRowCard extends StatelessWidget {
   final ItemSimple item;
+  final double borderRadius;
   final void Function(int itemId) onTap;
 
-  const StoreItemRowCard({super.key, required this.item, required this.onTap});
+  const StoreItemRowCard(
+      {super.key,
+      required this.item,
+      required this.onTap,
+      this.borderRadius = 0.0});
 
   @override
   Widget build(BuildContext context) {
@@ -447,10 +503,11 @@ class StoreItemRowCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TENetworkImage(
-              url: item.imageUrl,
+            StoreItemImageWithLike(
+              imageUrl: item.imageUrl,
               width: imageWidth,
-              borderRadius: DS.space.small,
+              itemId: item.id,
+              borderRadius: borderRadius,
             ),
             DS.space.hBase,
             Expanded(

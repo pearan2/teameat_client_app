@@ -102,4 +102,9 @@ class React extends IReact {
     Get.offAllNamed('/voucher/used',
         arguments: {'voucher': voucher, 'usedQuantity': usedQuantity});
   }
+
+  @override
+  void toItemLike() {
+    Get.toNamed('/store/item/like');
+  }
 }

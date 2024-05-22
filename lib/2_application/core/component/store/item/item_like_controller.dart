@@ -1,0 +1,34 @@
+import 'package:get/get.dart';
+import 'package:teameat/3_domain/store/item/i_item_repository.dart';
+
+class ItemLikeController {
+  final _itemRepo = Get.find<IStoreItemRepository>();
+
+  final _likedItemIds = <int>{}.obs;
+
+  // ignore: invalid_use_of_protected_member
+  bool isLike(int itemId) => _likedItemIds.value.contains(itemId);
+
+  void _like(int itemId) {
+    _likedItemIds.add(itemId);
+    _itemRepo.like(itemId);
+  }
+
+  void _unLike(int itemId) {
+    _likedItemIds.remove(itemId);
+    _itemRepo.unLike(itemId);
+  }
+
+  void toggleLike(int itemId) {
+    if (_likedItemIds.contains(itemId)) {
+      _unLike(itemId);
+    } else {
+      _like(itemId);
+    }
+  }
+
+  void init() {
+    // ignore: invalid_use_of_protected_member
+    _likedItemIds.value = _itemRepo.findMyLikes().toSet();
+  }
+}

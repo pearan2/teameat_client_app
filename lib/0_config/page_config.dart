@@ -9,6 +9,8 @@ import 'package:teameat/1_presentation/core/root_page.dart';
 import 'package:teameat/1_presentation/core/root_page_binding.dart';
 import 'package:teameat/1_presentation/home/home_page.dart';
 import 'package:teameat/1_presentation/home/home_page_binding.dart';
+import 'package:teameat/1_presentation/store/item/like_page.dart';
+import 'package:teameat/1_presentation/store/item/like_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page_binding.dart';
 import 'package:teameat/1_presentation/store/store_page.dart';
@@ -73,6 +75,13 @@ List<GetPage> allPages() => [
         name: "/store/item/purchase",
         binding: PurchasePageBinding(),
         page: () => const PurchasePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/store/item/like",
+        binding: LikePageBinding(),
+        page: () => const LikePage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),

@@ -324,4 +324,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get successLogOut => '정상적으로 로그아웃 되었어요! 다음에 꼭! 다시 만나요 :)';
+
+  @override
+  String get like => '좋아요';
+
+  @override
+  String get likeStoreItemsNotFound => '좋아요 한 상품이 없어요';
 }

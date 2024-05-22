@@ -106,4 +106,6 @@ abstract class ITextSystem {
   String get signOutConfirm;
   String get goSignOut;
   String get successLogOut;
+  String get like;
+  String get likeStoreItemsNotFound;
 }

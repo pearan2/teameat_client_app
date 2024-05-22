@@ -29,6 +29,11 @@ class UserPage extends GetView<UserPageController> {
                     PageLoadingWrapper(child: UserCard(user: controller.user))),
                 const UserPageDivider(),
                 TERowButton(
+                  onTap: controller.react.toItemLike,
+                  text: DS.text.like,
+                ),
+                const UserPageDivider(),
+                TERowButton(
                   onTap: controller.react.toCustomerService,
                   text: DS.text.customerQuestion,
                 ),

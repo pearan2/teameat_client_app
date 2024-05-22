@@ -157,6 +157,7 @@ class StorePage extends GetView<StorePageController> {
                     itemBuilder: (_, idx) => StoreItemRowCard(
                       item: controller.store.items[idx],
                       onTap: controller.react.toStoreItemDetail,
+                      borderRadius: DS.space.xBase,
                     ),
                     separatorBuilder: (_, __) => DS.space.vBase,
                     itemCount: controller.store.items.length,

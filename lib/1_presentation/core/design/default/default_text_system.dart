@@ -330,4 +330,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get likeStoreItemsNotFound => '좋아요 한 상품이 없어요';
+
+  @override
+  String get numberWithoutUnitFormat => '###,###,###';
 }

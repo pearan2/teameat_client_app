@@ -30,7 +30,7 @@ class TEonTap extends GetView<LoadingProvider> {
           loginWrapper(() => onTap());
           return;
         }
-        onTap.call();
+        onTap();
       },
       behavior: HitTestBehavior.opaque,
       child: child,

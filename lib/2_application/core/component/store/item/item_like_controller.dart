@@ -19,11 +19,13 @@ class ItemLikeController {
     _itemRepo.unlike(itemId);
   }
 
-  void toggleLike(int itemId) {
+  int toggleLike(int itemId) {
     if (_likedItemIds.contains(itemId)) {
       _unlike(itemId);
+      return -1;
     } else {
       _like(itemId);
+      return 1;
     }
   }
 

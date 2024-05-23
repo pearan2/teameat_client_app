@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
@@ -63,16 +64,55 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                         subInfo: controller.item.store.address,
                       )),
                       DS.space.vSmall,
-                      PageLoadingWrapper(
-                          child: Text(controller.item.name,
-                              style: DS.textStyle.title3)),
-                      DS.space.vTiny,
-                      PageLoadingWrapper(
-                          child: Text(
-                        controller.item.introduce,
-                        style: DS.textStyle.paragraph3
-                            .copyWith(fontWeight: FontWeight.normal),
-                      )),
+
+                      ////////////////////////////////////////////////
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                PageLoadingWrapper(
+                                    child: Text(controller.item.name,
+                                        style: DS.textStyle.title3)),
+                                DS.space.vTiny,
+                                PageLoadingWrapper(
+                                  child: Text(
+                                    controller.item.introduce,
+                                    style: DS.textStyle.paragraph3.copyWith(
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          DS.space.hBase,
+                          PageLoadingWrapper(
+                            child: TEonTap(
+                              onTap: controller.onLikeClickHandler,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ItemLike(itemId: controller.itemId),
+                                  DS.space.vXXTiny,
+                                  controller.item.numberOfLikes > 9999
+                                      ? Text(
+                                          '9999+',
+                                          style: DS.textStyle.caption2,
+                                        )
+                                      : Text(
+                                          controller.item.numberOfLikes.format(
+                                              DS.text.numberWithoutUnitFormat),
+                                          style: DS.textStyle.caption2,
+                                        )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      ////////////////////////////////////////////////
                       DS.space.vTiny,
                       PageLoadingWrapper(
                         child: StoreItemSellTypeText(

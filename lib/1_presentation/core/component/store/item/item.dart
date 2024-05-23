@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -231,18 +230,15 @@ class ItemLike extends GetView<ItemLikeController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEonTap(
-      onTap: () => controller.toggleLike(itemId),
-      child: Obx(
-        () => AnimatedSwitcher(
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return ScaleTransition(scale: animation, child: child);
-          },
-          duration: const Duration(milliseconds: 200),
-          child: controller.isLike(itemId)
-              ? _buildLikeWidget()
-              : _buildUnlikeWidget(),
-        ),
+    return Obx(
+      () => AnimatedSwitcher(
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        duration: const Duration(milliseconds: 200),
+        child: controller.isLike(itemId)
+            ? _buildLikeWidget()
+            : _buildUnlikeWidget(),
       ),
     );
   }
@@ -382,7 +378,7 @@ class StoreItemQuantityPicker extends StatelessWidget {
   }
 }
 
-class StoreItemImageWithLike extends StatelessWidget {
+class StoreItemImageWithLike extends GetView<ItemLikeController> {
   final String imageUrl;
   final double width;
   final int itemId;
@@ -406,16 +402,22 @@ class StoreItemImageWithLike extends StatelessWidget {
           borderRadius: borderRadius,
         ),
         Positioned(
-          bottom: DS.space.tiny,
-          right: DS.space.tiny,
-          child: ItemLike(itemId: itemId),
+          bottom: 0,
+          right: 0,
+          child: TEonTap(
+            onTap: () => controller.toggleLike(itemId),
+            child: Padding(
+              padding: EdgeInsets.all(DS.space.tiny),
+              child: ItemLike(itemId: itemId),
+            ),
+          ),
         ),
       ],
     );
   }
 }
 
-class StoreItemColumnCard extends GetView<ItemLikeController> {
+class StoreItemColumnCard extends StatelessWidget {
   final ItemSimple item;
   final void Function(int itemId) onTap;
   final double borderRadius;
@@ -432,7 +434,6 @@ class StoreItemColumnCard extends GetView<ItemLikeController> {
 
     return TEonTap(
       onTap: () => onTap(item.id),
-      onDoubleTap: () => controller.toggleLike(item.id),
       child: SizedBox(
         width: imageWidth,
         child: Column(
@@ -478,7 +479,7 @@ class StoreItemColumnCard extends GetView<ItemLikeController> {
   }
 }
 
-class StoreItemRowCard extends GetView<ItemLikeController> {
+class StoreItemRowCard extends StatelessWidget {
   final ItemSimple item;
   final double borderRadius;
   final void Function(int itemId) onTap;
@@ -495,7 +496,6 @@ class StoreItemRowCard extends GetView<ItemLikeController> {
 
     return TEonTap(
       onTap: () => onTap(item.id),
-      onDoubleTap: () => controller.toggleLike(item.id),
       child: SizedBox(
         height: imageWidth,
         child: Row(

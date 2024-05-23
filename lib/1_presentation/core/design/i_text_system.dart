@@ -108,4 +108,5 @@ abstract class ITextSystem {
   String get successLogOut;
   String get like;
   String get likeStoreItemsNotFound;
+  String get numberWithoutUnitFormat;
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/not_found.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -9,8 +9,8 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/like_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 
-class LikePage extends GetView<LikePageController> {
-  const LikePage({super.key});
+class StoreItemLikePage extends GetView<StoreItemLikePageController> {
+  const StoreItemLikePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,13 @@ class LikePage extends GetView<LikePageController> {
                 PagedSliverGrid(
                   pagingController: controller.pagingController,
                   builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
-                      noItemsFoundIndicatorBuilder: (_) =>
-                          const Center(child: LikeItemsNotFound()),
+                      noItemsFoundIndicatorBuilder: (_) => Center(
+                            child: SimpleNotFound(
+                              title: DS.text.likeStoreItemsNotFound,
+                              buttonText: DS.text.goToSeeStoreItems,
+                              onTap: controller.react.toHomeOffAll,
+                            ),
+                          ),
                       itemBuilder: (_, item, idx) => StoreItemColumnCard(
                           borderRadius: DS.space.xBase,
                           item: item,
@@ -49,34 +54,5 @@ class LikePage extends GetView<LikePageController> {
             ),
           ),
         ));
-  }
-}
-
-class LikeItemsNotFound extends GetView<LikePageController> {
-  const LikeItemsNotFound({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(DS.space.xBase),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            DS.text.likeStoreItemsNotFound,
-            style: DS.textStyle.paragraph2.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          DS.space.vTiny,
-          TEPrimaryButton(
-            onTap: controller.react.toHomeOffAll,
-            text: DS.text.goToSeeStoreItems,
-            contentHorizontalPadding: DS.space.small,
-            fitContentWidth: true,
-          ),
-        ],
-      ),
-    );
   }
 }

@@ -38,4 +38,6 @@ abstract class IRouter {
       {required VoucherDetail voucher, required int usedQuantity});
 
   void toItemLike();
+
+  void toStoreLike();
 }

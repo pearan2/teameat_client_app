@@ -80,6 +80,13 @@ class VoucherPageController extends PageController {
   }
 
   @override
+  void dispose() {
+    pagingController.removePageRequestListener(_loadVouchers);
+    pagingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Future<bool> initialLoad() async {
     pagingController.addPageRequestListener(_loadVouchers);
     await Future.wait([_loadCodes(), _loadNumberOfRemainVouchers()]);

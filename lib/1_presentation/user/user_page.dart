@@ -32,7 +32,13 @@ class UserPage extends GetView<UserPageController> {
                   onTap: controller.react.toItemLike,
                   text: DS.text.like,
                 ),
+                TERowButton(
+                  isLoginRequired: true,
+                  onTap: controller.react.toStoreLike,
+                  text: DS.text.followStore,
+                ),
                 const UserPageDivider(),
+
                 TERowButton(
                   onTap: controller.react.toCustomerService,
                   text: DS.text.customerQuestion,
@@ -120,9 +126,7 @@ class UserCard extends StatelessWidget {
           ),
           TEonTap(
             child: const Icon(Icons.copy),
-            onTap: () async {
-              FlutterClipboard.copy(user.id);
-            },
+            onTap: () => FlutterClipboard.copy(user.id),
           ),
         ],
       ),

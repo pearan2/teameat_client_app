@@ -21,7 +21,7 @@ class AuthService extends IAuthService {
   }
 
   @override
-  void login(String accessToken) {
+  Future<void> login(String accessToken) async {
     return _conn.setAuthentication(accessToken);
   }
 

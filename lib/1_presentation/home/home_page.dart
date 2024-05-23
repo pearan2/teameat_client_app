@@ -95,7 +95,7 @@ class StoreCard extends StatelessWidget {
                 subInfo: store.address,
               ),
             ),
-            DS.space.hLarge,
+            DS.space.hSmall
           ],
         ),
         DS.space.vTiny,

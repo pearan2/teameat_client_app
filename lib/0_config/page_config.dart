@@ -13,6 +13,8 @@ import 'package:teameat/1_presentation/store/item/like_page.dart';
 import 'package:teameat/1_presentation/store/item/like_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page.dart';
 import 'package:teameat/1_presentation/store/item/purchase_page_binding.dart';
+import 'package:teameat/1_presentation/store/like_page.dart';
+import 'package:teameat/1_presentation/store/like_page_binding.dart';
 import 'package:teameat/1_presentation/store/store_page.dart';
 import 'package:teameat/1_presentation/store/store_page_binding.dart';
 import 'package:teameat/1_presentation/user/customer_service_page.dart';
@@ -79,9 +81,16 @@ List<GetPage> allPages() => [
         transition: Transition.rightToLeft,
       ),
       GetPage(
+        name: "/store/like",
+        binding: StoreLikePageBinding(),
+        page: () => const StoreLikePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
         name: "/store/item/like",
-        binding: LikePageBinding(),
-        page: () => const LikePage(),
+        binding: StoreItemLikePageBinding(),
+        page: () => const StoreItemLikePage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),

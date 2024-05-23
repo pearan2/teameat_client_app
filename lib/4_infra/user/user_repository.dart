@@ -5,7 +5,7 @@ import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/3_domain/user/user.dart';
 
-class UserRepository extends IUserRepository {
+class UserRepository implements IUserRepository {
   final _conn = Get.find<IConnection>();
 
   @override
@@ -30,5 +30,27 @@ class UserRepository extends IUserRepository {
     } catch (e) {
       return left(const Failure.deleteMeFail('회원탈퇴에 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
+  }
+
+  Future<Either<Failure, List<int>>> _getMyLikes(String path) async {
+    try {
+      const path = 'api/member/me';
+      final ret = await _conn.delete(path, null);
+      return ret.fold((l) => left(l),
+          (r) => right((r as Iterable).map((e) => e as int).toList()));
+    } catch (e) {
+      return left(const Failure.fetchLikeFail(
+          '정상적으로 좋아요 정보를 가져오지 못했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<int>>> getMyStoreItemLikes() {
+    return _getMyLikes('api/member/like/store-item');
+  }
+
+  @override
+  Future<Either<Failure, List<int>>> getMyStoreLikes() {
+    return _getMyLikes('api/member/like/store');
   }
 }

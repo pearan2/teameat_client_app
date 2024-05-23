@@ -5,14 +5,14 @@ import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/4_infra/core/likable_repository.dart';
 
-class StoreItemRepository extends IStoreItemRepository {
+class StoreItemRepository extends IStoreItemRepository<ItemSimple>
+    with LikableRepositoryMixin<ItemSimple> {
   final _conn = Get.find<IConnection>();
   final _pref = Get.find<SharedPreferences>();
   final _recentItemKey = 'recentItemLocalDataKey';
   final _recentItemMaxCount = 10;
-  final _likeItemKey = 'likeItemLocalDataKey';
-  final _numberOfLikeItemsPerPage = 10;
 
   @override
   Future<Either<Failure, ItemDetail>> findById(int id) async {
@@ -96,82 +96,28 @@ class StoreItemRepository extends IStoreItemRepository {
     }
   }
 
-  Future<bool> _saveLikes(List<int> likes) async {
-    return _pref.setStringList(
-        _likeItemKey, likes.map((e) => e.toString()).toList());
-  }
+  @override
+  Future<Either<dynamic, Object>> Function(List<int> ids) get dataLoader =>
+      (ids) => _conn.get(
+          '/api/store/item/list', {'itemIds': ids.map((e) => e.toString())});
 
   @override
-  List<int> findMyLikes() {
-    final likes = _pref.getStringList(_likeItemKey);
-    if (likes == null) {
-      return <int>[];
-    } else {
-      return likes.map((e) => int.parse(e)).toList();
-    }
-  }
-
-  Future<void> _like(int itemId, bool isLike) async {
-    try {
-      final path = '/api/store/item/${isLike ? 'like' : 'unlike'}/$itemId';
-      _conn.patch(path, null);
-    } catch (e) {}
-  }
+  String get key => 'itemLikeLocalDateKey';
 
   @override
-  void like(int id) {
-    final likes = findMyLikes();
-    if (likes.contains(id)) {
-      return;
-    }
-    likes.insert(0, id);
-    _saveLikes(likes);
-    _like(id, true);
-  }
+  String get likeLoadPath => '/api/member/like/store-item';
 
   @override
-  void unlike(int id) {
-    final likes = findMyLikes();
-    likes.removeWhere((e) => e == id);
-    _saveLikes(likes);
-    _like(id, false);
-  }
+  String Function(int id) get likeCallbackPathBuilder =>
+      (id) => '/api/store/item/like/$id';
 
   @override
-  Future<Either<Failure, List<ItemSimple>>> findLikeItems(
-      int pageNumber) async {
-    try {
-      final likes = findMyLikes();
-      int start = pageNumber * _numberOfLikeItemsPerPage;
-      int end = (pageNumber + 1) * _numberOfLikeItemsPerPage;
-      if (start > likes.length) {
-        return right(<ItemSimple>[]);
-      }
-      if (end > likes.length) {
-        end = likes.length;
-      }
+  String Function(int id) get unlikeCallbackPathBuilder =>
+      (id) => '/api/store/item/unlike/$id';
 
-      const path = '/api/store/item/list';
-      final ids = likes.sublist(start, end);
-      final ret =
-          await _conn.get(path, {'itemIds': ids.map((e) => e.toString())});
+  @override
+  ItemSimple Function(JsonMap json) get dataResolver => ItemSimple.fromJson;
 
-      return ret.fold((l) => left(l), (r) {
-        final items =
-            (r as Iterable).map((json) => ItemSimple.fromJson(json)).toList();
-        final sortedItems = <ItemSimple>[];
-        for (final id in ids) {
-          for (final item in items) {
-            if (item.id == id) {
-              sortedItems.add(item);
-            }
-          }
-        }
-        return right(sortedItems);
-      });
-    } catch (e) {
-      return left(const Failure.fetchStoreItemFail(
-          '상품 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
-    }
-  }
+  @override
+  int get numberOfLikeDatasPerPage => 10;
 }

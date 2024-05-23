@@ -5,7 +5,7 @@ import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/order/i_order_repository.dart';
 import 'package:teameat/3_domain/order/order.dart' as dto;
 
-class OrderRepository extends IOrderRepository {
+class OrderRepository implements IOrderRepository {
   final _conn = Get.find<IConnection>();
 
   @override

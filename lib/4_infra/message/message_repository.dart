@@ -4,7 +4,7 @@ import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/message/i_message_repository.dart';
 
-class MessageRepository extends IMessageRepository {
+class MessageRepository implements IMessageRepository {
   final _conn = Get.find<IConnection>();
 
   @override

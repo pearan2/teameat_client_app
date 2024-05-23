@@ -109,4 +109,7 @@ abstract class ITextSystem {
   String get like;
   String get likeStoreItemsNotFound;
   String get numberWithoutUnitFormat;
+  String get followStore;
+  String get followStoreNotFound;
+  String get goToSeeStore;
 }

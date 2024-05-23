@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
@@ -71,10 +72,14 @@ class StorePage extends GetView<StorePageController> {
                     Padding(
                       padding: EdgeInsets.all(DS.space.xBase),
                       child: PageLoadingWrapper(
-                        child: InfoRow(
-                          icon: DS.image.storeLocation,
-                          title: DS.text.address,
-                          content: controller.store.address,
+                        child: TEonTap(
+                          onTap: () =>
+                              FlutterClipboard.copy(controller.store.address),
+                          child: InfoRow(
+                            icon: DS.image.storeLocation,
+                            title: DS.text.address,
+                            content: controller.store.address,
+                          ),
                         ),
                       ),
                     ),

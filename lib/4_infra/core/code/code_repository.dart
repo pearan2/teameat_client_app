@@ -5,7 +5,7 @@ import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 
-class CodeRepository extends ICodeRepository {
+class CodeRepository implements ICodeRepository {
   final _conn = Get.find<IConnection>();
 
   final _cache = <CodeKey, List<Code>>{};

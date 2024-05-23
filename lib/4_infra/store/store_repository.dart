@@ -4,8 +4,10 @@ import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/4_infra/core/likable_repository.dart';
 
-class StoreRepository extends IStoreRepository {
+class StoreRepository extends IStoreRepository<StoreSimple>
+    with LikableRepositoryMixin<StoreSimple> {
   final _conn = Get.find<IConnection>();
 
   @override
@@ -38,4 +40,29 @@ class StoreRepository extends IStoreRepository {
           "상점 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));
     }
   }
+
+  @override
+  Future<Either<dynamic, Object>> Function(List<int> ids) get dataLoader =>
+      (ids) => _conn
+          .get('/api/store/list/by-ids', {'ids': ids.map((e) => e.toString())});
+
+  @override
+  String get key => 'storeLikeLocalDateKey';
+
+  @override
+  String get likeLoadPath => '/api/member/like/store';
+
+  @override
+  String Function(int id) get likeCallbackPathBuilder =>
+      (id) => '/api/store/like/$id';
+
+  @override
+  String Function(int id) get unlikeCallbackPathBuilder =>
+      (id) => '/api/store/unlike/$id';
+
+  @override
+  StoreSimple Function(JsonMap json) get dataResolver => StoreSimple.fromJson;
+
+  @override
+  int get numberOfLikeDatasPerPage => 20;
 }

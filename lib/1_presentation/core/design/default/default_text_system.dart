@@ -333,4 +333,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get numberWithoutUnitFormat => '###,###,###';
+
+  @override
+  String get followStore => '팔로우 매장';
+
+  @override
+  String get followStoreNotFound => '팔로우한 매장이 없어요';
+
+  @override
+  String get goToSeeStore => '매장 구경하러 가기';
 }

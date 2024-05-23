@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/react.dart';
-import 'package:teameat/2_application/core/component/store/item/item_like_controller.dart';
+import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
@@ -49,5 +49,8 @@ Future<void> configDependency() async {
   // global controller
   Get.put<IReact>(React());
   Get.put<LoadingProvider>(LoadingProvider());
-  Get.put<ItemLikeController>(ItemLikeController()..init());
+  Get.put<LikeController<IStoreItemRepository>>(
+      LikeController<IStoreItemRepository>()..load());
+  Get.put<LikeController<IStoreRepository>>(
+      LikeController<IStoreRepository>()..load());
 }

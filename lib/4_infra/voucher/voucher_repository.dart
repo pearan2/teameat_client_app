@@ -5,7 +5,7 @@ import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
-class VoucherRepository extends IVoucherRepository {
+class VoucherRepository implements IVoucherRepository {
   final _conn = Get.find<IConnection>();
 
   @override

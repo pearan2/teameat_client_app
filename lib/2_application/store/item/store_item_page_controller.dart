@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
-import 'package:teameat/2_application/core/component/store/item/item_like_controller.dart';
+import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -9,7 +9,7 @@ import 'package:teameat/99_util/extension/int.dart';
 
 class StoreItemPageController extends PageController {
   final _storeItemRepo = Get.find<IStoreItemRepository>();
-  final _itemLikeController = Get.find<ItemLikeController>();
+  final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
 
   final _item = ItemDetail.empty().obs;
   final _buyQuantity = 1.obs;

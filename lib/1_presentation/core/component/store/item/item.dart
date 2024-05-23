@@ -6,8 +6,9 @@ import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
-import 'package:teameat/2_application/core/component/store/item/item_like_controller.dart';
+import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
+import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/int.dart';
 
@@ -191,7 +192,7 @@ class _ItemSaleRemainDurationTextState
   }
 }
 
-class ItemLike extends GetView<ItemLikeController> {
+class ItemLike extends GetView<LikeController<IStoreItemRepository>> {
   final int itemId;
 
   const ItemLike({super.key, required this.itemId});
@@ -378,7 +379,8 @@ class StoreItemQuantityPicker extends StatelessWidget {
   }
 }
 
-class StoreItemImageWithLike extends GetView<ItemLikeController> {
+class StoreItemImageWithLike
+    extends GetView<LikeController<IStoreItemRepository>> {
   final String imageUrl;
   final double width;
   final int itemId;

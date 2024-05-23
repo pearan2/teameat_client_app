@@ -3,7 +3,7 @@ import 'package:teameat/3_domain/core/failure.dart';
 
 abstract class IAuthService {
   Future<Either<Failure, String>> getLoginUrl(String socialLoginType);
-  void login(String accessToken);
+  Future<void> login(String accessToken);
   void logOut();
   bool isLogined();
 }

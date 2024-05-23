@@ -107,4 +107,9 @@ class React extends IReact {
   void toItemLike() {
     Get.toNamed('/store/item/like');
   }
+
+  @override
+  void toStoreLike() {
+    Get.toNamed('/store/like');
+  }
 }

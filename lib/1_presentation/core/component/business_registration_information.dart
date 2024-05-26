@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/2_application/core/clipboard.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class BusinessRegistrationInformation extends StatelessWidget {
   const BusinessRegistrationInformation({super.key});
@@ -53,14 +56,21 @@ class BusinessRegistrationInformation extends StatelessWidget {
           content: 'sadol7797@teameat.kr',
         ),
         const TEDivider(),
-        PaddingInfoRow(
-          title: DS.text.businessAddress,
-          content: '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
+        TEonTap(
+          onTap: () => TEClipboard.setText('대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)'),
+          child: PaddingInfoRow(
+            title: DS.text.businessAddress,
+            content: '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
+          ),
         ),
         const TEDivider(),
-        PaddingInfoRow(
-          title: DS.text.businessPhone,
-          content: '010-2995-2797',
+        TEonTap(
+          onTap: () => launchUrlString('tel:010-2995-2797'),
+          child: PaddingInfoRow(
+            withUnderLine: true,
+            title: DS.text.businessPhone,
+            content: '010-2995-2797',
+          ),
         ),
       ],
     );
@@ -70,11 +80,13 @@ class BusinessRegistrationInformation extends StatelessWidget {
 class PaddingInfoRow extends StatelessWidget {
   final String title;
   final String content;
+  final bool withUnderLine;
 
   const PaddingInfoRow({
     super.key,
     required this.title,
     required this.content,
+    this.withUnderLine = false,
   });
 
   @override
@@ -88,6 +100,7 @@ class PaddingInfoRow extends StatelessWidget {
         title: title,
         content: content,
         titleWidth: null,
+        withUnderLine: withUnderLine,
       ),
     );
   }

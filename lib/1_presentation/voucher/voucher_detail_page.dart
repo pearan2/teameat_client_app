@@ -31,6 +31,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
               controller.react.back(result: controller.isUpdated),
           homeOnPressed: controller.react.toHomeOffAll,
         ),
+        bottomSheetBackgroundColor: DS.color.primary500,
         bottomSheet: Obx(
           () => TEPrimaryButton(
             onTap: isUsable(controller.voucher.willBeExpiredAt,

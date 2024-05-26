@@ -15,20 +15,26 @@ class LoginPageController extends PageController {
     return _loginWith('KAKAO');
   }
 
+  Future<void> loginWithApple() async {
+    return _loginWith('APPLE');
+  }
+
   Future<void> _loginWith(String socialLoginType) async {
     react.isEventLoading = true;
     final ret = await _authService.getLoginUrl(socialLoginType);
     react.isEventLoading = false;
     if (ret.isLeft()) return;
     final loginUrl = ret.getOrElse(() => '');
-    final result = await FlutterWebAuth2.authenticate(
-        url: loginUrl, callbackUrlScheme: 'teameatwebauthcallback');
-    final accessToken = Uri.parse(result).queryParameters['accessToken'];
-    if (accessToken == null) return;
-    _authService.login(accessToken);
-    _itemLikeController.load();
-    _storeLikeController.load();
-    react.back(result: true);
+    try {
+      final result = await FlutterWebAuth2.authenticate(
+          url: loginUrl, callbackUrlScheme: 'teameatwebauthcallback');
+      final accessToken = Uri.parse(result).queryParameters['accessToken'];
+      if (accessToken == null) return;
+      _authService.login(accessToken);
+      _itemLikeController.load();
+      _storeLikeController.load();
+      react.back(result: true);
+    } catch (_) {}
   }
 
   @override

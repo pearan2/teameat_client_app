@@ -66,8 +66,13 @@ class CustomerServicePage extends GetView<CustomerServicePageController> {
                   logoImage: DS.image.kakaoLogo,
                   backgroundColor: const Color(0xFFF7E409),
                   text: DS.text.customerServiceKakaoQuestion,
+                  textColor: DS.color.background800,
                   onTap: controller.onCustomerServiceClickHandler,
                   borderRadius: 0.0,
+                ),
+                Container(
+                  color: const Color(0xFFF7E409),
+                  height: GetPlatform.isIOS ? DS.space.xBase : 0.0,
                 ),
               ],
             )

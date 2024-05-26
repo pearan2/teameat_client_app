@@ -8,6 +8,7 @@ abstract class IImageSystem {
   Image get mainLargeIconNoBg;
   Image get mainMediumIconNoBg;
   Image get kakaoLogo;
+  Image get appleLogo;
   Image get iconHome;
   Image get bottomIconHome;
   Image get bottomIconVoucher;

@@ -1,4 +1,3 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
@@ -9,6 +8,7 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/user.dart';
 
@@ -17,10 +17,12 @@ class UserPage extends GetView<UserPageController> {
 
   @override
   Widget build(BuildContext context) {
+    final topAreaHeight = MediaQuery.of(context).padding.top;
     return TEScaffold(
         onPop: (didPop) => controller.react.toHomeOffAll(),
         withBottomNavigator: true,
-        body: SafeArea(
+        body: Padding(
+          padding: EdgeInsets.only(top: topAreaHeight),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +115,7 @@ class UserCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.email ?? '',
+                user.email.isEmpty ? DS.text.logined : user.email,
                 style: DS.textStyle.paragraph3
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -126,7 +128,7 @@ class UserCard extends StatelessWidget {
           ),
           TEonTap(
             child: const Icon(Icons.copy),
-            onTap: () => FlutterClipboard.copy(user.id),
+            onTap: () => TEClipboard.setText(user.id.toString()),
           ),
         ],
       ),

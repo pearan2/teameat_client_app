@@ -32,7 +32,6 @@ class VoucherPage extends GetView<VoucherPageController> {
           padding: EdgeInsets.only(
             left: DS.space.xBase,
             right: DS.space.xBase,
-            bottom: DS.space.small,
           ),
           child: CustomScrollView(
             slivers: [
@@ -117,7 +116,8 @@ class VoucherPage extends GetView<VoucherPageController> {
                     crossAxisSpacing: DS.space.small,
                     mainAxisSpacing: DS.space.small,
                     crossAxisCount: 2,
-                  ))
+                  )),
+              SliverToBoxAdapter(child: DS.space.vSmall)
             ],
           ),
         ));

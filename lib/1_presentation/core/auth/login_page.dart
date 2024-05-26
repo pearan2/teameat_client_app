@@ -26,11 +26,20 @@ class LoginPage extends GetView<LoginPageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(DS.text.trySnsJoinOrLogin),
-                  DS.space.vSmall,
+                  DS.space.vTiny,
+                  SnsLoginButton(
+                    logoImage: DS.image.appleLogo,
+                    backgroundColor: const Color(0xFF000000),
+                    text: DS.text.loginWithApple,
+                    textColor: DS.color.background000,
+                    onTap: controller.loginWithApple,
+                  ),
+                  DS.space.vTiny,
                   SnsLoginButton(
                     logoImage: DS.image.kakaoLogo,
                     backgroundColor: const Color(0xFFF7E409),
                     text: DS.text.loginWithKakao,
+                    textColor: DS.color.background800,
                     onTap: controller.loginWithKakao,
                   ),
                 ],
@@ -85,6 +94,7 @@ class TeameatIntroduce extends StatelessWidget {
 class SnsLoginButton extends StatelessWidget {
   final Image logoImage;
   final Color backgroundColor;
+  final Color textColor;
   final String text;
   final void Function() onTap;
   final double? borderRadius;
@@ -95,6 +105,7 @@ class SnsLoginButton extends StatelessWidget {
     required this.backgroundColor,
     required this.text,
     required this.onTap,
+    required this.textColor,
     this.borderRadius,
   });
 
@@ -118,9 +129,8 @@ class SnsLoginButton extends StatelessWidget {
             DS.space.hXTiny,
             Text(
               text,
-              style: DS.textStyle.paragraph3.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: DS.textStyle.paragraph3
+                  .copyWith(fontWeight: FontWeight.bold, color: textColor),
             )
           ],
         ),

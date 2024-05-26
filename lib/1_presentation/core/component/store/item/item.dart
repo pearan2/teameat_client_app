@@ -172,7 +172,7 @@ class _ItemSaleRemainDurationTextState
   @override
   Widget build(BuildContext context) {
     final remainHours = diff.inHours;
-    if (remainHours > 100) {
+    if (remainHours > 99) {
       return const SizedBox();
     }
     if (remainHours < 0) {

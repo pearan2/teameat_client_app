@@ -41,6 +41,13 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  Image get appleLogo => Image.asset(
+        'assets/image/sns_logo_apple.png',
+        width: 24,
+        height: 24,
+      );
+
+  @override
   Image get iconHome => Image.asset(
         'assets/image/icon_home.png',
         width: 24,

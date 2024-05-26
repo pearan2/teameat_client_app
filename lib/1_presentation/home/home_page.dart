@@ -19,26 +19,16 @@ class HomePage extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    final scrollController = ScrollController();
+    final topAreaHeight = MediaQuery.of(context).padding.top;
     return TEScaffold(
-      onPop: (didPop) {
-        final isTop = scrollController.position.pixels == 0;
-        if (!isTop) {
-          scrollController.animateTo(0,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.bounceInOut);
-        } else {
-          SystemNavigator.pop();
-        }
-      },
       withBottomNavigator: true,
-      body: SafeArea(
+      body: Padding(
+        padding: EdgeInsets.only(top: topAreaHeight),
         child: RefreshIndicator(
           onRefresh: () async {
             controller.pageRefresh();
           },
           child: CustomScrollView(
-            controller: scrollController,
             slivers: [
               SliverAppBar(
                 backgroundColor: DS.color.background000,
@@ -48,7 +38,7 @@ class HomePage extends GetView<HomePageController> {
                 expandedHeight: HomePageSearcher.homePageSearcherMaxHeight,
                 flexibleSpace: const HomePageSearcher(),
               ),
-              PagedSliverList.separated(
+              PagedSliverList(
                 pagingController: controller.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
                   noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
@@ -56,12 +46,6 @@ class HomePage extends GetView<HomePageController> {
                     padding:
                         EdgeInsets.only(top: idx == 0 ? DS.space.xBase : 0),
                     child: StoreCard(store: store),
-                  ),
-                ),
-                separatorBuilder: (_, idx) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: DS.space.xSmall),
-                  child: Divider(
-                    color: DS.color.background600,
                   ),
                 ),
               ),
@@ -81,7 +65,14 @@ class StoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 구매 할 수 있는 아이템이 하나도 없다면 아예 표기자체를 하지 않는다.
+    /// 물론 표기만 안했지 item list 에는 존재하기 때문에 다음 것을 로딩하려고 시도한다.
+    if (store.items.isEmpty) {
+      return const SizedBox();
+    }
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
@@ -102,6 +93,12 @@ class StoreCard extends StatelessWidget {
         StoreItemList(
           items: store.items,
           borderRadius: DS.space.tiny,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: DS.space.small),
+          child: Divider(
+            color: DS.color.background600,
+          ),
         )
       ],
     );
@@ -109,7 +106,7 @@ class StoreCard extends StatelessWidget {
 }
 
 class HomePageSearcher extends GetView<HomePageController> {
-  static const double homePageSearcherMaxHeight = 124.0;
+  static const double homePageSearcherMaxHeight = 80.0;
 
   const HomePageSearcher({super.key});
 

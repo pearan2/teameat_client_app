@@ -60,6 +60,9 @@ class DefaultTextSystem extends ITextSystem {
   String get loginWithKakao => '카카오로 로그인';
 
   @override
+  String get loginWithApple => '애플로 로그인';
+
+  @override
   String get confirmToLogin => '로그인 하기';
 
   @override
@@ -181,7 +184,7 @@ class DefaultTextSystem extends ITextSystem {
   String get voucherNotFound => '검색된 이용권이 없어요';
 
   @override
-  String get voucherExpiredAtFormat => 'yyyy.MM.dd aa HH:mm 까지';
+  String get voucherExpiredAtFormat => 'yyyy.MM.dd aa h:mm 까지';
 
   @override
   String get allUsed => '사용완료';
@@ -202,7 +205,7 @@ class DefaultTextSystem extends ITextSystem {
   String get voucherUseLog => '사용 기록';
 
   @override
-  String get voucherUsedAtFormat => 'yyyy.MM.dd aa HH:mm';
+  String get voucherUsedAtFormat => 'yyyy.MM.dd aa h:mm';
 
   @override
   String get voucherCountFormat => '###개';
@@ -342,4 +345,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get goToSeeStore => '매장 구경하러 가기';
+
+  @override
+  String get copyToClipboard => '클립보드에 복사 되었어요';
+
+  @override
+  String get logined => '로그인 됨';
 }

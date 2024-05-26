@@ -9,6 +9,7 @@ class TEScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
+  final Color? bottomSheetBackgroundColor;
   final bool withBottomNavigator;
   final bool loading;
   final void Function(bool didPop)? onPop;
@@ -19,6 +20,7 @@ class TEScaffold extends StatelessWidget {
     this.appBar,
     this.bottomSheet,
     this.withBottomNavigator = false,
+    this.bottomSheetBackgroundColor,
     this.loading = false,
     this.onPop,
   });
@@ -33,6 +35,7 @@ class TEScaffold extends StatelessWidget {
               body: body,
               appBar: appBar,
               bottomSheet: bottomSheet,
+              bottomSheetBackgroundColor: bottomSheetBackgroundColor,
             ),
           ),
           _TEBottomNavigator(key: key),
@@ -44,6 +47,7 @@ class TEScaffold extends StatelessWidget {
         body: body,
         appBar: appBar,
         bottomSheet: bottomSheet,
+        bottomSheetBackgroundColor: bottomSheetBackgroundColor,
       );
     }
   }
@@ -78,11 +82,13 @@ class _InnerScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
+  final Color? bottomSheetBackgroundColor;
   const _InnerScaffold({
     super.key,
     required this.body,
     this.appBar,
     this.bottomSheet,
+    this.bottomSheetBackgroundColor,
   });
 
   @override
@@ -92,15 +98,20 @@ class _InnerScaffold extends StatelessWidget {
       backgroundColor: DS.color.background000,
       body: Padding(
         padding: EdgeInsets.only(
-            bottom: GetPlatform.isIOS && bottomSheet != null
+            bottom: (GetPlatform.isIOS &&
+                    bottomSheet !=
+                        null) // ios 면서, bottomSheet 이 없다면 xBase 만큼 띄워줌
                 ? DS.space.xBase
                 : 0.0),
         child: body,
       ),
-      bottomSheet: Padding(
-        padding:
-            EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
-        child: bottomSheet,
+      bottomSheet: Container(
+        color: bottomSheetBackgroundColor,
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
+          child: bottomSheet,
+        ),
       ),
     );
   }

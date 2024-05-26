@@ -18,6 +18,7 @@ abstract class ITextSystem {
   String get teameatIntroduce4;
   String get willYouJoinUs;
   String get loginWithKakao;
+  String get loginWithApple;
   String get needToLoginContent;
   String get confirmToLogin;
   String get refuseToLogin;
@@ -112,4 +113,6 @@ abstract class ITextSystem {
   String get followStore;
   String get followStoreNotFound;
   String get goToSeeStore;
+  String get copyToClipboard;
+  String get logined;
 }

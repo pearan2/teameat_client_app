@@ -32,6 +32,9 @@ Future<void> main() async {
 }
 
 class AppWidget extends StatelessWidget {
+  static const horizontalPadding = 20.0;
+  static const itemHorizontalSpace = 8.0;
+
   const AppWidget({super.key});
 
   @override

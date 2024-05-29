@@ -12,10 +12,9 @@ import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/string.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/main.dart';
 
 class HomePage extends GetView<HomePageController> {
-  static const double horizontalPadding = 48;
-
   const HomePage({super.key});
 
   @override
@@ -32,6 +31,7 @@ class HomePage extends GetView<HomePageController> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
+                key: controller.topKey,
                 backgroundColor: DS.color.background000,
                 surfaceTintColor: DS.color.background000,
                 snap: true,
@@ -73,7 +73,7 @@ class StoreCard extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: HomePage.horizontalPadding),
+              horizontal: AppWidget.horizontalPadding),
           child: StoreSimpleInfoRow(
             storeId: store.id,
             profileImageUrl: store.profileImageUrl,
@@ -82,16 +82,8 @@ class StoreCard extends StatelessWidget {
           ),
         ),
         DS.space.vTiny,
-        StoreItemList(
-          items: store.items,
-          borderRadius: DS.space.tiny,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: DS.space.small),
-          child: Divider(
-            color: DS.color.background600,
-          ),
-        )
+        StoreItemList(items: store.items),
+        DS.space.vXBase
       ],
     );
   }
@@ -108,7 +100,7 @@ class HomePageSearcher extends GetView<HomePageController> {
         color: DS.color.background000,
       ),
       padding:
-          const EdgeInsets.symmetric(horizontal: HomePage.horizontalPadding),
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       height: DS.space.large,
       child: Row(
         children: [

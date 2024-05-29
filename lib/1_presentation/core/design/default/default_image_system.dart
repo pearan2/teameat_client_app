@@ -168,27 +168,27 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get bookmark => SvgPicture.asset(
         'assets/image/icon/bookmark.svg',
-        height: 17,
-        width: 13,
+        height: 20,
+        width: 16,
       );
 
   @override
   SvgPicture get bookmarkClicked => SvgPicture.asset(
         'assets/image/icon/bookmark_marked.svg',
-        height: 17,
-        width: 13,
+        height: 20,
+        width: 16,
       );
 
   @override
   SvgPicture get iconLike => SvgPicture.asset(
-        'assets/image/icon/like_liked.svg',
+        'assets/image/icon/like.svg',
         height: 31,
         width: 31,
       );
 
   @override
   SvgPicture get iconLikeClicked => SvgPicture.asset(
-        'assets/image/icon/like.svg',
+        'assets/image/icon/like_liked.svg',
         height: 31,
         width: 31,
       );

@@ -117,4 +117,5 @@ abstract class ITextSystem {
   String get logined;
   String get home;
   String get profile;
+  String get sellTypeVoucher;
 }

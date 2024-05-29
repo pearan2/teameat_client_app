@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 class TextSearcher extends StatefulWidget {

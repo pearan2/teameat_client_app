@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart' as wd;
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
@@ -10,6 +11,7 @@ import 'package:teameat/3_domain/store/store.dart';
 class HomePageController extends PageController {
   /// 상수
   final numberOfRecommendRequestItems = 1;
+  final topKey = const wd.GlobalObjectKey("top-key");
 
   /// repos
   final _storeRepo = Get.find<IStoreRepository>();

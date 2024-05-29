@@ -119,23 +119,11 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                             sellType: controller.item.sellType),
                       ),
                       DS.space.vTiny,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          PageLoadingWrapper(
-                            child: StoreItemPriceText(
-                                price: controller.item.price, isTitle: true),
-                          ),
-                          DS.space.hXTiny,
-                          PageLoadingWrapper(
-                            child: ItemPriceDiscountRateText(
-                              price: controller.item.price,
+                      PageLoadingWrapper(
+                          child: StoreItemPrice(
                               originalPrice: controller.item.originalPrice,
-                              withPercentage: false,
-                            ),
-                          )
-                        ],
-                      ),
+                              price: controller.item.price,
+                              isTitle: true)),
                       DS.space.vSmall,
                       StoreItemUsageInfo(item: controller.item),
                       DS.space.vLarge
@@ -164,7 +152,7 @@ class StoreItemUsageInfo extends StatelessWidget {
           Text(
             title,
             style: DS.textStyle.paragraph3.copyWith(
-              color: DS.color.background400,
+              color: DS.color.background500,
             ),
           ),
           Text(info, style: DS.textStyle.paragraph3)

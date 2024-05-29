@@ -357,4 +357,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get profile => '프로필';
+
+  @override
+  String get sellTypeVoucher => '이용권';
 }

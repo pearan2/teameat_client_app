@@ -56,7 +56,9 @@ class StorePage extends GetView<StorePageController> {
                   padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
                   decoration: BoxDecoration(
                       border: Border(
-                          bottom: BorderSide(color: DS.color.background400))),
+                          bottom: BorderSide(
+                              color: DS.color.background100,
+                              width: DS.space.xTiny))),
                   child: Obx(
                     () => PageLoadingWrapper(
                       child: StoreSimpleInfoRow(

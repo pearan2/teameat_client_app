@@ -27,9 +27,9 @@ class DefaultColorSystem extends IColorSystem {
   @override
   Color get background700 => const Color(0xFF292929);
   @override
-  Color get background600 => const Color(0xFF929292);
+  Color get background600 => const Color(0xFF4D4D4D);
   @override
-  Color get background500 => const Color(0xFFAFAFAF);
+  Color get background500 => const Color(0xFF767676);
   @override
   Color get background400 => const Color(0xFFB5B5B5);
   @override

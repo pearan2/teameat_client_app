@@ -27,7 +27,7 @@ class VoucherPage extends GetView<VoucherPageController> {
           title: DS.text.inventory,
           height: DS.space.medium,
         ),
-        withBottomNavigator: true,
+        activated: BottomNavigatorType.inventory,
         body: Padding(
           padding: EdgeInsets.only(
             left: DS.space.xBase,

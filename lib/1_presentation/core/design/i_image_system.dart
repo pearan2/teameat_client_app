@@ -10,9 +10,16 @@ abstract class IImageSystem {
   Image get kakaoLogo;
   Image get appleLogo;
   Image get iconHome;
-  Image get bottomIconHome;
-  Image get bottomIconVoucher;
-  Image get bottomIconUser;
+
+  ///
+  SvgPicture get bottomIconHome;
+  SvgPicture get bottomIconHomeClicked;
+  SvgPicture get bottomIconVoucher;
+  SvgPicture get bottomIconVoucherClicked;
+  SvgPicture get bottomIconUser;
+  SvgPicture get bottomIconUserClicked;
+
+  ///
   Image get storeLocation;
   Image get storeOperationInfo;
   Image get storeIntroduce;

@@ -27,22 +27,18 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<!-- IamPort -->
-			<key>CFBundleURLSchemes</key>
-    		<array>
-      	<!-- URL Scheme 값 설정 -->
-      	<string>teameatiospaymentappscheme</string>
-    		</array>
-			
-			
 			<key>CFBundleURLName</key>
 			<string></string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>teameatiospaymentappscheme</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-
-	<!-- IamPort -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kftc-bankpay</string>
@@ -82,11 +78,8 @@
 		<string>newliiv</string>
 		<string>naversearchthirdlogin</string>
 	</array>
-
-
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!-- IamPort -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -94,7 +87,6 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
-
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

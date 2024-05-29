@@ -10,7 +10,7 @@ class TEScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
   final Color? bottomSheetBackgroundColor;
-  final bool withBottomNavigator;
+  final BottomNavigatorType? activated;
   final bool loading;
   final void Function(bool didPop)? onPop;
 
@@ -19,14 +19,14 @@ class TEScaffold extends StatelessWidget {
     required this.body,
     this.appBar,
     this.bottomSheet,
-    this.withBottomNavigator = false,
+    this.activated,
     this.bottomSheetBackgroundColor,
     this.loading = false,
     this.onPop,
   });
 
   Widget _buildChild() {
-    if (withBottomNavigator) {
+    if (activated != null) {
       return Column(
         children: [
           Expanded(
@@ -38,7 +38,10 @@ class TEScaffold extends StatelessWidget {
               bottomSheetBackgroundColor: bottomSheetBackgroundColor,
             ),
           ),
-          _TEBottomNavigator(key: key),
+          _TEBottomNavigator(
+            key: key,
+            activated: activated!,
+          ),
         ],
       );
     } else {
@@ -117,42 +120,128 @@ class _InnerScaffold extends StatelessWidget {
   }
 }
 
+extension BottomNavigatorTypeExtension on BottomNavigatorType {
+  Widget getIconClicked() {
+    switch (this) {
+      case BottomNavigatorType.home:
+        return DS.image.bottomIconHomeClicked;
+      case BottomNavigatorType.inventory:
+        return DS.image.bottomIconVoucherClicked;
+      case BottomNavigatorType.profile:
+        return DS.image.bottomIconUserClicked;
+      default:
+        throw 'invalid value';
+    }
+  }
+
+  Widget getIcon() {
+    switch (this) {
+      case BottomNavigatorType.home:
+        return DS.image.bottomIconHome;
+      case BottomNavigatorType.inventory:
+        return DS.image.bottomIconVoucher;
+      case BottomNavigatorType.profile:
+        return DS.image.bottomIconUser;
+      default:
+        throw 'invalid value';
+    }
+  }
+
+  Text getTextClicked() {
+    return getText(color: DS.color.primary500);
+  }
+
+  Text getText({Color? color}) {
+    switch (this) {
+      case BottomNavigatorType.home:
+        return Text(
+          DS.text.home,
+          style: DS.textStyle.caption2
+              .copyWith(color: color ?? DS.color.background500),
+        );
+      case BottomNavigatorType.inventory:
+        return Text(
+          DS.text.inventory,
+          style: DS.textStyle.caption2
+              .copyWith(color: color ?? DS.color.background500),
+        );
+      case BottomNavigatorType.profile:
+        return Text(
+          DS.text.profile,
+          style: DS.textStyle.caption2
+              .copyWith(color: color ?? DS.color.background500),
+        );
+      default:
+        throw 'invalid value';
+    }
+  }
+}
+
+enum BottomNavigatorType { home, inventory, profile }
+
+class _BottomNavigatorToggle extends StatelessWidget {
+  final bool clicked;
+  final BottomNavigatorType type;
+
+  const _BottomNavigatorToggle({required this.type, required this.clicked});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: DS.space.xBase * 2,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          clicked ? type.getIconClicked() : type.getIcon(),
+          DS.space.vXTiny,
+          clicked ? type.getTextClicked() : type.getText(),
+        ],
+      ),
+    );
+  }
+}
+
 class _TEBottomNavigator extends StatelessWidget {
-  const _TEBottomNavigator({super.key});
+  final BottomNavigatorType activated;
+  const _TEBottomNavigator({super.key, required this.activated});
 
   @override
   Widget build(BuildContext context) {
     final react = Get.find<IReact>();
 
     return Container(
-      height: DS.space.large + (GetPlatform.isIOS ? DS.space.xBase : 0.0),
+      height: DS.space.large +
+          DS.space.tiny +
+          (GetPlatform.isIOS ? DS.space.xBase : 0.0),
       padding:
           EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
       decoration: BoxDecoration(
         color: DS.color.background000,
-        boxShadow: [
-          BoxShadow(
-              color: DS.color.background800.withOpacity(0.15),
-              spreadRadius: DS.space.xxTiny,
-              blurRadius: DS.space.tiny,
-              offset: Offset(0, -DS.space.xTiny))
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TEonTap(
             onTap: react.toHomeOffAll,
-            child: DS.image.bottomIconHome,
+            child: _BottomNavigatorToggle(
+              clicked: activated == BottomNavigatorType.home,
+              type: BottomNavigatorType.home,
+            ),
           ),
           TEonTap(
             onTap: react.toVoucherOffAll,
             isLoginRequired: true,
-            child: DS.image.bottomIconVoucher,
+            child: _BottomNavigatorToggle(
+              clicked: activated == BottomNavigatorType.inventory,
+              type: BottomNavigatorType.inventory,
+            ),
           ),
           TEonTap(
             onTap: react.toUserOffAll,
-            child: DS.image.bottomIconUser,
+            child: _BottomNavigatorToggle(
+              clicked: activated == BottomNavigatorType.profile,
+              type: BottomNavigatorType.profile,
+            ),
           ),
         ],
       ),

@@ -115,4 +115,6 @@ abstract class ITextSystem {
   String get goToSeeStore;
   String get copyToClipboard;
   String get logined;
+  String get home;
+  String get profile;
 }

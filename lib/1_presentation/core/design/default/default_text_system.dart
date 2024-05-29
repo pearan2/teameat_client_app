@@ -351,4 +351,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get logined => '로그인 됨';
+
+  @override
+  String get home => '홈';
+
+  @override
+  String get profile => '프로필';
 }

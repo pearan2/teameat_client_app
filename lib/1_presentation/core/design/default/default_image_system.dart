@@ -54,26 +54,50 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
       );
 
+////// bottom icons //////
+
   @override
-  Image get bottomIconHome => Image.asset(
-        'assets/image/bottom_icon_home.png',
-        width: 32,
-        height: 32,
+  SvgPicture get bottomIconHome => SvgPicture.asset(
+        'assets/image/icon/bottom/home.svg',
+        height: 22,
+        width: 22,
       );
 
   @override
-  Image get bottomIconUser => Image.asset(
-        'assets/image/bottom_icon_user.png',
-        width: 32,
-        height: 32,
+  SvgPicture get bottomIconHomeClicked => SvgPicture.asset(
+        'assets/image/icon/bottom/home_clicked.svg',
+        height: 22,
+        width: 22,
       );
 
   @override
-  Image get bottomIconVoucher => Image.asset(
-        'assets/image/bottom_icon_voucher.png',
-        width: 32,
-        height: 32,
+  SvgPicture get bottomIconUser => SvgPicture.asset(
+        'assets/image/icon/bottom/profile.svg',
+        height: 22,
+        width: 22,
       );
+
+  @override
+  SvgPicture get bottomIconUserClicked => SvgPicture.asset(
+        'assets/image/icon/bottom/profile_clicked.svg',
+        height: 22,
+        width: 22,
+      );
+
+  @override
+  SvgPicture get bottomIconVoucher => SvgPicture.asset(
+        'assets/image/icon/bottom/inventory.svg',
+        height: 22,
+        width: 22,
+      );
+
+  @override
+  SvgPicture get bottomIconVoucherClicked => SvgPicture.asset(
+        'assets/image/icon/bottom/inventory_clicked.svg',
+        height: 22,
+        width: 22,
+      );
+///////////////////////////
 
   @override
   Image get storeIntroduce => Image.asset(

@@ -21,7 +21,7 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
     return TEScaffold(
-      withBottomNavigator: true,
+      activated: BottomNavigatorType.home,
       body: Padding(
         padding: EdgeInsets.only(top: topAreaHeight),
         child: RefreshIndicator(

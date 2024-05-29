@@ -20,7 +20,7 @@ class UserPage extends GetView<UserPageController> {
     final topAreaHeight = MediaQuery.of(context).padding.top;
     return TEScaffold(
         onPop: (didPop) => controller.react.toHomeOffAll(),
-        withBottomNavigator: true,
+        activated: BottomNavigatorType.profile,
         body: Padding(
           padding: EdgeInsets.only(top: topAreaHeight),
           child: SingleChildScrollView(

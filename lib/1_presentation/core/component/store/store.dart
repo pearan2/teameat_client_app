@@ -25,7 +25,8 @@ class StoreSimpleInfoRow extends GetView<IReact> {
 
   Widget _buildButton() {
     if (!isButton) return const SizedBox();
-    return const Icon(Icons.keyboard_arrow_right);
+    // return const Icon(Icons.keyboard_arrow_right);
+    return const SizedBox();
   }
 
   @override
@@ -35,7 +36,7 @@ class StoreSimpleInfoRow extends GetView<IReact> {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(300),
-          child: TENetworkImage(url: profileImageUrl, width: DS.space.large),
+          child: TENetworkImage(url: profileImageUrl, width: DS.space.medium),
         ),
         DS.space.hTiny,
         Expanded(
@@ -52,14 +53,14 @@ class StoreSimpleInfoRow extends GetView<IReact> {
                 Text(
                   name,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.paragraph2
+                  style: DS.textStyle.paragraph3
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                DS.space.vXTiny,
+                DS.space.vXXTiny,
                 Text(
                   subInfo,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.caption1,
+                  style: DS.textStyle.caption2,
                 ),
               ],
             ),
@@ -78,32 +79,14 @@ class StoreLike extends GetView<LikeController<IStoreRepository>> {
 
   const StoreLike({super.key, required this.storeId});
 
-  Widget _buildLikeWidget() {
-    return Icon(
-      key: const ValueKey(true),
-      Icons.bookmark,
-      size: DS.space.medium,
-      color: DS.color.primary500,
-    );
-  }
-
-  Widget _buildUnlikeWidget() {
-    return Icon(
-      key: const ValueKey(false),
-      Icons.bookmark_outline,
-      size: DS.space.medium,
-      color: DS.color.primary500,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return TEonTap(
       isLoginRequired: true,
       onTap: () => controller.toggleLike(storeId),
       child: Obx(() => controller.isLike(storeId)
-          ? _buildLikeWidget()
-          : _buildUnlikeWidget()),
+          ? DS.image.bookmarkClicked
+          : DS.image.bookmark),
     );
   }
 }

@@ -63,19 +63,18 @@ class _TextSearcherState extends State<TextSearcher> {
       },
       cursorColor: DS.color.primary500,
       padding: EdgeInsets.symmetric(
-          horizontal: DS.space.base, vertical: DS.space.tiny),
+          horizontal: DS.space.xSmall, vertical: DS.space.tiny),
       prefix: Padding(
-        padding: EdgeInsets.only(left: DS.space.base),
-        child: Icon(
-          Icons.search,
-          size: DS.space.base,
-        ),
+        padding: EdgeInsets.only(left: DS.space.xSmall),
+        child: DS.image.iconSearch,
       ),
+      placeholderStyle:
+          DS.textStyle.paragraph3.copyWith(color: DS.color.background400),
       placeholder: DS.text.textSearcherPlaceHolder,
       style: DS.textStyle.paragraph3,
       decoration: BoxDecoration(
-        color: DS.color.background000,
-        borderRadius: BorderRadius.circular(300),
+        color: DS.color.background100,
+        borderRadius: BorderRadius.circular(DS.space.xSmall),
         boxShadow: [
           BoxShadow(
               color: DS.color.background300.withOpacity(0.5),

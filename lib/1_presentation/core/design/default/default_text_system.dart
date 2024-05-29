@@ -2,7 +2,7 @@ import 'package:teameat/1_presentation/core/design/i_text_system.dart';
 
 class DefaultTextSystem extends ITextSystem {
   @override
-  String get textSearcherPlaceHolder => '오늘 뭐먹지?';
+  String get textSearcherPlaceHolder => '오늘 점심 뭐 먹지?';
 
   @override
   String get nearbyMe => '내 주변';

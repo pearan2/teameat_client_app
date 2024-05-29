@@ -5,8 +5,13 @@ abstract class IImageSystem {
   Image get splashBackground;
   SvgPicture get mainIconWithText;
   Image get nearbyMeIcon;
+
+  /// main icon (logo)
+  Image get mainIconSm;
   Image get mainLargeIconNoBg;
   Image get mainMediumIconNoBg;
+
+  ///
   Image get kakaoLogo;
   Image get appleLogo;
   Image get iconHome;
@@ -27,4 +32,11 @@ abstract class IImageSystem {
   Image get customerService;
   Image get storeItemExpired;
   Image get markerBackground;
+
+  /// icon
+  SvgPicture get iconSearch;
+  SvgPicture get iconLike;
+  SvgPicture get iconLikeClicked;
+  SvgPicture get bookmark;
+  SvgPicture get bookmarkClicked;
 }

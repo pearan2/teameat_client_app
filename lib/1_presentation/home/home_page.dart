@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
@@ -15,6 +14,8 @@ import 'package:teameat/99_util/extension/string.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 
 class HomePage extends GetView<HomePageController> {
+  static const double horizontalPadding = 48;
+
   const HomePage({super.key});
 
   @override
@@ -35,18 +36,14 @@ class HomePage extends GetView<HomePageController> {
                 surfaceTintColor: DS.color.background000,
                 snap: true,
                 floating: true,
-                expandedHeight: HomePageSearcher.homePageSearcherMaxHeight,
+                toolbarHeight: DS.space.tiny,
                 flexibleSpace: const HomePageSearcher(),
               ),
               PagedSliverList(
                 pagingController: controller.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
                   noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
-                  itemBuilder: (_, store, idx) => Padding(
-                    padding:
-                        EdgeInsets.only(top: idx == 0 ? DS.space.xBase : 0),
-                    child: StoreCard(store: store),
-                  ),
+                  itemBuilder: (_, store, idx) => StoreCard(store: store),
                 ),
               ),
               SliverToBoxAdapter(child: DS.space.vSmall),
@@ -70,24 +67,19 @@ class StoreCard extends StatelessWidget {
     if (store.items.isEmpty) {
       return const SizedBox();
     }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            DS.space.hSmall,
-            Expanded(
-              child: StoreSimpleInfoRow(
-                storeId: store.id,
-                profileImageUrl: store.profileImageUrl,
-                name: store.name,
-                subInfo: store.address,
-              ),
-            ),
-            DS.space.hSmall
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: HomePage.horizontalPadding),
+          child: StoreSimpleInfoRow(
+            storeId: store.id,
+            profileImageUrl: store.profileImageUrl,
+            name: store.name,
+            subInfo: store.address,
+          ),
         ),
         DS.space.vTiny,
         StoreItemList(
@@ -106,8 +98,6 @@ class StoreCard extends StatelessWidget {
 }
 
 class HomePageSearcher extends GetView<HomePageController> {
-  static const double homePageSearcherMaxHeight = 80.0;
-
   const HomePageSearcher({super.key});
 
   @override
@@ -116,31 +106,23 @@ class HomePageSearcher extends GetView<HomePageController> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: DS.color.background000,
-        boxShadow: [
-          BoxShadow(
-              color: DS.color.background800.withOpacity(0.25),
-              blurRadius: DS.space.xTiny,
-              offset: Offset(0, DS.space.xTiny))
-        ],
       ),
-      child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: DS.space.small),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [DS.image.mainIconWithText],
-            ),
-            DS.space.vBase,
-            Obx(
-              () => TextSearcher(
+      padding:
+          const EdgeInsets.symmetric(horizontal: HomePage.horizontalPadding),
+      height: DS.space.large,
+      child: Row(
+        children: [
+          DS.image.mainIconSm,
+          DS.space.hXSmall,
+          Obx(
+            () => Expanded(
+              child: TextSearcher(
                 onCompleted: controller.onSearchTextCompleted,
                 value: controller.searchOption.searchText,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

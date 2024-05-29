@@ -10,6 +10,7 @@ class DefaultImageSystem extends IImageSystem {
         fit: BoxFit.fitWidth,
       );
 
+  /// main icon
   @override
   SvgPicture get mainIconWithText => SvgPicture.asset(
         'assets/image/main_icon_with_text.svg',
@@ -18,10 +19,10 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  Image get nearbyMeIcon => Image.asset(
-        'assets/image/nearby_me.png',
-        height: 12,
-        width: 12,
+  Image get mainIconSm => Image.asset(
+        'assets/image/main_icon_no_bg.png',
+        height: 24,
+        width: 36,
       );
 
   @override
@@ -32,6 +33,14 @@ class DefaultImageSystem extends IImageSystem {
   Image get mainMediumIconNoBg =>
       Image.asset('assets/image/main_icon_no_bg.png',
           width: 55.36, height: 36.22);
+
+  ///
+  @override
+  Image get nearbyMeIcon => Image.asset(
+        'assets/image/nearby_me.png',
+        height: 12,
+        width: 12,
+      );
 
   @override
   Image get kakaoLogo => Image.asset(
@@ -146,5 +155,41 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/map_marker.png',
         height: 41,
         width: 32,
+      );
+
+  /// icon
+  @override
+  SvgPicture get iconSearch => SvgPicture.asset(
+        'assets/image/icon/search_icon.svg',
+        height: 16,
+        width: 16,
+      );
+
+  @override
+  SvgPicture get bookmark => SvgPicture.asset(
+        'assets/image/icon/bookmark.svg',
+        height: 17,
+        width: 13,
+      );
+
+  @override
+  SvgPicture get bookmarkClicked => SvgPicture.asset(
+        'assets/image/icon/bookmark_marked.svg',
+        height: 17,
+        width: 13,
+      );
+
+  @override
+  SvgPicture get iconLike => SvgPicture.asset(
+        'assets/image/icon/like_liked.svg',
+        height: 31,
+        width: 31,
+      );
+
+  @override
+  SvgPicture get iconLikeClicked => SvgPicture.asset(
+        'assets/image/icon/like.svg',
+        height: 31,
+        width: 31,
       );
 }

@@ -21,6 +21,7 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
     return TEScaffold(
+      onFloatingButtonClick: () => {},
       activated: BottomNavigatorType.home,
       body: Padding(
         padding: EdgeInsets.only(top: topAreaHeight),
@@ -37,6 +38,7 @@ class HomePage extends GetView<HomePageController> {
                 snap: true,
                 floating: true,
                 toolbarHeight: DS.space.tiny,
+                expandedHeight: GetPlatform.isAndroid ? DS.space.medium : null,
                 flexibleSpace: const HomePageSearcher(),
               ),
               PagedSliverList(
@@ -82,7 +84,10 @@ class StoreCard extends StatelessWidget {
           ),
         ),
         DS.space.vTiny,
-        StoreItemList(items: store.items),
+        StoreItemList(
+          items: store.items,
+          borderRadius: DS.space.xTiny,
+        ),
         DS.space.vXBase
       ],
     );
@@ -101,7 +106,6 @@ class HomePageSearcher extends GetView<HomePageController> {
       ),
       padding:
           const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
-      height: DS.space.large,
       child: Row(
         children: [
           DS.image.mainIconSm,

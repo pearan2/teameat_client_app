@@ -109,29 +109,36 @@ class DefaultImageSystem extends IImageSystem {
 ///////////////////////////
 
   @override
-  Image get storeIntroduce => Image.asset(
-        'assets/image/store_introduce.png',
+  SvgPicture get store => SvgPicture.asset(
+        'assets/image/icon/store_icon.svg',
         width: 24,
         height: 24,
       );
 
   @override
-  Image get storeLocation => Image.asset(
-        'assets/image/store_location.png',
+  SvgPicture get location => SvgPicture.asset(
+        'assets/image/icon/address_icon.svg',
         width: 24,
         height: 24,
       );
 
   @override
-  Image get storeOperationInfo => Image.asset(
-        'assets/image/store_operation_info.png',
+  SvgPicture get clock => SvgPicture.asset(
+        'assets/image/icon/clock_icon.svg',
         width: 24,
         height: 24,
       );
 
   @override
-  Image get storePhone => Image.asset(
-        'assets/image/store_phone.png',
+  SvgPicture get phone => SvgPicture.asset(
+        'assets/image/icon/phone_icon.svg',
+        width: 24,
+        height: 24,
+      );
+
+  @override
+  SvgPicture get up => SvgPicture.asset(
+        'assets/image/icon/up.svg',
         width: 24,
         height: 24,
       );
@@ -141,13 +148,6 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/customer_service.png',
         width: 251,
         height: 282,
-      );
-
-  @override
-  Image get storeItemExpired => Image.asset(
-        'assets/image/store_item_expire.png',
-        width: 24,
-        height: 24,
       );
 
   @override

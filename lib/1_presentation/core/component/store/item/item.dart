@@ -65,12 +65,15 @@ class StoreItemPrice extends StatelessWidget {
   final int originalPrice;
   final int price;
   final bool isTitle;
+  final CrossAxisAlignment? crossAxisAlignment;
 
-  const StoreItemPrice(
-      {super.key,
-      required this.originalPrice,
-      required this.price,
-      this.isTitle = false});
+  const StoreItemPrice({
+    super.key,
+    required this.originalPrice,
+    required this.price,
+    this.isTitle = false,
+    this.crossAxisAlignment,
+  });
 
   bool isDiscount() {
     return price < originalPrice;
@@ -79,7 +82,7 @@ class StoreItemPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         isDiscount()
@@ -389,6 +392,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   final int itemId;
   final double borderRadius;
   final DateTime salesWillBeEndedAt;
+  final double ratio;
 
   const StoreItemImage({
     super.key,
@@ -397,6 +401,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
     required this.itemId,
     required this.borderRadius,
     required this.salesWillBeEndedAt,
+    this.ratio = 3 / 4,
   });
 
   @override
@@ -406,7 +411,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
         TENetworkImage(
           url: imageUrl,
           width: width,
-          ratio: 3 / 4,
+          ratio: ratio,
           borderRadius: borderRadius,
         ),
         Positioned(
@@ -435,13 +440,15 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
 
 class StoreItemNameText extends StatelessWidget {
   final String name;
+  final TextAlign? textAlign;
 
-  const StoreItemNameText({super.key, required this.name});
+  const StoreItemNameText({super.key, required this.name, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       name,
+      textAlign: textAlign,
       style: DS.textStyle.paragraph3
           .copyWith(fontWeight: FontWeight.w600, color: DS.color.background600),
       maxLines: 2,
@@ -527,6 +534,7 @@ class StoreItemRowCard extends StatelessWidget {
               imageUrl: item.imageUrl,
               width: imageWidth,
               itemId: item.id,
+              ratio: 1 / 1,
               borderRadius: borderRadius,
               salesWillBeEndedAt: item.salesWillBeEndedAt,
             ),
@@ -536,7 +544,10 @@ class StoreItemRowCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  StoreItemNameText(name: item.name),
+                  StoreItemNameText(
+                    name: item.name,
+                    textAlign: TextAlign.end,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
@@ -544,6 +555,7 @@ class StoreItemRowCard extends StatelessWidget {
                       StoreItemSellTypeText(sellType: item.sellType),
                       DS.space.vTiny,
                       StoreItemPrice(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         originalPrice: item.originalPrice,
                         price: item.price,
                       )

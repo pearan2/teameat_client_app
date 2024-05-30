@@ -8,7 +8,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 class TENetworkImage extends StatelessWidget {
   final String url;
   final double? width;
-  final double? height;
+
   final double borderRadius;
   final double ratio;
 
@@ -17,7 +17,6 @@ class TENetworkImage extends StatelessWidget {
     required this.url,
     this.width,
     this.borderRadius = 0,
-    this.height,
     this.ratio = 1.0,
   });
 
@@ -27,7 +26,6 @@ class TENetworkImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       child: SizedBox(
         width: width ?? width,
-        height: height ?? height,
         child: AspectRatio(
           aspectRatio: ratio,
           child: LayoutBuilder(

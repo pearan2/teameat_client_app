@@ -83,7 +83,7 @@ class StorePage extends GetView<StorePageController> {
                               onTap: () =>
                                   TEClipboard.setText(controller.store.address),
                               child: InfoRow(
-                                icon: DS.image.storeLocation,
+                                icon: DS.image.location,
                                 title: DS.text.address,
                                 content: controller.store.address,
                               ),
@@ -101,7 +101,7 @@ class StorePage extends GetView<StorePageController> {
                           padding: EdgeInsets.all(DS.space.xBase),
                           child: PageLoadingWrapper(
                             child: InfoRow(
-                              icon: DS.image.storeIntroduce,
+                              icon: DS.image.store,
                               title: DS.text.storeIntroduce,
                               content: controller.store.introduce,
                             ),
@@ -116,7 +116,7 @@ class StorePage extends GetView<StorePageController> {
                                   'tel:${controller.store.phone}'),
                               child: InfoRow(
                                 withUnderLine: true,
-                                icon: DS.image.storePhone,
+                                icon: DS.image.phone,
                                 title:
                                     '${DS.text.reservation} / ${DS.text.question}',
                                 content: controller.store.phone,
@@ -129,7 +129,7 @@ class StorePage extends GetView<StorePageController> {
                           padding: EdgeInsets.all(DS.space.xBase),
                           child: PageLoadingWrapper(
                             child: InfoRow(
-                              icon: DS.image.storeOperationInfo,
+                              icon: DS.image.clock,
                               title: DS.text.operationTime,
                               content: controller.store.operationTime,
                             ),
@@ -140,7 +140,7 @@ class StorePage extends GetView<StorePageController> {
                           padding: EdgeInsets.all(DS.space.xBase),
                           child: PageLoadingWrapper(
                             child: InfoRow(
-                              icon: DS.image.storeOperationInfo,
+                              icon: DS.image.clock,
                               title: DS.text.breakTime,
                               content: controller.store.breakTime,
                             ),
@@ -151,7 +151,7 @@ class StorePage extends GetView<StorePageController> {
                           padding: EdgeInsets.all(DS.space.xBase),
                           child: PageLoadingWrapper(
                             child: InfoRow(
-                              icon: DS.image.storeOperationInfo,
+                              icon: DS.image.clock,
                               title: DS.text.lastOrderTime,
                               content: controller.store.lastOrderTime,
                             ),

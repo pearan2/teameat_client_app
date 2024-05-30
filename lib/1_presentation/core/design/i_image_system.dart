@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 abstract class IImageSystem {
   Image get splashBackground;
@@ -24,13 +25,15 @@ abstract class IImageSystem {
   SvgPicture get bottomIconUser;
   SvgPicture get bottomIconUserClicked;
 
+  /// store 관련 아이콘들
+  SvgPicture get location;
+  SvgPicture get clock;
+  SvgPicture get store;
+  SvgPicture get phone;
+  SvgPicture get up;
+
   ///
-  Image get storeLocation;
-  Image get storeOperationInfo;
-  Image get storeIntroduce;
-  Image get storePhone;
   Image get customerService;
-  Image get storeItemExpired;
   Image get markerBackground;
 
   /// icon

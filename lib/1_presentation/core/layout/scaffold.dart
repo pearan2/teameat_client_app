@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -13,6 +14,7 @@ class TEScaffold extends StatelessWidget {
   final BottomNavigatorType? activated;
   final bool loading;
   final void Function(bool didPop)? onPop;
+  final void Function()? onFloatingButtonClick;
 
   const TEScaffold({
     super.key,
@@ -23,6 +25,7 @@ class TEScaffold extends StatelessWidget {
     this.bottomSheetBackgroundColor,
     this.loading = false,
     this.onPop,
+    this.onFloatingButtonClick,
   });
 
   Widget _buildChild() {
@@ -36,6 +39,7 @@ class TEScaffold extends StatelessWidget {
               appBar: appBar,
               bottomSheet: bottomSheet,
               bottomSheetBackgroundColor: bottomSheetBackgroundColor,
+              onFloatingButtonClick: onFloatingButtonClick,
             ),
           ),
           _TEBottomNavigator(
@@ -51,6 +55,7 @@ class TEScaffold extends StatelessWidget {
         appBar: appBar,
         bottomSheet: bottomSheet,
         bottomSheetBackgroundColor: bottomSheetBackgroundColor,
+        onFloatingButtonClick: onFloatingButtonClick,
       );
     }
   }
@@ -86,24 +91,48 @@ class _InnerScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
   final Color? bottomSheetBackgroundColor;
+  final void Function()? onFloatingButtonClick;
+
   const _InnerScaffold({
     super.key,
     required this.body,
     this.appBar,
     this.bottomSheet,
     this.bottomSheetBackgroundColor,
+    this.onFloatingButtonClick,
   });
+
+  Widget _buildFloatingButton() {
+    return TEonTap(
+      onTap: () => onFloatingButtonClick?.call(),
+      child: Container(
+        width: DS.space.large,
+        height: DS.space.large,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: DS.color.primary500,
+          borderRadius: const BorderRadius.all(Radius.circular(300)),
+        ),
+        child: Icon(
+          Icons.keyboard_arrow_up,
+          size: DS.space.medium,
+          color: DS.color.background000,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:
+          onFloatingButtonClick != null ? _buildFloatingButton() : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: appBar,
       backgroundColor: DS.color.background000,
       body: Padding(
         padding: EdgeInsets.only(
-            bottom: (GetPlatform.isIOS &&
-                    bottomSheet !=
-                        null) // ios 면서, bottomSheet 이 없다면 xBase 만큼 띄워줌
+            bottom: (GetPlatform.isIOS && bottomSheet != null)
                 ? DS.space.xBase
                 : 0.0),
         child: body,

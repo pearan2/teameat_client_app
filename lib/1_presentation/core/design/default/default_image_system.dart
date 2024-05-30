@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/design/i_image_system.dart';
 
 class DefaultImageSystem extends IImageSystem {
@@ -57,10 +58,13 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  Image get iconHome => Image.asset(
-        'assets/image/icon_home.png',
-        width: 24,
+
+  /// Todo 추후 검은색 받아서 변경
+  SvgPicture get iconHome => SvgPicture.asset(
+        'assets/image/icon/bottom/home.svg',
         height: 24,
+        width: 24,
+        color: DS.color.background800,
       );
 
 ////// bottom icons //////

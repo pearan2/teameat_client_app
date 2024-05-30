@@ -40,11 +40,13 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
                             ),
                           ),
                       itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                          borderRadius: DS.space.xBase,
+                          borderRadius: DS.space.xTiny,
                           item: item,
                           onTap: controller.react.toStoreItemDetail)),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: width / (width + DS.space.large * 5),
+                    /// 4/3 비율로 갈거라서 변경해줌
+                    childAspectRatio:
+                        width / (width * (4 / 3) + DS.space.large * 5),
                     crossAxisSpacing: DS.space.small,
                     mainAxisSpacing: DS.space.small,
                     crossAxisCount: 2,

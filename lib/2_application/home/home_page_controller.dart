@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart' as wd;
+import 'package:flutter/material.dart' as mt;
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
@@ -11,7 +11,7 @@ import 'package:teameat/3_domain/store/store.dart';
 class HomePageController extends PageController {
   /// 상수
   final numberOfRecommendRequestItems = 1;
-  final topKey = const wd.GlobalObjectKey("top-key");
+  final topKey = const mt.GlobalObjectKey("top-key");
 
   /// repos
   final _storeRepo = Get.find<IStoreRepository>();
@@ -34,6 +34,15 @@ class HomePageController extends PageController {
   ItemSimple? get recommendedItem =>
       // ignore: invalid_use_of_protected_member
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
+
+  void onFloatingButtonClickHandler() {
+    final context = topKey.currentContext;
+    if (context == null) {
+      return;
+    }
+    mt.Scrollable.ensureVisible(context,
+        duration: const Duration(milliseconds: 300));
+  }
 
   void onStoreItemCardClickHandler(int itemId) {
     return react.toStoreItemDetail(itemId);

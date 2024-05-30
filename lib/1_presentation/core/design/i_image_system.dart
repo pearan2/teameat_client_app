@@ -15,7 +15,7 @@ abstract class IImageSystem {
   ///
   Image get kakaoLogo;
   Image get appleLogo;
-  Image get iconHome;
+  SvgPicture get iconHome;
 
   ///
   SvgPicture get bottomIconHome;

@@ -20,7 +20,7 @@ class StoreRepository extends IStoreRepository<StoreSimple>
       return ret.fold(
           (l) => left(l),
           (r) => right((r as Iterable)
-              .map((json) => StoreSimple.fromJson(json))
+              .map((json) => StoreSimple.fromJsonWithItemSort(json))
               .toList()));
     } catch (_) {
       return left(const Failure.fetchStoreFail(
@@ -33,8 +33,8 @@ class StoreRepository extends IStoreRepository<StoreSimple>
     try {
       final path = '/api/store/$storeId';
       final ret = await _conn.get(path, null);
-      return ret.fold(
-          (l) => left(l), (r) => right(StoreDetail.fromJson(r as JsonMap)));
+      return ret.fold((l) => left(l),
+          (r) => right(StoreDetail.fromJsonWithItemSort(r as JsonMap)));
     } catch (e) {
       return left(const Failure.fetchStoreFail(
           "상점 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));

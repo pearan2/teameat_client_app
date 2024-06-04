@@ -262,41 +262,44 @@ class _TEBottomNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     final react = Get.find<IReact>();
 
-    return Container(
-      height: DS.space.large +
-          DS.space.tiny +
-          (GetPlatform.isIOS ? DS.space.xBase : 0.0),
-      padding:
-          EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
-      decoration: BoxDecoration(
-        color: DS.color.background000,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TEonTap(
-            onTap: react.toHomeOffAll,
-            child: _BottomNavigatorToggle(
-              clicked: activated == BottomNavigatorType.home,
-              type: BottomNavigatorType.home,
+    return DefaultTextStyle(
+      style: const TextStyle(),
+      child: Container(
+        height: DS.space.large +
+            DS.space.tiny +
+            (GetPlatform.isIOS ? DS.space.xBase : 0.0),
+        padding:
+            EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
+        decoration: BoxDecoration(
+          color: DS.color.background000,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TEonTap(
+              onTap: react.toHomeOffAll,
+              child: _BottomNavigatorToggle(
+                clicked: activated == BottomNavigatorType.home,
+                type: BottomNavigatorType.home,
+              ),
             ),
-          ),
-          TEonTap(
-            onTap: react.toVoucherOffAll,
-            isLoginRequired: true,
-            child: _BottomNavigatorToggle(
-              clicked: activated == BottomNavigatorType.inventory,
-              type: BottomNavigatorType.inventory,
+            TEonTap(
+              onTap: react.toVoucherOffAll,
+              isLoginRequired: true,
+              child: _BottomNavigatorToggle(
+                clicked: activated == BottomNavigatorType.inventory,
+                type: BottomNavigatorType.inventory,
+              ),
             ),
-          ),
-          TEonTap(
-            onTap: react.toUserOffAll,
-            child: _BottomNavigatorToggle(
-              clicked: activated == BottomNavigatorType.profile,
-              type: BottomNavigatorType.profile,
+            TEonTap(
+              onTap: react.toUserOffAll,
+              child: _BottomNavigatorToggle(
+                clicked: activated == BottomNavigatorType.profile,
+                type: BottomNavigatorType.profile,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

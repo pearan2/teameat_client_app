@@ -11,7 +11,7 @@ import 'package:teameat/3_domain/store/store.dart';
 class HomePageController extends PageController {
   /// 상수
   final numberOfRecommendRequestItems = 1;
-  final topKey = const mt.GlobalObjectKey("top-key");
+  final topKey = mt.GlobalKey();
 
   /// repos
   final _storeRepo = Get.find<IStoreRepository>();

@@ -10,8 +10,6 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
-import 'package:teameat/99_util/extension/string.dart';
-import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/main.dart';
 
 class HomePage extends GetView<HomePageController> {
@@ -163,7 +161,11 @@ class SearchNotFound extends GetView<HomePageController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          DS.text.searchNotFound.style(DS.textStyle.paragraph3.w500()),
+          Text(
+            DS.text.searchNotFound,
+            style:
+                DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.w500),
+          ),
           DS.space.vTiny,
           TEPrimaryButton(
             onTap: controller.clearSearchOption,

@@ -15,6 +15,7 @@ class ItemSimple with _$ItemSimple {
     required int price,
     required String sellType,
     required DateTime salesWillBeEndedAt,
+    required int orderReference,
     DateTime? currentGroupBuyingWillBeEndedAt,
   }) = _ItemSimple;
 
@@ -30,6 +31,7 @@ class ItemSimple with _$ItemSimple {
         originalPrice: 14900,
         price: 12800,
         sellType: '이용권',
+        orderReference: 0,
         salesWillBeEndedAt: DateTime.now(),
         currentGroupBuyingWillBeEndedAt: DateTime.now());
   }

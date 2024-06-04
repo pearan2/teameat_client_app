@@ -269,6 +269,7 @@ class StoreItemImageCarousel extends StatelessWidget {
           bottom: DS.space.xTiny,
           child: PageLoadingWrapper(
             child: ItemSaleRemainDurationText(
+                key: ValueKey(item.id),
                 salesWillBeEndedAt: item.salesWillBeEndedAt),
           ),
         )
@@ -419,6 +420,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
             left: 0,
             right: 0,
             child: ItemSaleRemainDurationText(
+              key: ValueKey(itemId),
               salesWillBeEndedAt: salesWillBeEndedAt,
               borderRadius: borderRadius,
             )),

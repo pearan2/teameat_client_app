@@ -15,7 +15,7 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 /// call. Be sure to annotate the handler with `@pragma('vm:entry-point')` above the function declaration.
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  showFlutterNotification(message);
+  // showFlutterNotification(message);
 }
 
 Future<void> setupFlutterNotifications() async {
@@ -75,7 +75,7 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
 
 Future<void> _addMessageListener() async {
   // 백그라운드에서 알람이 왔을 때 추가 동작
-  // FirebaseMessaging.onBackgroundMessage(showFlutterNotification);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   // foreground 에서 알람이 왔을때 추가 동작
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -87,6 +87,7 @@ Future<void> _addMessageListener() async {
   // background 에서 앱이 켜졌을때 추가 동작
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     // print('onMessageOpenedApp');
+
     // print(message);
     // showFlutterNotification(message);
   });
@@ -119,6 +120,7 @@ Future<void> configMessage() async {
   if (!await _isMessagePermitted()) {
     return;
   }
+
   await setupFlutterNotifications();
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   _addMessageListener();

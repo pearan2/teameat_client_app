@@ -97,6 +97,13 @@ class StoreSimple with _$StoreSimple {
     required List<ItemSimple> items,
   }) = _StoreSimple;
 
+  factory StoreSimple.fromJsonWithItemSort(Map<String, Object?> json) {
+    final ret = StoreSimple.fromJson(json);
+    final sorted = [...ret.items];
+    sorted.sort((lhs, rhs) => lhs.orderReference - rhs.orderReference);
+    return ret.copyWith(items: sorted);
+  }
+
   factory StoreSimple.fromJson(Map<String, Object?> json) =>
       _$StoreSimpleFromJson(json);
 }
@@ -118,6 +125,13 @@ class StoreDetail with _$StoreDetail {
     required String breakTime,
     required String lastOrderTime,
   }) = _StoreDetail;
+
+  factory StoreDetail.fromJsonWithItemSort(Map<String, Object?> json) {
+    final ret = StoreDetail.fromJson(json);
+    final sorted = [...ret.items];
+    sorted.sort((lhs, rhs) => lhs.orderReference - rhs.orderReference);
+    return ret.copyWith(items: sorted);
+  }
 
   factory StoreDetail.fromJson(Map<String, Object?> json) =>
       _$StoreDetailFromJson(json);

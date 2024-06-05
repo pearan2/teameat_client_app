@@ -22,6 +22,19 @@ class UserRepository implements IUserRepository {
   }
 
   @override
+  Future<Either<Failure, User>> updateMe(UserUpdate update) async {
+    try {
+      const path = 'api/member/me';
+      final ret = await _conn.patch(path, update.toJson());
+      return ret.fold(
+          (l) => left(l), (r) => right(User.fromJson(r as JsonMap)));
+    } catch (e) {
+      return left(
+          const Failure.updateMeFail('내 정보를 업데이트 하는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> deleteMe() async {
     try {
       const path = 'api/member/me';

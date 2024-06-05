@@ -10,6 +10,8 @@ class User with _$User {
     required String email,
     required String socialLoginType,
     required DateTime createdAt,
+    required String nickname,
+    required String profileImageUrl,
     required String id,
   }) = _User;
 
@@ -20,7 +22,22 @@ class User with _$User {
       email: 'Visitor',
       socialLoginType: 'Visitor Login',
       createdAt: DateTime(1991, 05, 01),
+      nickname: "",
+      profileImageUrl:
+          "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
       id: 'visitor user Id',
     );
   }
+}
+
+@freezed
+class UserUpdate with _$UserUpdate {
+  const factory UserUpdate({
+    required String email,
+    required String profileImageUrl,
+    required String nickname,
+  }) = _UserUpdate;
+
+  factory UserUpdate.fromJson(Map<String, Object?> json) =>
+      _$UserUpdateFromJson(json);
 }

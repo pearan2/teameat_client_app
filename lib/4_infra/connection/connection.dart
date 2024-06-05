@@ -14,7 +14,7 @@ class HttpClient extends IConnection<String, Failure> {
   static const _authTokenKey = 'authTokenKey';
 
   final String endPoint;
-  final int connectionTimeout = 5;
+  final int connectionTimeout = 10;
   final _pref = Get.find<SharedPreferences>();
 
   bool _isLogined = false;

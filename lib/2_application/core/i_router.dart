@@ -40,4 +40,6 @@ abstract class IRouter {
   void toItemLike();
 
   void toStoreLike();
+
+  void toUserDetail();
 }

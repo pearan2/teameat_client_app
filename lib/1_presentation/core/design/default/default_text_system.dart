@@ -360,4 +360,22 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get sellTypeVoucher => '이용권';
+
+  @override
+  String get imageFileByteMustLessThan1MB => '이미지 크기는 1MB 보다 작아야 해요';
+
+  @override
+  String get save => '저장하기';
+
+  @override
+  String get userCreatedAt => '가입일';
+
+  @override
+  String get userLoginType => '로그인 타입';
+
+  @override
+  String get userMeInfo => '내 정보';
+
+  @override
+  String get userNickname => '닉네임';
 }

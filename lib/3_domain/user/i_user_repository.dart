@@ -7,6 +7,8 @@ abstract class IUserRepository {
 
   Future<Either<Failure, bool>> deleteMe();
 
+  Future<Either<Failure, User>> updateMe(UserUpdate update);
+
   Future<Either<Failure, List<int>>> getMyStoreItemLikes();
 
   Future<Either<Failure, List<int>>> getMyStoreLikes();

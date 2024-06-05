@@ -118,4 +118,10 @@ abstract class ITextSystem {
   String get home;
   String get profile;
   String get sellTypeVoucher;
+  String get imageFileByteMustLessThan1MB;
+  String get save;
+  String get userMeInfo;
+  String get userNickname;
+  String get userLoginType;
+  String get userCreatedAt;
 }

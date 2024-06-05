@@ -83,6 +83,9 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - photo_manager (2.0.0):
+    - Flutter
+    - FlutterMacOS
   - PromisesObjC (2.4.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
@@ -102,6 +105,7 @@ DEPENDENCIES:
   - iamport_flutter (from `.symlinks/plugins/iamport_flutter/ios`)
   - iamport_webview_flutter (from `.symlinks/plugins/iamport_webview_flutter/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -139,6 +143,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/iamport_webview_flutter/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  photo_manager:
+    :path: ".symlinks/plugins/photo_manager/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   uni_links:
@@ -166,6 +172,7 @@ SPEC CHECKSUMS:
   NMapsGeometry: 4e02554fa9880ef02ed96b075dc84355d6352479
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  photo_manager: ff695c7a1dd5bc379974953a2b5c0a293f7c4c8a
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a

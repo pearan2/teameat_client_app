@@ -8,9 +8,9 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/user.dart';
+import 'package:teameat/99_util/get.dart';
 
 class UserPage extends GetView<UserPageController> {
   const UserPage({super.key});
@@ -27,8 +27,11 @@ class UserPage extends GetView<UserPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() =>
-                    PageLoadingWrapper(child: UserCard(user: controller.user))),
+                Obx(() => PageLoadingWrapper(
+                        child: UserCard(
+                      user: controller.user,
+                      onSettingClicked: c.onUserSettingClicked,
+                    ))),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.react.toItemLike,
@@ -100,8 +103,10 @@ class UserPageDivider extends StatelessWidget {
 
 class UserCard extends StatelessWidget {
   final User user;
+  final void Function() onSettingClicked;
 
-  const UserCard({super.key, required this.user});
+  const UserCard(
+      {super.key, required this.user, required this.onSettingClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +132,8 @@ class UserCard extends StatelessWidget {
             ],
           ),
           TEonTap(
-            child: const Icon(Icons.copy),
-            onTap: () => TEClipboard.setText(user.id.toString()),
+            onTap: onSettingClicked,
+            child: const Icon(Icons.settings),
           ),
         ],
       ),

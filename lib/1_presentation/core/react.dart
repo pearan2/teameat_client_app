@@ -112,4 +112,9 @@ class React extends IReact {
   void toStoreLike() {
     Get.toNamed('/store/like');
   }
+
+  @override
+  void toUserDetail() {
+    Get.toNamed('/user/detail');
+  }
 }

@@ -10,7 +10,6 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
-import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 
 class UserPage extends GetView<UserPageController> {
@@ -28,11 +27,9 @@ class UserPage extends GetView<UserPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => PageLoadingWrapper(
-                        child: UserCard(
-                      user: controller.user,
-                      onSettingClicked: c.onUserSettingClicked,
-                    ))),
+                UserCard(
+                  onSettingClicked: c.onUserSettingClicked,
+                ),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.react.toItemLike,
@@ -102,12 +99,10 @@ class UserPageDivider extends StatelessWidget {
   }
 }
 
-class UserCard extends StatelessWidget {
-  final User user;
+class UserCard extends GetView<UserPageController> {
   final void Function() onSettingClicked;
 
-  const UserCard(
-      {super.key, required this.user, required this.onSettingClicked});
+  const UserCard({super.key, required this.onSettingClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -115,22 +110,31 @@ class UserCard extends StatelessWidget {
       padding: EdgeInsets.all(DS.space.xBase),
       child: Row(
         children: [
-          TENetworkImage(url: user.profileImageUrl, size: DS.space.large),
+          Obx(
+            () => PageLoadingWrapper(
+              child: TENetworkImage(
+                url: c.user.profileImageUrl,
+                size: DS.space.large,
+              ),
+            ),
+          ),
           DS.space.hTiny,
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                user.nickname,
-                style: DS.textStyle.paragraph3
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
+              Obx(() => PageLoadingWrapper(
+                      child: Text(
+                    c.user.nickname,
+                    style: DS.textStyle.paragraph3
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ))),
               DS.space.vTiny,
-              Text(
-                user.socialLoginType,
-                style: DS.textStyle.caption1,
-              )
+              Obx(() => PageLoadingWrapper(
+                      child: Text(
+                    c.user.socialLoginType,
+                    style: DS.textStyle.caption1,
+                  )))
             ],
           ),
           const Expanded(child: SizedBox()),

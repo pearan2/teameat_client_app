@@ -78,8 +78,15 @@ class UserPageController extends PageController {
     });
   }
 
+  Future<void> toUserDetail() async {
+    if (user == User.visitor()) {
+      await _loadMe();
+    }
+    react.toUserDetail();
+  }
+
   Future<void> onUserSettingClicked() async {
-    return loginWrapper(react.toUserDetail);
+    return loginWrapper(toUserDetail);
   }
 
   Future<void> _loadRecentSeeItems() async {

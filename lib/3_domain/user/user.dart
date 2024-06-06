@@ -22,7 +22,7 @@ class User with _$User {
       email: 'Visitor',
       socialLoginType: 'Visitor Login',
       createdAt: DateTime(1991, 05, 01),
-      nickname: "",
+      nickname: "Anonymous",
       profileImageUrl:
           "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
       id: 'visitor user Id',

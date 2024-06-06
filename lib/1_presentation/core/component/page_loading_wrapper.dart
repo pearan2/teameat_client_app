@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 
 class PageLoadingWrapper extends StatefulWidget {
@@ -51,7 +52,10 @@ class _PageLoadingWrapperState extends State<PageLoadingWrapper> {
                 color: widget.baseColor,
               ),
             )),
-            widget.child,
+            Padding(
+              padding: EdgeInsets.all(DS.space.xxTiny),
+              child: widget.child,
+            ),
           ],
         ),
       );

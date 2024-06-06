@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -113,14 +114,15 @@ class UserCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(DS.space.xBase),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          TENetworkImage(url: user.profileImageUrl, size: DS.space.large),
+          DS.space.hTiny,
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.email.isEmpty ? DS.text.logined : user.email,
+                user.nickname,
                 style: DS.textStyle.paragraph3
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -131,6 +133,7 @@ class UserCard extends StatelessWidget {
               )
             ],
           ),
+          const Expanded(child: SizedBox()),
           TEonTap(
             onTap: onSettingClicked,
             child: const Icon(Icons.settings),

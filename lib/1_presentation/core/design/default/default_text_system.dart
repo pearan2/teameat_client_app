@@ -378,4 +378,19 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get userNickname => '닉네임';
+
+  @override
+  String get emailValidateFail => '이메일 형식이 아닙니다';
+
+  @override
+  String get nicknameValidateFail => '닉네임은 2자 이상, 8자 이하이고 앞뒤 공백이 없어야 합니다';
+
+  @override
+  String get userEmail => '이메일';
+
+  @override
+  String get editSuccess => '정상적으로 수정 되었어요';
+
+  @override
+  String get copyUserId => '아이디 복사하기';
 }

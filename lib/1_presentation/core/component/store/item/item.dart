@@ -409,7 +409,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TENetworkImage(
+        TENetworkCacheImage(
           url: imageUrl,
           width: width,
           ratio: ratio,

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart' as md;
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
@@ -33,10 +33,8 @@ class UserPageController extends PageController {
   bool get loading => _isLoading.value;
   File? get selectedProfileImageFile => _selectedProfileImageFile.value;
 
-  final emailController = md.TextEditingController();
-  final emailFocusNode = md.FocusNode();
-  final nicknameController = md.TextEditingController();
-  final nicknameFocusNode = md.FocusNode();
+  final emailController = TECupertinoTextFieldController();
+  final nicknameController = TECupertinoTextFieldController();
 
   Future<void> onLogOut() async {
     if (!_authService.isLogined()) {
@@ -91,7 +89,11 @@ class UserPageController extends PageController {
 
   Future<void> _loadMe() async {
     final ret = await _userRepo.getMe();
-    return ret.fold((l) => null, (r) => _user.value = r);
+    return ret.fold((l) => null, (r) {
+      emailController.text = r.email;
+      nicknameController.text = r.nickname;
+      _user.value = r;
+    });
   }
 
   Future<void> onProfileImageClicked() async {
@@ -103,7 +105,33 @@ class UserPageController extends PageController {
   }
 
   Future<void> updateMe() async {
+    if (!emailController.checkIsValid() || !nicknameController.checkIsValid()) {
+      _isLoading.value = false;
+      return;
+    }
+    emailController.unFocus();
+    nicknameController.unFocus();
+
     _isLoading.value = true;
+    String profileImageUrl = user.profileImageUrl;
+    if (selectedProfileImageFile != null) {
+      final profileImageUploadResult =
+          await _fileService.uploadImage(selectedProfileImageFile!);
+      profileImageUploadResult.fold((l) => showError(l.desc), (r) {
+        profileImageUrl = r;
+        _selectedProfileImageFile.value = null;
+      });
+    }
+    final ret = await _userRepo.updateMe(UserUpdate(
+      email: emailController.text,
+      profileImageUrl: profileImageUrl,
+      nickname: nicknameController.text,
+    ));
+    ret.fold((l) => showError(l.desc), (r) {
+      react.back();
+      showSuccess(DS.text.editSuccess);
+      _user.value = r;
+    });
     _isLoading.value = false;
   }
 
@@ -111,9 +139,7 @@ class UserPageController extends PageController {
   void dispose() {
     super.dispose();
     emailController.dispose();
-    emailFocusNode.dispose();
     nicknameController.dispose();
-    nicknameFocusNode.dispose();
   }
 
   @override

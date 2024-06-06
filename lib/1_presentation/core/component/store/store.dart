@@ -36,7 +36,8 @@ class StoreSimpleInfoRow extends GetView<IReact> {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(300),
-          child: TENetworkImage(url: profileImageUrl, width: DS.space.medium),
+          child:
+              TENetworkCacheImage(url: profileImageUrl, width: DS.space.medium),
         ),
         DS.space.hTiny,
         Expanded(

@@ -119,13 +119,13 @@ class VoucherImage extends StatelessWidget {
     return Stack(
       children: [
         imageUrls.length == 1
-            ? TENetworkImage(
+            ? TENetworkCacheImage(
                 url: imageUrls.first,
                 borderRadius: borderRadius,
               )
             : CarouselSlider(
                 items: imageUrls
-                    .map((e) => TENetworkImage(
+                    .map((e) => TENetworkCacheImage(
                           url: e,
                           borderRadius: borderRadius,
                         ))

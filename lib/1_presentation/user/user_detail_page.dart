@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
+import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
@@ -18,29 +20,81 @@ class UserDetailPage extends GetView<UserPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
-      appBar: TEAppBar(
-        title: DS.text.userMeInfo,
-      ),
-      bottomSheet: const SaveButton(),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            DS.space.vSmall,
-            Obx(() => UserImage(
-                  size: DS.space.large * 2,
-                  url: c.user.profileImageUrl,
-                  file: c.selectedProfileImageFile,
-                  onTap: c.onProfileImageClicked,
-                )),
-            DS.space.vSmall,
-            TEDivider.thick(),
-            DS.space.vSmall,
-          ],
-        ),
-      ),
-    );
+    return Obx(() => TEScaffold(
+          loading: c.loading,
+          appBar: TEAppBar(
+            title: DS.text.userMeInfo,
+          ),
+          bottomSheet: const SaveButton(),
+          body: Column(
+            children: [
+              DS.space.vSmall,
+              Center(
+                child: Obx(() => UserImage(
+                      size: DS.space.large * 2,
+                      url: c.user.profileImageUrl,
+                      file: c.selectedProfileImageFile,
+                      onTap: c.onProfileImageClicked,
+                    )),
+              ),
+              DS.space.vSmall,
+              TEDivider.thick(),
+              DS.space.vSmall,
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+                  children: [
+                    TECupertinoTextField(
+                      maxLines: 1,
+                      controller: c.emailController,
+                      autoFocus: false,
+                      helperText: DS.text.userEmail,
+                      hintText: 'teameat@teameat.kr',
+                      validate: (value) => value.isEmail,
+                      errorText: DS.text.emailValidateFail,
+                      onEditingComplete: c.nicknameController.requestFocus,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    DS.space.vSmall,
+                    TECupertinoTextField(
+                      maxLines: 1,
+                      controller: c.nicknameController,
+                      autoFocus: false,
+                      helperText: DS.text.userNickname,
+                      hintText: 'teamEat',
+                      validate: (value) {
+                        final trimmed = value.trim();
+                        if (trimmed.length != value.length) {
+                          return false;
+                        }
+                        return trimmed.length >= 2 && trimmed.length <= 8;
+                      },
+                      errorText: DS.text.nicknameValidateFail,
+                    ),
+                    DS.space.vLarge,
+                    TEonTap(
+                      onTap: () => TEClipboard.setText(c.user.id),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            DS.text.copyUserId,
+                            style: DS.textStyle.caption1,
+                          ),
+                          DS.space.hXTiny,
+                          Icon(
+                            Icons.copy,
+                            size: DS.space.xSmall,
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
 
@@ -60,12 +114,7 @@ class UserImage extends StatelessWidget {
 
   Widget _buildImage() {
     if (file == null) {
-      return TENetworkImage(
-        url: url!,
-        width: size,
-        ratio: 1 / 1,
-        borderRadius: 300,
-      );
+      return TENetworkImage(url: url!, size: size);
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(300),

@@ -24,7 +24,7 @@ class VoucherUsedPage extends GetView<VoucherUsedPageController> {
         padding: EdgeInsets.all(DS.space.xBase),
         child: Column(
           children: [
-            TENetworkImage(
+            TENetworkCacheImage(
               url: controller.voucher.itemImageUrls.first,
               borderRadius: DS.space.base,
             ),

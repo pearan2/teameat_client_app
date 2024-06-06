@@ -118,7 +118,7 @@ class PurchaseItemInfoCard extends StatelessWidget {
 
     return Row(
       children: [
-        TENetworkImage(
+        TENetworkCacheImage(
           url: item.imageUrl,
           width: imageWith,
           borderRadius: DS.space.small,

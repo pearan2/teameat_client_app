@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
-class TENetworkImage extends StatelessWidget {
+class TENetworkCacheImage extends StatelessWidget {
   final String url;
   final double? width;
 
   final double borderRadius;
   final double ratio;
 
-  const TENetworkImage({
+  const TENetworkCacheImage({
     super.key,
     required this.url,
     this.width,
@@ -69,7 +69,8 @@ class TEImageCarousel extends StatelessWidget {
     return PageLoadingWrapper(
       child: CarouselSlider(
         items: imageUrls
-            .map((e) => TENetworkImage(key: ObjectKey(e), url: e, width: width))
+            .map((e) =>
+                TENetworkCacheImage(key: ObjectKey(e), url: e, width: width))
             .toList(),
         options: CarouselOptions(
           autoPlay: false,
@@ -77,6 +78,33 @@ class TEImageCarousel extends StatelessWidget {
           viewportFraction: 1.0,
           aspectRatio: 1.0,
         ),
+      ),
+    );
+  }
+}
+
+class TENetworkImage extends StatelessWidget {
+  final String url;
+  final double size;
+
+  final double borderRadius;
+
+  const TENetworkImage({
+    super.key,
+    required this.url,
+    required this.size,
+    this.borderRadius = 300,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: Image.network(
+        url,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
       ),
     );
   }

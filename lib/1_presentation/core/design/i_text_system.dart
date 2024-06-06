@@ -124,4 +124,9 @@ abstract class ITextSystem {
   String get userNickname;
   String get userLoginType;
   String get userCreatedAt;
+  String get userEmail;
+  String get emailValidateFail;
+  String get nicknameValidateFail;
+  String get editSuccess;
+  String get copyUserId;
 }

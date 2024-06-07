@@ -129,4 +129,11 @@ abstract class ITextSystem {
   String get nicknameValidateFail;
   String get editSuccess;
   String get copyUserId;
+  String get locationServiceDisabled;
+  String get locationPermissionDenied;
+  String get withInMeterFormat;
+  String get noDistanceLimit;
+  String get distance;
+  String get distanceFormat;
+  String get accessToLocationPleaseWait;
 }

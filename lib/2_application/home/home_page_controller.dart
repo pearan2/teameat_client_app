@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' as mt;
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
@@ -20,11 +22,14 @@ class HomePageController extends PageController {
   /// controllers
   final PagingController<int, StoreSimple> pagingController =
       PagingController(firstPageKey: 0);
+  final locationController = Get.find<LocationController>();
 
   /// 상태
   final _searchOption = SearchStoreSimpleList.empty().obs;
   final _isNearbyMe = false.obs;
   final _recommendedItems = <ItemSimple>[].obs;
+  final _withInMeter = Rxn<int>();
+  final _isLoading = false.obs;
 
   /// getter
   bool get isNearbyMe => _isNearbyMe.value;
@@ -34,6 +39,10 @@ class HomePageController extends PageController {
   ItemSimple? get recommendedItem =>
       // ignore: invalid_use_of_protected_member
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
+
+  int? get withInMeter => _withInMeter.value;
+
+  bool get loading => _isLoading.value;
 
   void onFloatingButtonClickHandler() {
     final context = topKey.currentContext;
@@ -65,6 +74,31 @@ class HomePageController extends PageController {
   }
 
   /// 상태 변경 함수
+  Future<void> onWithInMeterChanged(int? value) async {
+    if (!locationController.isInitialized) {
+      _isLoading.value = true;
+      await locationController.init();
+      _isLoading.value = false;
+    }
+    if (locationController.data == null) {
+      return;
+    }
+    final loc = locationController.data!;
+    if (loc.latitude == null || loc.longitude == null) {
+      showError(DS.text.locationServiceDisabled);
+      return;
+    }
+    _withInMeter.value = value;
+    _searchOption.value = _searchOption.value.copyWith(
+      pageNumber: 0,
+      baseLocation: value == null
+          ? null
+          : Point(latitude: loc.latitude!, longitude: loc.longitude!),
+      withInMeter: value,
+    );
+    pagingController.refresh();
+  }
+
   Future<void> onNearbyMeClickHandler() async {
     _isNearbyMe.value = !isNearbyMe;
   }
@@ -78,8 +112,8 @@ class HomePageController extends PageController {
   Future<void> loadStores(int currentPageNumber) async {
     final ret = await _storeRepo.getStores(_searchOption.value);
     ret.fold((l) => showError(l.desc), (r) {
-      if (r.isEmpty) {
-        pagingController.appendLastPage([]);
+      if (r.length < _searchOption.value.pageSize) {
+        pagingController.appendLastPage(r);
       } else {
         pagingController.appendPage(r, currentPageNumber + 1);
         _searchOption.value =

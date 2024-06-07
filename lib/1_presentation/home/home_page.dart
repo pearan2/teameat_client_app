@@ -10,6 +10,8 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
 class HomePage extends GetView<HomePageController> {
@@ -18,36 +20,41 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
-    return TEScaffold(
-      onFloatingButtonClick: controller.onFloatingButtonClickHandler,
-      activated: BottomNavigatorType.home,
-      body: Padding(
-        padding: EdgeInsets.only(top: topAreaHeight),
-        child: RefreshIndicator(
-          onRefresh: () async {
-            controller.pageRefresh();
-          },
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                key: controller.topKey,
-                backgroundColor: DS.color.background000,
-                surfaceTintColor: DS.color.background000,
-                snap: true,
-                floating: true,
-                toolbarHeight: DS.space.tiny,
-                expandedHeight: GetPlatform.isAndroid ? DS.space.medium : null,
-                flexibleSpace: const HomePageSearcher(),
-              ),
-              PagedSliverList(
-                pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
-                  noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
-                  itemBuilder: (_, store, idx) => StoreCard(store: store),
+    return Obx(
+      () => TEScaffold(
+        loadingText: DS.text.accessToLocationPleaseWait,
+        loading: c.loading,
+        onFloatingButtonClick: controller.onFloatingButtonClickHandler,
+        activated: BottomNavigatorType.home,
+        body: Padding(
+          padding: EdgeInsets.only(top: topAreaHeight),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              controller.pageRefresh();
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  key: controller.topKey,
+                  backgroundColor: DS.color.background000,
+                  surfaceTintColor: DS.color.background000,
+                  snap: true,
+                  floating: true,
+                  toolbarHeight: DS.space.tiny,
+                  expandedHeight:
+                      GetPlatform.isAndroid ? DS.space.medium : null,
+                  flexibleSpace: const HomePageSearcher(),
                 ),
-              ),
-              SliverToBoxAdapter(child: DS.space.vSmall),
-            ],
+                PagedSliverList(
+                  pagingController: controller.pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
+                    noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
+                    itemBuilder: (_, store, idx) => StoreCard(store: store),
+                  ),
+                ),
+                SliverToBoxAdapter(child: DS.space.vSmall),
+              ],
+            ),
           ),
         ),
       ),
@@ -75,6 +82,7 @@ class StoreCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
               horizontal: AppWidget.horizontalPadding),
           child: StoreSimpleInfoRow(
+            location: store.location,
             storeId: store.id,
             profileImageUrl: store.profileImageUrl,
             name: store.name,
@@ -116,6 +124,23 @@ class HomePageSearcher extends GetView<HomePageController> {
               ),
             ),
           ),
+          DS.space.hXSmall,
+          Obx(() => TESelectorBottomSheet<int?>(
+                borderRadius: DS.space.tiny,
+                candidates: const [500, 1000, 2000, null],
+                onSelected: c.onWithInMeterChanged,
+                isEqual: (lhs, rhs) => lhs == rhs,
+                toLabel: (v) {
+                  if (v == null) {
+                    return DS.text.noDistanceLimit;
+                  } else {
+                    return v.format(DS.text.withInMeterFormat);
+                  }
+                },
+                icon: Icons.location_pin,
+                selectedValue: controller.withInMeter,
+                text: DS.text.distance,
+              )),
         ],
       ),
     );

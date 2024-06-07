@@ -67,6 +67,7 @@ class StorePage extends GetView<StorePageController> {
                         name: controller.store.name,
                         subInfo: controller.store.oneLineIntroduce,
                         storeId: controller.storeId,
+                        location: controller.store.location,
                         isButton: false,
                       ),
                     ),

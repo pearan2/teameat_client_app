@@ -16,7 +16,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/voucher/voucher_detail_page_controller.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
-import 'package:teameat/99_util/extension/int.dart';
+import 'package:teameat/99_util/extension/num.dart';
 
 class VoucherDetailPage extends GetView<VoucherDetailPageController> {
   const VoucherDetailPage({super.key});
@@ -74,6 +74,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                       child: StoreSimpleInfoRow(
+                        location: controller.voucher.storeLocation,
                         profileImageUrl:
                             controller.voucher.storeProfileImageUrl,
                         name: controller.voucher.storeName,

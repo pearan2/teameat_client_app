@@ -6,6 +6,7 @@ import 'package:teameat/1_presentation/core/react.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
@@ -56,4 +57,5 @@ Future<void> configDependency() async {
       LikeController<IStoreItemRepository>()..load());
   Get.put<LikeController<IStoreRepository>>(
       LikeController<IStoreRepository>()..load());
+  Get.put<LocationController>(LocationController());
 }

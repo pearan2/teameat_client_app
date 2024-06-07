@@ -5,7 +5,6 @@ class InfoRow extends StatelessWidget {
   final Widget? icon;
   final String title;
   final String content;
-  final double? titleWidth;
   final bool withUnderLine;
 
   const InfoRow({
@@ -13,7 +12,6 @@ class InfoRow extends StatelessWidget {
     this.icon,
     required this.title,
     required this.content,
-    this.titleWidth = 80,
     this.withUnderLine = false,
   });
 
@@ -25,8 +23,10 @@ class InfoRow extends StatelessWidget {
         icon ?? const SizedBox(),
         Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: DS.space.xTiny),
-          width: titleWidth,
+          padding: EdgeInsets.only(
+            top: DS.space.xTiny,
+            left: icon == null ? 0.0 : DS.space.tiny,
+          ),
           child: Text(
             title,
             style: DS.textStyle.paragraph3.copyWith(

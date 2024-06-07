@@ -12,7 +12,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/store_item_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
-import 'package:teameat/99_util/extension/int.dart';
+import 'package:teameat/99_util/extension/num.dart';
 
 class StoreItemPage extends GetView<StoreItemPageController> {
   @override
@@ -58,6 +58,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                       DS.space.vTiny,
                       PageLoadingWrapper(
                           child: StoreSimpleInfoRow(
+                        location: controller.item.store.location,
                         storeId: controller.item.store.id,
                         profileImageUrl: controller.item.store.profileImageUrl,
                         name: controller.item.store.name,

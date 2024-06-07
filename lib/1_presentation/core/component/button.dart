@@ -360,15 +360,21 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   }
 
   bool isSelected(T value) {
-    if (selectedValue == null) {
-      return false;
+    if (isEqual == null) {
+      return selectedValue! == value;
     } else {
-      if (isEqual == null) {
-        return selectedValue! == value;
-      } else {
-        return isEqual!(selectedValue as T, value);
-      }
+      return isEqual!(selectedValue as T, value);
     }
+
+    // if (selectedValue == null) {
+    //   return false;
+    // } else {
+    //   if (isEqual == null) {
+    //     return selectedValue! == value;
+    //   } else {
+    //     return isEqual!(selectedValue as T, value);
+    //   }
+    // }
   }
 
   TextStyle getTextStyle(T value) {
@@ -382,26 +388,27 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   void showSelector(double maxHeight) {
     final react = Get.find<IReact>();
 
-    showTEBottomSheet(Container(
-      constraints: BoxConstraints(maxHeight: maxHeight),
-      padding: EdgeInsets.only(bottom: DS.space.tiny),
-      child: ListView.separated(
-        padding: EdgeInsets.all(DS.space.xBase),
-        shrinkWrap: true,
-        itemBuilder: (_, idx) => TEonTap(
-          onTap: () {
-            onSelected(candidates[idx]);
-            react.back();
-          },
-          child: Text(
-            toLabelString(candidates[idx]),
-            style: getTextStyle(candidates[idx]),
+    showTEBottomSheet(
+      Container(
+        constraints: BoxConstraints(maxHeight: maxHeight),
+        child: ListView.separated(
+          padding: EdgeInsets.only(bottom: DS.space.xBase),
+          shrinkWrap: true,
+          itemBuilder: (_, idx) => TEonTap(
+            onTap: () {
+              onSelected(candidates[idx]);
+              react.back();
+            },
+            child: Text(
+              toLabelString(candidates[idx]),
+              style: getTextStyle(candidates[idx]),
+            ),
           ),
+          separatorBuilder: (_, __) => DS.space.vSmall,
+          itemCount: candidates.length,
         ),
-        separatorBuilder: (_, __) => DS.space.vSmall,
-        itemCount: candidates.length,
       ),
-    ));
+    );
   }
 
   @override

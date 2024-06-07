@@ -1,9 +1,27 @@
+import 'dart:math';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 
 part 'store.freezed.dart';
 
 part 'store.g.dart';
+
+extension PointExtension on Point {
+  double distanceKilo(Point target) {
+    const p = 0.017453292519943295;
+    const c = cos;
+    const radiusOfEarth = 6371;
+
+    final a = 0.5 -
+        c((target.latitude - latitude) * p) / 2 +
+        c(latitude * p) *
+            c(target.latitude * p) *
+            (1 - c((target.longitude - longitude) * p)) /
+            2;
+    return radiusOfEarth * 2 * asin(sqrt(a));
+  }
+}
 
 @freezed
 class Point with _$Point {
@@ -56,16 +74,21 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     List<String>? hashTags,
     List<String>? categories,
     Point? baseLocation,
+    int? withInMeter,
     required int pageNumber,
+    required int pageSize,
   }) = _SearchStoreSimpleList;
 
   factory SearchStoreSimpleList.empty() {
     return const SearchStoreSimpleList(
-        searchText: "",
-        hashTags: [],
-        categories: [],
-        baseLocation: null,
-        pageNumber: 0);
+      searchText: "",
+      hashTags: [],
+      categories: [],
+      baseLocation: null,
+      withInMeter: null,
+      pageNumber: 0,
+      pageSize: 5,
+    );
   }
   factory SearchStoreSimpleList.fromJson(Map<String, Object?> json) =>
       _$SearchStoreSimpleListFromJson(json);
@@ -76,12 +99,21 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     if (target.hashTags != null) ret['hashTags'] = target.hashTags;
     if (target.categories != null) ret['categories'] = target.categories;
     if (target.baseLocation != null) {
-      ret['baseLocation'] = {
-        'longitude': target.baseLocation!.longitude.toString(),
-        'latitude': target.baseLocation!.latitude.toString()
-      };
+      ret['baseLocation.longitude'] = target.baseLocation!.longitude.toString();
+      ret['baseLocation.latitude'] = target.baseLocation!.latitude.toString();
+    }
+
+    // if (target.baseLocation != null) {
+    //   ret['baseLocation'] = {
+    //     'longitude': target.baseLocation!.longitude.toString(),
+    //     'latitude': target.baseLocation!.latitude.toString()
+    //   };
+    // }
+    if (target.withInMeter != null) {
+      ret['withInMeter'] = target.withInMeter.toString();
     }
     ret['pageNumber'] = target.pageNumber.toString();
+    ret['pageSize'] = target.pageSize.toString();
     return ret;
   }
 }

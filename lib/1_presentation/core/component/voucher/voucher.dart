@@ -4,7 +4,7 @@ import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
-import 'package:teameat/99_util/extension/int.dart';
+import 'package:teameat/99_util/extension/num.dart';
 
 class VoucherDDay extends StatelessWidget {
   final DateTime willBeExpiredAt;

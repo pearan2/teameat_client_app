@@ -5,7 +5,7 @@ import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/99_util/extension/int.dart';
+import 'package:teameat/99_util/extension/num.dart';
 
 class StoreItemPageController extends PageController {
   final _storeItemRepo = Get.find<IStoreItemRepository>();

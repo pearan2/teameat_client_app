@@ -393,4 +393,25 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get copyUserId => '아이디 복사하기';
+
+  @override
+  String get locationPermissionDenied => '위치 권한이 거부되었어요';
+
+  @override
+  String get locationServiceDisabled => '위치 정보 사용이 불가능해요';
+
+  @override
+  String get withInMeterFormat => '### 미터 이내';
+
+  @override
+  String get noDistanceLimit => '거리제한 없음';
+
+  @override
+  String get distance => '거리';
+
+  @override
+  String get distanceFormat => '###.#km';
+
+  @override
+  String get accessToLocationPleaseWait => '위치 정보를 가져오고 있습니다\n잠시만 기다려주세요';
 }

@@ -13,6 +13,7 @@ class TEScaffold extends StatelessWidget {
   final Color? bottomSheetBackgroundColor;
   final BottomNavigatorType? activated;
   final bool loading;
+  final String? loadingText;
   final void Function(bool didPop)? onPop;
   final void Function()? onFloatingButtonClick;
 
@@ -23,6 +24,7 @@ class TEScaffold extends StatelessWidget {
     this.bottomSheet,
     this.activated,
     this.bottomSheetBackgroundColor,
+    this.loadingText,
     this.loading = false,
     this.onPop,
     this.onFloatingButtonClick,
@@ -75,8 +77,26 @@ class TEScaffold extends StatelessWidget {
               height: double.infinity,
               color: DS.color.background800.withOpacity(0.7),
               child: Center(
-                  child: TELoading(
-                size: DS.space.large,
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  loadingText == null
+                      ? const SizedBox()
+                      : DefaultTextStyle(
+                          style: const TextStyle(),
+                          child: Text(
+                            loadingText!,
+                            textAlign: TextAlign.center,
+                            style: DS.textStyle.paragraph3.copyWith(
+                              color: DS.color.background000,
+                            ),
+                          ),
+                        ),
+                  loadingText == null ? const SizedBox() : DS.space.vSmall,
+                  TELoading(
+                    size: DS.space.large,
+                  ),
+                ],
               )),
             ),
           )

@@ -39,6 +39,7 @@ class StoreLikePage extends GetView<StoreLikePageController> {
                 profileImageUrl: store.profileImageUrl,
                 name: store.name,
                 subInfo: store.address,
+                location: store.location,
                 storeId: store.id,
               ),
             ),

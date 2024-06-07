@@ -99,7 +99,6 @@ class PaddingInfoRow extends StatelessWidget {
       child: InfoRow(
         title: title,
         content: content,
-        titleWidth: null,
         withUnderLine: withUnderLine,
       ),
     );

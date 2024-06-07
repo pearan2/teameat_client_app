@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
+import 'package:teameat/3_domain/store/store.dart';
 
 class StoreSimpleInfoRow extends GetView<IReact> {
   final int storeId;
@@ -13,6 +15,7 @@ class StoreSimpleInfoRow extends GetView<IReact> {
   final String name;
   final String subInfo;
   final bool isButton;
+  final Point location;
 
   const StoreSimpleInfoRow({
     super.key,
@@ -20,6 +23,7 @@ class StoreSimpleInfoRow extends GetView<IReact> {
     required this.name,
     required this.subInfo,
     required this.storeId,
+    required this.location,
     this.isButton = true,
   });
 
@@ -70,6 +74,8 @@ class StoreSimpleInfoRow extends GetView<IReact> {
             ),
           ),
           _buildButton(),
+          DS.space.hTiny,
+          Distance(point: location),
           DS.space.hTiny,
           StoreLike(storeId: storeId),
         ],

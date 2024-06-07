@@ -28,7 +28,6 @@ class HomePageController extends PageController {
   final _searchOption = SearchStoreSimpleList.empty().obs;
   final _isNearbyMe = false.obs;
   final _recommendedItems = <ItemSimple>[].obs;
-  final _withInMeter = Rxn<int>();
   final _isLoading = false.obs;
 
   /// getter
@@ -40,7 +39,7 @@ class HomePageController extends PageController {
       // ignore: invalid_use_of_protected_member
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
 
-  int? get withInMeter => _withInMeter.value;
+  int? get withInMeter => _searchOption.value.withInMeter;
 
   bool get loading => _isLoading.value;
 
@@ -88,7 +87,6 @@ class HomePageController extends PageController {
       showError(DS.text.locationServiceDisabled);
       return;
     }
-    _withInMeter.value = value;
     _searchOption.value = _searchOption.value.copyWith(
       pageNumber: 0,
       baseLocation: value == null

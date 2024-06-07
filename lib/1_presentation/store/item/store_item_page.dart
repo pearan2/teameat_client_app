@@ -124,7 +124,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                               originalPrice: controller.item.originalPrice,
                               price: controller.item.price,
                               isTitle: true)),
-                      DS.space.vSmall,
+                      DS.space.vLarge,
                       StoreItemUsageInfo(item: controller.item),
                       DS.space.vLarge
                     ],
@@ -182,10 +182,8 @@ class StoreItemUsageInfo extends StatelessWidget {
           DS.text.itemUsageInfo,
           style: DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
         ),
-        DS.space.vSmall,
-        Divider(
-          color: DS.color.background800,
-        ),
+        // DS.space.vSmall,
+        Divider(color: DS.color.background800),
         buildInfo(DS.text.expiredAt, getExpiredAtString()),
         buildInfo(DS.text.phone, item.store.phone),
         buildInfo(DS.text.operationTime, item.store.operationTime),

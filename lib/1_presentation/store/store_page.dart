@@ -54,6 +54,7 @@ class StorePage extends GetView<StorePageController> {
                 toolbarHeight: DS.space.large + topAreaHeight,
                 flexibleSpace: Container(
                   padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(

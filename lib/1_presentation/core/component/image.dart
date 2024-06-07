@@ -32,7 +32,6 @@ class TENetworkCacheImage extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
               final larger = max(constraints.maxHeight, constraints.maxWidth);
               return Image.network(
-                key: ValueKey('$url$larger'),
                 url,
                 fit: BoxFit.cover,
                 cacheWidth: (larger).toInt(),

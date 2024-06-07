@@ -31,46 +31,49 @@ class StoreSimpleInfoRow extends GetView<IReact> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(300),
-          child:
-              TENetworkCacheImage(url: profileImageUrl, width: DS.space.medium),
-        ),
-        DS.space.hTiny,
-        Expanded(
-          child: TEonTap(
-            onTap: () {
-              if (isButton) {
-                controller.toStoreDetail(storeId);
-              }
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  name,
-                  overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.paragraph3
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                DS.space.vXXTiny,
-                Text(
-                  subInfo,
-                  overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.caption2,
-                ),
-              ],
+    return IntrinsicHeight(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(300),
+            child: TENetworkCacheImage(
+                url: profileImageUrl, width: DS.space.medium),
+          ),
+          DS.space.hTiny,
+          Expanded(
+            child: TEonTap(
+              onTap: () {
+                if (isButton) {
+                  controller.toStoreDetail(storeId);
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    overflow: TextOverflow.ellipsis,
+                    style: DS.textStyle.paragraph3
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  DS.space.vXXTiny,
+                  Text(
+                    subInfo,
+                    overflow: TextOverflow.ellipsis,
+                    style: DS.textStyle.caption2,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        _buildButton(),
-        DS.space.hTiny,
-        StoreLike(storeId: storeId),
-      ],
+          _buildButton(),
+          DS.space.hTiny,
+          StoreLike(storeId: storeId),
+        ],
+      ),
     );
   }
 }
@@ -85,9 +88,12 @@ class StoreLike extends GetView<LikeController<IStoreRepository>> {
     return TEonTap(
       isLoginRequired: true,
       onTap: () => controller.toggleLike(storeId),
-      child: Obx(() => controller.isLike(storeId)
-          ? DS.image.bookmarkClicked
-          : DS.image.bookmark),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: DS.space.xTiny),
+        child: Obx(() => controller.isLike(storeId)
+            ? DS.image.bookmarkClicked
+            : DS.image.bookmark),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
@@ -22,36 +22,32 @@ class TENetworkCacheImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    final imageWidth = width;
+    final imageHeight = width == null ? null : width! / ratio;
+
+    return ExtendedImage.network(
+      url,
+      width: imageWidth,
+      height: imageHeight,
       borderRadius: BorderRadius.circular(borderRadius),
-      child: SizedBox(
-        width: width ?? width,
-        child: AspectRatio(
-          aspectRatio: ratio,
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              final larger = max(constraints.maxHeight, constraints.maxWidth);
-              return Image.network(
-                url,
-                fit: BoxFit.cover,
-                cacheWidth: (larger).toInt(),
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null) {
-                    return TEShimmer.fromSize(width: larger, height: larger);
-                  } else {
-                    return child;
-                  }
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Center(
-                    child: DS.image.mainIconWithText,
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      ),
+      fit: BoxFit.cover,
+      cache: true,
+      retries: 3, // 3회까지 리트라이
+      timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
+      loadStateChanged: (state) {
+        switch (state) {
+          // ignore: constant_pattern_never_matches_value_type
+          case LoadState.loading:
+            return const Center(
+              child: TELoading(),
+            );
+          // ignore: constant_pattern_never_matches_value_type
+          case LoadState.failed:
+            return Center(
+              child: DS.image.mainIconWithText,
+            );
+        }
+      },
     );
   }
 }
@@ -85,7 +81,6 @@ class TEImageCarousel extends StatelessWidget {
 class TENetworkImage extends StatelessWidget {
   final String url;
   final double size;
-
   final double borderRadius;
 
   const TENetworkImage({

@@ -414,4 +414,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get accessToLocationPleaseWait => '위치 정보를 가져오고 있습니다\n잠시만 기다려주세요';
+
+  @override
+  String get accessToLocationTimeout =>
+      '위치 정보를 가지고 오는데 시간이 오래 걸리고 있어요. 다른 위치에서 다시 시도해주세요.';
 }

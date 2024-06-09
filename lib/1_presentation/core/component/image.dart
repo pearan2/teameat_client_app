@@ -25,29 +25,27 @@ class TENetworkCacheImage extends StatelessWidget {
     final imageWidth = width;
     final imageHeight = width == null ? null : width! / ratio;
 
-    return ExtendedImage.network(
-      url,
-      width: imageWidth,
-      height: imageHeight,
+    return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
-      fit: BoxFit.cover,
-      cache: true,
-      retries: 3, // 3회까지 리트라이
-      timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
-      loadStateChanged: (state) {
-        switch (state) {
-          // ignore: constant_pattern_never_matches_value_type
-          case LoadState.loading:
-            return const Center(
-              child: TELoading(),
-            );
-          // ignore: constant_pattern_never_matches_value_type
-          case LoadState.failed:
-            return Center(
-              child: DS.image.mainIconWithText,
-            );
-        }
-      },
+      child: ExtendedImage.network(
+        url,
+        width: imageWidth,
+        height: imageHeight,
+        fit: BoxFit.cover,
+        cache: true,
+        retries: 3, // 3회까지 리트라이
+        timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
+        loadStateChanged: (state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return const Center(child: TELoading());
+            case LoadState.failed:
+              return Center(child: DS.image.mainIconWithText);
+            case LoadState.completed:
+              return null;
+          }
+        },
+      ),
     );
   }
 }

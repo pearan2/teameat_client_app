@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
@@ -22,13 +23,43 @@ class LocationController {
 
   final _location = Location();
   bool _isInitialized = false;
-  late LocationData _data;
+  final _data = Rxn<LocationData>();
 
-  LocationData? get data => _isInitialized ? _data : null;
+  LocationData? get data => _data.value;
   bool get isInitialized => _isInitialized;
 
   void _locationDataListener(LocationData locationData) {
-    _data = locationData;
+    _isInitialized = true;
+    _data.value = locationData;
+  }
+
+  LocationController() {
+    _tryAutoInit();
+  }
+
+  Future<void> _loadLocalData() async {
+    _location.changeSettings(
+        interval: locationUpdateIntervalSec * 5); // 5초에 한번 업데이트
+    _location.onLocationChanged.listen(_locationDataListener);
+    final ret = await Future.any([
+      _location.getLocation(),
+      Future.delayed(const Duration(seconds: 5), () => null)
+    ]);
+    if (ret == null) {
+      showError(DS.text.accessToLocationTimeout);
+      return;
+    } else {
+      _data.value = ret;
+      _isInitialized = true;
+    }
+  }
+
+  Future<void> _tryAutoInit() async {
+    PermissionStatus permissionGranted = await _location.hasPermission();
+    if (!permissionGranted.isGranted()) {
+      return;
+    }
+    return _loadLocalData();
   }
 
   Future<void> init() async {
@@ -48,10 +79,6 @@ class LocationController {
         return;
       }
     }
-    _location.changeSettings(
-        interval: locationUpdateIntervalSec * 1000); // 10초에 한번 업데이트
-    _location.onLocationChanged.listen(_locationDataListener);
-    _data = await _location.getLocation();
-    _isInitialized = true;
+    return _loadLocalData();
   }
 }

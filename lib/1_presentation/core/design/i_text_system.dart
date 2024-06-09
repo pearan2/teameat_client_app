@@ -136,4 +136,5 @@ abstract class ITextSystem {
   String get distance;
   String get distanceFormat;
   String get accessToLocationPleaseWait;
+  String get accessToLocationTimeout;
 }

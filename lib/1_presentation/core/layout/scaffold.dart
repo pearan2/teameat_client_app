@@ -266,7 +266,7 @@ class _BottomNavigatorToggle extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           clicked ? type.getIconClicked() : type.getIcon(),
-          DS.space.vXTiny,
+          DS.space.vXXTiny,
           clicked ? type.getTextClicked() : type.getText(),
         ],
       ),
@@ -285,7 +285,7 @@ class _TEBottomNavigator extends StatelessWidget {
     return DefaultTextStyle(
       style: const TextStyle(),
       child: Container(
-        height: DS.space.large +
+        height: DS.space.medium +
             DS.space.tiny +
             (GetPlatform.isIOS ? DS.space.xBase : 0.0),
         padding:

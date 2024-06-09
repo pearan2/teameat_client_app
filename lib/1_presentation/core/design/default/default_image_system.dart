@@ -72,43 +72,43 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get bottomIconHome => SvgPicture.asset(
         'assets/image/icon/bottom/home.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 
   @override
   SvgPicture get bottomIconHomeClicked => SvgPicture.asset(
         'assets/image/icon/bottom/home_clicked.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 
   @override
   SvgPicture get bottomIconUser => SvgPicture.asset(
         'assets/image/icon/bottom/profile.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 
   @override
   SvgPicture get bottomIconUserClicked => SvgPicture.asset(
         'assets/image/icon/bottom/profile_clicked.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 
   @override
   SvgPicture get bottomIconVoucher => SvgPicture.asset(
         'assets/image/icon/bottom/inventory.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 
   @override
   SvgPicture get bottomIconVoucherClicked => SvgPicture.asset(
         'assets/image/icon/bottom/inventory_clicked.svg',
-        height: 22,
-        width: 22,
+        height: 20,
+        width: 20,
       );
 ///////////////////////////
 

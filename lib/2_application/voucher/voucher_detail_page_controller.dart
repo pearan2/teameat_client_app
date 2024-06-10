@@ -23,11 +23,7 @@ class VoucherDetailPageController extends PageController {
   final _tableNumber = RxnInt();
 
   final _isLoading = false.obs;
-
-  void initValues() {
-    _useQuantity.value = 1;
-    onVoucherPasswordReset();
-  }
+  bool _isQRProcessing = false;
 
   VoucherDetail get voucher => _voucher.value;
   int get useVoucherQuantity => _useQuantity.value;
@@ -59,7 +55,6 @@ class VoucherDetailPageController extends PageController {
     _isLoading.value = false;
     ret.fold((l) {
       showError(l.desc);
-      initValues();
     }, (r) {
       react.toVoucherUsedOffAll(
           voucher: voucher, usedQuantity: useVoucherQuantity);
@@ -83,7 +78,8 @@ class VoucherDetailPageController extends PageController {
       final object = jsonDecode(jsonString);
       final voucherPassword = object['voucherPassword'] as String;
       final tableNumber = object['tableNumber'] as int;
-      if (!isLoading) {
+      if (!_isQRProcessing) {
+        _isQRProcessing = true;
         _voucherPassword.value = voucherPassword;
         _tableNumber.value = tableNumber;
         _useVoucher();
@@ -91,9 +87,10 @@ class VoucherDetailPageController extends PageController {
     } catch (e) {}
   }
 
-  void onVoucherPasswordReset() {
+  void onVoucherUseReset() {
     _voucherPassword.value = '';
     _tableNumber.value = null;
+    _isQRProcessing = false;
   }
 
   void onVoucherPasswordDeleteLast() {

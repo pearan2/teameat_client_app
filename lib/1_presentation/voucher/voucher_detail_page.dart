@@ -313,7 +313,7 @@ class VoucherUseByPasswordDialog extends GetView<VoucherDetailPageController> {
             ),
             VoucherUseDialogGridButton(
               content: const Icon(Icons.refresh),
-              onTap: controller.onVoucherPasswordReset,
+              onTap: controller.onVoucherUseReset,
             ),
             VoucherUseDialogGridButton(
               content: '0',
@@ -381,7 +381,7 @@ class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
           onTap: () {
             c.react.back();
             controller.react.closeBottomSheet();
-            controller.onVoucherPasswordReset();
+            controller.onVoucherUseReset();
             showTEDialog(child: const VoucherUseByPasswordDialog());
           },
           text: DS.text.useVoucherByPassword,
@@ -435,7 +435,7 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
           isLoginRequired: true,
           onTap: () {
             controller.react.closeBottomSheet();
-            controller.onVoucherPasswordReset();
+            controller.onVoucherUseReset();
             if (controller.voucher.voucherUseDefaultType == 'QR_CODE_SCAN') {
               showTEDialog(child: const VoucherUseByQRScanDialog());
             } else {

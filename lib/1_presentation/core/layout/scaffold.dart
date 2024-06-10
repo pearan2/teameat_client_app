@@ -200,6 +200,8 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
         return DS.image.bottomIconHomeClicked;
       case BottomNavigatorType.inventory:
         return DS.image.bottomIconVoucherClicked;
+      case BottomNavigatorType.community:
+        return DS.image.bottomIconCommunityClicked;
       case BottomNavigatorType.profile:
         return DS.image.bottomIconUserClicked;
       default:
@@ -213,6 +215,8 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
         return DS.image.bottomIconHome;
       case BottomNavigatorType.inventory:
         return DS.image.bottomIconVoucher;
+      case BottomNavigatorType.community:
+        return DS.image.bottomIconCommunity;
       case BottomNavigatorType.profile:
         return DS.image.bottomIconUser;
       default:
@@ -238,6 +242,12 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
           style: DS.textStyle.caption2
               .copyWith(color: color ?? DS.color.background500),
         );
+      case BottomNavigatorType.community:
+        return Text(
+          DS.text.menuApplication,
+          style: DS.textStyle.caption2
+              .copyWith(color: color ?? DS.color.background500),
+        );
       case BottomNavigatorType.profile:
         return Text(
           DS.text.profile,
@@ -250,7 +260,7 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
   }
 }
 
-enum BottomNavigatorType { home, inventory, profile }
+enum BottomNavigatorType { home, inventory, community, profile }
 
 class _BottomNavigatorToggle extends StatelessWidget {
   final bool clicked;
@@ -311,6 +321,15 @@ class _TEBottomNavigator extends StatelessWidget {
                 type: BottomNavigatorType.inventory,
               ),
             ),
+            // community 작업 들어갈때 추가
+            // TEonTap(
+            //   onTap: react.toCommunityOffAll,
+            //   isLoginRequired: true,
+            //   child: _BottomNavigatorToggle(
+            //     clicked: activated == BottomNavigatorType.community,
+            //     type: BottomNavigatorType.community,
+            //   ),
+            // ),
             TEonTap(
               onTap: react.toUserOffAll,
               child: _BottomNavigatorToggle(

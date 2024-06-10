@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
@@ -17,12 +20,13 @@ class VoucherDetailPageController extends PageController {
 
   final _useQuantity = RxInt(1);
   final _voucherPassword = ''.obs;
+  final _tableNumber = RxnInt();
 
   final _isLoading = false.obs;
 
   void initValues() {
     _useQuantity.value = 1;
-    _voucherPassword.value = '';
+    onVoucherPasswordReset();
   }
 
   VoucherDetail get voucher => _voucher.value;
@@ -48,8 +52,10 @@ class VoucherDetailPageController extends PageController {
     final ret = await _voucherRepo.useVoucher(
         voucherId,
         UseVoucher(
-            storeVoucherPassword: _voucherPassword.value,
-            quantity: useVoucherQuantity));
+          storeVoucherPassword: _voucherPassword.value,
+          quantity: useVoucherQuantity,
+          tableNumber: _tableNumber.value,
+        ));
     _isLoading.value = false;
     ret.fold((l) {
       showError(l.desc);
@@ -71,8 +77,23 @@ class VoucherDetailPageController extends PageController {
     }
   }
 
+  void scanDataListener(Barcode data) {
+    try {
+      final jsonString = data.code!;
+      final object = jsonDecode(jsonString);
+      final voucherPassword = object['voucherPassword'] as String;
+      final tableNumber = object['tableNumber'] as int;
+      if (!isLoading) {
+        _voucherPassword.value = voucherPassword;
+        _tableNumber.value = tableNumber;
+        _useVoucher();
+      }
+    } catch (e) {}
+  }
+
   void onVoucherPasswordReset() {
     _voucherPassword.value = '';
+    _tableNumber.value = null;
   }
 
   void onVoucherPasswordDeleteLast() {

@@ -117,4 +117,9 @@ class React extends IReact {
   void toUserDetail() {
     Get.toNamed('/user/detail');
   }
+
+  @override
+  void toCommunityOffAll() {
+    Get.offAllNamed('/community');
+  }
 }

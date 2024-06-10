@@ -71,6 +71,7 @@ abstract class ITextSystem {
   String get useVoucherCount;
   String get useVoucherCountFormat;
   String get pleaseInputStoreVoucherPassword;
+  String get pleaseScanStoreVoucherQRCode;
   String get successUseVoucher;
   String get logOut;
   String get signOut;
@@ -137,4 +138,6 @@ abstract class ITextSystem {
   String get distanceFormat;
   String get accessToLocationPleaseWait;
   String get accessToLocationTimeout;
+  String get menuApplication;
+  String get useVoucherByPassword;
 }

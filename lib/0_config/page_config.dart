@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/community/community_page.dart';
+import 'package:teameat/1_presentation/community/community_page_binding.dart';
 import 'package:teameat/1_presentation/core/auth/login_page.dart';
 import 'package:teameat/1_presentation/core/auth/login_page_binding.dart';
 import 'package:teameat/1_presentation/core/payment/payment_page.dart';
@@ -41,6 +43,12 @@ List<GetPage> allPages() => [
         name: "/home",
         binding: HomePageBinding(),
         page: () => const HomePage(),
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/community",
+        binding: CommunityPageBinding(),
+        page: () => const CommunityPage(),
         transition: Transition.noTransition,
       ),
       GetPage(

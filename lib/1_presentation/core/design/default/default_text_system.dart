@@ -418,4 +418,13 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get accessToLocationTimeout =>
       '위치 정보를 가지고 오는데 시간이 오래 걸리고 있어요. 다른 위치에서 다시 시도해주세요.';
+
+  @override
+  String get menuApplication => '신청하기';
+
+  @override
+  String get pleaseScanStoreVoucherQRCode => '매장의 QR코드를 스캔해주세요';
+
+  @override
+  String get useVoucherByPassword => '매장 비밀번호로 사용하기';
 }

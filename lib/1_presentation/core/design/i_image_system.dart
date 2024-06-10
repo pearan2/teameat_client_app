@@ -22,6 +22,8 @@ abstract class IImageSystem {
   SvgPicture get bottomIconHomeClicked;
   SvgPicture get bottomIconVoucher;
   SvgPicture get bottomIconVoucherClicked;
+  SvgPicture get bottomIconCommunity;
+  SvgPicture get bottomIconCommunityClicked;
   SvgPicture get bottomIconUser;
   SvgPicture get bottomIconUserClicked;
 

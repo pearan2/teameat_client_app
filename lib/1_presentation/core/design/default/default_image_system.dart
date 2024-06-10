@@ -110,6 +110,21 @@ class DefaultImageSystem extends IImageSystem {
         height: 20,
         width: 20,
       );
+
+  @override
+  SvgPicture get bottomIconCommunity => SvgPicture.asset(
+        'assets/image/icon/bottom/community.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get bottomIconCommunityClicked => SvgPicture.asset(
+        'assets/image/icon/bottom/community_clicked.svg',
+        height: 20,
+        width: 20,
+      );
+
 ///////////////////////////
 
   @override

@@ -6,6 +6,8 @@ import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart'
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 class TENetworkCacheImage extends StatelessWidget {
+  static const imageMaxWidth = 720.0;
+
   final String url;
   final double? width;
 
@@ -24,25 +26,29 @@ class TENetworkCacheImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
-      child: AspectRatio(
-        aspectRatio: ratio,
-        child: ExtendedImage.network(
-          url,
-          width: width,
-          fit: BoxFit.cover,
-          cache: true,
-          retries: 3, // 3회까지 리트라이
-          timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
-          loadStateChanged: (state) {
-            switch (state.extendedImageLoadState) {
-              case LoadState.loading:
-                return const Center(child: TELoading());
-              case LoadState.failed:
-                return Center(child: DS.image.mainIconWithText);
-              case LoadState.completed:
-                return null;
-            }
-          },
+      child: SizedBox(
+        width: width,
+        height: width == null ? null : width! / ratio,
+        child: AspectRatio(
+          aspectRatio: ratio,
+          child: ExtendedImage.network(
+            url,
+            width: width,
+            fit: BoxFit.cover,
+            cache: true,
+            retries: 3, // 3회까지 리트라이
+            timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
+            loadStateChanged: (state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return const Center(child: TELoading());
+                case LoadState.failed:
+                  return Center(child: DS.image.mainIconWithText);
+                case LoadState.completed:
+                  return null;
+              }
+            },
+          ),
         ),
       ),
     );

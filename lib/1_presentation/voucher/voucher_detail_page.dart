@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -230,8 +231,8 @@ class VoucherUsePasswordLengthChecker
   }
 }
 
-class VoucherUseDialog extends GetView<VoucherDetailPageController> {
-  const VoucherUseDialog({super.key});
+class VoucherUseByPasswordDialog extends GetView<VoucherDetailPageController> {
+  const VoucherUseByPasswordDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -329,6 +330,67 @@ class VoucherUseDialog extends GetView<VoucherDetailPageController> {
   }
 }
 
+class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
+  const VoucherUseByQRScanDialog({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final c = Get.find<VoucherDetailPageController>();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DS.space.vTiny,
+        DS.image.mainIconWithText,
+        DS.space.vSmall,
+        Text(
+          c.voucher.itemName,
+          style: DS.textStyle.paragraph2,
+        ),
+        DS.space.vTiny,
+        Text(c.useVoucherQuantity.format(DS.text.useVoucherCountFormat),
+            style: DS.textStyle.title2),
+        DS.space.vSmall,
+        Text(
+          c.voucher.storeName,
+          textAlign: TextAlign.center,
+          style: DS.textStyle.paragraph2,
+        ),
+        DS.space.vTiny,
+        Text(
+          DS.text.pleaseScanStoreVoucherQRCode,
+          style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold),
+        ),
+        DS.space.vSmall,
+        AspectRatio(
+          aspectRatio: 1 / 1,
+          child: Container(
+            padding: EdgeInsets.all(DS.space.tiny),
+            width: double.infinity,
+            child: QRView(
+                overlay: QrScannerOverlayShape(
+                  borderRadius: DS.space.tiny,
+                  borderColor: DS.color.primary500,
+                ),
+                key: GlobalKey(),
+                onQRViewCreated: (controller) {
+                  controller.scannedDataStream.listen(c.scanDataListener);
+                }),
+          ),
+        ),
+        TERowButton(
+          onTap: () {
+            c.react.back();
+            controller.react.closeBottomSheet();
+            controller.onVoucherPasswordReset();
+            showTEDialog(child: const VoucherUseByPasswordDialog());
+          },
+          text: DS.text.useVoucherByPassword,
+        ),
+      ],
+    );
+  }
+}
+
 class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
   const VoucherUseBottomSheet({super.key});
 
@@ -374,7 +436,11 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
           onTap: () {
             controller.react.closeBottomSheet();
             controller.onVoucherPasswordReset();
-            showTEDialog(child: const VoucherUseDialog());
+            if (controller.voucher.voucherUseDefaultType == 'QR_CODE_SCAN') {
+              showTEDialog(child: const VoucherUseByQRScanDialog());
+            } else {
+              showTEDialog(child: const VoucherUseByPasswordDialog());
+            }
           },
           text: DS.text.use,
         )

@@ -66,6 +66,7 @@ class VoucherUseLog with _$VoucherUseLog {
     required String reason,
     required int quantity,
     required DateTime usedAt,
+    int? tableNumber,
   }) = _VoucherUseLog;
 
   factory VoucherUseLog.fromJson(Map<String, Object?> json) =>
@@ -90,6 +91,7 @@ class VoucherDetail with _$VoucherDetail {
     required String storeOperationTime,
     required Point storeLocation,
     required String itemName,
+    required String voucherUseDefaultType,
     required List<String> itemImageUrls,
     required List<VoucherUseLog> useLogs,
   }) = _VoucherDetail;
@@ -112,6 +114,7 @@ class VoucherDetail with _$VoucherDetail {
       storeAddress: store.address,
       storeOperationTime: store.operationTime,
       itemName: item.name,
+      voucherUseDefaultType: '',
       itemImageUrls: item.imageUrls,
       useLogs: List.generate(5, (_) => VoucherUseLog.empty()),
     );
@@ -123,25 +126,9 @@ class UseVoucher with _$UseVoucher {
   const factory UseVoucher({
     required String storeVoucherPassword,
     required int quantity,
+    int? tableNumber,
   }) = _UseVoucher;
 
   factory UseVoucher.fromJson(Map<String, Object?> json) =>
       _$UseVoucherFromJson(json);
 }
-
-
-// @freezed
-// class VoucherDetail with _$VoucherDetail {
-//   const factory VoucherDetail({
-//     required int id,
-//     required DateTime willBeExpiredAt,
-//     required String imageUrl,
-//     required Point storeLocation,
-//     required String storeName,
-//     required String itemName,
-//     required int quantity,
-//   }) = _VoucherDetail;
-
-//   factory VoucherDetail.fromJson(Map<String, Object?> json) =>
-//       _$VoucherSimpleFromJson(json);
-// }

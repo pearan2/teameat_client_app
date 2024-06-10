@@ -42,4 +42,6 @@ abstract class IRouter {
   void toStoreLike();
 
   void toUserDetail();
+
+  void toCommunityOffAll();
 }

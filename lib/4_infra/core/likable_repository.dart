@@ -9,6 +9,11 @@ mixin LikableRepositoryMixin<T> on ILikableRepository<T> {
   final _pref = Get.find<SharedPreferences>();
   final _conn = Get.find<IConnection>();
 
+  @override
+  void clean() {
+    _saveLikes([]);
+  }
+
   List<int> _loadLikes() {
     final stringIds = _pref.getStringList(key);
     if (stringIds == null) {

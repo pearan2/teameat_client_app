@@ -427,4 +427,52 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get useVoucherByPassword => '매장 비밀번호로 사용하기';
+
+  @override
+  String get gift => '선물하기';
+
+  @override
+  String get makeGiftAreYouSure => '정말 선물 하시겠어요?';
+
+  @override
+  String get no => '아니요';
+
+  @override
+  String get giftOrUse => '선물하기 / 사용하기';
+
+  @override
+  String get bankAccountBankName => '은행명';
+
+  @override
+  String get bankAccountHolderName => '예금주명';
+
+  @override
+  String get bankAccountNumber => '계좌번호';
+
+  @override
+  String get bankAccountInfo => '계좌정보';
+
+  @override
+  String get bankAccountBankNameValidateFail =>
+      '은행명은 2자 이상, 10자 이하이고 앞뒤 공백이 없어야 합니다';
+
+  @override
+  String get bankAccountHolderNameValidateFail =>
+      '예금주명은 2자 이상, 10자 이하이고 앞뒤 공백이 없어야 합니다';
+
+  @override
+  String get bankAccountNumberValidateFail =>
+      '계좌번호는 2자 이상, 20자 이하이고 앞뒤 공백이 없어야 합니다';
+
+  @override
+  String get bankAccountBankNameHint => '신한은행';
+
+  @override
+  String get bankAccountHolderNameHint => '팀잇';
+
+  @override
+  String get bankAccountNumberHint => '64204337829';
+
+  @override
+  String get bankAccountInfoValidateFail => '계좌정보는 모두 작성되거나 모두 비어있어야 합니다';
 }

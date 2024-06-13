@@ -6,10 +6,12 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
+import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
@@ -27,6 +29,9 @@ class UserPageController extends PageController {
   final _selectedProfileImageFile = Rxn<File>();
   final _isLoading = false.obs;
 
+  final _storeLikeController = Get.find<LikeController<IStoreRepository>>();
+  final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
+
   User get user => _user.value;
   // ignore: invalid_use_of_protected_member
   List<ItemSimple> get recentSeeItems => _recentSeeItems.value;
@@ -35,6 +40,9 @@ class UserPageController extends PageController {
 
   final emailController = TECupertinoTextFieldController();
   final nicknameController = TECupertinoTextFieldController();
+  final bankNameController = TECupertinoTextFieldController();
+  final holderNameController = TECupertinoTextFieldController();
+  final bankAccountNumberController = TECupertinoTextFieldController();
 
   Future<void> onLogOut() async {
     if (!_authService.isLogined()) {
@@ -49,6 +57,8 @@ class UserPageController extends PageController {
       return;
     }
     _authService.logOut();
+    _itemLikeController.clean();
+    _storeLikeController.clean();
     _user.value = User.visitor();
     showSuccess(DS.text.successLogOut);
   }
@@ -99,6 +109,9 @@ class UserPageController extends PageController {
     return ret.fold((l) => null, (r) {
       emailController.text = r.email;
       nicknameController.text = r.nickname;
+      bankAccountNumberController.text = r.bankAccount?.number ?? '';
+      holderNameController.text = r.bankAccount?.holderName ?? '';
+      bankNameController.text = r.bankAccount?.bankName ?? '';
       _user.value = r;
     });
   }
@@ -112,12 +125,40 @@ class UserPageController extends PageController {
   }
 
   Future<void> updateMe() async {
-    if (!emailController.checkIsValid() || !nicknameController.checkIsValid()) {
+    if (!((bankNameController.text.isEmpty ==
+            holderNameController.text.isEmpty) &&
+        (holderNameController.text.isEmpty ==
+            bankAccountNumberController.text.isEmpty))) {
+      showError(DS.text.bankAccountInfoValidateFail);
+      return;
+    }
+
+    if (!emailController.checkIsValid() ||
+        !nicknameController.checkIsValid() ||
+        !bankNameController.checkIsValid() ||
+        !holderNameController.checkIsValid() ||
+        !bankAccountNumberController.checkIsValid()) {
       _isLoading.value = false;
       return;
     }
+
     emailController.unFocus();
     nicknameController.unFocus();
+    bankNameController.unFocus();
+    holderNameController.unFocus();
+    bankAccountNumberController.unFocus();
+
+    late final BankAccount? bankAccount;
+    if (bankNameController.text.isEmpty ||
+        holderNameController.text.isEmpty ||
+        bankAccountNumberController.text.isEmpty) {
+      bankAccount = null;
+    } else {
+      bankAccount = BankAccount(
+          holderName: holderNameController.text,
+          bankName: bankNameController.text,
+          number: bankAccountNumberController.text);
+    }
 
     _isLoading.value = true;
     String profileImageUrl = user.profileImageUrl;
@@ -133,6 +174,7 @@ class UserPageController extends PageController {
       email: emailController.text,
       profileImageUrl: profileImageUrl,
       nickname: nicknameController.text,
+      bankAccount: bankAccount,
     ));
     ret.fold((l) => showError(l.desc), (r) {
       react.back();

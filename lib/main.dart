@@ -1,4 +1,5 @@
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -17,9 +18,21 @@ Future<void> main() async {
   // 추후 첫 로딩 속도가 너무 느릴 경우 Splash Controller 쪽으로 이동시킬 것
   // V1 단계에서는 FB 가 필요하지 않다.
   WidgetsFlutterBinding.ensureInitialized();
+
+//////////////////////
+  final _appLinks = AppLinks(); // AppLinks is singleton
+
+// Subscribe to all events (initial link and further)
+  _appLinks.uriLinkStream.listen((uri) {
+    print(uri);
+  });
+/////////////////////
+
   await NaverMapSdk.instance
       .initialize(clientId: "m6rvxbcwsx", onAuthFailed: print);
   // m6rvxbcwsx
+
+  // uniLink
 
   initializeDateFormatting();
   // await Firebase.initializeApp(

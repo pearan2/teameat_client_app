@@ -16,4 +16,5 @@ abstract class ILikableRepository<T> {
 
   void like(int id);
   void unlike(int id);
+  void clean();
 }

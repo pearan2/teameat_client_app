@@ -43,9 +43,10 @@ class StoreItemPageController extends PageController {
     }, (r) => _item.value = r);
   }
 
-  void onLikeClickHandler() {
-    final diff = _itemLikeController.toggleLike(itemId);
-    _item.value = item.copyWith(numberOfLikes: item.numberOfLikes + diff);
+  Future<void> onLikeClickHandler() async {
+    final diff = await _itemLikeController.toggleLike(itemId);
+    _item.value =
+        item.copyWith(numberOfLikes: item.numberOfLikes + (diff ?? 0));
   }
 
   @override

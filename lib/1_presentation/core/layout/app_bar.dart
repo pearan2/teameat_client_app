@@ -8,6 +8,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
   final void Function()? leadingIconOnPressed;
+  final Widget? action;
   final void Function()? homeOnPressed;
   final String? title;
 
@@ -16,10 +17,19 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingIconOnPressed,
     this.title,
     this.homeOnPressed,
+    this.action,
     double? height,
-  }) : preferredSize = Size.fromHeight(height ?? TEAppBar.defaultHeight);
+  })  : assert(!(action != null && homeOnPressed != null)),
+        preferredSize = Size.fromHeight(height ?? TEAppBar.defaultHeight);
 
   List<Widget> _buildActions() {
+    if (action != null) {
+      return [
+        action!,
+        DS.space.hSmall,
+      ];
+    }
+
     if (homeOnPressed == null) return [];
     return [
       TEonTap(onTap: homeOnPressed!, child: Center(child: DS.image.iconHome)),

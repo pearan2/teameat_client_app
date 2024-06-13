@@ -39,7 +39,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                     controller.voucher.quantity)
                 ? () => showTEBottomSheet(const VoucherUseBottomSheet())
                 : null,
-            text: DS.text.use,
+            text: DS.text.giftOrUse,
             borderRadius: 0,
             listenEventLoading: false,
           ),
@@ -431,18 +431,32 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
           ),
         ),
         DS.space.vBase,
-        TEPrimaryButton(
-          isLoginRequired: true,
-          onTap: () {
-            controller.react.closeBottomSheet();
-            controller.onVoucherUseReset();
-            if (controller.voucher.voucherUseDefaultType == 'QR_CODE_SCAN') {
-              showTEDialog(child: const VoucherUseByQRScanDialog());
-            } else {
-              showTEDialog(child: const VoucherUseByPasswordDialog());
-            }
-          },
-          text: DS.text.use,
+        Row(
+          children: [
+            Expanded(
+                child: TESecondaryButton(
+              isLoginRequired: true,
+              onTap: controller.onGiftHandler,
+              text: DS.text.gift,
+            )),
+            DS.space.hTiny,
+            Expanded(
+              child: TEPrimaryButton(
+                isLoginRequired: true,
+                onTap: () {
+                  controller.react.closeBottomSheet();
+                  controller.onVoucherUseReset();
+                  if (controller.voucher.voucherUseDefaultType ==
+                      'QR_CODE_SCAN') {
+                    showTEDialog(child: const VoucherUseByQRScanDialog());
+                  } else {
+                    showTEDialog(child: const VoucherUseByPasswordDialog());
+                  }
+                },
+                text: DS.text.use,
+              ),
+            ),
+          ],
         )
       ],
     );

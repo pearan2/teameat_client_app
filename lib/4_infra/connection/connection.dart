@@ -14,7 +14,7 @@ class HttpClient extends IConnection<String, Failure> {
   static const _authTokenKey = 'authTokenKey';
 
   final String endPoint;
-  final int connectionTimeout = 10;
+  final int connectionTimeout = 20; // 백엔드의 기본 타임아웃이 15초이기 때문
   final _pref = Get.find<SharedPreferences>();
 
   bool _isLogined = false;

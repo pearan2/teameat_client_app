@@ -32,6 +32,7 @@ class UserPage extends GetView<UserPageController> {
                 ),
                 const UserPageDivider(),
                 TERowButton(
+                  isLoginRequired: true,
                   onTap: controller.react.toItemLike,
                   text: DS.text.like,
                 ),

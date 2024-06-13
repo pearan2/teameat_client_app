@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/3_domain/voucher/gift/i_gift_repository.dart';
 import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
@@ -13,6 +16,7 @@ class VoucherDetailPageController extends PageController {
   final useVoucherPasswordMaxLength = 4;
 
   final _voucherRepo = Get.find<IVoucherRepository>();
+  final _giftRepo = Get.find<IGiftRepository>();
 
   final int voucherId;
 
@@ -105,7 +109,26 @@ class VoucherDetailPageController extends PageController {
     return ret.fold((l) => showError(l.desc), (r) => _voucher.value = r);
   }
 
-  Future<void> onUseVoucherHandler() async {}
+  Future<void> onGiftHandler() async {
+    final isConfirmed = await showTEConfirmDialog(
+      content: DS.text.makeGiftAreYouSure,
+      leftButtonText: DS.text.no,
+      rightButtonText: DS.text.gift,
+    );
+    if (!isConfirmed) {
+      return;
+    }
+    _isLoading.value = true;
+    final ret = await _giftRepo.createGiftFromVoucher(
+        voucherId: voucherId, quantity: _useQuantity.value);
+    _isLoading.value = false;
+    ret.fold((l) {
+      showError(l.desc);
+    }, (r) {
+      react.toVoucherUsedOffAll(
+          voucher: voucher, usedQuantity: useVoucherQuantity);
+    });
+  }
 
   VoucherDetailPageController({required this.voucherId});
 

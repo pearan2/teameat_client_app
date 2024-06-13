@@ -24,8 +24,15 @@ class UserDetailPage extends GetView<UserPageController> {
           loading: c.loading,
           appBar: TEAppBar(
             title: DS.text.userMeInfo,
+            action: TEonTap(
+              onTap: c.updateMe,
+              child: Text(
+                DS.text.save,
+                style: DS.textStyle.paragraph2,
+              ),
+            ),
           ),
-          bottomSheet: const SaveButton(),
+          resizeToAvoidBottomInset: true,
           body: Column(
             children: [
               DS.space.vSmall,
@@ -40,9 +47,10 @@ class UserDetailPage extends GetView<UserPageController> {
               DS.space.vSmall,
               TEDivider.thick(),
               DS.space.vSmall,
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+              Padding(
+                padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     TECupertinoTextField(
                       maxLines: 1,
@@ -69,7 +77,67 @@ class UserDetailPage extends GetView<UserPageController> {
                         }
                         return trimmed.length >= 2 && trimmed.length <= 8;
                       },
+                      onEditingComplete: c.bankNameController.requestFocus,
                       errorText: DS.text.nicknameValidateFail,
+                    ),
+                    DS.space.vMedium,
+                    Text(DS.text.bankAccountInfo,
+                        style: DS.textStyle.paragraph1
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    DS.space.vTiny,
+                    TECupertinoTextField(
+                      maxLines: 1,
+                      controller: c.bankNameController,
+                      autoFocus: false,
+                      helperText: DS.text.bankAccountBankName,
+                      hintText: DS.text.bankAccountBankNameHint,
+                      validate: (value) {
+                        final trimmed = value.trim();
+                        if (trimmed.length != value.length) {
+                          return false;
+                        }
+                        return (trimmed.length >= 2 && trimmed.length <= 10) ||
+                            trimmed.isEmpty;
+                      },
+                      onEditingComplete: c.holderNameController.requestFocus,
+                      errorText: DS.text.bankAccountBankNameValidateFail,
+                    ),
+                    DS.space.vTiny,
+                    TECupertinoTextField(
+                      maxLines: 1,
+                      controller: c.holderNameController,
+                      autoFocus: false,
+                      helperText: DS.text.bankAccountHolderName,
+                      hintText: DS.text.bankAccountHolderNameHint,
+                      validate: (value) {
+                        final trimmed = value.trim();
+                        if (trimmed.length != value.length) {
+                          return false;
+                        }
+                        return (trimmed.length >= 2 && trimmed.length <= 10) ||
+                            trimmed.isEmpty;
+                      },
+                      onEditingComplete:
+                          c.bankAccountNumberController.requestFocus,
+                      errorText: DS.text.bankAccountHolderNameValidateFail,
+                    ),
+                    DS.space.vTiny,
+                    TECupertinoTextField(
+                      maxLines: 1,
+                      controller: c.bankAccountNumberController,
+                      autoFocus: false,
+                      helperText: DS.text.bankAccountNumber,
+                      hintText: DS.text.bankAccountNumberHint,
+                      validate: (value) {
+                        final trimmed = value.trim();
+                        if (trimmed.length != value.length) {
+                          return false;
+                        }
+                        return (trimmed.length >= 2 && trimmed.length <= 20) ||
+                            trimmed.isEmpty;
+                      },
+                      errorText: DS.text.bankAccountNumberValidateFail,
+                      keyboardType: TextInputType.number,
                     ),
                     DS.space.vLarge,
                     TEonTap(

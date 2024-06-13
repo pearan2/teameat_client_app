@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/3_domain/core/i_likable_repository.dart';
 
 class LikeController<T extends ILikableRepository> {
@@ -18,7 +19,7 @@ class LikeController<T extends ILikableRepository> {
     _repo.unlike(id);
   }
 
-  int toggleLike(int id) {
+  int _toggleLike(int id) {
     if (_likedIds.contains(id)) {
       _unlike(id);
       return -1;
@@ -26,6 +27,16 @@ class LikeController<T extends ILikableRepository> {
       _like(id);
       return 1;
     }
+  }
+
+  Future<int?> toggleLike(int id) async {
+    return loginWrapper(() => _toggleLike(id));
+  }
+
+  void clean() {
+    _repo.clean();
+    // ignore: invalid_use_of_protected_member
+    _likedIds.value = {};
   }
 
   Future<void> load() async {

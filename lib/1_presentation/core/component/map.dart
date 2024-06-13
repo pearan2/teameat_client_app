@@ -17,14 +17,17 @@ class TEStoreMap extends StatefulWidget {
   final Point defaultCameraCenter;
   final List<StorePoint> stores;
   final double defaultZoomLevel;
+  final void Function(int id)? onStoreSelected;
 
-  const TEStoreMap._(
-      {super.key,
-      this.height,
-      required this.defaultCameraCenter,
-      required this.stores,
-      required this.defaultZoomLevel,
-      required this.isLoading});
+  const TEStoreMap._({
+    super.key,
+    this.height,
+    required this.defaultCameraCenter,
+    required this.stores,
+    required this.defaultZoomLevel,
+    required this.isLoading,
+    this.onStoreSelected,
+  });
 
   factory TEStoreMap.single(
       {double? height,
@@ -38,6 +41,7 @@ class TEStoreMap extends StatefulWidget {
       stores: [store],
       defaultZoomLevel: defaultZoomLevel,
       key: ValueKey(store.id),
+      onStoreSelected: print,
     );
   }
 
@@ -56,15 +60,16 @@ class _TEStoreMapState extends State<TEStoreMap> {
     if (oldWidget.isLoading != widget.isLoading) {
       setState(() => isLoading = widget.isLoading);
     }
+    if (oldWidget.stores != widget.stores) {
+      _addAllStoreMarkers();
+    }
     super.didUpdateWidget(oldWidget);
   }
 
   Future<void> _init(NaverMapController nController) async {
     isInit = true;
     controller = nController;
-    final iconWidget = await _makeMakerIconWidget(widget.stores.first);
-    final marker = await _makeMarker(iconWidget, widget.stores.first);
-    _addAllMarkers({marker});
+    _addAllStoreMarkers();
   }
 
   Future<Widget> _makeMakerIconWidget(StorePoint store) async {
@@ -112,11 +117,30 @@ class _TEStoreMapState extends State<TEStoreMap> {
       position: store.location.toNLatLng(),
     );
     marker.setIcon(overlayImage);
+    marker.setOnTapListener(
+        (m) => widget.onStoreSelected?.call(int.parse(m.info.id)));
     return marker;
+  }
+
+  Future<void> _addAllStoreMarkers() async {
+    if (!isInit) {
+      return;
+    }
+    final markers = await Future.wait(widget.stores
+        .map((s) async => _makeMarker(await _makeMakerIconWidget(s), s)));
+    _addAllMarkers(markers.toSet());
   }
 
   Future<void> _addAllMarkers(Set<NMarker> markers) {
     return controller.addOverlayAll(markers);
+  }
+
+  void _onCameraIdle() {
+    print('onCameraIdle');
+  }
+
+  void _onCameraChanged() {
+    print('onCameraChanged');
   }
 
   @override
@@ -138,12 +162,16 @@ class _TEStoreMapState extends State<TEStoreMap> {
     return SizedBox(
       height: height,
       child: NaverMap(
+        onCameraChange: (reason, animated) => _onCameraChanged(),
+        onCameraIdle: _onCameraIdle,
         forceGesture: true,
         options: NaverMapViewOptions(
             initialCameraPosition: NCameraPosition(
               target: widget.defaultCameraCenter.toNLatLng(),
               zoom: widget.defaultZoomLevel,
             ),
+            minZoom: 12,
+            maxZoom: 18,
             zoomGesturesEnable: true,
             zoomGesturesFriction: 0.1),
         onMapReady: (nController) {

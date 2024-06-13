@@ -16,7 +16,7 @@ class TEScaffold extends StatelessWidget {
   final String? loadingText;
   final void Function(bool didPop)? onPop;
   final void Function()? onFloatingButtonClick;
-
+  final bool resizeToAvoidBottomInset;
   const TEScaffold({
     super.key,
     required this.body,
@@ -28,6 +28,7 @@ class TEScaffold extends StatelessWidget {
     this.loading = false,
     this.onPop,
     this.onFloatingButtonClick,
+    this.resizeToAvoidBottomInset = false,
   });
 
   Widget _buildChild() {
@@ -42,6 +43,7 @@ class TEScaffold extends StatelessWidget {
               bottomSheet: bottomSheet,
               bottomSheetBackgroundColor: bottomSheetBackgroundColor,
               onFloatingButtonClick: onFloatingButtonClick,
+              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
             ),
           ),
           _TEBottomNavigator(
@@ -58,6 +60,7 @@ class TEScaffold extends StatelessWidget {
         bottomSheet: bottomSheet,
         bottomSheetBackgroundColor: bottomSheetBackgroundColor,
         onFloatingButtonClick: onFloatingButtonClick,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       );
     }
   }
@@ -112,6 +115,7 @@ class _InnerScaffold extends StatefulWidget {
   final Widget? bottomSheet;
   final Color? bottomSheetBackgroundColor;
   final void Function()? onFloatingButtonClick;
+  final bool resizeToAvoidBottomInset;
 
   const _InnerScaffold({
     super.key,
@@ -120,6 +124,7 @@ class _InnerScaffold extends StatefulWidget {
     this.bottomSheet,
     this.bottomSheetBackgroundColor,
     this.onFloatingButtonClick,
+    required this.resizeToAvoidBottomInset,
   });
 
   @override
@@ -154,33 +159,43 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
     );
   }
 
+  Widget _body() {
+    return NotificationListener<UserScrollNotification>(
+      onNotification: (notification) {
+        final direction = notification.direction;
+        if (direction == ScrollDirection.forward) {
+          setState(() => visible = true);
+        } else if (direction == ScrollDirection.reverse) {
+          setState(() => visible = false);
+        }
+        return true;
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+            bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
+                ? DS.space.xBase
+                : 0.0),
+        child: widget.body,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       floatingActionButton:
           widget.onFloatingButtonClick != null ? _buildFloatingButton() : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButtonAnimator: null,
       appBar: widget.appBar,
       backgroundColor: DS.color.background000,
-      body: NotificationListener<UserScrollNotification>(
-        onNotification: (notification) {
-          final direction = notification.direction;
-          if (direction == ScrollDirection.forward) {
-            setState(() => visible = true);
-          } else if (direction == ScrollDirection.reverse) {
-            setState(() => visible = false);
-          }
-          return true;
-        },
-        child: Padding(
-          padding: EdgeInsets.only(
-              bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
-                  ? DS.space.xBase
-                  : 0.0),
-          child: widget.body,
-        ),
-      ),
+      body: widget.resizeToAvoidBottomInset
+          ? SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: _body(),
+            )
+          : _body(),
       bottomSheet: Container(
         color: widget.bottomSheetBackgroundColor,
         child: Padding(

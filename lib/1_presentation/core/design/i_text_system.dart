@@ -140,4 +140,19 @@ abstract class ITextSystem {
   String get accessToLocationTimeout;
   String get menuApplication;
   String get useVoucherByPassword;
+  String get gift;
+  String get makeGiftAreYouSure;
+  String get no;
+  String get giftOrUse;
+  String get bankAccountNumber;
+  String get bankAccountBankName;
+  String get bankAccountHolderName;
+  String get bankAccountInfo;
+  String get bankAccountBankNameValidateFail;
+  String get bankAccountHolderNameValidateFail;
+  String get bankAccountNumberValidateFail;
+  String get bankAccountNumberHint;
+  String get bankAccountBankNameHint;
+  String get bankAccountHolderNameHint;
+  String get bankAccountInfoValidateFail;
 }

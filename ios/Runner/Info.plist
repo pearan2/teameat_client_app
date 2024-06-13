@@ -31,7 +31,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>teameatiospaymentappscheme</string>
+				<string>teameatapplinkscheme</string>
 			</array>
 		</dict>
 	</array>
@@ -87,15 +87,12 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
-	<key>io.flutter.embedded_views_preview</key>
-	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>사진 업로드 및 QR 코드 스캔을 위해 카메라 접근 권한이 필요합니다.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>사진 업로드 서비스를 위해 포토 라이브러리 접근 권한이 필요합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>위치를 기반으로 주변 음식점을 안내하기 위해 사용자의 위치 정보 접근 권한이 필요합니다.</string>
-	
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진 업로드 서비스를 위해 포토 라이브러리 접근 권한이 필요합니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -115,5 +112,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

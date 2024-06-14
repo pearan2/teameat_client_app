@@ -38,7 +38,7 @@ class StoreItemPageController extends PageController {
   Future<void> _loadStoreItemInfo() async {
     final ret = await _storeItemRepo.findById(itemId);
     return ret.fold((l) {
-      react.back();
+      react.back(closeOverlays: true);
       showError(l.desc);
     }, (r) => _item.value = r);
   }

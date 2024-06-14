@@ -14,8 +14,8 @@ class StoreItemLikePageController extends PageController {
   Future<void> _loadItems(int pageNumber) async {
     final ret = await _itemRepo.findLikeData(pageNumber);
     return ret.fold((l) => showError(l.desc), (r) {
-      if (r.isEmpty) {
-        pagingController.appendLastPage([]);
+      if (r.length < _itemRepo.numberOfLikeDatasPerPage) {
+        pagingController.appendLastPage(r as List<ItemSimple>);
       } else {
         pagingController.appendPage(r as List<ItemSimple>, pageNumber + 1);
       }

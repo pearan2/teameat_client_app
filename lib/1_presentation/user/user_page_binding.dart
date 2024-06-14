@@ -5,6 +5,5 @@ class UserPageBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => UserPageController(), fenix: true);
-    // Get.put(UserPageController());
   }
 }

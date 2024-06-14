@@ -31,8 +31,8 @@ class React extends IReact {
   }
 
   @override
-  void back<T>({T? result}) {
-    return Get.back<T>(result: result);
+  void back<T>({T? result, bool closeOverlays = false}) {
+    return Get.back<T>(result: result, closeOverlays: closeOverlays);
   }
 
   @override

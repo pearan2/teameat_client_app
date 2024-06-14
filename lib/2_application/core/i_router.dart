@@ -10,7 +10,7 @@ abstract class IRouter {
 
   void toStoreItemDetail(int itemId);
 
-  void back<T>({T? result});
+  void back<T>({T? result, bool closeOverlays});
 
   Future<void> toLogin();
 

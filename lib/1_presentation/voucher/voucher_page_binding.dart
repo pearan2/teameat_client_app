@@ -5,6 +5,5 @@ class VoucherPageBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => VoucherPageController(), fenix: true);
-    // Get.put(VoucherPageController());
   }
 }

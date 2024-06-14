@@ -6,11 +6,15 @@ class TextSearcher extends StatefulWidget {
   final FocusNode? focusNode;
   final TextEditingController? controller;
   final String? value;
+  final String? hintText;
+  final bool autoFocus;
 
   const TextSearcher(
       {super.key,
       required this.onCompleted,
       this.focusNode,
+      this.autoFocus = false,
+      this.hintText,
       this.controller,
       this.value});
 
@@ -24,6 +28,9 @@ class _TextSearcherState extends State<TextSearcher> {
 
   void init() {
     controller.text = widget.value ?? '';
+    if (widget.autoFocus) {
+      focusNode.requestFocus();
+    }
   }
 
   @override
@@ -69,7 +76,7 @@ class _TextSearcherState extends State<TextSearcher> {
       ),
       placeholderStyle:
           DS.textStyle.paragraph3.copyWith(color: DS.color.background400),
-      placeholder: DS.text.textSearcherPlaceHolder,
+      placeholder: widget.hintText ?? DS.text.textSearcherPlaceHolder,
       style: DS.textStyle.paragraph3,
       decoration: BoxDecoration(
         color: DS.color.background100,

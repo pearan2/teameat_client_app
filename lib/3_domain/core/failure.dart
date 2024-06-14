@@ -22,4 +22,5 @@ class Failure with _$Failure {
   const factory Failure.fetchLikeFail(String desc) = _FetchLikeFail;
   const factory Failure.uploadFileFail(String desc) = _UploadFileFail;
   const factory Failure.createGiftFail(String desc) = _CreateGiftFail;
+  const factory Failure.fetchLocalFail(String desc) = _FetchLocalFail;
 }

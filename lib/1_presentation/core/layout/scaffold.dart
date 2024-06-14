@@ -333,6 +333,14 @@ class _TEBottomNavigator extends StatelessWidget {
               ),
             ),
             TEonTap(
+              onTap: react.toCommunityOffAll,
+              isLoginRequired: true,
+              child: _BottomNavigatorToggle(
+                clicked: activated == BottomNavigatorType.community,
+                type: BottomNavigatorType.community,
+              ),
+            ),
+            TEonTap(
               onTap: () {
                 if (activated != BottomNavigatorType.inventory) {
                   react.toVoucherOffAll();
@@ -344,15 +352,6 @@ class _TEBottomNavigator extends StatelessWidget {
                 type: BottomNavigatorType.inventory,
               ),
             ),
-            // community 작업 들어갈때 추가
-            // TEonTap(
-            //   onTap: react.toCommunityOffAll,
-            //   isLoginRequired: true,
-            //   child: _BottomNavigatorToggle(
-            //     clicked: activated == BottomNavigatorType.community,
-            //     type: BottomNavigatorType.community,
-            //   ),
-            // ),
             TEonTap(
               onTap: () {
                 if (activated != BottomNavigatorType.profile) {

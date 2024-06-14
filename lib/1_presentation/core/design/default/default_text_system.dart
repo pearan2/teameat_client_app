@@ -475,4 +475,17 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get bankAccountInfoValidateFail => '계좌정보는 모두 작성되거나 모두 비어있어야 합니다';
+
+  @override
+  String get localStoreNotFound => '검색 결과가 없어요';
+
+  @override
+  String get pleaseSearchLocalStore => '가게를 검색해주세요';
+
+  @override
+  String get searchAgain => '다시 검색하기';
+
+  @override
+  String get searchLocalStoreTip =>
+      '음식점 이름이 "벨로" 인 경우\n"벨로" 라고 검색하시기 보다는\n"대구 벨로" 나 "벨로 파스타"\n라고 검색해보세요 :)';
 }

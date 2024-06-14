@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,27 +9,47 @@ import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:image/image.dart' as img;
 
-class AliMultiPhotoPicker extends StatefulWidget {
+class _FileRead {
+  final Uint8List bytes;
+  final int width;
+  final int height;
+
+  _FileRead({required this.bytes, required this.width, required this.height});
+}
+
+Future<_FileRead?> _loadFile(File file) async {
+  final bytes = file.readAsBytesSync();
+  final img.Image? image = img.decodeImage(bytes);
+  if (image == null) {
+    return null;
+  }
+  return _FileRead(bytes: bytes, width: image.width, height: image.height);
+}
+
+class TEMultiPhotoPicker extends StatefulWidget {
   final Widget loading;
   final Widget noPermission;
   final int thumbnailImageSize;
   final void Function(List<File> files) photoSelectHandler;
   final int? limit;
-  const AliMultiPhotoPicker({
+  final double? ratio;
+  const TEMultiPhotoPicker({
     super.key,
     this.loading = const Text('loading...'),
     this.noPermission = const Text('앨범 접근 권한을 확인해주세요.'),
     this.limit = 1,
     this.thumbnailImageSize = 480,
+    this.ratio,
     required this.photoSelectHandler,
   });
 
   @override
-  State<AliMultiPhotoPicker> createState() => _AliMultiPhotoPickerState();
+  State<TEMultiPhotoPicker> createState() => _TEMultiPhotoPickerState();
 }
 
-class _AliMultiPhotoPickerState extends State<AliMultiPhotoPicker> {
+class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
   late List<AssetPathEntity> albums;
 
   late List<AssetEntity> media;
@@ -37,6 +57,7 @@ class _AliMultiPhotoPickerState extends State<AliMultiPhotoPicker> {
   late Set<int> selectedIndexs;
   late bool isLoading;
   late bool isAuth;
+  bool isImageLoading = false;
 
   Future<void> _loadAlbums() async {
     final permissionResult = await PhotoManager.requestPermissionExtend(
@@ -110,12 +131,69 @@ class _AliMultiPhotoPickerState extends State<AliMultiPhotoPicker> {
     widget.photoSelectHandler(files);
   }
 
+  Future<_FileRead?> _loadLastFile() async {
+    final idx = selectedIndexs.last;
+    final selectedMedia = media[idx];
+    final file = await selectedMedia.file;
+    if (file == null) {
+      return null;
+    }
+    final ret = await compute(_loadFile, file);
+    return ret;
+  }
+
   Color _getColor(int idx) {
     if (idx.isEven) {
       return const Color(0xFFD7D1D0);
     } else {
       return const Color(0xFFF3EFEE);
     }
+  }
+
+  Widget _buildRatioViewer() {
+    if (selectedIndexs.isEmpty) {
+      return const Center(child: Text('이미지를 선택해주세요 :)'));
+    }
+    return FutureBuilder<_FileRead?>(
+      future: _loadLastFile(),
+      builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: TELoading());
+        }
+        if (snapshot.hasError) {
+          return const Center(child: Text('이미지 로드 실패\n권한을 다시 확인해주세요'));
+        }
+        final data = snapshot.data;
+        if (data == null) {
+          return const Center(child: Text('이미지 로드 실패\n권한을 다시 확인해주세요'));
+        }
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.grey.shade400,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.memory(data.bytes, fit: BoxFit.cover),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return AspectRatio(
+                    aspectRatio: widget.ratio!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        color: DS.color.primary500,
+                        width: DS.space.xTiny,
+                      )),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -133,6 +211,9 @@ class _AliMultiPhotoPickerState extends State<AliMultiPhotoPicker> {
       child: Column(
         children: [
           _buildControls(),
+          widget.ratio == null
+              ? const SizedBox()
+              : Expanded(child: _buildRatioViewer()),
           Expanded(child: _buildGrid()),
         ],
       ),
@@ -231,9 +312,12 @@ class _AliMultiPhotoPickerState extends State<AliMultiPhotoPicker> {
   }
 }
 
-Future<List<File>?> showMultiPhotoPickerBottomSheet({int? limit}) async {
+Future<List<File>?> showMultiPhotoPickerBottomSheet(
+    {int? limit, double? height, double? ratio}) async {
   return Get.bottomSheet<List<File>>(
+    isScrollControlled: true,
     Container(
+      height: height,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
@@ -241,9 +325,11 @@ Future<List<File>?> showMultiPhotoPickerBottomSheet({int? limit}) async {
         ),
         color: Colors.white,
       ),
-      constraints: BoxConstraints(maxHeight: Get.mediaQuery.size.height / 2),
-      child: AliMultiPhotoPicker(
+      constraints:
+          BoxConstraints(maxHeight: height ?? Get.mediaQuery.size.height / 2),
+      child: TEMultiPhotoPicker(
         loading: const TELoading(),
+        ratio: ratio,
         limit: limit,
         photoSelectHandler: (files) {
           Get.back<List<File>>(result: files, closeOverlays: false);

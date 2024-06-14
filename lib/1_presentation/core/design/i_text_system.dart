@@ -155,4 +155,8 @@ abstract class ITextSystem {
   String get bankAccountBankNameHint;
   String get bankAccountHolderNameHint;
   String get bankAccountInfoValidateFail;
+  String get pleaseSearchLocalStore;
+  String get localStoreNotFound;
+  String get searchLocalStoreTip;
+  String get searchAgain;
 }

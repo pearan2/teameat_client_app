@@ -8,4 +8,5 @@ abstract class IStoreRepository<T> extends ILikableRepository<T> {
       SearchStoreSimpleList searchOption);
 
   Future<Either<Failure, StoreDetail>> getStoreDetail(int storeId);
+  Future<Either<Failure, bool>> isStoreEntered(String storeId);
 }

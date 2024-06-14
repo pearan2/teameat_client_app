@@ -42,6 +42,18 @@ class StoreRepository extends IStoreRepository<StoreSimple>
   }
 
   @override
+  Future<Either<Failure, bool>> isStoreEntered(String storeId) async {
+    try {
+      final path = '/api/store/$storeId/is-entered';
+      final ret = await _conn.get(path, null);
+      return ret.fold((l) => left(l), (r) => right(r as bool));
+    } catch (e) {
+      return left(const Failure.fetchStoreFail(
+          "상점 입점 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));
+    }
+  }
+
+  @override
   Future<Either<dynamic, Object>> Function(List<int> ids) get dataLoader =>
       (ids) => _conn
           .get('/api/store/list/by-ids', {'ids': ids.map((e) => e.toString())});

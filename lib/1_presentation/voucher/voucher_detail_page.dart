@@ -39,7 +39,8 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                     controller.voucher.quantity)
                 ? () => showTEBottomSheet(const VoucherUseBottomSheet())
                 : null,
-            text: DS.text.giftOrUse,
+            text: DS.text.use,
+            // text: DS.text.giftOrUse,
             borderRadius: 0,
             listenEventLoading: false,
           ),
@@ -433,13 +434,14 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
         DS.space.vBase,
         Row(
           children: [
-            Expanded(
-                child: TESecondaryButton(
-              isLoginRequired: true,
-              onTap: controller.onGiftHandler,
-              text: DS.text.gift,
-            )),
-            DS.space.hTiny,
+            // 나중에 선물하기 사용할 때
+            // Expanded(
+            //     child: TESecondaryButton(
+            //   isLoginRequired: true,
+            //   onTap: controller.onGiftHandler,
+            //   text: DS.text.gift,
+            // )),
+            // DS.space.hTiny,
             Expanded(
               child: TEPrimaryButton(
                 isLoginRequired: true,

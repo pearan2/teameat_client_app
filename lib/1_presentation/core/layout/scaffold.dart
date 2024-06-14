@@ -322,14 +322,22 @@ class _TEBottomNavigator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TEonTap(
-              onTap: react.toHomeOffAll,
+              onTap: () {
+                if (activated != BottomNavigatorType.home) {
+                  react.toHomeOffAll();
+                }
+              },
               child: _BottomNavigatorToggle(
                 clicked: activated == BottomNavigatorType.home,
                 type: BottomNavigatorType.home,
               ),
             ),
             TEonTap(
-              onTap: react.toVoucherOffAll,
+              onTap: () {
+                if (activated != BottomNavigatorType.inventory) {
+                  react.toVoucherOffAll;
+                }
+              },
               isLoginRequired: true,
               child: _BottomNavigatorToggle(
                 clicked: activated == BottomNavigatorType.inventory,
@@ -346,7 +354,11 @@ class _TEBottomNavigator extends StatelessWidget {
             //   ),
             // ),
             TEonTap(
-              onTap: react.toUserOffAll,
+              onTap: () {
+                if (activated != BottomNavigatorType.profile) {
+                  react.toUserOffAll();
+                }
+              },
               child: _BottomNavigatorToggle(
                 clicked: activated == BottomNavigatorType.profile,
                 type: BottomNavigatorType.profile,

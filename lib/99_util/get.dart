@@ -12,10 +12,13 @@ class _DefaultLoadingWidget extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: Colors.grey,
       highlightColor: Colors.white,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey, borderRadius: BorderRadius.circular(4)),
-        child: child,
+      child: AbsorbPointer(
+        absorbing: true,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey, borderRadius: BorderRadius.circular(4)),
+          child: child,
+        ),
       ),
     );
   }
@@ -49,17 +52,24 @@ class RxWrapper<F, T> {
           _DefaultFailureWidget(failureString: failureString, child: child);
 
   final Rx<_ValueStatus> _status = _ValueStatus.loading.obs;
-  T value;
+  T _value;
   final T _emptyValue;
   F? failure;
   final Future<Either<F, T>> Function() loader;
+
+  T get value => _value;
+  set value(T newValue) {
+    _status.value = _ValueStatus.loading;
+    _value = newValue;
+    _status.value = _ValueStatus.success;
+  }
 
   RxWrapper({
     required T emptyValue,
     required this.loader,
     bool initLoad = true,
   })  : _emptyValue = emptyValue,
-        value = emptyValue {
+        _value = emptyValue {
     if (initLoad) {
       load();
     } else {
@@ -74,7 +84,7 @@ class RxWrapper<F, T> {
       failure = f;
       _status.value = _ValueStatus.failure;
     }, (r) {
-      value = r;
+      _value = r;
       _status.value = _ValueStatus.success;
     });
     return ret;
@@ -101,7 +111,7 @@ class RxWrapper<F, T> {
                 failure!.toString(), builder(_emptyValue));
           }
         case _ValueStatus.success:
-          return builder(value);
+          return builder(_value);
         default:
           {
             throw "Invalid value detected";

@@ -4,7 +4,6 @@ import 'package:teameat/1_presentation/core/component/business_registration_info
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
-import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
@@ -42,7 +41,6 @@ class UserPage extends GetView<UserPageController> {
                   text: DS.text.followStore,
                 ),
                 const UserPageDivider(),
-
                 TERowButton(
                   onTap: controller.react.toCustomerService,
                   text: DS.text.customerQuestion,
@@ -68,13 +66,11 @@ class UserPage extends GetView<UserPageController> {
                   ],
                 ),
                 DS.space.vTiny,
-                Obx(() => PageLoadingWrapper(
-                        child: StoreItemList(
+                c.recentSeeItems.obx((recentSeeItems) => StoreItemList(
                       notFound: const RecentSeeItemsNotFound(),
-                      items: controller.recentSeeItems,
+                      items: recentSeeItems,
                       borderRadius: DS.space.tiny,
-                    ))),
-                //
+                    )),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.onLogOut,
@@ -111,31 +107,25 @@ class UserCard extends GetView<UserPageController> {
       padding: EdgeInsets.all(DS.space.xBase),
       child: Row(
         children: [
-          Obx(
-            () => PageLoadingWrapper(
-              child: TENetworkImage(
-                url: c.user.profileImageUrl,
+          c.user.obx((user) => TENetworkImage(
+                url: user.profileImageUrl,
                 size: DS.space.large,
-              ),
-            ),
-          ),
+              )),
           DS.space.hTiny,
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(() => PageLoadingWrapper(
-                      child: Text(
-                    c.user.nickname,
+              c.user.obx((user) => Text(
+                    user.nickname,
                     style: DS.textStyle.paragraph3
                         .copyWith(fontWeight: FontWeight.bold),
-                  ))),
+                  )),
               DS.space.vTiny,
-              Obx(() => PageLoadingWrapper(
-                      child: Text(
-                    c.user.socialLoginType,
+              c.user.obx((user) => Text(
+                    user.socialLoginType,
                     style: DS.textStyle.caption1,
-                  )))
+                  )),
             ],
           ),
           const Expanded(child: SizedBox()),

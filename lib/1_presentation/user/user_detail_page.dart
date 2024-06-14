@@ -37,13 +37,12 @@ class UserDetailPage extends GetView<UserPageController> {
             children: [
               DS.space.vSmall,
               Center(
-                child: Obx(() => UserImage(
-                      size: DS.space.large * 2,
-                      url: c.user.profileImageUrl,
-                      file: c.selectedProfileImageFile,
-                      onTap: c.onProfileImageClicked,
-                    )),
-              ),
+                  child: c.user.obx((user) => UserImage(
+                        size: DS.space.large * 2,
+                        url: user.profileImageUrl,
+                        file: c.selectedProfileImageFile,
+                        onTap: c.onProfileImageClicked,
+                      ))),
               DS.space.vSmall,
               TEDivider.thick(),
               DS.space.vSmall,
@@ -141,7 +140,7 @@ class UserDetailPage extends GetView<UserPageController> {
                     ),
                     DS.space.vLarge,
                     TEonTap(
-                      onTap: () => TEClipboard.setText(c.user.id),
+                      onTap: () => TEClipboard.setText(c.user.value.id),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

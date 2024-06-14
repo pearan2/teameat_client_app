@@ -129,15 +129,16 @@ class HomePageController extends PageController {
   }
 
   @override
-  void dispose() {
-    pagingController.removePageRequestListener(loadStores);
-    pagingController.removeStatusListener(pagingControllerStatusChangeListener);
-    pagingController.dispose();
-    super.dispose();
+  void onReady() {
+    pagingController.error = '';
+    pagingController.refresh();
+    pagingController.error = null;
+    super.onReady();
   }
 
   @override
   Future<bool> initialLoad() async {
+    pagingController.itemList = [];
     pagingController.addPageRequestListener(loadStores);
     pagingController.addStatusListener(pagingControllerStatusChangeListener);
     return true;

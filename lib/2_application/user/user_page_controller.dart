@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -10,13 +11,14 @@ import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
+import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/3_domain/user/user.dart';
+import 'package:teameat/99_util/get.dart';
 
 class UserPageController extends PageController {
   final _userRepo = Get.find<IUserRepository>();
@@ -24,17 +26,19 @@ class UserPageController extends PageController {
   final _itemRepo = Get.find<IStoreItemRepository>();
   final _fileService = Get.find<IFileService>();
 
-  final _user = User.visitor().obs;
-  final _recentSeeItems = StoreDetail.empty().items.obs;
+  late final user = User.visitor().wrap(_loadMe);
+  late final recentSeeItems = <ItemSimple>[
+    ItemSimple.empty(),
+    ItemSimple.empty()
+  ].wrap(_loadRecentSeeItems);
+
   final _selectedProfileImageFile = Rxn<File>();
   final _isLoading = false.obs;
 
   final _storeLikeController = Get.find<LikeController<IStoreRepository>>();
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
 
-  User get user => _user.value;
   // ignore: invalid_use_of_protected_member
-  List<ItemSimple> get recentSeeItems => _recentSeeItems.value;
   bool get loading => _isLoading.value;
   File? get selectedProfileImageFile => _selectedProfileImageFile.value;
 
@@ -59,7 +63,7 @@ class UserPageController extends PageController {
     _authService.logOut();
     _itemLikeController.clean();
     _storeLikeController.clean();
-    _user.value = User.visitor();
+    user.value = User.visitor();
     showSuccess(DS.text.successLogOut);
   }
 
@@ -81,7 +85,7 @@ class UserPageController extends PageController {
       if (r) {
         showSuccess(DS.text.deleteUserSuccessSeeYouAgain);
         _authService.logOut();
-        _user.value = User.visitor();
+        user.value = User.visitor();
       } else {
         showError(DS.text.apiFail);
       }
@@ -89,8 +93,8 @@ class UserPageController extends PageController {
   }
 
   Future<void> toUserDetail() async {
-    if (user == User.visitor()) {
-      await _loadMe();
+    if (user.value == User.visitor()) {
+      await user.load();
     }
     react.toUserDetail();
   }
@@ -99,20 +103,19 @@ class UserPageController extends PageController {
     return loginWrapper(toUserDetail);
   }
 
-  Future<void> _loadRecentSeeItems() async {
-    return resolve(
-        _itemRepo.findRecentSeeItems(), (r) => _recentSeeItems.value = r);
+  Future<Either<Failure, List<ItemSimple>>> _loadRecentSeeItems() async {
+    return _itemRepo.findRecentSeeItems();
   }
 
-  Future<void> _loadMe() async {
+  Future<Either<Failure, User>> _loadMe() async {
     final ret = await _userRepo.getMe();
-    return ret.fold((l) => null, (r) {
+    return ret.fold((l) => right(User.visitor()), (r) {
       emailController.text = r.email;
       nicknameController.text = r.nickname;
       bankAccountNumberController.text = r.bankAccount?.number ?? '';
       holderNameController.text = r.bankAccount?.holderName ?? '';
       bankNameController.text = r.bankAccount?.bankName ?? '';
-      _user.value = r;
+      return right(r);
     });
   }
 
@@ -161,7 +164,7 @@ class UserPageController extends PageController {
     }
 
     _isLoading.value = true;
-    String profileImageUrl = user.profileImageUrl;
+    String profileImageUrl = user.value.profileImageUrl;
     if (selectedProfileImageFile != null) {
       final profileImageUploadResult =
           await _fileService.uploadImage(selectedProfileImageFile!);
@@ -179,21 +182,18 @@ class UserPageController extends PageController {
     ret.fold((l) => showError(l.desc), (r) {
       react.back();
       showSuccess(DS.text.editSuccess);
-      _user.value = r;
+      user.value = r;
     });
     _isLoading.value = false;
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
     emailController.dispose();
     nicknameController.dispose();
-  }
-
-  @override
-  Future<bool> initialLoad() async {
-    await Future.wait([_loadMe(), _loadRecentSeeItems()]);
-    return true;
+    bankNameController.dispose();
+    holderNameController.dispose();
+    bankAccountNumberController.dispose();
+    super.onClose();
   }
 }

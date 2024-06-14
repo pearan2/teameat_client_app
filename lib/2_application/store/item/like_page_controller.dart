@@ -23,14 +23,16 @@ class StoreItemLikePageController extends PageController {
   }
 
   @override
-  void dispose() {
-    pagingController.removePageRequestListener(_loadItems);
-    pagingController.dispose();
-    super.dispose();
+  void onReady() {
+    pagingController.error = '';
+    pagingController.refresh();
+    pagingController.error = null;
+    super.onReady();
   }
 
   @override
   Future<bool> initialLoad() {
+    pagingController.itemList = [];
     pagingController.addPageRequestListener(_loadItems);
     return super.initialLoad();
   }

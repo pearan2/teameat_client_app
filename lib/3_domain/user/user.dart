@@ -32,9 +32,9 @@ class User with _$User {
   factory User.visitor() {
     return User(
       email: 'Visitor',
-      socialLoginType: 'Visitor Login',
+      socialLoginType: 'Visitor',
       createdAt: DateTime(1991, 05, 01),
-      nickname: "Anonymous",
+      nickname: "Unknown User",
       profileImageUrl:
           "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
       id: 'visitor user Id',

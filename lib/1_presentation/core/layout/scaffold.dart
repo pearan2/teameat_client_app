@@ -335,7 +335,7 @@ class _TEBottomNavigator extends StatelessWidget {
             TEonTap(
               onTap: () {
                 if (activated != BottomNavigatorType.inventory) {
-                  react.toVoucherOffAll;
+                  react.toVoucherOffAll();
                 }
               },
               isLoginRequired: true,

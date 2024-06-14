@@ -4,6 +4,7 @@ import 'package:teameat/2_application/home/home_page_controller.dart';
 class HomePageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(HomePageController());
+    Get.lazyPut(() => HomePageController(), fenix: true);
+    // Get.put(HomePageController());
   }
 }

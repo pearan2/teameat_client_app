@@ -4,6 +4,7 @@ import 'package:teameat/2_application/user/user_page_controller.dart';
 class UserPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserPageController());
+    Get.lazyPut(() => UserPageController(), fenix: true);
+    // Get.put(UserPageController());
   }
 }

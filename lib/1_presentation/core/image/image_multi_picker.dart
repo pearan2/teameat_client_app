@@ -34,14 +34,17 @@ class TEMultiPhotoPicker extends StatefulWidget {
   final int thumbnailImageSize;
   final void Function(List<File> files) photoSelectHandler;
   final int? limit;
-  final double? ratio;
+  final int? widthRatio;
+  final int? heightRatio;
+
   const TEMultiPhotoPicker({
     super.key,
     this.loading = const Text('loading...'),
     this.noPermission = const Text('앨범 접근 권한을 확인해주세요.'),
     this.limit = 1,
     this.thumbnailImageSize = 480,
-    this.ratio,
+    this.widthRatio,
+    this.heightRatio,
     required this.photoSelectHandler,
   });
 
@@ -131,15 +134,10 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
     widget.photoSelectHandler(files);
   }
 
-  Future<_FileRead?> _loadLastFile() async {
+  Future<File?> _loadLastFile() async {
     final idx = selectedIndexs.last;
     final selectedMedia = media[idx];
-    final file = await selectedMedia.file;
-    if (file == null) {
-      return null;
-    }
-    final ret = await compute(_loadFile, file);
-    return ret;
+    return selectedMedia.file;
   }
 
   Color _getColor(int idx) {
@@ -152,9 +150,13 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
 
   Widget _buildRatioViewer() {
     if (selectedIndexs.isEmpty) {
-      return const Center(child: Text('이미지를 선택해주세요 :)'));
+      return Center(
+          child: Text(
+        '이미지를 선택해주세요 :)\n선택하신 이미지는\n가로 ${widget.widthRatio} : 세로 ${widget.heightRatio}\n비율로 변환됩니다',
+        textAlign: TextAlign.center,
+      ));
     }
-    return FutureBuilder<_FileRead?>(
+    return FutureBuilder<File?>(
       future: _loadLastFile(),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -167,30 +169,9 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
         if (data == null) {
           return const Center(child: Text('이미지 로드 실패\n권한을 다시 확인해주세요'));
         }
-        return Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: Colors.grey.shade400,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.memory(data.bytes, fit: BoxFit.cover),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return AspectRatio(
-                    aspectRatio: widget.ratio!,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: DS.color.primary500,
-                        width: DS.space.xTiny,
-                      )),
-                    ),
-                  );
-                },
-              )
-            ],
-          ),
+        return AspectRatio(
+          aspectRatio: widget.widthRatio! / widget.heightRatio!,
+          child: Image.file(data, fit: BoxFit.cover),
         );
       },
     );
@@ -211,7 +192,7 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
       child: Column(
         children: [
           _buildControls(),
-          widget.ratio == null
+          widget.widthRatio == null && widget.heightRatio != null
               ? const SizedBox()
               : Expanded(child: _buildRatioViewer()),
           Expanded(child: _buildGrid()),
@@ -313,7 +294,7 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
 }
 
 Future<List<File>?> showMultiPhotoPickerBottomSheet(
-    {int? limit, double? height, double? ratio}) async {
+    {int? limit, double? height, int? widthRatio, int? heightRatio}) async {
   return Get.bottomSheet<List<File>>(
     isScrollControlled: true,
     Container(
@@ -329,7 +310,8 @@ Future<List<File>?> showMultiPhotoPickerBottomSheet(
           BoxConstraints(maxHeight: height ?? Get.mediaQuery.size.height / 2),
       child: TEMultiPhotoPicker(
         loading: const TELoading(),
-        ratio: ratio,
+        widthRatio: widthRatio,
+        heightRatio: heightRatio,
         limit: limit,
         photoSelectHandler: (files) {
           Get.back<List<File>>(result: files, closeOverlays: false);

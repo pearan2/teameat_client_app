@@ -71,6 +71,7 @@ class UserPage extends GetView<UserPageController> {
                       items: recentSeeItems,
                       borderRadius: DS.space.tiny,
                     )),
+                DS.space.vSmall,
                 const UserPageDivider(),
                 TERowButton(
                   onTap: controller.onLogOut,

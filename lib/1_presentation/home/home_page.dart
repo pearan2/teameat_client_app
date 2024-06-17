@@ -48,7 +48,7 @@ class HomePage extends GetView<HomePageController> {
                   surfaceTintColor: DS.color.background000,
                   snap: true,
                   floating: true,
-                  toolbarHeight: DS.space.large,
+                  toolbarHeight: DS.space.base,
                   expandedHeight:
                       GetPlatform.isAndroid ? DS.space.medium : null,
                   flexibleSpace: const HomePageSearcher(),

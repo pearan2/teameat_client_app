@@ -362,6 +362,12 @@ class DefaultTextSystem extends ITextSystem {
   String get sellTypeVoucher => '이용권';
 
   @override
+  String get sellTypeTimeLimit => '기간한정';
+
+  @override
+  String get sellTypeQuantityLimit => '수량한정';
+
+  @override
   String get imageFileByteMustLessThan1MB => '이미지 크기는 1MB 보다 작아야 해요';
 
   @override
@@ -410,7 +416,7 @@ class DefaultTextSystem extends ITextSystem {
   String get distance => '거리';
 
   @override
-  String get distanceFormat => '###.#km';
+  String get distanceFormat => '###.# KM';
 
   @override
   String get accessToLocationPleaseWait => '위치 정보를 가져오고 있습니다\n잠시만 기다려주세요';
@@ -488,4 +494,7 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get searchLocalStoreTip =>
       '음식점 이름이 "벨로" 인 경우\n"벨로" 라고 검색하시기 보다는\n"대구 벨로" 나 "벨로 파스타"\n라고 검색해보세요 :)';
+
+  @override
+  String get discountPrice => '할인가';
 }

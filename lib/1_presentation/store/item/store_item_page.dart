@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
@@ -13,6 +14,7 @@ import 'package:teameat/2_application/store/item/store_item_page_controller.dart
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/get.dart';
 
 class StoreItemPage extends GetView<StoreItemPageController> {
   @override
@@ -41,11 +43,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
             floating: true,
             expandedHeight: width,
             flexibleSpace: Obx(
-              () => StoreItemImageCarousel(
-                width: width,
-                height: width,
-                item: controller.item,
-              ),
+              () => TEImageCarousel(width: width, imageUrls: c.item.imageUrls),
             ),
           ),
           SliverToBoxAdapter(
@@ -116,8 +114,11 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                       ////////////////////////////////////////////////
                       DS.space.vTiny,
                       PageLoadingWrapper(
-                        child: StoreItemSellTypeText(
-                            sellType: controller.item.sellType),
+                        child: StoreItemSellType(
+                          sellType: controller.item.sellType,
+                          salesWillBeEndedAt: c.item.salesWillBeEndedAt,
+                          quantity: c.item.quantity,
+                        ),
                       ),
                       DS.space.vTiny,
                       PageLoadingWrapper(

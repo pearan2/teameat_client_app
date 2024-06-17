@@ -13,10 +13,15 @@ class ItemSimple with _$ItemSimple {
     required String imageUrl,
     required int originalPrice,
     required int price,
+    required int quantity,
     required String sellType,
     required DateTime salesWillBeEndedAt,
     required int orderReference,
     DateTime? currentGroupBuyingWillBeEndedAt,
+    int? curationId,
+    required int storeId,
+    required String storeName,
+    required Point storeLocation,
   }) = _ItemSimple;
 
   factory ItemSimple.fromJson(Map<String, Object?> json) =>
@@ -24,16 +29,21 @@ class ItemSimple with _$ItemSimple {
 
   factory ItemSimple.empty() {
     return ItemSimple(
-        id: -1,
-        name: "마르게리따 피자 + 오레가노 치즈스테이크에 더해지는 풍미가 오늘은 ",
-        imageUrl:
-            "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
-        originalPrice: 14900,
-        price: 12800,
-        sellType: '이용권',
-        orderReference: 0,
-        salesWillBeEndedAt: DateTime.now(),
-        currentGroupBuyingWillBeEndedAt: DateTime.now());
+      id: -1,
+      name: "마르게리따 피자 + 오레가노 치즈스테이크에 더해지는 풍미가 오늘은 ",
+      imageUrl:
+          "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
+      originalPrice: 14900,
+      price: 12800,
+      quantity: 100,
+      sellType: '이용권',
+      orderReference: 0,
+      salesWillBeEndedAt: DateTime.now(),
+      currentGroupBuyingWillBeEndedAt: DateTime.now(),
+      storeId: -1,
+      storeName: "벨로",
+      storeLocation: Point.empty(),
+    );
   }
 }
 
@@ -45,6 +55,7 @@ class ItemDetail with _$ItemDetail {
     required String imageUrl,
     required int originalPrice,
     required int price,
+    required int quantity,
     required String sellType,
     required DateTime salesWillBeEndedAt,
     DateTime? currentGroupBuyingWillBeEndedAt,
@@ -69,6 +80,7 @@ class ItemDetail with _$ItemDetail {
           "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
       originalPrice: 14900,
       price: 12800,
+      quantity: 100,
       sellType: '이용권',
       salesWillBeEndedAt: DateTime.now(),
       currentGroupBuyingWillBeEndedAt: DateTime.now(),

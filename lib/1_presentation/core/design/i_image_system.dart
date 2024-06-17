@@ -40,8 +40,14 @@ abstract class IImageSystem {
 
   /// icon
   SvgPicture get iconSearch;
-  SvgPicture get iconLike;
-  SvgPicture get iconLikeClicked;
+  Image get iconLike;
+  Image get iconLikeClicked;
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
+  SvgPicture get rightArrow;
+  Image get dangolPick;
+
+  /// sell type icon
+  SvgPicture get timeLimit;
+  SvgPicture get quantityLimit;
 }

@@ -4,12 +4,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
-import 'package:teameat/1_presentation/core/component/store/store.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
-import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
@@ -20,6 +19,11 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final imageWidth = (screenWidth -
+            (AppWidget.horizontalPadding * 2) -
+            (AppWidget.itemHorizontalSpace)) /
+        2;
     return Obx(
       () => TEScaffold(
         loadingText: DS.text.accessToLocationPleaseWait,
@@ -27,7 +31,11 @@ class HomePage extends GetView<HomePageController> {
         onFloatingButtonClick: controller.onFloatingButtonClickHandler,
         activated: BottomNavigatorType.home,
         body: Padding(
-          padding: EdgeInsets.only(top: topAreaHeight),
+          padding: EdgeInsets.only(
+            top: topAreaHeight,
+            left: AppWidget.horizontalPadding,
+            right: AppWidget.horizontalPadding,
+          ),
           child: RefreshIndicator(
             onRefresh: () async {
               controller.pageRefresh();
@@ -40,62 +48,35 @@ class HomePage extends GetView<HomePageController> {
                   surfaceTintColor: DS.color.background000,
                   snap: true,
                   floating: true,
-                  toolbarHeight: DS.space.tiny,
+                  toolbarHeight: DS.space.large,
                   expandedHeight:
                       GetPlatform.isAndroid ? DS.space.medium : null,
                   flexibleSpace: const HomePageSearcher(),
                 ),
-                PagedSliverList(
-                  pagingController: controller.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
-                    noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
-                    itemBuilder: (_, store, idx) => StoreCard(store: store),
-                  ),
-                ),
+                PagedSliverGrid(
+                    pagingController: controller.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
+                      itemBuilder: (_, item, idx) => StoreItemColumnCard(
+                          item: item,
+                          onTap: (itemId) => c.react.toStoreItemDetail(itemId)),
+                      noItemsFoundIndicatorBuilder: (_) =>
+                          const SearchNotFound(),
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: imageWidth /
+                          (imageWidth +
+                              DS.space.large * 3 +
+                              DS.space.base * 2), // Todo 비율 조정
+                      crossAxisSpacing: DS.space.small,
+                      mainAxisSpacing: DS.space.base,
+                      crossAxisCount: 2,
+                    )),
                 SliverToBoxAdapter(child: DS.space.vSmall),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class StoreCard extends StatelessWidget {
-  final StoreSimple store;
-
-  const StoreCard({super.key, required this.store});
-
-  @override
-  Widget build(BuildContext context) {
-    /// 구매 할 수 있는 아이템이 하나도 없다면 아예 표기자체를 하지 않는다.
-    /// 물론 표기만 안했지 item list 에는 존재하기 때문에 다음 것을 로딩하려고 시도한다.
-    if (store.items.isEmpty) {
-      return const SizedBox();
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppWidget.horizontalPadding),
-          child: StoreSimpleInfoRow(
-            location: store.location,
-            storeId: store.id,
-            profileImageUrl: store.profileImageUrl,
-            name: store.name,
-            subInfo: store.address,
-          ),
-        ),
-        DS.space.vTiny,
-        StoreItemList(
-          items: store.items,
-          borderRadius: DS.space.xTiny,
-        ),
-        DS.space.vXBase
-      ],
     );
   }
 }
@@ -110,8 +91,6 @@ class HomePageSearcher extends GetView<HomePageController> {
       decoration: BoxDecoration(
         color: DS.color.background000,
       ),
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       child: Row(
         children: [
           DS.image.mainIconSm,

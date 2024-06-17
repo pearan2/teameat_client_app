@@ -6,10 +6,10 @@ import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/get.dart';
 
-class Distance extends GetView<LocationController> {
+class DistanceWithIcon extends GetView<LocationController> {
   final Point point;
 
-  const Distance({super.key, required this.point});
+  const DistanceWithIcon({super.key, required this.point});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,29 @@ class Distance extends GetView<LocationController> {
                 ],
               )),
         ],
+      );
+    });
+  }
+}
+
+class DistanceText extends GetView<LocationController> {
+  final Point point;
+
+  const DistanceText({super.key, required this.point});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final basePoint = c.data?.toPoint();
+      if (basePoint == null) {
+        return const SizedBox();
+      }
+      final kilo = basePoint.distanceKilo(point);
+
+      return Text(
+        kilo.format(DS.text.distanceFormat),
+        style: DS.textStyle.caption1.copyWith(
+            color: DS.color.background700, fontWeight: FontWeight.w600),
       );
     });
   }

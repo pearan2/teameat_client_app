@@ -119,6 +119,8 @@ abstract class ITextSystem {
   String get home;
   String get profile;
   String get sellTypeVoucher;
+  String get sellTypeTimeLimit;
+  String get sellTypeQuantityLimit;
   String get imageFileByteMustLessThan1MB;
   String get save;
   String get userMeInfo;
@@ -159,4 +161,5 @@ abstract class ITextSystem {
   String get localStoreNotFound;
   String get searchLocalStoreTip;
   String get searchAgain;
+  String get discountPrice;
 }

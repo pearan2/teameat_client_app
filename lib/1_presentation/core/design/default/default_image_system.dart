@@ -199,16 +199,43 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get iconLike => SvgPicture.asset(
-        'assets/image/icon/like.svg',
-        height: 31,
-        width: 31,
+  Image get iconLike => Image.asset(
+        'assets/image/icon/like.png',
+        height: 36,
+        width: 36,
       );
 
   @override
-  SvgPicture get iconLikeClicked => SvgPicture.asset(
-        'assets/image/icon/like_liked.svg',
-        height: 31,
-        width: 31,
+  Image get iconLikeClicked => Image.asset(
+        'assets/image/icon/like_liked.png',
+        height: 36,
+        width: 36,
+      );
+  @override
+  SvgPicture get rightArrow => SvgPicture.asset(
+        'assets/image/icon/right_arrow.svg',
+        height: 24,
+        width: 24,
+      );
+  @override
+  Image get dangolPick => Image.asset(
+        'assets/image/icon/dangol_pick.png',
+        width: 44,
+        height: 44,
+      );
+
+// sell type icon
+  @override
+  SvgPicture get quantityLimit => SvgPicture.asset(
+        'assets/image/icon/sell_type/quantity_limit.svg',
+        height: 16,
+        width: 16,
+      );
+
+  @override
+  SvgPicture get timeLimit => SvgPicture.asset(
+        'assets/image/icon/sell_type/time_limit.svg',
+        height: 16,
+        width: 16,
       );
 }

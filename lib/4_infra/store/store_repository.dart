@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
+import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/4_infra/core/likable_repository.dart';
 
@@ -11,7 +12,7 @@ class StoreRepository extends IStoreRepository<StoreSimple>
   final _conn = Get.find<IConnection>();
 
   @override
-  Future<Either<Failure, List<StoreSimple>>> getStores(
+  Future<Either<Failure, List<ItemSimple>>> getStores(
       SearchStoreSimpleList searchOption) async {
     try {
       const path = '/api/store/list';
@@ -20,7 +21,7 @@ class StoreRepository extends IStoreRepository<StoreSimple>
       return ret.fold(
           (l) => left(l),
           (r) => right((r as Iterable)
-              .map((json) => StoreSimple.fromJsonWithItemSort(json))
+              .map((json) => ItemSimple.fromJson(json))
               .toList()));
     } catch (_) {
       return left(const Failure.fetchStoreFail(

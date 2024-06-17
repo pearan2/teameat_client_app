@@ -20,7 +20,7 @@ class HomePageController extends PageController {
   final _itemRepo = Get.find<IStoreItemRepository>();
 
   /// controllers
-  final PagingController<int, StoreSimple> pagingController =
+  final PagingController<int, ItemSimple> pagingController =
       PagingController(firstPageKey: 0);
   final locationController = Get.find<LocationController>();
 

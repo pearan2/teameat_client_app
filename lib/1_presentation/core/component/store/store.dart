@@ -29,7 +29,6 @@ class StoreSimpleInfoRow extends GetView<IReact> {
 
   Widget _buildButton() {
     if (!isButton) return const SizedBox();
-    // return const Icon(Icons.keyboard_arrow_right);
     return const SizedBox();
   }
 
@@ -75,7 +74,7 @@ class StoreSimpleInfoRow extends GetView<IReact> {
           ),
           _buildButton(),
           DS.space.hTiny,
-          Distance(point: location),
+          DistanceWithIcon(point: location),
           DS.space.hTiny,
           StoreLike(storeId: storeId),
         ],

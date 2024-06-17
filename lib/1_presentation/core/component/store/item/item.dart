@@ -2,34 +2,49 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
-import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
 class StoreItemOriginalPriceText extends StatelessWidget {
   final int originalPrice;
   final int price;
-
+  final MainAxisAlignment? mainAxisAlignment;
   const StoreItemOriginalPriceText(
-      {super.key, required this.originalPrice, required this.price});
+      {super.key,
+      required this.originalPrice,
+      required this.price,
+      this.mainAxisAlignment});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      originalPrice.format(DS.text.priceFormat),
-      style: DS.textStyle.caption1.copyWith(
-        color: DS.color.background500,
-        fontWeight: FontWeight.w300, // demi-light
-        decoration: TextDecoration.lineThrough,
-        decorationColor: DS.color.background500,
-      ),
+    return Row(
+      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+      children: [
+        Text(
+          DS.text.discountPrice,
+          style: DS.textStyle.caption1
+              .copyWith(color: DS.color.point500, fontWeight: FontWeight.w600),
+        ),
+        DS.space.hXTiny,
+        Text(
+          originalPrice.format(DS.text.priceFormat),
+          style: DS.textStyle.caption1.copyWith(
+            color: DS.color.background400,
+            decoration: TextDecoration.lineThrough,
+            decorationColor: DS.color.background400,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -54,8 +69,8 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
     return Text(
       calcDiscountRateString(),
       style: DS.textStyle.paragraph3.copyWith(
-        color: DS.color.secondary700,
-        fontWeight: FontWeight.bold,
+        color: DS.color.point500,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
@@ -65,14 +80,14 @@ class StoreItemPrice extends StatelessWidget {
   final int originalPrice;
   final int price;
   final bool isTitle;
-  final CrossAxisAlignment? crossAxisAlignment;
+  final bool alignRight;
 
   const StoreItemPrice({
     super.key,
     required this.originalPrice,
     required this.price,
     this.isTitle = false,
-    this.crossAxisAlignment,
+    this.alignRight = false,
   });
 
   bool isDiscount() {
@@ -82,23 +97,28 @@ class StoreItemPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+      crossAxisAlignment:
+          alignRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         isDiscount()
             ? StoreItemOriginalPriceText(
-                originalPrice: originalPrice, price: price)
+                originalPrice: originalPrice,
+                price: price,
+                mainAxisAlignment: alignRight
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+              )
             : const SizedBox(),
+        isDiscount() ? DS.space.vXTiny : const SizedBox(),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             isDiscount()
-                ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: DS.space.xTiny),
-                    child: StoreItemPriceDiscountRateText(
-                        originalPrice: originalPrice, price: price),
-                  )
+                ? StoreItemPriceDiscountRateText(
+                    originalPrice: originalPrice, price: price)
                 : const SizedBox(),
+            isDiscount() ? DS.space.hXTiny : const SizedBox(),
             StoreItemPriceText(price: price, isTitle: isTitle)
           ],
         )
@@ -109,10 +129,9 @@ class StoreItemPrice extends StatelessWidget {
 
 class ItemSaleRemainDurationText extends StatefulWidget {
   final DateTime salesWillBeEndedAt;
-  final double borderRadius;
 
   const ItemSaleRemainDurationText(
-      {super.key, required this.salesWillBeEndedAt, this.borderRadius = 0.0});
+      {super.key, required this.salesWillBeEndedAt});
 
   @override
   State<ItemSaleRemainDurationText> createState() =>
@@ -182,51 +201,29 @@ class _ItemSaleRemainDurationTextState
   }
 
   Widget _buildRemainDuration() {
-    return SizedBox(
-      width: DS.space.medium + DS.space.base,
-      child: Text(
-        calcRemainSaleDuration(),
-        style: DS.textStyle.caption2.copyWith(
-          color: DS.color.background000,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+    return Text(
+      calcRemainSaleDuration(),
+      style: DS.textStyle.caption1.copyWith(color: DS.color.background600),
     );
   }
 
   Widget _buildSaleEndText() {
     return Text(
       DS.text.saleEnd,
-      style: DS.textStyle.caption2.copyWith(
-        color: DS.color.background000,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildContainer(Widget child) {
-    return Container(
-      height: DS.space.base,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          color: DS.color.background800.withOpacity(0.3),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(widget.borderRadius),
-              topRight: Radius.circular(widget.borderRadius))),
-      child: child,
+      style: DS.textStyle.caption1.copyWith(color: DS.color.background600),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final remainHours = diff.inHours;
-    if (remainHours > 99) {
+    if (remainHours > 9999) {
       return const SizedBox();
     }
     if (remainHours < 0) {
-      return _buildContainer(_buildSaleEndText());
+      return _buildSaleEndText();
     }
-    return _buildContainer(_buildRemainDuration());
+    return _buildRemainDuration();
   }
 }
 
@@ -245,60 +242,99 @@ class ItemLike extends GetView<LikeController<IStoreItemRepository>> {
   }
 }
 
-class StoreItemImageCarousel extends StatelessWidget {
-  final double width;
-  final double height;
+class StoreItemSellType extends StatelessWidget {
+  final String sellType;
+  final int quantity;
+  final DateTime salesWillBeEndedAt;
+  final bool isColumnShape;
 
-  final ItemDetail item;
-
-  const StoreItemImageCarousel({
+  const StoreItemSellType({
     super.key,
-    required this.width,
-    required this.height,
-    required this.item,
+    required this.sellType,
+    required this.quantity,
+    required this.salesWillBeEndedAt,
+    this.isColumnShape = false,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        TEImageCarousel(width: width, imageUrls: item.imageUrls),
-        Positioned(
-          left: 0,
-          bottom: DS.space.xTiny,
-          child: PageLoadingWrapper(
-            child: ItemSaleRemainDurationText(
-                key: ValueKey(item.id),
-                salesWillBeEndedAt: item.salesWillBeEndedAt),
-          ),
-        )
-      ],
+  Widget _buildContainer(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: DS.color.background400),
+        borderRadius: BorderRadius.circular(
+          DS.space.xxTiny,
+        ),
+      ),
+      padding: EdgeInsets.all(
+        DS.space.tiny,
+      ),
+      child: child,
     );
   }
-}
 
-class StoreItemSellTypeText extends StatelessWidget {
-  final String sellType;
+  Widget _buildText(String text) {
+    return Text(
+      text,
+      style: DS.textStyle.caption1.copyWith(color: DS.color.primary600),
+    );
+  }
 
-  const StoreItemSellTypeText({super.key, required this.sellType});
+  Widget _buildSellTypeTextAndIcon(String sellType) {
+    if (sellType == DS.text.sellTypeTimeLimit) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [_buildText(sellType), DS.space.hTiny, DS.image.timeLimit],
+      );
+    } else if (sellType == DS.text.sellTypeQuantityLimit) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildText(sellType),
+          DS.space.hTiny,
+          DS.image.quantityLimit
+        ],
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget _buildSellTypeContent(String sellType) {
+    if (sellType == DS.text.sellTypeTimeLimit) {
+      return ItemSaleRemainDurationText(salesWillBeEndedAt: salesWillBeEndedAt);
+    } else if (sellType == DS.text.sellTypeQuantityLimit) {
+      return Text(quantity.format(DS.text.voucherCountFormat),
+          style: DS.textStyle.caption1.copyWith(
+            color: DS.color.background600,
+          ));
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget _buildShapeContainer() {
+    if (isColumnShape) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          _buildSellTypeTextAndIcon(sellType),
+          DS.space.vXTiny,
+          _buildSellTypeContent(sellType)
+        ],
+      );
+    } else {
+      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        _buildSellTypeTextAndIcon(sellType),
+        _buildSellTypeContent(sellType)
+      ]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     if (sellType == DS.text.sellTypeVoucher) {
       return const SizedBox();
     }
-    return Container(
-      color: DS.color.secondary700,
-      padding: EdgeInsets.all(DS.space.xxTiny),
-      child: Text(
-        sellType,
-        style: DS.textStyle.caption2.copyWith(
-          color: DS.color.background000,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+    return _buildContainer(_buildShapeContainer());
   }
 }
 
@@ -315,7 +351,8 @@ class StoreItemPriceText extends StatelessWidget {
       price.format(DS.text.priceFormat),
       style: isTitle
           ? DS.textStyle.title1
-          : DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
+          : DS.textStyle.paragraph3.copyWith(
+              color: DS.color.background800, fontWeight: FontWeight.bold),
     );
   }
 }
@@ -392,8 +429,8 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   final double width;
   final int itemId;
   final double borderRadius;
-  final DateTime salesWillBeEndedAt;
   final double ratio;
+  final bool isDangolPick;
 
   const StoreItemImage({
     super.key,
@@ -401,7 +438,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
     required this.width,
     required this.itemId,
     required this.borderRadius,
-    required this.salesWillBeEndedAt,
+    this.isDangolPick = false,
     this.ratio = 3 / 4,
   });
 
@@ -416,21 +453,23 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
           borderRadius: borderRadius,
         ),
         Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: ItemSaleRemainDurationText(
-              key: ValueKey(itemId),
-              salesWillBeEndedAt: salesWillBeEndedAt,
-              borderRadius: borderRadius,
-            )),
+          top: DS.space.tiny,
+          left: DS.space.tiny,
+          child: Visibility(
+            visible: isDangolPick,
+            child: DS.image.dangolPick,
+          ),
+        ),
         Positioned(
           bottom: 0,
           right: 0,
           child: TEonTap(
             onTap: () => controller.toggleLike(itemId),
             child: Padding(
-              padding: EdgeInsets.all(DS.space.xSmall),
+              padding: EdgeInsets.symmetric(
+                horizontal: DS.space.xSmall,
+                vertical: DS.space.xTiny,
+              ),
               child: ItemLike(itemId: itemId),
             ),
           ),
@@ -451,10 +490,54 @@ class StoreItemNameText extends StatelessWidget {
     return Text(
       name,
       textAlign: textAlign,
-      style: DS.textStyle.paragraph3
-          .copyWith(fontWeight: FontWeight.w600, color: DS.color.background600),
-      maxLines: 2,
+      style: DS.textStyle.paragraph3.copyWith(color: DS.color.background700),
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+class StoreItemStoreSimpleRow extends GetView<IReact> {
+  final String name;
+  final int id;
+  final Point location;
+
+  const StoreItemStoreSimpleRow({
+    super.key,
+    required this.name,
+    required this.id,
+    required this.location,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () => c.toStoreDetail(id),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: DS.textStyle.caption1.copyWith(
+                      color: DS.color.background500,
+                    ),
+                  ),
+                ),
+                DS.space.hXXTiny,
+                DS.image.rightArrow,
+              ],
+            ),
+          ),
+          DistanceText(point: location),
+        ],
+      ),
     );
   }
 }
@@ -486,17 +569,27 @@ class StoreItemColumnCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StoreItemImage(
+              isDangolPick: item.curationId != null,
               imageUrl: item.imageUrl,
               width: imageWidth,
               itemId: item.id,
               borderRadius: borderRadius,
+            ),
+            DS.space.vXTiny,
+            StoreItemSellType(
+              sellType: item.sellType,
               salesWillBeEndedAt: item.salesWillBeEndedAt,
+              quantity: item.quantity,
+            ),
+            DS.space.vXTiny,
+            StoreItemStoreSimpleRow(
+              id: item.storeId,
+              name: item.storeName,
+              location: item.storeLocation,
             ),
             DS.space.vXTiny,
             StoreItemNameText(name: item.name),
-            DS.space.vXTiny,
-            StoreItemSellTypeText(sellType: item.sellType),
-            DS.space.vXTiny,
+            DS.space.vTiny,
             StoreItemPrice(
                 originalPrice: item.originalPrice, price: item.price),
           ],
@@ -538,7 +631,6 @@ class StoreItemRowCard extends StatelessWidget {
               itemId: item.id,
               ratio: 1 / 1,
               borderRadius: borderRadius,
-              salesWillBeEndedAt: item.salesWillBeEndedAt,
             ),
             DS.space.hBase,
             Expanded(
@@ -554,10 +646,15 @@ class StoreItemRowCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      StoreItemSellTypeText(sellType: item.sellType),
+                      StoreItemSellType(
+                        sellType: item.sellType,
+                        salesWillBeEndedAt: item.salesWillBeEndedAt,
+                        quantity: item.quantity,
+                        isColumnShape: true,
+                      ),
                       DS.space.vTiny,
                       StoreItemPrice(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        alignRight: true,
                         originalPrice: item.originalPrice,
                         price: item.price,
                       )

@@ -26,6 +26,7 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
   final focusNode = FocusNode();
   final textEditController = TextEditingController();
 
+  bool isSearched = false;
   List<Local> locals = [];
   bool isLoading = false;
 
@@ -45,12 +46,14 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
     focusNode.requestFocus();
   }
 
-  Future<void> onSearch(String searchText) async {
+  Future<void> onSearch() async {
+    final searchText = textEditController.text;
     if (searchText.isEmpty) {
       focusNode.requestFocus();
       return;
     }
     loading(true);
+    isSearched = true;
     final ret = await _localRepo.findLocal(searchText);
     loading(false);
     ret.fold((l) => showError(l.desc), (r) => setState(() => locals = r));
@@ -71,10 +74,12 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          DS.text.localStoreNotFound,
-          style: DS.textStyle.paragraph1,
-        ),
+        isSearched
+            ? Text(
+                DS.text.localStoreNotFound,
+                style: DS.textStyle.paragraph1,
+              )
+            : const SizedBox(),
         DS.space.vBase,
         Text(
           DS.text.searchLocalStoreTip,
@@ -83,8 +88,8 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
         ),
         DS.space.vBase,
         TEPrimaryButton(
-          onTap: onSearchTextRefresh,
-          text: DS.text.searchAgain,
+          onTap: isSearched ? onSearchTextRefresh : onSearch,
+          text: isSearched ? DS.text.searchAgain : DS.text.search,
           fitContentWidth: true,
           contentHorizontalPadding: DS.space.small,
         ),
@@ -167,7 +172,7 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextSearcher(
-            onCompleted: onSearch,
+            onCompleted: (_) => onSearch(),
             focusNode: focusNode,
             controller: textEditController,
             hintText: DS.text.pleaseSearchLocalStore,

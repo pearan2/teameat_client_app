@@ -11,6 +11,7 @@ import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/i_local_repository.dart';
+import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/message/i_message_repository.dart';
 import 'package:teameat/3_domain/order/i_order_repository.dart';
@@ -23,6 +24,7 @@ import 'package:teameat/4_infra/auth/auth_service.dart';
 import 'package:teameat/4_infra/connection/connection.dart';
 import 'package:teameat/4_infra/core/code/code_repository.dart';
 import 'package:teameat/4_infra/core/local_repository.dart';
+import 'package:teameat/4_infra/curation/curation_repository.dart';
 import 'package:teameat/4_infra/file/file_service.dart';
 import 'package:teameat/4_infra/message/message_repository.dart';
 import 'package:teameat/4_infra/order/order_repository.dart';
@@ -51,6 +53,7 @@ Future<void> configDependency() async {
   Get.put<IGiftRepository>(GiftRepository());
   Get.put<IUserRepository>(UserRepository());
   Get.put<ILocalRepository>(LocalRepository());
+  Get.put<ICurationRepository>(CurationRepository());
 
   // service
   Get.put<IAuthService>(AuthService());

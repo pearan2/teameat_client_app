@@ -161,5 +161,7 @@ abstract class ITextSystem {
   String get localStoreNotFound;
   String get searchLocalStoreTip;
   String get searchAgain;
+  String get search;
   String get discountPrice;
+  String get registerCurationSuccess;
 }

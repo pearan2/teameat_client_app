@@ -497,4 +497,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get discountPrice => '할인가';
+
+  @override
+  String get registerCurationSuccess => '메뉴 신청을 잘 접수했어요! 팀잇이 빠르게 영업해볼게요!';
+
+  @override
+  String get search => '검색하기';
 }

@@ -23,4 +23,7 @@ class Failure with _$Failure {
   const factory Failure.uploadFileFail(String desc) = _UploadFileFail;
   const factory Failure.createGiftFail(String desc) = _CreateGiftFail;
   const factory Failure.fetchLocalFail(String desc) = _FetchLocalFail;
+  const factory Failure.fetchCurationFail(String desc) = _FetchCurationFail;
+  const factory Failure.registerCurationFail(String desc) =
+      _RegisterCurationFail;
 }

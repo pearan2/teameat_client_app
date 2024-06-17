@@ -18,7 +18,10 @@ class CommunityPage extends GetView<CommunityPageController> {
           child: Column(
             children: [
               TEPrimaryButton(onTap: c.onSearchStore, text: '가게검색'),
+              Obx(() => Text('가게 : ${c.local?.title}')),
+              Obx(() => Text('입점여부 : ${c.localIsEntered}')),
               TEPrimaryButton(onTap: c.onImageSelect, text: '이미지선택'),
+              TEPrimaryButton(onTap: c.onCreateCuration, text: '큐레이션'),
               Center(
                 child: Obx(() => c.bytes.value == null
                     ? const SizedBox()

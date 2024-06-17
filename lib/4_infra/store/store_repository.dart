@@ -46,6 +46,7 @@ class StoreRepository extends IStoreRepository<StoreSimple>
   Future<Either<Failure, bool>> isStoreEntered(String storeId) async {
     try {
       final path = '/api/store/$storeId/is-entered';
+
       final ret = await _conn.get(path, null);
       return ret.fold((l) => left(l), (r) => right(r as bool));
     } catch (e) {

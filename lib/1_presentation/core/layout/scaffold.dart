@@ -146,7 +146,7 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
           height: DS.space.large,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: DS.color.primary500,
+            color: DS.color.primary600,
             borderRadius: const BorderRadius.all(Radius.circular(300)),
           ),
           child: Icon(
@@ -240,7 +240,7 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
   }
 
   Text getTextClicked() {
-    return getText(color: DS.color.primary500);
+    return getText(color: DS.color.primary600);
   }
 
   Text getText({Color? color}) {

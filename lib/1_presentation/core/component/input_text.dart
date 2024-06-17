@@ -96,7 +96,7 @@ class TECupertinoTextField extends StatefulWidget {
     this.helperTextSpacing = 8.0,
     this.enabled = true,
   }) {
-    this.focusedBorderColor = focusedBorderColor ?? DS.color.primary500;
+    this.focusedBorderColor = focusedBorderColor ?? DS.color.primary600;
     this.emptyBorderColor = emptyBorderColor ?? DS.color.background400;
     this.filledBorderColor = filledBorderColor ?? DS.color.background800;
     this.hintText = hintText ?? '';
@@ -112,7 +112,7 @@ class TECupertinoTextField extends StatefulWidget {
     this.errorText = errorText ?? '';
     this.errorTextStyle = errorTextStyle ??
         DS.textStyle.caption1
-            .copyWith(color: DS.color.secondary500, letterSpacing: -0.2);
+            .copyWith(color: DS.color.secondary700, letterSpacing: -0.2);
 
     this.suffixTextStyle = suffixTextStyle ??
         DS.textStyle.caption1
@@ -243,7 +243,7 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       enabled: widget.enabled,
       controller: widget.controller.c,
       autofocus: widget.autoFocus,
-      cursorColor: DS.color.primary500,
+      cursorColor: DS.color.primary600,
       padding: EdgeInsets.only(bottom: DS.space.tiny),
       focusNode: widget.controller.focusNode,
       maxLines: widget.maxLines,
@@ -262,7 +262,7 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       onSubmitted: widget.onSubmitted,
       style: isValid
           ? widget.textStyle
-          : widget.textStyle.copyWith(color: DS.color.secondary500),
+          : widget.textStyle.copyWith(color: DS.color.secondary700),
       placeholder: widget.hintText,
       placeholderStyle: widget.hintTextStyle,
       keyboardType: widget.keyboardType,

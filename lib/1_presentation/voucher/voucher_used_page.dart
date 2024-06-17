@@ -45,7 +45,7 @@ class VoucherUsedPage extends GetView<VoucherUsedPageController> {
                     text: controller.usedQuantity
                         .format(DS.text.voucherCountFormat),
                     style: DS.textStyle.title2.copyWith(
-                      color: DS.color.secondary500,
+                      color: DS.color.secondary700,
                     ),
                   ),
                   const TextSpan(text: ' '),

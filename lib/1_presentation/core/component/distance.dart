@@ -28,7 +28,7 @@ class Distance extends GetView<LocationController> {
                   vertical: DS.space.xTiny, horizontal: DS.space.tiny),
               height: DS.space.base,
               decoration: BoxDecoration(
-                color: DS.color.primary500,
+                color: DS.color.primary600,
                 borderRadius: BorderRadius.circular(300),
               ),
               child: Row(

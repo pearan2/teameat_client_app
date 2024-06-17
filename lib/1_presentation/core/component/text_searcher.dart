@@ -67,7 +67,7 @@ class _TextSearcherState extends State<TextSearcher> {
         focusNode.unfocus();
         widget.onCompleted(controller.text);
       },
-      cursorColor: DS.color.primary500,
+      cursorColor: DS.color.primary600,
       padding: EdgeInsets.symmetric(
           horizontal: DS.space.xSmall, vertical: DS.space.tiny),
       prefix: Padding(

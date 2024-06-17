@@ -11,7 +11,7 @@ class TELoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingAnimationWidget.waveDots(
-      color: color ?? DS.color.primary500,
+      color: color ?? DS.color.primary600,
       size: size ?? DS.space.base,
     );
   }

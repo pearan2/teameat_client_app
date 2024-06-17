@@ -46,7 +46,6 @@ dependencies:
   freezed_annotation: ^2.4.1
   shared_preferences: ^2.2.3
   shimmer: ^3.0.0
-  google_fonts: ^6.2.1
   flutter_svg: ^2.0.10+1
   infinite_scroll_pagination: ^4.0.0
   carousel_slider: ^4.2.1
@@ -94,6 +93,18 @@ flutter:
     - assets/image/icon/
     - assets/image/icon/bottom/
   
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/pretendard/Pretendard-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/pretendard/Pretendard-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/pretendard/Pretendard-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/pretendard/Pretendard-ExtraBold.ttf
+          weight: 800
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

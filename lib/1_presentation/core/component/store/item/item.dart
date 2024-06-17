@@ -54,7 +54,7 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
     return Text(
       calcDiscountRateString(),
       style: DS.textStyle.paragraph3.copyWith(
-        color: DS.color.secondary500,
+        color: DS.color.secondary700,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -289,7 +289,7 @@ class StoreItemSellTypeText extends StatelessWidget {
       return const SizedBox();
     }
     return Container(
-      color: DS.color.secondary500,
+      color: DS.color.secondary700,
       padding: EdgeInsets.all(DS.space.xxTiny),
       child: Text(
         sellType,

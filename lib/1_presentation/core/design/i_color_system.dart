@@ -2,19 +2,19 @@ import 'package:flutter/widgets.dart';
 
 abstract class IColorSystem {
   /// 0xFF0086FF
-  Color get primary500;
+  Color get primary600;
 
   /// 0xFF356BF7
-  Color get primary400;
+  Color get primary500;
 
   /// 0xFFF44E00
-  Color get secondary600;
+  Color get secondary900;
 
   /// 0xFFFD5353
-  Color get secondary500;
+  Color get secondary700;
 
   /// 0xFFF44E00
-  Color get secondary400;
+  Color get secondary500;
 
   Color get point500;
 

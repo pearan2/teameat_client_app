@@ -1,11 +1,10 @@
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 
 class DefaultTextStyleSystem extends ITextStyleSystem {
   static TextStyle get defaultStyle =>
-      GoogleFonts.inter().copyWith(height: 1.1);
+      const TextStyle(fontFamily: 'Pretendard', height: 1.1);
 
   /// title
   @override

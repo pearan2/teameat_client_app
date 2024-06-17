@@ -157,7 +157,7 @@ class NearbyMe extends GetView<HomePageController> {
           child: Container(
             decoration: BoxDecoration(
                 color: controller.isNearbyMe
-                    ? DS.color.primary500
+                    ? DS.color.primary600
                     : DS.color.background500,
                 borderRadius: BorderRadius.circular(300)),
             padding: EdgeInsets.symmetric(

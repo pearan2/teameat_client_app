@@ -32,7 +32,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
               controller.react.back(result: controller.isUpdated),
           homeOnPressed: controller.react.toHomeOffAll,
         ),
-        bottomSheetBackgroundColor: DS.color.primary500,
+        bottomSheetBackgroundColor: DS.color.primary600,
         bottomSheet: Obx(
           () => TEPrimaryButton(
             onTap: isUsable(controller.voucher.willBeExpiredAt,
@@ -221,7 +221,7 @@ class VoucherUsePasswordLengthChecker
               height: DS.space.small,
               decoration: BoxDecoration(
                   color: (idx < controller.useVoucherPasswordLength)
-                      ? DS.color.primary500
+                      ? DS.color.primary600
                       : DS.color.background400,
                   borderRadius: BorderRadius.circular(300)),
             )),
@@ -370,7 +370,7 @@ class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
             child: QRView(
                 overlay: QrScannerOverlayShape(
                   borderRadius: DS.space.tiny,
-                  borderColor: DS.color.primary500,
+                  borderColor: DS.color.primary600,
                 ),
                 key: GlobalKey(),
                 onQRViewCreated: (controller) {

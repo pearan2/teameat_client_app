@@ -333,7 +333,7 @@ class StoreItemQuantityPicker extends StatelessWidget {
 
   void onClickHandler(int addValue) {
     final nextQuantityCandidate = quantity + addValue;
-    if (quantity > 99 || quantity < 1) return;
+    if (nextQuantityCandidate > 9 || nextQuantityCandidate < 1) return;
     onQuantityChanged.call(nextQuantityCandidate);
   }
 

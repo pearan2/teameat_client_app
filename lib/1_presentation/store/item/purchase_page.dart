@@ -81,7 +81,7 @@ class PurchaseMethodSelector extends GetView<PurchasePageController> {
             ? []
             : [controller.purchaseMethod!],
         candidates: controller.purchaseMethods,
-        numberOfRowChildren: 2,
+        numberOfRowChildren: 1,
         onTap: controller.onPurchaseMethodClick,
         builder: (value, isSelected) => TEToggle(
           text: value.method,

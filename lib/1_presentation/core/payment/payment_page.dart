@@ -24,13 +24,14 @@ class PaymentPage extends GetView<PaymentPageController> {
           ],
         ),
       ),
-      userCode: 'imp66624150',
+      userCode: 'imp66624150', // 고객사 식별 코드
       data: PaymentData(
-          pg: 'html5_inicis.INIpayTest', // PG사
+          pg: 'welcome.welcometst', // PG사 (웰컴페이먼츠로 변경) '{PG_PROVIDER}.{MID}'
           payMethod: controller.paymentMethod.value, // 결제수단
           name: controller.order.name, // 주문명
           merchantUid: controller.order.orderId, // 주문번호
           amount: controller.order.totalAmount, // 결제금액
+          buyerName: controller.order.memberEmail, // 주문자 이메일
           buyerTel: controller.order.memberSocialId, // 구매자 연락처
           buyerEmail: controller.order.memberEmail, // 구매자 이메일
           appScheme: 'teameatiospaymentappscheme', // 앱 URL scheme (ios)

@@ -22,7 +22,7 @@ class PurchasePageController extends PageController {
       .fold(0, (prev, entry) => prev + entry.key.price * entry.value);
   List<PaymentMethod> get purchaseMethods => [
         PaymentMethod.card(),
-        PaymentMethod.naver(),
+        // PaymentMethod.naver(), -> 웰컴페이먼츠로 변경되면서 사용불가.
         PaymentMethod.kakao(),
         PaymentMethod.toss()
       ];

@@ -13,6 +13,7 @@ class CommunityPage extends GetView<CommunityPageController> {
   Widget build(BuildContext context) {
     return TEScaffold(
         appBar: TEAppBar(height: 0),
+        activated: BottomNavigatorType.community,
         body: Center(
           child: Column(
             children: [

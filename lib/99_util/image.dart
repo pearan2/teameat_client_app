@@ -15,6 +15,15 @@ class ImageResizeResult {
     required this.bytes,
     required this.contentType,
   });
+
+  factory ImageResizeResult.empty() {
+    return ImageResizeResult(
+      width: 0,
+      height: 0,
+      bytes: Uint8List(0),
+      contentType: '',
+    );
+  }
 }
 
 class ImageResizeParameter {

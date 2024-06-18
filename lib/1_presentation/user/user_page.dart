@@ -108,9 +108,11 @@ class UserCard extends GetView<UserPageController> {
       padding: EdgeInsets.all(DS.space.xBase),
       child: Row(
         children: [
-          c.user.obx((user) => TENetworkImage(
-                url: user.profileImageUrl,
-                size: DS.space.large,
+          c.user.obx((user) => TECacheImage(
+                src: user.profileImageUrl,
+                width: DS.space.large,
+                ratio: 1,
+                borderRadius: 300,
               )),
           DS.space.hTiny,
           Column(

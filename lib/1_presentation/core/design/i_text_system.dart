@@ -164,4 +164,10 @@ abstract class ITextSystem {
   String get search;
   String get discountPrice;
   String get registerCurationSuccess;
+  String get curationNotFound;
+  String get applicationsOfUserFormat;
+  String get preview;
+  String get addMenuImage;
+  String get addEtcImage;
+  String get canNotAddMorePictures;
 }

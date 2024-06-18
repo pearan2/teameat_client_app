@@ -223,6 +223,12 @@ class DefaultImageSystem extends IImageSystem {
         width: 44,
         height: 44,
       );
+  @override
+  SvgPicture get addImage => SvgPicture.asset(
+        'assets/image/icon/add_image_icon.svg',
+        height: 24,
+        width: 24,
+      );
 
 // sell type icon
   @override
@@ -237,5 +243,13 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/icon/sell_type/time_limit.svg',
         height: 16,
         width: 16,
+      );
+
+  @override
+  Image get communityBanner1 => Image.asset(
+        'assets/image/banner/community_banner_1.png',
+        height: 164,
+        width: 357,
+        fit: BoxFit.cover,
       );
 }

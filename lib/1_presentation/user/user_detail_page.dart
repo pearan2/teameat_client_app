@@ -52,7 +52,7 @@ class UserDetailPage extends GetView<UserPageController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TECupertinoTextField(
-                      maxLines: 1,
+                      isEssential: true,
                       controller: c.emailController,
                       autoFocus: false,
                       helperText: DS.text.userEmail,
@@ -64,7 +64,7 @@ class UserDetailPage extends GetView<UserPageController> {
                     ),
                     DS.space.vSmall,
                     TECupertinoTextField(
-                      maxLines: 1,
+                      isEssential: true,
                       controller: c.nicknameController,
                       autoFocus: false,
                       helperText: DS.text.userNickname,
@@ -85,7 +85,6 @@ class UserDetailPage extends GetView<UserPageController> {
                             .copyWith(fontWeight: FontWeight.bold)),
                     DS.space.vTiny,
                     TECupertinoTextField(
-                      maxLines: 1,
                       controller: c.bankNameController,
                       autoFocus: false,
                       helperText: DS.text.bankAccountBankName,
@@ -103,7 +102,6 @@ class UserDetailPage extends GetView<UserPageController> {
                     ),
                     DS.space.vTiny,
                     TECupertinoTextField(
-                      maxLines: 1,
                       controller: c.holderNameController,
                       autoFocus: false,
                       helperText: DS.text.bankAccountHolderName,
@@ -122,7 +120,6 @@ class UserDetailPage extends GetView<UserPageController> {
                     ),
                     DS.space.vTiny,
                     TECupertinoTextField(
-                      maxLines: 1,
                       controller: c.bankAccountNumberController,
                       autoFocus: false,
                       helperText: DS.text.bankAccountNumber,
@@ -181,7 +178,12 @@ class UserImage extends StatelessWidget {
 
   Widget _buildImage() {
     if (file == null) {
-      return TENetworkImage(url: url!, size: size);
+      return TECacheImage(
+        src: url!,
+        width: size,
+        ratio: 1,
+        borderRadius: 300,
+      );
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(300),

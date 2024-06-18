@@ -4,6 +4,6 @@ import 'package:teameat/2_application/community/community_page_controller.dart';
 class CommunityPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(CommunityPageController());
+    Get.lazyPut(() => CommunityPageController(), fenix: true);
   }
 }

@@ -192,7 +192,7 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
       child: Column(
         children: [
           _buildControls(),
-          widget.widthRatio == null && widget.heightRatio != null
+          widget.widthRatio == null || widget.heightRatio == null
               ? const SizedBox()
               : Expanded(child: _buildRatioViewer()),
           Expanded(child: _buildGrid()),

@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/99_util/image.dart';
 import 'package:teameat/99_util/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,6 +32,7 @@ class TEMainButton extends GetView<LoadingProvider> {
   final double? contentVerticalPadding;
 
   final bool fitContentWidth;
+  final bool withShadow;
 
   const TEMainButton({
     super.key,
@@ -41,6 +48,7 @@ class TEMainButton extends GetView<LoadingProvider> {
     required this.fillColor,
     required this.contentColor,
     this.fitContentWidth = false,
+    this.withShadow = false,
   });
 
   TextStyle getContentStyle() {
@@ -98,6 +106,15 @@ class TEMainButton extends GetView<LoadingProvider> {
           border: _buildBorder(),
           color: fillColor,
           borderRadius: BorderRadius.circular(borderRadius ?? DS.space.tiny),
+          boxShadow: withShadow
+              ? [
+                  BoxShadow(
+                    color: DS.color.background800.withOpacity(0.25),
+                    blurRadius: DS.space.xTiny,
+                    offset: Offset(0, DS.space.xTiny),
+                  )
+                ]
+              : [],
         ),
         child: listenEventLoading
             ? Obx(() {
@@ -122,6 +139,7 @@ class TEPrimaryButton extends StatelessWidget {
   final double? contentVerticalPadding;
   final bool fitContentWidth;
   final double? borderRadius;
+  final bool withShadow;
 
   const TEPrimaryButton({
     super.key,
@@ -133,6 +151,7 @@ class TEPrimaryButton extends StatelessWidget {
     this.contentVerticalPadding,
     this.borderRadius,
     this.fitContentWidth = false,
+    this.withShadow = false,
   });
 
   @override
@@ -148,6 +167,7 @@ class TEPrimaryButton extends StatelessWidget {
       contentVerticalPadding: contentVerticalPadding,
       fitContentWidth: fitContentWidth,
       borderRadius: borderRadius,
+      withShadow: withShadow,
     );
   }
 }
@@ -161,17 +181,20 @@ class TESecondaryButton extends GetView<LoadingProvider> {
   final double? contentVerticalPadding;
   final bool fitContentWidth;
   final double? borderRadius;
+  final bool withShadow;
 
-  const TESecondaryButton(
-      {super.key,
-      this.onTap,
-      required this.text,
-      this.isLoginRequired = false,
-      this.listenEventLoading = false,
-      this.contentHorizontalPadding,
-      this.contentVerticalPadding,
-      this.borderRadius,
-      this.fitContentWidth = false});
+  const TESecondaryButton({
+    super.key,
+    this.onTap,
+    required this.text,
+    this.isLoginRequired = false,
+    this.listenEventLoading = false,
+    this.contentHorizontalPadding,
+    this.contentVerticalPadding,
+    this.borderRadius,
+    this.fitContentWidth = false,
+    this.withShadow = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +211,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
       contentVerticalPadding: contentVerticalPadding,
       fitContentWidth: fitContentWidth,
       borderRadius: borderRadius,
+      withShadow: withShadow,
     );
   }
 }
@@ -202,6 +226,8 @@ class TEToggle extends StatelessWidget {
   final Color? textUnSelected;
   final double borderRadius;
   final bool isTextBold;
+  final bool withShadow;
+  final TextStyle? textStyle;
 
   const TEToggle({
     super.key,
@@ -214,6 +240,8 @@ class TEToggle extends StatelessWidget {
     this.textUnSelected,
     this.textSelected,
     this.isTextBold = false,
+    this.withShadow = false,
+    this.textStyle,
   });
 
   @override
@@ -223,16 +251,28 @@ class TEToggle extends StatelessWidget {
     final textSelected = this.textSelected ?? DS.color.background000;
     final textUnSelected = this.textUnSelected ?? DS.color.background800;
 
+    final textStyle = this.textStyle ?? DS.textStyle.caption1;
+
     return Container(
       height: height,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: isSelected ? boxSelected : boxUnSelected,
-          borderRadius: BorderRadius.circular(borderRadius)),
+        color: isSelected ? boxSelected : boxUnSelected,
+        borderRadius: BorderRadius.circular(borderRadius),
+        boxShadow: withShadow
+            ? [
+                BoxShadow(
+                  color: DS.color.background800.withOpacity(0.25),
+                  blurRadius: DS.space.xTiny,
+                  offset: Offset(0, DS.space.xTiny),
+                )
+              ]
+            : [],
+      ),
       alignment: Alignment.center,
       child: Text(
         text,
-        style: DS.textStyle.caption1.copyWith(
+        style: textStyle.copyWith(
           color: isSelected ? textSelected : textUnSelected,
           fontWeight: isTextBold ? FontWeight.bold : null,
         ),
@@ -511,6 +551,304 @@ class TEPrivacyPolicyButton extends StatelessWidget {
         launchUrl(url);
       },
       text: DS.text.privacyPolicy,
+    );
+  }
+}
+
+class TETextButton extends StatelessWidget {
+  final String text;
+  final void Function()? onTap;
+
+  const TETextButton({
+    super.key,
+    required this.text,
+    this.onTap,
+  });
+
+  TextStyle getActiveStyle() {
+    return DS.textStyle.paragraph3
+        .copyWith(color: DS.color.background800, fontWeight: FontWeight.w600);
+  }
+
+  TextStyle getInactiveStyle() {
+    return DS.textStyle.paragraph3.copyWith(color: DS.color.background400);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () => onTap?.call(),
+      child: Text(
+        text,
+        style: onTap == null ? getInactiveStyle() : getActiveStyle(),
+      ),
+    );
+  }
+}
+
+class TEMultiImageSelector extends StatefulWidget {
+  final int numberOfMiniumImages;
+  final int numberOfMaximumImages;
+  final double imagePreviewWidth;
+  final int imageWidthRatio;
+  final int imageHeightRatio;
+  final bool isFirstCover;
+
+  final String addButtonTitle;
+  final Function(List<ImageResizeResult> images) onImageChanged;
+  final Function(bool isLoading) onLoading;
+
+  const TEMultiImageSelector({
+    super.key,
+    this.numberOfMiniumImages = 0,
+    this.numberOfMaximumImages = 10,
+    this.imagePreviewWidth = 80.0,
+    this.imageWidthRatio = 3,
+    this.imageHeightRatio = 4,
+    this.addButtonTitle = '사진 추가',
+    this.isFirstCover = false,
+    required this.onImageChanged,
+    required this.onLoading,
+  });
+
+  @override
+  State<TEMultiImageSelector> createState() => _TEMultiImageSelectorState();
+}
+
+class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
+  late final imageRatio = widget.imageWidthRatio / widget.imageHeightRatio;
+
+  List<File> selectedImages = [];
+  List<ImageResizeResult> croppedImages = [];
+  List<bool> loadings = [];
+
+  Widget _buildContainer(Widget child) {
+    return Container(
+      width: widget.imagePreviewWidth,
+      height: widget.imagePreviewWidth / imageRatio,
+      decoration:
+          BoxDecoration(border: Border.all(color: DS.color.background300)),
+      child: child,
+    );
+  }
+
+  void _changeIdx(int lhs, int rhs) {
+    if (lhs < 0 ||
+        lhs >= selectedImages.length ||
+        rhs < 0 ||
+        rhs >= selectedImages.length) {
+      return;
+    }
+    if (loadings[lhs] || loadings[rhs]) {
+      return;
+    }
+
+    final lhsLoading = loadings[lhs];
+    final lhsCroppedImage = croppedImages[lhs];
+    final lhsSelectedImage = selectedImages[lhs];
+
+    final nextLoading = [...loadings];
+    final nextCroppedImage = [...croppedImages];
+    final nextSelectedImage = [...selectedImages];
+
+    nextLoading[lhs] = nextLoading[rhs];
+    nextCroppedImage[lhs] = nextCroppedImage[rhs];
+    nextSelectedImage[lhs] = nextSelectedImage[rhs];
+
+    nextLoading[rhs] = lhsLoading;
+    nextCroppedImage[rhs] = lhsCroppedImage;
+    nextSelectedImage[rhs] = lhsSelectedImage;
+
+    setState(() {
+      loadings = nextLoading;
+      croppedImages = nextCroppedImage;
+      selectedImages = nextSelectedImage;
+      _tryInvokeCallback();
+    });
+  }
+
+  Widget _buildContent(int idx) {
+    final isLoading = loadings[idx];
+    if (isLoading) {
+      return const Center(child: TELoading());
+    }
+    return GestureDetector(
+      key: ValueKey(idx),
+      behavior: HitTestBehavior.opaque,
+      onDoubleTap: () => _removeImage(idx),
+      child: Stack(
+        children: [
+          Image.memory(
+            croppedImages[idx].bytes,
+            fit: BoxFit.fill,
+          ),
+          Positioned.fill(
+              child: Row(
+            children: [
+              Expanded(
+                child: TEonTap(
+                  onTap: () => _changeIdx(idx - 1, idx),
+                  child: const SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TEonTap(
+                  onTap: () => _changeIdx(idx, idx + 1),
+                  child: const SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+              )
+            ],
+          )),
+          Positioned(
+              left: DS.space.xTiny,
+              bottom: DS.space.xTiny,
+              child: Visibility(
+                visible: idx == 0 && widget.isFirstCover,
+                child: Container(
+                  padding: EdgeInsets.all(DS.space.xTiny),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      DS.space.xTiny,
+                    ),
+                    color: DS.color.background700.withOpacity(0.85),
+                  ),
+                  child: Text(
+                    'cover',
+                    style: DS.textStyle.paragraph3.copyWith(
+                      color: DS.color.background000,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButtonText() {
+    final style = DS.textStyle.caption1.copyWith(color: DS.color.background600);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        widget.numberOfMiniumImages == 0
+            ? Text(widget.addButtonTitle, style: style)
+            : TEEssentialText(widget.addButtonTitle, style: style),
+        DS.space.vXTiny,
+        Text(
+          '${selectedImages.length}/${widget.numberOfMaximumImages}',
+          style: style,
+        )
+      ],
+    );
+  }
+
+  void _tryInvokeCallback() {
+    if (!loadings.contains(true)) {
+      widget.onLoading(false);
+      widget.onImageChanged(croppedImages);
+    }
+  }
+
+  void _removeImage(int idx) {
+    final nextLoadings = [...loadings]..removeAt(idx);
+    final nextCroppedImages = [...croppedImages]..removeAt(idx);
+    final nextSelectedImages = [...selectedImages]..removeAt(idx);
+    setState(() {
+      loadings = nextLoadings;
+      croppedImages = nextCroppedImages;
+      selectedImages = nextSelectedImages;
+      _tryInvokeCallback();
+    });
+  }
+
+  Future<void> _cropImage(int idx) async {
+    final ret = await resize(
+        ImageResizeParameter(selectedImages[idx], ratio: imageRatio));
+    setState(() {
+      final nextLoadings = [...loadings];
+      nextLoadings[idx] = false;
+      final nextCroppedImages = [...croppedImages];
+      nextCroppedImages[idx] = ret;
+      loadings = nextLoadings;
+      croppedImages = nextCroppedImages;
+      _tryInvokeCallback();
+    });
+  }
+
+  Future<void> _onAddImage() async {
+    if (this.selectedImages.length >= widget.numberOfMaximumImages) {
+      return showError(DS.text.canNotAddMorePictures);
+    }
+
+    final selectedImages = await showMultiPhotoPickerBottomSheet(
+      limit: widget.numberOfMaximumImages - this.selectedImages.length,
+      widthRatio: widget.imageWidthRatio,
+      heightRatio: widget.imageHeightRatio,
+      height: Get.mediaQuery.size.height - Get.mediaQuery.padding.top,
+    );
+    if (selectedImages == null) {
+      return;
+    }
+    final beforeLength = this.selectedImages.length;
+    setState(() {
+      this.selectedImages = [...this.selectedImages, ...selectedImages];
+      loadings = [
+        ...loadings,
+        ...List.generate(selectedImages.length, (_) => true)
+      ];
+      croppedImages = [
+        ...croppedImages,
+        ...List.generate(
+            selectedImages.length, (_) => ImageResizeResult.empty())
+      ];
+    });
+    for (int i = beforeLength; i < this.selectedImages.length; i++) {
+      _cropImage(i);
+    }
+    widget.onLoading(true);
+  }
+
+  Widget _buildAddImageButton() {
+    return TEonTap(
+      onTap: _onAddImage,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          DS.image.addImage,
+          _buildButtonText(),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final height = widget.imagePreviewWidth / imageRatio;
+    return SizedBox(
+      height: height,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemBuilder: (_, idx) {
+          if (idx < selectedImages.length) {
+            return _buildContainer(_buildContent(idx));
+          } else {
+            return _buildContainer(_buildAddImageButton());
+          }
+        },
+        separatorBuilder: (_, __) => DS.space.hXTiny,
+        itemCount: selectedImages.length + 1,
+      ),
     );
   }
 }

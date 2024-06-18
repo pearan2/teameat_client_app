@@ -17,4 +17,15 @@ class Local with _$Local {
   }) = _Local;
 
   factory Local.fromJson(Map<String, Object?> json) => _$LocalFromJson(json);
+
+  factory Local.empty() {
+    return Local(
+      title: '',
+      category: '',
+      address: '',
+      roadAddress: '',
+      location: Point.empty(),
+      storeId: '',
+    );
+  }
 }

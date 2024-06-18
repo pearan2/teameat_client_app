@@ -9,5 +9,5 @@ abstract class ICurationRepository {
   Future<Either<Failure, CurationDetail>> findById(int id);
 
   Future<Either<Failure, List<CurationSimple>>> findAll(
-      {required int pageNumber, required int pageSize});
+      SearchCurationSimpleList searchOption);
 }

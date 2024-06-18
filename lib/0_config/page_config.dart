@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/community_page.dart';
 import 'package:teameat/1_presentation/community/community_page_binding.dart';
+import 'package:teameat/1_presentation/community/create/community_create_page.dart';
+import 'package:teameat/1_presentation/community/create/community_create_page_binding.dart';
 import 'package:teameat/1_presentation/core/auth/login_page.dart';
 import 'package:teameat/1_presentation/core/auth/login_page_binding.dart';
 import 'package:teameat/1_presentation/core/payment/payment_page.dart';
@@ -50,6 +52,13 @@ List<GetPage> allPages() => [
         binding: CommunityPageBinding(),
         page: () => const CommunityPage(),
         transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/community/create",
+        binding: CommunityCreatePageBinding(),
+        page: () => const CommunityCreatePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/user",

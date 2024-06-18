@@ -46,8 +46,12 @@ abstract class IImageSystem {
   SvgPicture get bookmarkClicked;
   SvgPicture get rightArrow;
   Image get dangolPick;
+  SvgPicture get addImage;
 
   /// sell type icon
   SvgPicture get timeLimit;
   SvgPicture get quantityLimit;
+
+  /// banner
+  Image get communityBanner1;
 }

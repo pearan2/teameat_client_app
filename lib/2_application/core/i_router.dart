@@ -44,4 +44,6 @@ abstract class IRouter {
   void toUserDetail();
 
   void toCommunityOffAll();
+
+  void toCommunityCreate();
 }

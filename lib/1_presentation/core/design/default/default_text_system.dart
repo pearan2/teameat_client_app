@@ -503,4 +503,23 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get search => '검색하기';
+
+  @override
+  String get curationNotFound => '아직 신청한 맛집이 없어요';
+
+  @override
+  String get applicationsOfUserFormat => '님의 신청 기록';
+
+  @override
+  String get preview => '미리보기';
+
+  @override
+  String get addEtcImage => '기타 사진 추가';
+
+  @override
+  String get addMenuImage => '메뉴 사진 추가';
+
+  @override
+  String get canNotAddMorePictures =>
+      '더 이상 사진을 추가할 수 없어요. 사진을 더블 클릭 하면 삭제 하실 수 있어요! 삭제 후 추가 해주세요.';
 }

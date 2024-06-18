@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/99_util/text.dart';
 
@@ -68,6 +69,8 @@ class TECupertinoTextField extends StatefulWidget {
   final void Function()? onEditingComplete;
   final void Function(String value)? onSubmitted;
 
+  final bool isEssential;
+
   final bool enabled;
 
   TECupertinoTextField({
@@ -76,7 +79,7 @@ class TECupertinoTextField extends StatefulWidget {
     Color? focusedBorderColor,
     Color? emptyBorderColor,
     Color? filledBorderColor,
-    this.maxLines,
+    this.maxLines = 1,
     this.onChanged,
     this.validate,
     this.onEditingComplete,
@@ -94,6 +97,7 @@ class TECupertinoTextField extends StatefulWidget {
     this.widgetWidth,
     TextStyle? suffixTextStyle,
     this.helperTextSpacing = 8.0,
+    this.isEssential = false,
     this.enabled = true,
   }) {
     this.focusedBorderColor = focusedBorderColor ?? DS.color.primary600;
@@ -107,12 +111,12 @@ class TECupertinoTextField extends StatefulWidget {
     this.autoFocus = autoFocus ?? true;
 
     this.helperTextStyle = helperTextStyle ??
-        DS.textStyle.caption1
-            .copyWith(color: DS.color.background600, letterSpacing: -0.2);
+        DS.textStyle.paragraph3
+            .copyWith(color: DS.color.background700, letterSpacing: -0.2);
     this.errorText = errorText ?? '';
     this.errorTextStyle = errorTextStyle ??
         DS.textStyle.caption1
-            .copyWith(color: DS.color.secondary700, letterSpacing: -0.2);
+            .copyWith(color: DS.color.point500, letterSpacing: -0.2);
 
     this.suffixTextStyle = suffixTextStyle ??
         DS.textStyle.caption1
@@ -133,6 +137,10 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
   late bool isFocused;
   late bool isValid;
   bool isDisposed = false;
+
+  bool isOneLine() {
+    return widget.maxLines == 1;
+  }
 
   @override
   void initState() {
@@ -167,10 +175,15 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
     } else {
       return Padding(
         padding: EdgeInsets.only(bottom: widget.helperTextSpacing ?? 0.0),
-        child: Text(
-          widget.helperText!,
-          style: widget.helperTextStyle,
-        ),
+        child: widget.isEssential
+            ? TEEssentialText(
+                widget.helperText!,
+                style: widget.helperTextStyle,
+              )
+            : Text(
+                widget.helperText!,
+                style: widget.helperTextStyle,
+              ),
       );
     }
   }
@@ -238,47 +251,61 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
     }
   }
 
+  Color _getBorderColor() {
+    if (isOneLine()) {
+      return isFocused
+          ? widget.focusedBorderColor
+          : (isEmpty ? widget.emptyBorderColor : widget.filledBorderColor);
+    } else {
+      return isFocused
+          ? widget.focusedBorderColor
+          : (isEmpty ? DS.color.background200 : widget.filledBorderColor);
+    }
+  }
+
   Widget _buildInnerTextField() {
-    return CupertinoTextField(
-      enabled: widget.enabled,
-      controller: widget.controller.c,
-      autofocus: widget.autoFocus,
-      cursorColor: DS.color.primary600,
-      padding: EdgeInsets.only(bottom: DS.space.tiny),
-      focusNode: widget.controller.focusNode,
-      maxLines: widget.maxLines,
-      onChanged: (value) {
-        setState(() {
-          isEmpty = value.isEmpty;
-          if (widget.validate != null) {
-            isValid = widget.validate!(value);
-            widget.controller.isValid = isValid;
-          }
-        });
-        widget.onChanged?.call(value);
-      },
-      suffix: _buildSuffix(),
-      onEditingComplete: widget.onEditingComplete,
-      onSubmitted: widget.onSubmitted,
-      style: isValid
-          ? widget.textStyle
-          : widget.textStyle.copyWith(color: DS.color.secondary700),
-      placeholder: widget.hintText,
-      placeholderStyle: widget.hintTextStyle,
-      keyboardType: widget.keyboardType,
-      decoration: BoxDecoration(
-        border: widget.enabled
-            ? Border(
-                bottom: BorderSide(
-                  width: 2,
-                  color: isFocused
-                      ? widget.focusedBorderColor
-                      : (isEmpty
-                          ? widget.emptyBorderColor
-                          : widget.filledBorderColor),
-                ),
-              )
-            : null,
+    return AbsorbPointer(
+      absorbing: !widget.enabled,
+      child: CupertinoTextField(
+        controller: widget.controller.c,
+        autofocus: widget.autoFocus,
+        cursorColor: DS.color.primary600,
+        padding: isOneLine()
+            ? EdgeInsets.only(bottom: DS.space.tiny)
+            : EdgeInsets.all(DS.space.small),
+        focusNode: widget.controller.focusNode,
+        maxLines: widget.maxLines,
+        onChanged: (value) {
+          setState(() {
+            isEmpty = value.isEmpty;
+            if (widget.validate != null) {
+              isValid = widget.validate!(value);
+              widget.controller.isValid = isValid;
+            }
+          });
+          widget.onChanged?.call(value);
+        },
+        suffix: _buildSuffix(),
+        onEditingComplete: widget.onEditingComplete,
+        onSubmitted: widget.onSubmitted,
+        style: isValid
+            ? widget.textStyle
+            : widget.textStyle.copyWith(color: DS.color.point500),
+        placeholder: widget.hintText,
+        placeholderStyle: widget.hintTextStyle,
+        keyboardType: widget.keyboardType,
+        decoration: BoxDecoration(
+          color: isOneLine() ? null : DS.color.background200,
+          borderRadius:
+              isOneLine() ? null : BorderRadius.circular(DS.space.tiny),
+          border: !isOneLine()
+              ? Border.all(width: 1, color: _getBorderColor())
+              : widget.enabled
+                  ? Border(
+                      bottom: BorderSide(width: 2, color: _getBorderColor()),
+                    )
+                  : null,
+        ),
       ),
     );
   }

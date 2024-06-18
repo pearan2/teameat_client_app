@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -5,22 +8,33 @@ import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
-class TENetworkCacheImage extends StatelessWidget {
-  static const imageMaxWidth = 720.0;
-
-  final String url;
+class TECacheImage extends StatelessWidget {
+  final dynamic src;
   final double? width;
 
   final double borderRadius;
   final double ratio;
 
-  const TENetworkCacheImage({
+  const TECacheImage({
     super.key,
-    required this.url,
+    required this.src,
     this.width,
     this.borderRadius = 0,
     this.ratio = 1.0,
-  });
+  }) : assert((src is String) | (src is Uint8List) | (src is File),
+            'invalid src provided, src is (String | Uint8List | File)');
+
+  dynamic _getImageBuilder() {
+    if (src is String) {
+      return ExtendedImage.network;
+    } else if (src is Uint8List) {
+      return ExtendedImage.memory;
+    } else if (src is File) {
+      return ExtendedImage.file;
+    } else {
+      throw 'invalid src provided, src is (String | Uint8List | File)';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +45,8 @@ class TENetworkCacheImage extends StatelessWidget {
         height: width == null ? null : width! / ratio,
         child: AspectRatio(
           aspectRatio: ratio,
-          child: ExtendedImage.network(
-            url,
+          child: _getImageBuilder()(
+            src,
             width: width,
             fit: BoxFit.cover,
             cache: true,
@@ -67,8 +81,7 @@ class TEImageCarousel extends StatelessWidget {
     return PageLoadingWrapper(
       child: CarouselSlider(
         items: imageUrls
-            .map((e) =>
-                TENetworkCacheImage(key: ObjectKey(e), url: e, width: width))
+            .map((e) => TECacheImage(key: ObjectKey(e), src: e, width: width))
             .toList(),
         options: CarouselOptions(
           autoPlay: false,
@@ -76,32 +89,6 @@ class TEImageCarousel extends StatelessWidget {
           viewportFraction: 1.0,
           aspectRatio: 1.0,
         ),
-      ),
-    );
-  }
-}
-
-class TENetworkImage extends StatelessWidget {
-  final String url;
-  final double size;
-  final double borderRadius;
-
-  const TENetworkImage({
-    super.key,
-    required this.url,
-    required this.size,
-    this.borderRadius = 300,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
-      child: Image.network(
-        url,
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
       ),
     );
   }

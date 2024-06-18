@@ -9,15 +9,13 @@ class CurationRepository implements ICurationRepository {
   final _conn = Get.find<IConnection>();
 
   @override
-  Future<Either<Failure, List<CurationSimple>>> findAll({
-    required int pageNumber,
-    required int pageSize,
-  }) async {
+  Future<Either<Failure, List<CurationSimple>>> findAll(
+      SearchCurationSimpleList searchOption) async {
     try {
       const path = '/api/store/curation/list-by-creator';
 
-      final ret = await _conn
-          .get(path, {'pageNumber': pageNumber, 'pageSize': pageSize});
+      final ret = await _conn.get(
+          path, SearchCurationSimpleList.toStringJson(searchOption));
       return ret.fold(
           (l) => left(l),
           (r) => right((r as Iterable)

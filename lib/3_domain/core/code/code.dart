@@ -38,6 +38,7 @@ class Code with _$Code {
 class CodeKey with _$CodeKey {
   const factory CodeKey({required String key}) = _CodeKey;
 
+  factory CodeKey.curationFilter() => const CodeKey(key: 'CURATION_FILTER');
   factory CodeKey.storeCategory() => const CodeKey(key: 'STORE_CATEGORY');
   factory CodeKey.storeHashTag() => const CodeKey(key: 'STORE_HASHTAG');
   factory CodeKey.voucherFilter() => const CodeKey(key: 'VOUCHER_FILTER');

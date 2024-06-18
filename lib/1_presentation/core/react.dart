@@ -122,4 +122,9 @@ class React extends IReact {
   void toCommunityOffAll() {
     Get.offAllNamed('/community');
   }
+
+  @override
+  void toCommunityCreate() {
+    Get.toNamed('/community/create');
+  }
 }

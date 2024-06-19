@@ -14,10 +14,12 @@ import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/voucher/voucher_detail_page_controller.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/get.dart';
 
 class VoucherDetailPage extends GetView<VoucherDetailPageController> {
   const VoucherDetailPage({super.key});
@@ -122,12 +124,24 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: const Icon(Icons.info),
+                      icon: const Icon(Icons.info_outline),
                       title: DS.text.voucherUseLog,
                       content: controller.voucher.useLogs.fold(
                           '',
                           (prev, e) =>
                               '$prev${e.usedAt.format(DS.text.voucherUsedAtFormat)}\n${e.quantity.format(DS.text.voucherCountFormat)} ${e.reason}\n\n'),
+                    ))),
+                DS.space.vSmall,
+                const DottedLine(),
+                DS.space.vSmall,
+                Obx(() => PageLoadingWrapper(
+                        child: TEonTap(
+                      onTap: () => TEClipboard.setText(c.voucher.orderId),
+                      child: InfoRow(
+                        icon: const Icon(Icons.numbers),
+                        title: DS.text.orderId,
+                        content: c.voucher.orderId,
+                      ),
                     ))),
               ],
             ),

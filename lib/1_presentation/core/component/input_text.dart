@@ -233,7 +233,9 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       ).size.width;
       final textSize = getTextPainter(
         maxLine: widget.maxLines,
-        text: widget.controller.text,
+        text: widget.controller.text.isEmpty
+            ? widget.hintText
+            : widget.controller.text,
         style: widget.textStyle,
         maxWidth: widget.widgetWidth!,
       ).size;
@@ -241,7 +243,8 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       if (suffixWidth < minWidth) {
         suffixWidth = minWidth;
       }
-      return SizedBox(
+      return Container(
+        padding: EdgeInsets.only(bottom: DS.space.tiny),
         width: suffixWidth,
         child: Text(
           widget.suffixText!,

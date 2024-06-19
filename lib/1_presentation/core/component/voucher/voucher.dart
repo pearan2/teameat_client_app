@@ -57,7 +57,7 @@ class VoucherUsedMark extends StatelessWidget {
             vertical: DS.space.xTiny, horizontal: DS.space.xSmall),
         decoration: BoxDecoration(
             border: Border.all(
-              color: DS.color.secondary700,
+              color: DS.color.secondary900,
               width: DS.space.xxTiny,
             ),
             borderRadius: BorderRadius.circular(DS.space.tiny)),
@@ -66,7 +66,7 @@ class VoucherUsedMark extends StatelessWidget {
           style: DS.textStyle.paragraph1.copyWith(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
-            color: DS.color.secondary700,
+            color: DS.color.secondary900,
           ),
         ),
       ),
@@ -155,9 +155,7 @@ class VoucherImage extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: isAllUsed(
-            quantity,
-          ),
+          visible: isAllUsed(quantity),
           child: const Positioned.fill(child: VoucherUsedMark()),
         ),
         Visibility(

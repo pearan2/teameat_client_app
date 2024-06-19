@@ -61,6 +61,7 @@ class CommunityCreatePageController extends PageController {
       return;
     }
     _local.value = selected;
+    storeNameController.text = selected.title;
   }
 
   Future<void> _searchLocalIsEntered(Local? local) async {

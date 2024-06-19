@@ -522,4 +522,56 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get canNotAddMorePictures =>
       '더 이상 사진을 추가할 수 없어요. 사진을 더블 클릭 하면 삭제 하실 수 있어요! 삭제 후 추가 해주세요.';
+
+  @override
+  String get orderId => '주문번호';
+
+  @override
+  String get store => '가게';
+
+  @override
+  String get menuName => '메뉴명';
+
+  @override
+  String get pleaseInputMenuName => '메뉴명을 작성해주세요 ex) 우당탕김밥';
+
+  @override
+  String get etcInfo => '기타 설명';
+
+  @override
+  String get koreanWon => '원';
+
+  @override
+  String get menuOneLineIntroduce => '한줄 소개';
+
+  @override
+  String get menuPrice => '메뉴 가격';
+
+  @override
+  String get menuPriceHint => '6500';
+
+  @override
+  String get pleaseInputEtcInfo => 'ex) 메뉴 상세 설명, 사용 팁, 가게 정보 등';
+
+  @override
+  String get pleaseInputMenuOneLineIntroduce => '메뉴를 한 줄로 소개해 주세요';
+
+  @override
+  String get etcInfoError => '기타 설명은 1자 이상, 1024자 이하 입니다';
+
+  @override
+  String get menuNameError => '메뉴명은 1자 이상, 30자 이하 입니다';
+
+  @override
+  String get menuOneLineIntroduceError => '한줄 소개는 1자 이상, 100자 이하 입니다';
+
+  @override
+  String get menuPriceError => '가격은 1000원 이상, 100,000원 이하 입니다';
+
+  @override
+  String get storeIsEnteredText => '팀잇에 입점해 있는 가게에요! 사장님께 즉시 전달될 수 있어요 ;)';
+
+  @override
+  String get storeIsNotEnteredText =>
+      '팀잇에 아직 입점하지 않은 가게에요\n저희가 최대한 빠르게 영업해 볼게요 :)';
 }

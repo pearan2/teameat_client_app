@@ -170,4 +170,21 @@ abstract class ITextSystem {
   String get addMenuImage;
   String get addEtcImage;
   String get canNotAddMorePictures;
+  String get orderId;
+  String get store;
+  String get menuName;
+  String get menuNameError;
+  String get pleaseInputMenuName;
+  String get menuPrice;
+  String get menuPriceError;
+  String get menuPriceHint;
+  String get koreanWon;
+  String get menuOneLineIntroduce;
+  String get menuOneLineIntroduceError;
+  String get pleaseInputMenuOneLineIntroduce;
+  String get etcInfo;
+  String get etcInfoError;
+  String get pleaseInputEtcInfo;
+  String get storeIsEnteredText;
+  String get storeIsNotEnteredText;
 }

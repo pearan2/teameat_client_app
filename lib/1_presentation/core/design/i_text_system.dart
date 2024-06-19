@@ -190,4 +190,9 @@ abstract class ITextSystem {
   String get pictureIsLoadingTryAgainLater;
   String get menuPictureIsEssential;
   String get localIsEssential;
+  String get goToApplyMyFavoriteMenu;
+  String get applicationCompleted;
+  String get inSale;
+  String get saleFinished;
+  String get reward;
 }

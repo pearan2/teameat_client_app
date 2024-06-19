@@ -129,9 +129,10 @@ class StoreItemPrice extends StatelessWidget {
 
 class ItemSaleRemainDurationText extends StatefulWidget {
   final DateTime salesWillBeEndedAt;
+  final bool useDDay;
 
   const ItemSaleRemainDurationText(
-      {super.key, required this.salesWillBeEndedAt});
+      {super.key, required this.salesWillBeEndedAt, this.useDDay = false});
 
   @override
   State<ItemSaleRemainDurationText> createState() =>
@@ -201,6 +202,11 @@ class _ItemSaleRemainDurationTextState
   }
 
   Widget _buildRemainDuration() {
+    if (widget.useDDay) {
+      return Text('D-${diff.inDays}',
+          style: DS.textStyle.caption1.copyWith(color: DS.color.background600));
+    }
+
     return Text(
       calcRemainSaleDuration(),
       style: DS.textStyle.caption1.copyWith(color: DS.color.background600),
@@ -247,6 +253,7 @@ class StoreItemSellType extends StatelessWidget {
   final int quantity;
   final DateTime salesWillBeEndedAt;
   final bool isColumnShape;
+  final bool useDDay;
 
   const StoreItemSellType({
     super.key,
@@ -254,6 +261,7 @@ class StoreItemSellType extends StatelessWidget {
     required this.quantity,
     required this.salesWillBeEndedAt,
     this.isColumnShape = false,
+    this.useDDay = false,
   });
 
   Widget _buildContainer(Widget child) {
@@ -300,7 +308,10 @@ class StoreItemSellType extends StatelessWidget {
 
   Widget _buildSellTypeContent(String sellType) {
     if (sellType == DS.text.sellTypeTimeLimit) {
-      return ItemSaleRemainDurationText(salesWillBeEndedAt: salesWillBeEndedAt);
+      return ItemSaleRemainDurationText(
+        salesWillBeEndedAt: salesWillBeEndedAt,
+        useDDay: useDDay,
+      );
     } else if (sellType == DS.text.sellTypeQuantityLimit) {
       return Text(quantity.format(DS.text.voucherCountFormat),
           style: DS.textStyle.caption1.copyWith(

@@ -7,6 +7,8 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 
 class TEScaffold extends StatelessWidget {
+  static const iosBottomPadding = 32.0;
+
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomSheet;
@@ -173,7 +175,7 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
       child: Padding(
         padding: EdgeInsets.only(
             bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
-                ? DS.space.xBase
+                ? TEScaffold.iosBottomPadding
                 : 0.0),
         child: widget.body,
       ),
@@ -199,8 +201,8 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
       bottomSheet: Container(
         color: widget.bottomSheetBackgroundColor,
         child: Padding(
-          padding:
-              EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
+          padding: EdgeInsets.only(
+              bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
           child: widget.bottomSheet,
         ),
       ),
@@ -312,9 +314,9 @@ class _TEBottomNavigator extends StatelessWidget {
       child: Container(
         height: DS.space.medium +
             DS.space.tiny +
-            (GetPlatform.isIOS ? DS.space.xBase : 0.0),
-        padding:
-            EdgeInsets.only(bottom: GetPlatform.isIOS ? DS.space.xBase : 0.0),
+            (GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
+        padding: EdgeInsets.only(
+            bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
         decoration: BoxDecoration(
           color: DS.color.background000,
         ),

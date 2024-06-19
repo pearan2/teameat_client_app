@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/image.dart';
+import 'package:teameat/1_presentation/core/component/not_found.dart';
+import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/community_page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
+import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/99_util/extension/date_time.dart';
+import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -17,15 +25,27 @@ class CommunityPage extends GetView<CommunityPageController> {
     return TEScaffold(
       appBar: TEAppBar(height: 0),
       activated: BottomNavigatorType.community,
-      bottomSheet: const CurationApplicationButton(),
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: DS.space.tiny, horizontal: AppWidget.horizontalPadding),
-        child: CustomScrollView(
-          slivers: [
-            BannerSliver(),
-            UserInfoSliver(),
-            CurationStatusSelectorSliver(),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                const BannerSliver(),
+                const UserInfoSliver(),
+                const CurationStatusSelectorSliver(),
+                const CurationList(),
+                SliverToBoxAdapter(child: DS.space.vMedium),
+                SliverToBoxAdapter(child: DS.space.vMedium),
+              ],
+            ),
+            const Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CurationApplicationButton(),
+            ),
           ],
         ),
       ),
@@ -46,7 +66,7 @@ class UserInfoSliver extends GetView<CommunityPageController> {
       floating: true,
       toolbarHeight: DS.space.medium,
       flexibleSpace: Container(
-        padding: EdgeInsets.only(top: DS.space.tiny),
+        padding: EdgeInsets.only(top: DS.space.small),
         alignment: Alignment.centerLeft,
         child: c.me.obx((me) => Text(
               '${me.nickname} ${DS.text.applicationsOfUserFormat}',
@@ -95,7 +115,7 @@ class CurationStatusSelectorSliver extends GetView<CommunityPageController> {
       backgroundColor: DS.color.background000,
       surfaceTintColor: DS.color.background000,
       pinned: true,
-      toolbarHeight: DS.space.base * 2,
+      toolbarHeight: DS.space.medium * 2,
       flexibleSpace: Obx(
         () => Container(
           alignment: Alignment.center,
@@ -130,11 +150,7 @@ class CurationApplicationButton extends GetView<CommunityPageController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: DS.space.base,
-        right: DS.space.base,
-        bottom: DS.space.base,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: DS.space.base),
       child: TEPrimaryButton(
         isLoginRequired: true,
         listenEventLoading: false,
@@ -142,6 +158,212 @@ class CurationApplicationButton extends GetView<CommunityPageController> {
         text: DS.text.menuApplication,
         withShadow: true,
       ),
+    );
+  }
+}
+
+class CurationCreatedAtAndStatusRow extends StatelessWidget {
+  final CurationSimple curation;
+  const CurationCreatedAtAndStatusRow({super.key, required this.curation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          curation.createdAt.format(DS.text.yyyyMMddBasicFormat),
+          style:
+              DS.textStyle.paragraph3.copyWith(color: DS.color.background500),
+        ),
+        Text(
+          curation.getStatusText(),
+          style: DS.textStyle.paragraph3
+              .copyWith(color: curation.getStatusColor()),
+        )
+      ],
+    );
+  }
+}
+
+class CurationImage extends StatelessWidget {
+  final CurationSimple curation;
+
+  const CurationImage({super.key, required this.curation});
+
+  @override
+  Widget build(BuildContext context) {
+    return TECacheImage(
+      src: curation.imageUrl,
+      width: CurationCard.imageSize,
+      ratio: 1 / 1,
+      borderRadius: DS.space.xTiny,
+    );
+  }
+}
+
+class CurationItemInfoColumn extends StatelessWidget {
+  final CurationSimple curation;
+  const CurationItemInfoColumn({super.key, required this.curation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          curation.storeName,
+          style: DS.textStyle.caption1.copyWith(color: DS.color.background500),
+        ),
+        DS.space.vTiny,
+        Text(curation.name,
+            style: DS.textStyle.paragraph3
+                .copyWith(color: DS.color.background700)),
+        DS.space.vTiny,
+        curation.item == null
+            ? Text(
+                curation.originalPrice.format(DS.text.priceFormat),
+                style: DS.textStyle.paragraph3.copyWith(
+                    fontWeight: FontWeight.bold, color: DS.color.background800),
+              )
+            : StoreItemPrice(
+                originalPrice: curation.item!.originalPrice,
+                price: curation.item!.price,
+              )
+      ],
+    );
+  }
+}
+
+class CurationRewardRow extends StatelessWidget {
+  final ItemSimple item;
+  final int? itemSellTotalAmount;
+  final double rewardRatio;
+
+  const CurationRewardRow({
+    super.key,
+    required this.item,
+    required this.itemSellTotalAmount,
+    required this.rewardRatio,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: CurationCard.imageSize,
+          child: StoreItemSellType(
+            sellType: item.sellType,
+            quantity: item.quantity,
+            salesWillBeEndedAt: item.salesWillBeEndedAt,
+            useDDay: true,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(300),
+              child: Container(
+                width: DS.space.tiny,
+                height: DS.space.tiny,
+                color: DS.color.secondary500,
+              ),
+            ),
+            DS.space.hTiny,
+            Text(
+              DS.text.reward,
+              style: DS.textStyle.paragraph3
+                  .copyWith(color: DS.color.background700),
+            ),
+            DS.space.hTiny,
+            Text(
+              (((itemSellTotalAmount ?? 0) * rewardRatio).round())
+                  .format(DS.text.priceFormat),
+              style: DS.textStyle.paragraph2.copyWith(
+                color: DS.color.background800,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class CurationCard extends StatelessWidget {
+  static const imageSize = 120.0;
+  final CurationSimple curation;
+
+  const CurationCard({super.key, required this.curation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(DS.space.small),
+      decoration: BoxDecoration(
+          border: Border.all(color: DS.color.background200),
+          borderRadius: BorderRadius.circular(DS.space.xTiny),
+          color: DS.color.background000,
+          boxShadow: [
+            BoxShadow(
+              color: DS.color.background800.withOpacity(0.05),
+              blurRadius: DS.space.xTiny,
+              offset: Offset(0, DS.space.xTiny),
+            )
+          ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CurationCreatedAtAndStatusRow(curation: curation),
+          DS.space.vSmall,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CurationImage(curation: curation),
+              DS.space.hXSmall,
+              CurationItemInfoColumn(curation: curation),
+            ],
+          ),
+          curation.item == null ? const SizedBox() : DS.space.vTiny,
+          curation.item == null
+              ? const SizedBox()
+              : CurationRewardRow(
+                  item: curation.item!,
+                  itemSellTotalAmount: curation.itemSellTotalAmount,
+                  rewardRatio: curation.rewardRatio,
+                ),
+        ],
+      ),
+    );
+  }
+}
+
+class CurationList extends GetView<CommunityPageController> {
+  const CurationList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return PagedSliverList.separated(
+      pagingController: controller.pagingController,
+      builderDelegate: PagedChildBuilderDelegate<CurationSimple>(
+        noItemsFoundIndicatorBuilder: (_) => Center(
+          child: SimpleNotFound(
+            title: DS.text.curationNotFound,
+            buttonText: DS.text.goToApplyMyFavoriteMenu,
+            onTap: controller.react.toCommunityCreate,
+          ),
+        ),
+        itemBuilder: (_, curation, idx) =>
+            CurationCard(key: ValueKey(curation.id), curation: curation),
+      ),
+      separatorBuilder: (_, idx) => DS.space.vTiny,
     );
   }
 }

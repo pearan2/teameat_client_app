@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
@@ -16,108 +15,109 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
-      appBar: TEAppBar(
-        leadingIconOnPressed: c.react.back,
-        title: DS.text.menuApplication,
-        action: const ToPreviewButton(),
-      ),
-      resizeToAvoidBottomInset: true,
-      body: Padding(
-        padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TEMultiImageSelector(
-              addButtonTitle: DS.text.addMenuImage,
-              isFirstCover: true,
-              numberOfMiniumImages: 1,
-              numberOfMaximumImages: 5,
-              onImageChanged: (images) => c.menuImages = images,
-              onLoading: (isLoading) => c.isMenuImageLoading = isLoading,
+    return Obx(() => TEScaffold(
+          loading: c.isLoading,
+          appBar: TEAppBar(
+            leadingIconOnPressed: c.react.back,
+            title: DS.text.menuApplication,
+            action: const ToPreviewButton(),
+          ),
+          resizeToAvoidBottomInset: true,
+          body: Padding(
+            padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TEMultiImageSelector(
+                  addButtonTitle: DS.text.addMenuImage,
+                  isFirstCover: true,
+                  numberOfMiniumImages: 1,
+                  numberOfMaximumImages: 5,
+                  onImageChanged: (images) => c.menuImages = images,
+                  onLoading: (isLoading) => c.isMenuImageLoading = isLoading,
+                ),
+                DS.space.vSmall,
+                TEMultiImageSelector(
+                  addButtonTitle: DS.text.addEtcImage,
+                  numberOfMiniumImages: 0,
+                  numberOfMaximumImages: 10,
+                  imageWidthRatio: 1,
+                  imageHeightRatio: 1,
+                  onImageChanged: (images) => c.storeImages = images,
+                  onLoading: (isLoading) => c.isStoreImageLoading = isLoading,
+                ),
+                DS.space.vSmall,
+                TEonTap(
+                  onTap: c.onSearchStore,
+                  child: TECupertinoTextField(
+                    isEssential: true,
+                    autoFocus: false,
+                    helperText: DS.text.store,
+                    hintText: DS.text.pleaseSearchLocalStore,
+                    maxLines: null,
+                    enabled: false,
+                    controller: c.storeNameController,
+                  ),
+                ),
+                const IsStoreEnteredText(),
+                DS.space.vSmall,
+                TECupertinoTextField(
+                  isEssential: true,
+                  autoFocus: false,
+                  helperText: DS.text.menuName,
+                  hintText: DS.text.pleaseInputMenuName,
+                  maxLines: 1,
+                  controller: c.menuNameController,
+                  onEditingComplete: c.menuPriceController.requestFocus,
+                  errorText: DS.text.menuNameError,
+                  validate: (value) => value.isNotEmpty && value.length <= 30,
+                ),
+                LayoutBuilder(builder: (context, constraints) {
+                  return TECupertinoTextField(
+                    isEssential: true,
+                    autoFocus: false,
+                    helperText: DS.text.menuPrice,
+                    hintText: DS.text.menuPriceHint,
+                    widgetWidth: constraints.maxWidth,
+                    suffixText: DS.text.koreanWon,
+                    maxLines: 1,
+                    controller: c.menuPriceController,
+                    onEditingComplete:
+                        c.menuOneLineIntroduceController.requestFocus,
+                    errorText: DS.text.menuPriceError,
+                    keyboardType: TextInputType.number,
+                    validate: (value) {
+                      final price = int.tryParse(value);
+                      return price != null && price >= 1000 && price <= 100000;
+                    },
+                  );
+                }),
+                TECupertinoTextField(
+                  isEssential: true,
+                  autoFocus: false,
+                  helperText: DS.text.menuOneLineIntroduce,
+                  hintText: DS.text.pleaseInputMenuOneLineIntroduce,
+                  maxLines: 1,
+                  controller: c.menuOneLineIntroduceController,
+                  onEditingComplete: c.menuIntroduceController.requestFocus,
+                  errorText: DS.text.menuOneLineIntroduceError,
+                  validate: (value) => value.isNotEmpty && value.length <= 100,
+                ),
+                TECupertinoTextField(
+                  isEssential: true,
+                  autoFocus: false,
+                  helperText: DS.text.etcInfo,
+                  hintText: DS.text.pleaseInputEtcInfo,
+                  maxLines: null,
+                  controller: c.menuIntroduceController,
+                  onEditingComplete: c.toPreview,
+                  errorText: DS.text.etcInfoError,
+                  validate: (value) => value.isNotEmpty && value.length <= 1024,
+                ),
+              ],
             ),
-            DS.space.vSmall,
-            TEMultiImageSelector(
-              addButtonTitle: DS.text.addEtcImage,
-              numberOfMiniumImages: 0,
-              numberOfMaximumImages: 10,
-              imageWidthRatio: 1,
-              imageHeightRatio: 1,
-              onImageChanged: (images) => c.storeImages = images,
-              onLoading: (isLoading) => c.isStoreImageLoading = isLoading,
-            ),
-            DS.space.vSmall,
-            TEonTap(
-              onTap: c.onSearchStore,
-              child: TECupertinoTextField(
-                isEssential: true,
-                autoFocus: false,
-                helperText: DS.text.store,
-                hintText: DS.text.pleaseSearchLocalStore,
-                maxLines: null,
-                enabled: false,
-                controller: c.storeNameController,
-              ),
-            ),
-            const IsStoreEnteredText(),
-            DS.space.vSmall,
-            TECupertinoTextField(
-              isEssential: true,
-              autoFocus: false,
-              helperText: DS.text.menuName,
-              hintText: DS.text.pleaseInputMenuName,
-              maxLines: 1,
-              controller: c.menuNameController,
-              onEditingComplete: c.menuPriceController.requestFocus,
-              errorText: DS.text.menuNameError,
-              validate: (value) => value.isNotEmpty && value.length <= 30,
-            ),
-            LayoutBuilder(builder: (context, constraints) {
-              return TECupertinoTextField(
-                isEssential: true,
-                autoFocus: false,
-                helperText: DS.text.menuPrice,
-                hintText: DS.text.menuPriceHint,
-                widgetWidth: constraints.maxWidth,
-                suffixText: DS.text.koreanWon,
-                maxLines: 1,
-                controller: c.menuPriceController,
-                onEditingComplete:
-                    c.menuOneLineIntroduceController.requestFocus,
-                errorText: DS.text.menuPriceError,
-                keyboardType: TextInputType.number,
-                validate: (value) {
-                  final price = int.tryParse(value);
-                  return price != null && price >= 1000 && price <= 100000;
-                },
-              );
-            }),
-            TECupertinoTextField(
-              isEssential: true,
-              autoFocus: false,
-              helperText: DS.text.menuOneLineIntroduce,
-              hintText: DS.text.pleaseInputMenuOneLineIntroduce,
-              maxLines: 1,
-              controller: c.menuOneLineIntroduceController,
-              onEditingComplete: c.menuIntroduceController.requestFocus,
-              errorText: DS.text.menuOneLineIntroduceError,
-              validate: (value) => value.isNotEmpty && value.length <= 100,
-            ),
-            TECupertinoTextField(
-              isEssential: true,
-              autoFocus: false,
-              helperText: DS.text.etcInfo,
-              hintText: DS.text.pleaseInputEtcInfo,
-              maxLines: null,
-              controller: c.menuIntroduceController,
-              onEditingComplete: c.toPreview,
-              errorText: DS.text.etcInfoError,
-              validate: (value) => value.isNotEmpty && value.length <= 1024,
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 

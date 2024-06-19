@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -6,6 +8,28 @@ import 'package:teameat/3_domain/store/item/item.dart';
 part 'curation.freezed.dart';
 
 part 'curation.g.dart';
+
+extension CurationExtension on CurationSimple {
+  String getStatusText() {
+    if (isSellFinished == null) {
+      return DS.text.applicationCompleted;
+    } else if (!isSellFinished!) {
+      return DS.text.inSale;
+    } else {
+      return DS.text.saleFinished;
+    }
+  }
+
+  Color getStatusColor() {
+    if (isSellFinished == null) {
+      return DS.color.background500;
+    } else if (!isSellFinished!) {
+      return DS.color.primary600;
+    } else {
+      return DS.color.secondary500;
+    }
+  }
+}
 
 @freezed
 class SearchCurationSimpleList with _$SearchCurationSimpleList {
@@ -45,11 +69,25 @@ class CurationSimple with _$CurationSimple {
     required final DateTime createdAt,
     required final String storeName,
     ItemSimple? item,
+    bool? isSellFinished,
     int? itemSellTotalAmount,
   }) = _CurationSimple;
 
   factory CurationSimple.fromJson(Map<String, Object?> json) =>
       _$CurationSimpleFromJson(json);
+
+  factory CurationSimple.fromDetail(CurationDetail detail) => CurationSimple(
+        id: detail.id,
+        name: detail.name,
+        imageUrl: detail.imageUrl,
+        originalPrice: detail.originalPrice,
+        rewardRatio: detail.rewardRatio,
+        createdAt: detail.createdAt,
+        storeName: detail.storeName,
+        item: detail.item,
+        isSellFinished: detail.isSellFinished,
+        itemSellTotalAmount: detail.itemSellTotalAmount,
+      );
 }
 
 @freezed
@@ -67,6 +105,7 @@ class CurationDetail with _$CurationDetail {
     required final DateTime createdAt,
     required final String storeName,
     ItemSimple? item,
+    bool? isSellFinished,
     int? itemSellTotalAmount,
   }) = _CurationDetail;
 

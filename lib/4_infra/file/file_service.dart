@@ -13,14 +13,17 @@ class FileService implements IFileService {
   final _conn = Get.find<IConnection>();
 
   @override
-  Future<Either<Failure, String>> uploadImage(File file) async {
+  Future<Either<Failure, String>> uploadImageFile(File file) async {
+    final resizeResult = await resize(ImageResizeParameter(file));
+    return uploadImage(resizeResult);
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImage(ImageResizeResult image) async {
     try {
-      final resizeResult = await resize(ImageResizeParameter(file));
       const path = '/api/common/upload-url';
-      final ret = await _conn.get(path, {
-        'fileName':
-            'client_app/w:${resizeResult.width};h:${resizeResult.height}'
-      });
+      final ret = await _conn.get(
+          path, {'fileName': 'client_app/w:${image.width};h:${image.height}'});
       if (ret.isLeft()) {
         return ret.fold(
             (l) => left(l),
@@ -30,12 +33,12 @@ class FileService implements IFileService {
       final json = ret.getOrElse(() => "") as JsonMap;
       final url = json['url'] as String;
       final headers = <String, String>{
-        HttpHeaders.contentTypeHeader: resizeResult.contentType,
+        HttpHeaders.contentTypeHeader: image.contentType,
       };
       await http.put(
         Uri.parse(url),
         headers: headers,
-        body: resizeResult.bytes,
+        body: image.bytes,
       );
       return right(url.split('?')[0]);
     } catch (e) {

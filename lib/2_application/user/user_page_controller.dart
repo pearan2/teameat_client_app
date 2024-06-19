@@ -167,7 +167,7 @@ class UserPageController extends PageController {
     String profileImageUrl = user.value.profileImageUrl;
     if (selectedProfileImageFile != null) {
       final profileImageUploadResult =
-          await _fileService.uploadImage(selectedProfileImageFile!);
+          await _fileService.uploadImageFile(selectedProfileImageFile!);
       profileImageUploadResult.fold((l) => showError(l.desc), (r) {
         profileImageUrl = r;
         _selectedProfileImageFile.value = null;

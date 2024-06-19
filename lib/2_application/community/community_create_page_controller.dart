@@ -9,6 +9,7 @@ import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
+import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/99_util/image.dart';
 
@@ -21,6 +22,9 @@ class CommunityCreatePageController extends PageController {
 // repo
   final _storeRepo = Get.find<IStoreRepository>();
   final _curationRepo = Get.find<ICurationRepository>();
+
+  // service
+  final _fileService = Get.find<IFileService>();
 
 // state
 
@@ -57,7 +61,7 @@ class CommunityCreatePageController extends PageController {
     if (!checkInputValidIfNotShowError()) {
       return;
     }
-    showSuccess('등록완료!');
+    _onCreateCuration();
   }
 
   bool _showErrorAndReturnFalse(String errorText) {
@@ -101,22 +105,40 @@ class CommunityCreatePageController extends PageController {
     ret.fold((l) => showError(l.desc), (r) => _localIsEntered.value = r);
   }
 
-  Future<void> onCreateCuration() async {
+  Future<List<String>> _uploadImage(List<ImageResizeResult> images) async {
+    final uploadResults =
+        await Future.wait(images.map(_fileService.uploadImage));
+    final rets = <String>[];
+    for (final uploadResult in uploadResults) {
+      uploadResult.fold((l) => showError(l.desc), (r) => rets.add(r));
+    }
+    return rets;
+  }
+
+  Future<void> _onCreateCuration() async {
     if (local == null) {
       return;
     }
+    _isLoading.value = true;
+    final imageUrlLists = await Future.wait(
+        [_uploadImage(_menuImages), _uploadImage(_storeImages)]);
+
     final ret = await _curationRepo.registerCuration(CurationCreateRequest(
       localInfo: local!,
-      name: 'test',
-      originalPrice: 1000,
-      oneLineIntroduce: '킹줄소개',
-      introduce: '겁나소개',
-      itemImageUrls: ['asdf', '1234'],
-      storeImageUrls: [],
+      name: menuNameController.text,
+      originalPrice: int.parse(menuPriceController.text),
+      oneLineIntroduce: menuOneLineIntroduceController.text,
+      introduce: menuIntroduceController.text,
+      itemImageUrls: imageUrlLists[0],
+      storeImageUrls: imageUrlLists[1],
     ));
+    _isLoading.value = false;
     ret.fold(
       (l) => showError(l.desc),
-      (_) => showSuccess(DS.text.registerCurationSuccess),
+      (_) {
+        react.toCommunityOffAll();
+        showSuccess(DS.text.registerCurationSuccess);
+      },
     );
   }
 

@@ -289,7 +289,7 @@ class DefaultTextSystem extends ITextSystem {
   String get clearSearchOption => '검색 조건 초기화 하기';
 
   @override
-  String get saleEnd => '판매 종료';
+  String get saleEnd => '종료';
 
   @override
   String get noData => '정보 없음';
@@ -583,4 +583,19 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get pictureIsLoadingTryAgainLater => '사진을 불러오는 중이에요 잠시 후 다시 시도해주세요';
+
+  @override
+  String get goToApplyMyFavoriteMenu => '나의 단골 맛집 신청하러 가기';
+
+  @override
+  String get applicationCompleted => '신청완료';
+
+  @override
+  String get inSale => '판매중';
+
+  @override
+  String get saleFinished => '판매완료';
+
+  @override
+  String get reward => '리워드';
 }

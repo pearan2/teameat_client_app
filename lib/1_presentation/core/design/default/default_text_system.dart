@@ -574,4 +574,13 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get storeIsNotEnteredText =>
       '팀잇에 아직 입점하지 않은 가게에요\n저희가 최대한 빠르게 영업해 볼게요 :)';
+
+  @override
+  String get localIsEssential => '가게를 선택해주세요';
+
+  @override
+  String get menuPictureIsEssential => '메뉴사진은 최소 1장 이상이여야 해요';
+
+  @override
+  String get pictureIsLoadingTryAgainLater => '사진을 불러오는 중이에요 잠시 후 다시 시도해주세요';
 }

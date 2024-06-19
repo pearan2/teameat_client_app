@@ -187,4 +187,7 @@ abstract class ITextSystem {
   String get pleaseInputEtcInfo;
   String get storeIsEnteredText;
   String get storeIsNotEnteredText;
+  String get pictureIsLoadingTryAgainLater;
+  String get menuPictureIsEssential;
+  String get localIsEssential;
 }

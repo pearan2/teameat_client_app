@@ -126,11 +126,9 @@ class ToPreviewButton extends GetView<CommunityCreatePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => TETextButton(
-        text: DS.text.preview,
-        onTap: c.isInputValid ? c.toPreview : null,
-      ),
+    return TETextButton(
+      text: DS.text.preview,
+      onTap: c.toPreview,
     );
   }
 }

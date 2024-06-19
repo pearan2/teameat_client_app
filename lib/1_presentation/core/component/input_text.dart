@@ -10,7 +10,7 @@ class TECupertinoTextFieldController {
     c = TextEditingController(text: text);
   }
 
-  bool isValid = true;
+  bool Function(String value)? validate;
 
   String get text => c.text;
   set text(String value) {
@@ -18,9 +18,12 @@ class TECupertinoTextFieldController {
   }
 
   bool checkIsValid() {
+    if (validate == null) {
+      return true;
+    }
+    final isValid = validate!.call(c.text);
     if (!isValid) {
       requestFocus();
-      return false;
     }
     return isValid;
   }
@@ -153,6 +156,7 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       isValid = widget.validate!(widget.controller.text);
     }
     widget.controller.focusNode.addListener(focusNodeListener);
+    widget.controller.validate = widget.validate;
   }
 
   void focusNodeListener() {
@@ -283,7 +287,6 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
             isEmpty = value.isEmpty;
             if (widget.validate != null) {
               isValid = widget.validate!(value);
-              widget.controller.isValid = isValid;
             }
           });
           widget.onChanged?.call(value);

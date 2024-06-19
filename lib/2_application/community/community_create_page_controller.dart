@@ -26,7 +26,7 @@ class CommunityCreatePageController extends PageController {
 
   final _local = Rxn<Local>();
   final _localIsEntered = false.obs;
-  final _isInputValid = false.obs;
+  // final _isInputValid = false.obs;
 
   bool _isMenuImageLoading = false;
   List<ImageResizeResult> _menuImages = [];
@@ -45,7 +45,7 @@ class CommunityCreatePageController extends PageController {
   bool get localIsEntered => _localIsEntered.value;
   Local? get local => _local.value;
   bool get isLoading => _isLoading.value;
-  bool get isInputValid => _isInputValid.value;
+  // bool get isInputValid => _isInputValid.value;
 
   // setter
   set isMenuImageLoading(bool isLoading) => _isMenuImageLoading = isLoading;
@@ -53,7 +53,36 @@ class CommunityCreatePageController extends PageController {
   set isStoreImageLoading(bool isLoading) => _isStoreImageLoading = isLoading;
   set storeImages(List<ImageResizeResult> images) => _storeImages = images;
 
-  void toPreview() {}
+  void toPreview() {
+    if (!checkInputValidIfNotShowError()) {
+      return;
+    }
+    showSuccess('등록완료!');
+  }
+
+  bool _showErrorAndReturnFalse(String errorText) {
+    showError(errorText);
+    return false;
+  }
+
+  bool checkInputValidIfNotShowError() {
+    if (_isMenuImageLoading || _isStoreImageLoading) {
+      return _showErrorAndReturnFalse(DS.text.pictureIsLoadingTryAgainLater);
+    }
+    if (local == null) {
+      return _showErrorAndReturnFalse(DS.text.localIsEssential);
+    }
+    if (_menuImages.isEmpty) {
+      return _showErrorAndReturnFalse(DS.text.menuPictureIsEssential);
+    }
+    if (!menuNameController.checkIsValid() ||
+        !menuPriceController.checkIsValid() ||
+        !menuOneLineIntroduceController.checkIsValid() ||
+        !menuIntroduceController.checkIsValid()) {
+      return false;
+    }
+    return true;
+  }
 
   Future<void> onSearchStore() async {
     final selected = await searchLocal();

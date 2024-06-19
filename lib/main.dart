@@ -66,7 +66,9 @@ class AppWidget extends StatelessWidget {
         builder: (_, child) =>
             ScrollConfiguration(behavior: NoGlowBehavior(), child: child!),
         theme: ThemeData(
+          colorScheme: ColorScheme.light(primary: DS.color.primary600),
           useMaterial3: true,
+          scaffoldBackgroundColor: DS.color.background000,
           bottomSheetTheme: BottomSheetThemeData(
             backgroundColor: DS.color.background000,
             surfaceTintColor: DS.color.background000,

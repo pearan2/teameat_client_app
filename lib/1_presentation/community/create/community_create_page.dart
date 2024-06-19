@@ -85,7 +85,8 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
                     onEditingComplete:
                         c.menuOneLineIntroduceController.requestFocus,
                     errorText: DS.text.menuPriceError,
-                    keyboardType: TextInputType.number,
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: true), // 'Done' 버튼 때문에 이렇게 해둠
                     validate: (value) {
                       final price = int.tryParse(value);
                       return price != null && price >= 1000 && price <= 100000;

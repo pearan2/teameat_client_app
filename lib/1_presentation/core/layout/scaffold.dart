@@ -7,7 +7,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 
 class TEScaffold extends StatelessWidget {
-  static const iosBottomPadding = 32.0;
+  static const iosBottomPadding = 24.0;
 
   final Widget body;
   final PreferredSizeWidget? appBar;
@@ -312,8 +312,7 @@ class _TEBottomNavigator extends StatelessWidget {
     return DefaultTextStyle(
       style: const TextStyle(),
       child: Container(
-        height: DS.space.medium +
-            DS.space.tiny +
+        height: DS.space.large +
             (GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
         padding: EdgeInsets.only(
             bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
@@ -335,7 +334,11 @@ class _TEBottomNavigator extends StatelessWidget {
               ),
             ),
             TEonTap(
-              onTap: react.toCommunityOffAll,
+              onTap: () {
+                if (activated != BottomNavigatorType.community) {
+                  react.toCommunityOffAll();
+                }
+              },
               isLoginRequired: true,
               child: _BottomNavigatorToggle(
                 clicked: activated == BottomNavigatorType.community,

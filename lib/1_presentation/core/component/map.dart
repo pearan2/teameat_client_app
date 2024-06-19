@@ -17,6 +17,7 @@ class TEStoreMap extends StatefulWidget {
   final Point defaultCameraCenter;
   final List<StorePoint> stores;
   final double defaultZoomLevel;
+  final bool gestureEnabled;
   final void Function(int id)? onStoreSelected;
 
   const TEStoreMap._({
@@ -26,14 +27,16 @@ class TEStoreMap extends StatefulWidget {
     required this.stores,
     required this.defaultZoomLevel,
     required this.isLoading,
+    this.gestureEnabled = false,
     this.onStoreSelected,
   });
 
-  factory TEStoreMap.single(
-      {double? height,
-      required StorePoint store,
-      required bool isLoading,
-      double defaultZoomLevel = 15}) {
+  factory TEStoreMap.single({
+    double? height,
+    required StorePoint store,
+    required bool isLoading,
+    double defaultZoomLevel = 15,
+  }) {
     return TEStoreMap._(
       isLoading: isLoading,
       height: height,
@@ -41,6 +44,7 @@ class TEStoreMap extends StatefulWidget {
       stores: [store],
       defaultZoomLevel: defaultZoomLevel,
       key: ValueKey(store.id),
+      gestureEnabled: false,
       onStoreSelected: print,
     );
   }
@@ -166,14 +170,19 @@ class _TEStoreMapState extends State<TEStoreMap> {
         onCameraIdle: _onCameraIdle,
         forceGesture: true,
         options: NaverMapViewOptions(
-            initialCameraPosition: NCameraPosition(
-              target: widget.defaultCameraCenter.toNLatLng(),
-              zoom: widget.defaultZoomLevel,
-            ),
-            minZoom: 12,
-            maxZoom: 18,
-            zoomGesturesEnable: true,
-            zoomGesturesFriction: 0.1),
+          initialCameraPosition: NCameraPosition(
+            target: widget.defaultCameraCenter.toNLatLng(),
+            zoom: widget.defaultZoomLevel,
+          ),
+          minZoom: 12,
+          maxZoom: 18,
+          zoomGesturesFriction: 0.1,
+          zoomGesturesEnable: widget.gestureEnabled,
+          stopGesturesEnable: widget.gestureEnabled,
+          tiltGesturesEnable: widget.gestureEnabled,
+          scrollGesturesEnable: widget.gestureEnabled,
+          rotationGesturesEnable: widget.gestureEnabled,
+        ),
         onMapReady: (nController) {
           _init(nController);
         },

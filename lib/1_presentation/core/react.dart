@@ -127,4 +127,9 @@ class React extends IReact {
   void toCommunityCreate() {
     Get.toNamed('/community/create');
   }
+
+  @override
+  void toCommunityView(int curationId) {
+    Get.toNamed('/community/view', arguments: {'curationId': curationId});
+  }
 }

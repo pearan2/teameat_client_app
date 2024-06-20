@@ -5,7 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/image/image_viewer.dart';
 import 'package:teameat/main.dart';
 
 class TECacheImage extends StatelessWidget {
@@ -188,6 +190,52 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
               bottom: 0,
               child: widget.bottomLeft ?? const SizedBox()),
         ],
+      ),
+    );
+  }
+}
+
+class TEImageListViewer extends StatelessWidget {
+  final List<dynamic> imageSrcs;
+  final double imageRatio;
+  final double imagePreviewWidth;
+
+  const TEImageListViewer(
+      {super.key,
+      required this.imageSrcs,
+      required this.imageRatio,
+      this.imagePreviewWidth = 80.0});
+
+  Widget _buildItem(final dynamic imageSrc) {
+    return TEonTap(
+      onTap: () => showMultiImageViewer(
+          imageSrc: imageSrc, imageSrcs: imageSrcs, imageRatio: imageRatio),
+      child: Container(
+        width: imagePreviewWidth,
+        height: imagePreviewWidth / imageRatio,
+        decoration:
+            BoxDecoration(border: Border.all(color: DS.color.background300)),
+        child: TECacheImage(
+          src: imageSrc,
+          width: imagePreviewWidth,
+          ratio: imageRatio,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final height = imagePreviewWidth / imageRatio;
+    return SizedBox(
+      height: height,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemBuilder: (_, idx) => _buildItem(imageSrcs[idx]),
+        separatorBuilder: (_, __) => DS.space.hXTiny,
+        itemCount: imageSrcs.length,
       ),
     );
   }

@@ -202,4 +202,6 @@ abstract class ITextSystem {
   String get warningNotice;
   String get itemWarningNotice;
   String get unknownErrorPleaseCallManager;
+  String get storeItemPicture;
+  String get etcPicture;
 }

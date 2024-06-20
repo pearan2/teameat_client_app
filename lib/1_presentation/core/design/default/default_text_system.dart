@@ -620,4 +620,10 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get unknownErrorPleaseCallManager =>
       '알 수 없는 문제가 발생하였습니다. 지속된다면 관리자에게 문의하여 주세요';
+
+  @override
+  String get etcPicture => '기타 사진';
+
+  @override
+  String get storeItemPicture => '메뉴 사진';
 }

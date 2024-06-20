@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/not_found.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -287,7 +288,7 @@ class CurationRewardRow extends StatelessWidget {
   }
 }
 
-class CurationCard extends StatelessWidget {
+class CurationCard extends GetView<CommunityPageController> {
   static const imageSize = 120.0;
   final CurationSimple curation;
 
@@ -295,42 +296,45 @@ class CurationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(DS.space.small),
-      decoration: BoxDecoration(
-          border: Border.all(color: DS.color.background200),
-          borderRadius: BorderRadius.circular(DS.space.xTiny),
-          color: DS.color.background000,
-          boxShadow: [
-            BoxShadow(
-              color: DS.color.background800.withOpacity(0.05),
-              blurRadius: DS.space.xTiny,
-              offset: Offset(0, DS.space.xTiny),
-            )
-          ]),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CurationCreatedAtAndStatusRow(curation: curation),
-          DS.space.vSmall,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CurationImage(curation: curation),
-              DS.space.hXSmall,
-              CurationItemInfoColumn(curation: curation),
-            ],
-          ),
-          curation.item == null ? const SizedBox() : DS.space.vTiny,
-          curation.item == null
-              ? const SizedBox()
-              : CurationRewardRow(
-                  item: curation.item!,
-                  itemSellTotalAmount: curation.itemSellTotalAmount,
-                  rewardRatio: curation.rewardRatio,
-                ),
-        ],
+    return TEonTap(
+      onTap: () => c.react.toCommunityView(curation.id),
+      child: Container(
+        padding: EdgeInsets.all(DS.space.small),
+        decoration: BoxDecoration(
+            border: Border.all(color: DS.color.background200),
+            borderRadius: BorderRadius.circular(DS.space.xTiny),
+            color: DS.color.background000,
+            boxShadow: [
+              BoxShadow(
+                color: DS.color.background800.withOpacity(0.05),
+                blurRadius: DS.space.xTiny,
+                offset: Offset(0, DS.space.xTiny),
+              )
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CurationCreatedAtAndStatusRow(curation: curation),
+            DS.space.vSmall,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CurationImage(curation: curation),
+                DS.space.hXSmall,
+                CurationItemInfoColumn(curation: curation),
+              ],
+            ),
+            curation.item == null ? const SizedBox() : DS.space.vTiny,
+            curation.item == null
+                ? const SizedBox()
+                : CurationRewardRow(
+                    item: curation.item!,
+                    itemSellTotalAmount: curation.itemSellTotalAmount,
+                    rewardRatio: curation.rewardRatio,
+                  ),
+          ],
+        ),
       ),
     );
   }

@@ -111,6 +111,28 @@ class CurationDetail with _$CurationDetail {
 
   factory CurationDetail.fromJson(Map<String, Object?> json) =>
       _$CurationDetailFromJson(json);
+
+  factory CurationDetail.empty() {
+    return CurationDetail(
+      id: -1,
+      name: '',
+      imageUrl: '',
+      oneLineIntroduce: 'oneLineIntroduce',
+      introduce: 'introduce',
+      itemImageUrls: List.generate(
+          5,
+          (_) =>
+              'https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png'),
+      storeImageUrls: List.generate(
+          5,
+          (_) =>
+              'https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png'),
+      originalPrice: 15000,
+      rewardRatio: 0.01,
+      createdAt: DateTime.now(),
+      storeName: '팀잇',
+    );
+  }
 }
 
 @freezed

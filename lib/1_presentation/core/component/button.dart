@@ -7,6 +7,7 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
+import 'package:teameat/1_presentation/core/image/image_viewer.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -672,39 +673,30 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     if (isLoading) {
       return const Center(child: TELoading());
     }
+    final imageSrc = croppedImages[idx].bytes;
+    final imageSrcs = croppedImages.map((c) => c.bytes).toList();
+
     return GestureDetector(
       key: ValueKey(idx),
+      onTap: () {
+        if (loadings.contains(true)) {
+          return;
+        }
+        showMultiImageViewer(
+          imageSrc: imageSrc,
+          imageSrcs: imageSrcs,
+          imageRatio: imageRatio,
+          onRemove: _removeImage,
+          onReorder: _changeIdx,
+        );
+      },
       behavior: HitTestBehavior.opaque,
-      onDoubleTap: () => _removeImage(idx),
       child: Stack(
         children: [
           Image.memory(
             croppedImages[idx].bytes,
             fit: BoxFit.fill,
           ),
-          Positioned.fill(
-              child: Row(
-            children: [
-              Expanded(
-                child: TEonTap(
-                  onTap: () => _changeIdx(idx - 1, idx),
-                  child: const SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TEonTap(
-                  onTap: () => _changeIdx(idx, idx + 1),
-                  child: const SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-              )
-            ],
-          )),
           Positioned(
               left: DS.space.xTiny,
               bottom: DS.space.xTiny,

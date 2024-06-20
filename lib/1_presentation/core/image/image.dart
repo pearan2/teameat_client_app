@@ -24,13 +24,57 @@ class TECacheImage extends StatelessWidget {
   }) : assert((src is String) | (src is Uint8List) | (src is File),
             'invalid src provided, src is (String | Uint8List | File)');
 
-  dynamic _getImageBuilder() {
+  Widget _getImageBuilder() {
     if (src is String) {
-      return ExtendedImage.network;
+      return ExtendedImage.network(
+        src, width: width,
+        fit: BoxFit.cover,
+        cache: true,
+        retries: 3, // 3회까지 리트라이
+        timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
+        loadStateChanged: (state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return const Center(child: TELoading());
+            case LoadState.failed:
+              return Center(child: DS.image.mainIconWithText);
+            case LoadState.completed:
+              return null;
+          }
+        },
+      );
     } else if (src is Uint8List) {
-      return ExtendedImage.memory;
+      return ExtendedImage.memory(
+        src,
+        width: width,
+        fit: BoxFit.cover,
+        loadStateChanged: (state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return const Center(child: TELoading());
+            case LoadState.failed:
+              return Center(child: DS.image.mainIconWithText);
+            case LoadState.completed:
+              return null;
+          }
+        },
+      );
     } else if (src is File) {
-      return ExtendedImage.file;
+      return ExtendedImage.file(
+        src,
+        width: width,
+        fit: BoxFit.cover,
+        loadStateChanged: (state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return const Center(child: TELoading());
+            case LoadState.failed:
+              return Center(child: DS.image.mainIconWithText);
+            case LoadState.completed:
+              return null;
+          }
+        },
+      );
     } else {
       throw 'invalid src provided, src is (String | Uint8List | File)';
     }
@@ -45,24 +89,7 @@ class TECacheImage extends StatelessWidget {
         height: width == null ? null : width! / ratio,
         child: AspectRatio(
           aspectRatio: ratio,
-          child: _getImageBuilder()(
-            src,
-            width: width,
-            fit: BoxFit.cover,
-            cache: true,
-            retries: 3, // 3회까지 리트라이
-            timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
-            loadStateChanged: (state) {
-              switch (state.extendedImageLoadState) {
-                case LoadState.loading:
-                  return const Center(child: TELoading());
-                case LoadState.failed:
-                  return Center(child: DS.image.mainIconWithText);
-                case LoadState.completed:
-                  return null;
-              }
-            },
-          ),
+          child: _getImageBuilder(),
         ),
       ),
     );

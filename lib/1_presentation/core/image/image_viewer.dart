@@ -1,252 +1,368 @@
-// import 'package:ali/0_presentation/core/ali_design_system.dart';
-// import 'package:ali/0_presentation/core/utils/image/image_box.dart';
-// import 'package:ali/0_presentation/core/utils/util.dart';
-// import 'package:flutter/gestures.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:photo_view/photo_view.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
-// class ImageViewPage extends StatelessWidget {
-//   final String imageUrl;
-//   final bool isNetworkImage;
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 
-//   const ImageViewPage({
-//     Key? key,
-//     required this.imageUrl,
-//     this.isNetworkImage = true,
-//   }) : super(key: key);
+class ImageViewPage extends StatelessWidget {
+  final String imageUrl;
+  final bool isNetworkImage;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-//       color: Colors.black,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           leading: IconButton(
-//             splashColor: Colors.transparent,
-//             highlightColor: Colors.transparent,
-//             onPressed: () => Get.back(),
-//             icon: Icon(Icons.close, color: AliColorScheme.grayScaleWhite),
-//           ),
-//           centerTitle: true,
-//           elevation: 0,
-//           backgroundColor: Colors.transparent,
-//         ),
-//         body: ImageViewPageBody(
-//             imageUrl: imageUrl, isNetworkImage: isNetworkImage),
-//         backgroundColor: Colors.black,
-//       ),
-//     );
-//   }
-// }
+  const ImageViewPage({
+    super.key,
+    required this.imageUrl,
+    this.isNetworkImage = true,
+  });
 
-// class ImageViewPageBody extends StatelessWidget {
-//   final String imageUrl;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+      color: Colors.black,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.close, color: DS.color.background000),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
+        body: ImageViewPageBody(
+            imageUrl: imageUrl, isNetworkImage: isNetworkImage),
+        backgroundColor: Colors.black,
+      ),
+    );
+  }
+}
 
-//   final bool isNetworkImage;
+class ImageViewPageBody extends StatelessWidget {
+  final String imageUrl;
 
-//   const ImageViewPageBody({
-//     Key? key,
-//     required this.imageUrl,
-//     required this.isNetworkImage,
-//   }) : super(key: key);
+  final bool isNetworkImage;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     if (isNetworkImage) {
-//       return Center(
-//         child: PhotoView(
-//           maxScale: PhotoViewComputedScale.contained * 8,
-//           minScale: PhotoViewComputedScale.contained * 1.0,
-//           initialScale: PhotoViewComputedScale.contained * 1.0,
-//           imageProvider: NetworkImage(imageUrl),
-//         ),
-//       );
-//     } else {
-//       return Center(
-//         child: PhotoView(
-//           maxScale: PhotoViewComputedScale.contained * 8,
-//           minScale: PhotoViewComputedScale.contained * 1.0,
-//           initialScale: PhotoViewComputedScale.contained * 1.0,
-//           imageProvider: AssetImage(imageUrl),
-//         ),
-//       );
-//     }
-//   }
-// }
+  const ImageViewPageBody({
+    super.key,
+    required this.imageUrl,
+    required this.isNetworkImage,
+  });
 
-// class ImageMultiViewPage extends StatefulWidget {
-//   final String nowImageUrl;
-//   final List<String> imageUrls;
+  @override
+  Widget build(BuildContext context) {
+    if (isNetworkImage) {
+      return Center(
+        child: PhotoView(
+          maxScale: PhotoViewComputedScale.contained * 8,
+          minScale: PhotoViewComputedScale.contained * 1.0,
+          initialScale: PhotoViewComputedScale.contained * 1.0,
+          imageProvider: NetworkImage(imageUrl),
+        ),
+      );
+    } else {
+      return Center(
+        child: PhotoView(
+          maxScale: PhotoViewComputedScale.contained * 8,
+          minScale: PhotoViewComputedScale.contained * 1.0,
+          initialScale: PhotoViewComputedScale.contained * 1.0,
+          imageProvider: AssetImage(imageUrl),
+        ),
+      );
+    }
+  }
+}
 
-//   const ImageMultiViewPage({
-//     Key? key,
-//     required this.nowImageUrl,
-//     required this.imageUrls,
-//   }) : super(key: key);
+class ImageMultiViewPage extends StatefulWidget {
+  final dynamic nowImageSrc;
+  final List<dynamic> imageSrcs;
+  final Function(int oldIdx, int newIdx) onReorder;
+  final Function(int targetIdx) onRemove;
+  final double ratio;
 
-//   @override
-//   State<ImageMultiViewPage> createState() => _ImageMultiViewPageState();
-// }
+  const ImageMultiViewPage({
+    super.key,
+    required this.nowImageSrc,
+    required this.imageSrcs,
+    required this.ratio,
+    required this.onReorder,
+    required this.onRemove,
+  });
 
-// class _ImageMultiViewPageState extends State<ImageMultiViewPage>
-//     with SingleTickerProviderStateMixin {
-//   late String nowImageUrl = widget.nowImageUrl;
+  @override
+  State<ImageMultiViewPage> createState() => _ImageMultiViewPageState();
+}
 
-//   late int nowIdx = widget.imageUrls.indexOf(nowImageUrl);
+class _ImageMultiViewPageState extends State<ImageMultiViewPage>
+    with TickerProviderStateMixin {
+  final imageWidth = DS.space.large + DS.space.base;
+  late final imageHeight = imageWidth / widget.ratio;
 
-//   late final TabController tabController;
+  late var imageSrcs = [...widget.imageSrcs];
+  late int nowIdx = widget.imageSrcs.indexOf(widget.nowImageSrc);
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     tabController = TabController(
-//         length: widget.imageUrls.length, vsync: this, initialIndex: nowIdx);
-//     tabController.addListener(_tabListener);
-//   }
+  bool isInitialized = false;
+  late TabController tabController;
 
-//   @override
-//   void dispose() {
-//     tabController.removeListener(_tabListener);
-//     tabController.dispose();
-//     super.dispose();
-//   }
+  void onReorder(int lhs, int rhs) {
+    if (lhs < rhs) {
+      rhs--;
+    }
+    if (lhs < 0 ||
+        lhs >= imageSrcs.length ||
+        rhs < 0 ||
+        rhs >= imageSrcs.length) {
+      return;
+    }
+    final newImageSrcs = [...imageSrcs];
 
-//   void _tabListener() {
-//     setState(() {
-//       nowIdx = tabController.index;
-//     });
-//   }
+    final lhsTarget = newImageSrcs.removeAt(lhs);
+    newImageSrcs.insert(rhs, lhsTarget);
+    setState(() {
+      imageSrcs = newImageSrcs;
+      tabController.index = rhs;
+      widget.onReorder(lhs, rhs);
+    });
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-//       color: Colors.black,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           leading: IconButton(
-//             splashColor: Colors.transparent,
-//             highlightColor: Colors.transparent,
-//             onPressed: () => Get.back(),
-//             icon: Icon(Icons.close, color: AliColorScheme.grayScaleWhite),
-//           ),
-//           centerTitle: true,
-//           title: Text(
-//             '${nowIdx + 1}/${widget.imageUrls.length}',
-//             style: AliTextTheme.h3.copyWith(
-//               height: 1,
-//               color: AliColorScheme.grayScaleWhite,
-//             ),
-//           ),
-//           elevation: 0,
-//           backgroundColor: Colors.transparent,
-//         ),
-//         body: Stack(
-//           children: [
-//             TabBarView(
-//               controller: tabController,
-//               dragStartBehavior: DragStartBehavior.down,
-//               children: widget.imageUrls
-//                   .map((e) => ImageMultiViewPageBody(imageUrl: e))
-//                   .toList(),
-//             ),
-//             Positioned(
-//               bottom: AliSpacing.xBase,
-//               child: LimitedBox(
-//                 maxHeight: 72,
-//                 maxWidth: Get.mediaQuery.size.width,
-//                 child: ListView.separated(
-//                   shrinkWrap: true,
-//                   physics: const AlwaysScrollableScrollPhysics(),
-//                   padding: EdgeInsets.symmetric(horizontal: AliSpacing.xBase),
-//                   scrollDirection: Axis.horizontal,
-//                   itemBuilder: (_, idx) =>
-//                       _buildItem(widget.imageUrls[idx], idx),
-//                   separatorBuilder: (_, __) => AliSpacing.hTiny,
-//                   itemCount: widget.imageUrls.length,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//         backgroundColor: Colors.black,
-//       ),
-//     );
-//   }
+  void onRemove(int idx) {
+    final newImageSrcs = [...imageSrcs]..removeAt(idx);
+    final int nextIdx;
+    if (idx >= newImageSrcs.length) {
+      nextIdx = newImageSrcs.length - 1;
+    } else {
+      nextIdx = idx;
+    }
+    if (newImageSrcs.isEmpty) {
+      widget.onRemove(idx);
+      Get.back();
+      return;
+    }
 
-//   Widget _buildItem(String imageUrl, int idx) {
-//     Widget _buildImage() {
-//       return AliImageBox(
-//         borderRadius: 4,
-//         imagePath: imageUrl,
-//         onTap: () => tabController.animateTo(idx),
-//         width: 72,
-//         height: 72,
-//       );
-//     }
+    setState(() {
+      imageSrcs = newImageSrcs;
+      initTabController(nextIdx);
+      widget.onRemove(nextIdx);
+    });
+  }
 
-//     if (idx == nowIdx) {
-//       return AliBox(
-//         padding: EdgeInsets.zero,
-//         borderRadius: 4,
-//         borderColor: AliColorScheme.grayScaleWhite,
-//         borderWidth: 2,
-//         child: _buildImage(),
-//       );
-//     } else {
-//       return _buildImage();
-//     }
-//   }
-// }
+  void initTabController(int idx) {
+    if (isInitialized) {
+      tabController.removeListener(_tabListener);
+      tabController.dispose();
+    }
+    tabController = TabController(
+      length: imageSrcs.length,
+      vsync: this,
+      initialIndex: idx,
+      animationDuration: Duration.zero,
+    );
+    tabController.addListener(_tabListener);
+  }
 
-// class ImageMultiViewPageBody extends StatelessWidget {
-//   final String imageUrl;
+  @override
+  void initState() {
+    super.initState();
+    initTabController(nowIdx);
+    isInitialized = true;
+  }
 
-//   const ImageMultiViewPageBody({
-//     Key? key,
-//     required this.imageUrl,
-//   }) : super(key: key);
+  @override
+  void dispose() {
+    tabController.removeListener(_tabListener);
+    tabController.dispose();
+    super.dispose();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: PhotoView(
-//         maxScale: PhotoViewComputedScale.contained * 8,
-//         minScale: PhotoViewComputedScale.contained * 1.0,
-//         initialScale: PhotoViewComputedScale.contained * 1.0,
-//         imageProvider: NetworkImage(imageUrl),
-//       ),
-//     );
-//   }
-// }
+  void _tabListener() {
+    setState(() {
+      nowIdx = tabController.index;
+    });
+  }
 
-// void showImageViewer(String imageUrl, {bool isNetworkImage = true}) {
-//   Get.bottomSheet(
-//     ImageViewPage(
-//       imageUrl: imageUrl,
-//       isNetworkImage: isNetworkImage,
-//     ),
-//     isScrollControlled: true,
-//     isDismissible: false,
-//     enableDrag: false,
-//     enterBottomSheetDuration: Duration.zero,
-//     exitBottomSheetDuration: Duration.zero,
-//   );
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+      color: Colors.black,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.close, color: DS.color.background000),
+          ),
+          centerTitle: true,
+          title: Text(
+            '${nowIdx + 1}/${imageSrcs.length}',
+            style: DS.textStyle.title3.copyWith(color: DS.color.background000),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                dragStartBehavior: DragStartBehavior.down,
+                children: imageSrcs
+                    .map((e) => ImageMultiViewPageBody(imageSrc: e))
+                    .toList(),
+              ),
+            ),
+            LimitedBox(
+              maxHeight: imageHeight,
+              maxWidth: Get.mediaQuery.size.width,
+              child: ReorderableListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: DS.space.xSmall),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
+                itemCount: imageSrcs.length,
+                onReorder: onReorder,
+              ),
+            ),
+            DS.space.vMedium,
+          ],
+        ),
+        backgroundColor: Colors.black,
+      ),
+    );
+  }
 
-// void showMultiImageViewer(String imageUrl, List<String> ImageUrls,
-//     {bool isNetworkImage = true}) {
-//   Get.bottomSheet(
-//     ImageMultiViewPage(
-//       nowImageUrl: imageUrl,
-//       imageUrls: ImageUrls,
-//     ),
-//     isScrollControlled: true,
-//     isDismissible: false,
-//     enableDrag: false,
-//     enterBottomSheetDuration: Duration.zero,
-//     exitBottomSheetDuration: Duration.zero,
-//   );
-// }
+  Widget _buildItem(dynamic imageSrc, int idx) {
+    Widget buildImage() {
+      return TEonTap(
+        onTap: () => tabController.animateTo(idx),
+        child: TECacheImage(
+          src: imageSrc,
+          borderRadius: DS.space.xTiny,
+          ratio: widget.ratio,
+          width: DS.space.large + DS.space.base,
+        ),
+      );
+    }
+
+    return Stack(
+      key: ObjectKey(imageSrc),
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: DS.space.xTiny),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(DS.space.xTiny),
+            border: Border.all(
+                color: idx == nowIdx
+                    ? DS.color.background000
+                    : DS.color.background800,
+                width: DS.space.xxTiny),
+          ),
+          child: buildImage(),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: TEonTap(
+            onTap: () => onRemove(idx),
+            child: Container(
+              width: DS.space.base,
+              height: DS.space.base,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(DS.space.xxTiny),
+                border: Border.all(
+                  width: DS.space.xxTiny,
+                  color: DS.color.background000,
+                ),
+                color: DS.color.background800,
+              ),
+              child: Icon(
+                Icons.delete,
+                color: DS.color.background000,
+                size: DS.space.xBase,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ImageMultiViewPageBody extends StatelessWidget {
+  final dynamic imageSrc;
+
+  const ImageMultiViewPageBody({
+    super.key,
+    required this.imageSrc,
+  });
+
+  ImageProvider getProvider() {
+    if (imageSrc is String) {
+      return NetworkImage(imageSrc);
+    } else if (imageSrc is Uint8List) {
+      return MemoryImage(imageSrc);
+    } else if (imageSrc is File) {
+      return FileImage(imageSrc);
+    } else {
+      throw 'invalid src provided, src is (String | Uint8List | File)';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: PhotoView(
+        maxScale: PhotoViewComputedScale.contained * 8,
+        minScale: PhotoViewComputedScale.contained * 1.0,
+        initialScale: PhotoViewComputedScale.contained * 1.0,
+        imageProvider: getProvider(),
+      ),
+    );
+  }
+}
+
+void showImageViewer(String imageUrl, {bool isNetworkImage = true}) {
+  Get.bottomSheet(
+    ImageViewPage(
+      imageUrl: imageUrl,
+      isNetworkImage: isNetworkImage,
+    ),
+    isScrollControlled: true,
+    isDismissible: false,
+    enableDrag: false,
+    enterBottomSheetDuration: Duration.zero,
+    exitBottomSheetDuration: Duration.zero,
+  );
+}
+
+void showMultiImageViewer({
+  required dynamic imageSrc,
+  required List<dynamic> imageSrcs,
+  required double imageRatio,
+  required Function(int oldIdx, int newIdx) onReorder,
+  required Function(int targetIdx) onRemove,
+}) {
+  Get.bottomSheet(
+    ImageMultiViewPage(
+      nowImageSrc: imageSrc,
+      imageSrcs: imageSrcs,
+      ratio: imageRatio,
+      onRemove: onRemove,
+      onReorder: onReorder,
+    ),
+    isScrollControlled: true,
+    isDismissible: false,
+    enableDrag: false,
+    enterBottomSheetDuration: Duration.zero,
+    exitBottomSheetDuration: Duration.zero,
+  );
+}

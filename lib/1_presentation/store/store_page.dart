@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
-import 'package:teameat/1_presentation/core/component/image.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';

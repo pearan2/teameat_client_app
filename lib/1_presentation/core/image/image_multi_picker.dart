@@ -9,24 +9,6 @@ import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
-import 'package:image/image.dart' as img;
-
-class _FileRead {
-  final Uint8List bytes;
-  final int width;
-  final int height;
-
-  _FileRead({required this.bytes, required this.width, required this.height});
-}
-
-Future<_FileRead?> _loadFile(File file) async {
-  final bytes = file.readAsBytesSync();
-  final img.Image? image = img.decodeImage(bytes);
-  if (image == null) {
-    return null;
-  }
-  return _FileRead(bytes: bytes, width: image.width, height: image.height);
-}
 
 class TEMultiPhotoPicker extends StatefulWidget {
   final Widget loading;

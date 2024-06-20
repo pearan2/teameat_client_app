@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
-import 'package:teameat/1_presentation/core/component/image.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';

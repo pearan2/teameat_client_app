@@ -195,4 +195,10 @@ abstract class ITextSystem {
   String get inSale;
   String get saleFinished;
   String get reward;
+  String get itemDescriptionByCurator;
+  String get dangolPick;
+  String get readMore;
+  String get wayToCome;
+  String get warningNotice;
+  String get itemWarningNotice;
 }

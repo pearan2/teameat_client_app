@@ -5,8 +5,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
-import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/main.dart';
 
 class TECacheImage extends StatelessWidget {
   final dynamic src;
@@ -96,26 +96,98 @@ class TECacheImage extends StatelessWidget {
   }
 }
 
-class TEImageCarousel extends StatelessWidget {
-  final double width;
-  final List<String> imageUrls;
+class TEImageCarouselCounter extends StatelessWidget {
+  final int total;
+  final int now;
 
-  const TEImageCarousel(
-      {super.key, required this.width, required this.imageUrls});
+  const TEImageCarouselCounter({
+    super.key,
+    required this.total,
+    required this.now,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return PageLoadingWrapper(
-      child: CarouselSlider(
-        items: imageUrls
-            .map((e) => TECacheImage(key: ObjectKey(e), src: e, width: width))
-            .toList(),
-        options: CarouselOptions(
-          autoPlay: false,
-          enlargeCenterPage: true,
-          viewportFraction: 1.0,
-          aspectRatio: 1.0,
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.tiny,
+        horizontal: DS.space.xSmall,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(300),
+        color: DS.color.background800,
+      ),
+      child: Text(
+        '$now/$total',
+        textAlign: TextAlign.center,
+        style: DS.textStyle.paragraph3
+            .copyWith(color: DS.color.background000, height: 1),
+      ),
+    );
+  }
+}
+
+class TEImageCarousel extends StatefulWidget {
+  final double width;
+  final List<String> imageUrls;
+  final double ratio;
+  final Widget? bottomLeft;
+
+  const TEImageCarousel({
+    super.key,
+    required this.width,
+    required this.imageUrls,
+    this.ratio = 1 / 1,
+    this.bottomLeft,
+  });
+
+  @override
+  State<TEImageCarousel> createState() => _TEImageCarouselState();
+}
+
+class _TEImageCarouselState extends State<TEImageCarousel> {
+  int nowImageIdx = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: widget.width / widget.ratio,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CarouselSlider(
+            items: widget.imageUrls
+                .map(
+                  (e) => TECacheImage(
+                    key: ObjectKey(e),
+                    src: e,
+                    width: widget.width,
+                    ratio: widget.ratio,
+                  ),
+                )
+                .toList(),
+            options: CarouselOptions(
+              autoPlay: false,
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) =>
+                  setState(() => nowImageIdx = index),
+              viewportFraction: 1.0,
+              aspectRatio: widget.ratio,
+            ),
+          ),
+          Positioned(
+            right: DS.space.tiny + AppWidget.horizontalPadding,
+            bottom: DS.space.tiny,
+            child: TEImageCarouselCounter(
+              now: nowImageIdx + 1,
+              total: widget.imageUrls.length,
+            ),
+          ),
+          Positioned(
+              left: AppWidget.horizontalPadding,
+              bottom: 0,
+              child: widget.bottomLeft ?? const SizedBox()),
+        ],
       ),
     );
   }

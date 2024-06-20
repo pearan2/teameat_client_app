@@ -1,31 +1,28 @@
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/99_util/get.dart';
 
 class StorePageController extends PageController {
   final _storeRepo = Get.find<IStoreRepository>();
 
-  final _isMapBeingTouched = false.obs;
-
   final int storeId;
 
-  final _store = StoreDetail.empty().obs;
-
-  StoreDetail get store => _store.value;
-
-  bool get isMapBeingTouched => _isMapBeingTouched.value;
+  late final store = StoreDetail.empty().wrap(_loadStore);
 
   StorePageController({required this.storeId});
 
-  void onMapTouched() {
-    _isMapBeingTouched.value = true;
-  }
-
-  Future<void> _loadStore() async {
-    return resolve(_storeRepo.getStoreDetail(storeId), (s) {
-      _store.value = s;
-    });
+  Future<Either<Failure, StoreDetail>> _loadStore() async {
+    final ret = await _storeRepo.getStoreDetail(storeId);
+    ret.fold((l) {
+      Get.back();
+      showError(l.desc);
+    }, (r) => {});
+    return ret;
   }
 
   @override

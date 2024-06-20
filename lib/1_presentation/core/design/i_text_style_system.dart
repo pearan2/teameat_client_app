@@ -16,6 +16,9 @@ abstract class ITextStyleSystem {
   /// 16
   TextStyle get paragraph2;
 
+  /// 16 h : 1.4
+  TextStyle get paragraph2Long;
+
   /// 14
   TextStyle get paragraph3;
 

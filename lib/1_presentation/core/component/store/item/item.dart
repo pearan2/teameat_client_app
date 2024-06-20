@@ -19,26 +19,30 @@ class StoreItemOriginalPriceText extends StatelessWidget {
   final int originalPrice;
   final int price;
   final MainAxisAlignment? mainAxisAlignment;
+  final TextStyle? style;
   const StoreItemOriginalPriceText(
       {super.key,
       required this.originalPrice,
       required this.price,
+      this.style,
       this.mainAxisAlignment});
 
   @override
   Widget build(BuildContext context) {
+    final style = this.style ?? DS.textStyle.caption1;
+
     return Row(
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
         Text(
           DS.text.discountPrice,
-          style: DS.textStyle.caption1
-              .copyWith(color: DS.color.point500, fontWeight: FontWeight.w600),
+          style: style.copyWith(
+              color: DS.color.point500, fontWeight: FontWeight.w600),
         ),
         DS.space.hXTiny,
         Text(
           originalPrice.format(DS.text.priceFormat),
-          style: DS.textStyle.caption1.copyWith(
+          style: style.copyWith(
             color: DS.color.background400,
             decoration: TextDecoration.lineThrough,
             decorationColor: DS.color.background400,
@@ -52,10 +56,12 @@ class StoreItemOriginalPriceText extends StatelessWidget {
 class StoreItemPriceDiscountRateText extends StatelessWidget {
   final int originalPrice;
   final int price;
+  final TextStyle? style;
 
   const StoreItemPriceDiscountRateText({
     super.key,
     required this.originalPrice,
+    this.style,
     required this.price,
   });
 
@@ -66,9 +72,10 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = this.style ?? DS.textStyle.paragraph3;
     return Text(
       calcDiscountRateString(),
-      style: DS.textStyle.paragraph3.copyWith(
+      style: style.copyWith(
         color: DS.color.point500,
         fontWeight: FontWeight.w600,
       ),
@@ -103,6 +110,10 @@ class StoreItemPrice extends StatelessWidget {
       children: [
         isDiscount()
             ? StoreItemOriginalPriceText(
+                style: isTitle
+                    ? DS.textStyle.paragraph2
+                        .copyWith(fontWeight: FontWeight.w600)
+                    : null,
                 originalPrice: originalPrice,
                 price: price,
                 mainAxisAlignment: alignRight
@@ -116,7 +127,13 @@ class StoreItemPrice extends StatelessWidget {
           children: [
             isDiscount()
                 ? StoreItemPriceDiscountRateText(
-                    originalPrice: originalPrice, price: price)
+                    style: isTitle
+                        ? DS.textStyle.paragraph2
+                            .copyWith(fontWeight: FontWeight.w600)
+                        : null,
+                    originalPrice: originalPrice,
+                    price: price,
+                  )
                 : const SizedBox(),
             isDiscount() ? DS.space.hXTiny : const SizedBox(),
             StoreItemPriceText(price: price, isTitle: isTitle)
@@ -130,9 +147,13 @@ class StoreItemPrice extends StatelessWidget {
 class ItemSaleRemainDurationText extends StatefulWidget {
   final DateTime salesWillBeEndedAt;
   final bool useDDay;
+  final TextStyle? textStyle;
 
   const ItemSaleRemainDurationText(
-      {super.key, required this.salesWillBeEndedAt, this.useDDay = false});
+      {super.key,
+      required this.salesWillBeEndedAt,
+      this.useDDay = false,
+      this.textStyle});
 
   @override
   State<ItemSaleRemainDurationText> createState() =>
@@ -144,6 +165,9 @@ class _ItemSaleRemainDurationTextState
   int sec = 0;
   Timer? timer;
   late Duration diff;
+
+  late final style = widget.textStyle ??
+      DS.textStyle.caption1.copyWith(color: DS.color.background600);
 
   @override
   void didUpdateWidget(covariant ItemSaleRemainDurationText oldWidget) {
@@ -203,21 +227,13 @@ class _ItemSaleRemainDurationTextState
 
   Widget _buildRemainDuration() {
     if (widget.useDDay) {
-      return Text('D-${diff.inDays}',
-          style: DS.textStyle.caption1.copyWith(color: DS.color.background600));
+      return Text('D-${diff.inDays}', style: style);
     }
-
-    return Text(
-      calcRemainSaleDuration(),
-      style: DS.textStyle.caption1.copyWith(color: DS.color.background600),
-    );
+    return Text(calcRemainSaleDuration(), style: style);
   }
 
   Widget _buildSaleEndText() {
-    return Text(
-      DS.text.saleEnd,
-      style: DS.textStyle.caption1.copyWith(color: DS.color.background600),
-    );
+    return Text(DS.text.saleEnd, style: style);
   }
 
   @override
@@ -235,15 +251,36 @@ class _ItemSaleRemainDurationTextState
 
 class ItemLike extends GetView<LikeController<IStoreItemRepository>> {
   final int itemId;
+  final Widget liked;
+  final Widget base;
 
-  const ItemLike({super.key, required this.itemId});
+  const ItemLike({
+    super.key,
+    required this.itemId,
+    required this.liked,
+    required this.base,
+  });
+
+  factory ItemLike.base(int itemId) {
+    return ItemLike(
+      itemId: itemId,
+      liked: DS.image.iconLikeClicked,
+      base: DS.image.iconLike,
+    );
+  }
+
+  factory ItemLike.border(int itemId) {
+    return ItemLike(
+      itemId: itemId,
+      liked: DS.image.iconLikeBorderClicked,
+      base: DS.image.iconLikeBorder,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isLike(itemId)
-          ? DS.image.iconLikeClicked
-          : DS.image.iconLike,
+      () => controller.isLike(itemId) ? liked : base,
     );
   }
 }
@@ -252,14 +289,18 @@ class StoreItemSellType extends StatelessWidget {
   final String sellType;
   final int quantity;
   final DateTime salesWillBeEndedAt;
+  final MainAxisAlignment? rowShapeAlignment;
   final bool isColumnShape;
   final bool useDDay;
+  final TextStyle? textStyle;
 
   const StoreItemSellType({
     super.key,
     required this.sellType,
     required this.quantity,
     required this.salesWillBeEndedAt,
+    this.rowShapeAlignment,
+    this.textStyle,
     this.isColumnShape = false,
     this.useDDay = false,
   });
@@ -279,10 +320,11 @@ class StoreItemSellType extends StatelessWidget {
     );
   }
 
-  Widget _buildText(String text) {
+  Widget _buildText(String text, Color color) {
+    final style = textStyle ?? DS.textStyle.caption1;
     return Text(
       text,
-      style: DS.textStyle.caption1.copyWith(color: DS.color.primary600),
+      style: style.copyWith(color: color),
     );
   }
 
@@ -290,13 +332,17 @@ class StoreItemSellType extends StatelessWidget {
     if (sellType == DS.text.sellTypeTimeLimit) {
       return Row(
         mainAxisSize: MainAxisSize.min,
-        children: [_buildText(sellType), DS.space.hTiny, DS.image.timeLimit],
+        children: [
+          _buildText(sellType, DS.color.primary600),
+          DS.space.hTiny,
+          DS.image.timeLimit
+        ],
       );
     } else if (sellType == DS.text.sellTypeQuantityLimit) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildText(sellType),
+          _buildText(sellType, DS.color.primary600),
           DS.space.hTiny,
           DS.image.quantityLimit
         ],
@@ -311,12 +357,11 @@ class StoreItemSellType extends StatelessWidget {
       return ItemSaleRemainDurationText(
         salesWillBeEndedAt: salesWillBeEndedAt,
         useDDay: useDDay,
+        textStyle: textStyle,
       );
     } else if (sellType == DS.text.sellTypeQuantityLimit) {
-      return Text(quantity.format(DS.text.voucherCountFormat),
-          style: DS.textStyle.caption1.copyWith(
-            color: DS.color.background600,
-          ));
+      return _buildText(
+          quantity.format(DS.text.voucherCountFormat), DS.color.background600);
     } else {
       return const SizedBox();
     }
@@ -333,10 +378,13 @@ class StoreItemSellType extends StatelessWidget {
         ],
       );
     } else {
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        _buildSellTypeTextAndIcon(sellType),
-        _buildSellTypeContent(sellType)
-      ]);
+      return Row(
+          mainAxisAlignment:
+              rowShapeAlignment ?? MainAxisAlignment.spaceBetween,
+          children: [
+            _buildSellTypeTextAndIcon(sellType),
+            _buildSellTypeContent(sellType)
+          ]);
     }
   }
 
@@ -441,7 +489,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   final int itemId;
   final double borderRadius;
   final double ratio;
-  final bool isDangolPick;
+  final String? curatorProfileImageUrl;
 
   const StoreItemImage({
     super.key,
@@ -449,7 +497,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
     required this.width,
     required this.itemId,
     required this.borderRadius,
-    this.isDangolPick = false,
+    this.curatorProfileImageUrl,
     this.ratio = 3 / 4,
   });
 
@@ -467,7 +515,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
           top: DS.space.tiny,
           left: DS.space.tiny,
           child: Visibility(
-            visible: isDangolPick,
+            visible: curatorProfileImageUrl != null,
             child: DS.image.dangolPick,
           ),
         ),
@@ -481,7 +529,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
                 horizontal: DS.space.xSmall,
                 vertical: DS.space.xTiny,
               ),
-              child: ItemLike(itemId: itemId),
+              child: ItemLike.base(itemId),
             ),
           ),
         ),
@@ -580,7 +628,7 @@ class StoreItemColumnCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StoreItemImage(
-              isDangolPick: item.curationId != null,
+              curatorProfileImageUrl: item.curatorProfileImageUrl,
               imageUrl: item.imageUrl,
               width: imageWidth,
               itemId: item.id,

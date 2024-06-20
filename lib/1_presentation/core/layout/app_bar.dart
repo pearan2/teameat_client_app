@@ -11,15 +11,18 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? action;
   final void Function()? homeOnPressed;
   final String? title;
+  final Widget? titleWidget;
 
   TEAppBar({
     super.key,
     this.leadingIconOnPressed,
     this.title,
+    this.titleWidget,
     this.homeOnPressed,
     this.action,
     double? height,
   })  : assert(!(action != null && homeOnPressed != null)),
+        assert(!(title != null && titleWidget != null)),
         preferredSize = Size.fromHeight(height ?? TEAppBar.defaultHeight);
 
   List<Widget> _buildActions() {
@@ -38,8 +41,10 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget? _buildTitle(double titleMaxWidth) {
+    if (titleWidget != null) {
+      return titleWidget;
+    }
     if (title == null) return null;
-
     final titleWidth = Container(
       alignment: Alignment.center,
       width: titleMaxWidth,

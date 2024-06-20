@@ -1,25 +1,22 @@
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/get.dart';
 
 class StoreItemPageController extends PageController {
   final _storeItemRepo = Get.find<IStoreItemRepository>();
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
 
-  final _item = ItemDetail.empty().obs;
+  late final item = ItemDetail.empty().wrap(_loadStoreItemInfo);
   final _buyQuantity = 1.obs;
 
-  ItemDetail get item => _item.value;
   int get buyQuantity => _buyQuantity.value;
-  int get totalPrice => buyQuantity * item.price;
-
-  String get numberOfLikes =>
-      _item.value.numberOfLikes.format(DS.text.numberWithoutUnitFormat);
+  int get totalPrice => buyQuantity * item.value.price;
 
   final int itemId;
   StoreItemPageController({required this.itemId});
@@ -32,26 +29,26 @@ class StoreItemPageController extends PageController {
   }
 
   void onBuyClickHandler() {
-    react.toItemPurchase({item: buyQuantity});
+    react.toItemPurchase({item.value: buyQuantity});
   }
 
-  Future<void> _loadStoreItemInfo() async {
+  Future<Either<Failure, ItemDetail>> _loadStoreItemInfo() async {
     final ret = await _storeItemRepo.findById(itemId);
-    return ret.fold((l) {
+    ret.fold((l) {
       react.back(closeOverlays: true);
       showError(l.desc);
-    }, (r) => _item.value = r);
+    }, (r) => {});
+    return ret;
   }
 
   Future<void> onLikeClickHandler() async {
     final diff = await _itemLikeController.toggleLike(itemId);
-    _item.value =
-        item.copyWith(numberOfLikes: item.numberOfLikes + (diff ?? 0));
+    item.value = item.value
+        .copyWith(numberOfLikes: item.value.numberOfLikes + (diff ?? 0));
   }
 
   @override
   Future<bool> initialLoad() async {
-    await _loadStoreItemInfo();
     return true;
   }
 }

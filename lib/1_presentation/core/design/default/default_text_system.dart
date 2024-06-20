@@ -598,4 +598,22 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get reward => '리워드';
+
+  @override
+  String get itemDescriptionByCurator => '상품 설명';
+
+  @override
+  String get dangolPick => '단골Pick';
+
+  @override
+  String get readMore => '더보기';
+
+  @override
+  String get wayToCome => '오시는 길';
+
+  @override
+  String get warningNotice => '유의사항';
+
+  @override
+  String get itemWarningNotice => '∘ 메뉴 사진은 연출된 이미지로 실제 이미지와 다를 수 있습니다';
 }

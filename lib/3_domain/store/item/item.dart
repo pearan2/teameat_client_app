@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
 part 'item.freezed.dart';
@@ -18,7 +19,7 @@ class ItemSimple with _$ItemSimple {
     required DateTime salesWillBeEndedAt,
     required int orderReference,
     DateTime? currentGroupBuyingWillBeEndedAt,
-    int? curationId,
+    String? curatorProfileImageUrl,
     required int storeId,
     required String storeName,
     required Point storeLocation,
@@ -40,8 +41,10 @@ class ItemSimple with _$ItemSimple {
       orderReference: 0,
       salesWillBeEndedAt: DateTime.now(),
       currentGroupBuyingWillBeEndedAt: DateTime.now(),
+      curatorProfileImageUrl:
+          "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
       storeId: -1,
-      storeName: "벨로",
+      storeName: "팀잇",
       storeLocation: Point.empty(),
     );
   }
@@ -67,6 +70,7 @@ class ItemDetail with _$ItemDetail {
     int? weight,
     required String originInformation,
     required List<String> imageUrls,
+    CurationMain? curation,
   }) = _ItemDetail;
 
   factory ItemDetail.fromJson(Map<String, Object?> json) =>

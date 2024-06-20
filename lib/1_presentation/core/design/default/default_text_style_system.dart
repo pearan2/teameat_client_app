@@ -4,7 +4,7 @@ import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 
 class DefaultTextStyleSystem extends ITextStyleSystem {
   static TextStyle get defaultStyle =>
-      const TextStyle(fontFamily: 'Pretendard', height: 1.1);
+      const TextStyle(fontFamily: 'Pretendard', height: 1);
 
   /// title
   @override
@@ -22,6 +22,9 @@ class DefaultTextStyleSystem extends ITextStyleSystem {
   TextStyle get paragraph1 => defaultStyle.copyWith(fontSize: 18);
   @override
   TextStyle get paragraph2 => defaultStyle.copyWith(fontSize: 16);
+  @override
+  TextStyle get paragraph2Long =>
+      defaultStyle.copyWith(fontSize: 16, height: 1.3);
   @override
   TextStyle get paragraph3 => defaultStyle.copyWith(fontSize: 14);
 

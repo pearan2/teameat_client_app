@@ -211,6 +211,21 @@ class DefaultImageSystem extends IImageSystem {
         height: 36,
         width: 36,
       );
+
+  @override
+  SvgPicture get iconLikeBorder => SvgPicture.asset(
+        'assets/image/icon/like_border.svg',
+        height: 31,
+        width: 31,
+      );
+
+  @override
+  SvgPicture get iconLikeBorderClicked => SvgPicture.asset(
+        'assets/image/icon/like_border_liked.svg',
+        height: 31,
+        width: 31,
+      );
+
   @override
   SvgPicture get rightArrow => SvgPicture.asset(
         'assets/image/icon/right_arrow.svg',

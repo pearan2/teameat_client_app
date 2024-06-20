@@ -25,27 +25,18 @@ class CommunityPage extends GetView<CommunityPageController> {
     return TEScaffold(
       appBar: TEAppBar(height: 0),
       activated: BottomNavigatorType.community,
+      bottomFloatingButton: const CurationApplicationButton(),
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: DS.space.tiny, horizontal: AppWidget.horizontalPadding),
-        child: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                const BannerSliver(),
-                const UserInfoSliver(),
-                const CurationStatusSelectorSliver(),
-                const CurationList(),
-                SliverToBoxAdapter(child: DS.space.vMedium),
-                SliverToBoxAdapter(child: DS.space.vMedium),
-              ],
-            ),
-            const Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: CurationApplicationButton(),
-            ),
+        child: CustomScrollView(
+          slivers: [
+            const BannerSliver(),
+            const UserInfoSliver(),
+            const CurationStatusSelectorSliver(),
+            const CurationList(),
+            SliverToBoxAdapter(child: DS.space.vMedium),
+            SliverToBoxAdapter(child: DS.space.vMedium),
           ],
         ),
       ),
@@ -150,7 +141,7 @@ class CurationApplicationButton extends GetView<CommunityPageController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.space.base),
+      padding: EdgeInsets.symmetric(horizontal: DS.space.medium),
       child: TEPrimaryButton(
         isLoginRequired: true,
         listenEventLoading: false,

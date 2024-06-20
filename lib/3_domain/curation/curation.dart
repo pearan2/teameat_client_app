@@ -114,6 +114,22 @@ class CurationDetail with _$CurationDetail {
 }
 
 @freezed
+class CurationMain with _$CurationMain {
+  const factory CurationMain({
+    required int curatorId,
+    required String curatorProfileImageUrl,
+    required String curatorNickname,
+    String? curatorOneLineIntroduce,
+    required List<String> storeImageUrls,
+    required String oneLineIntroduce,
+    required String introduce,
+  }) = _CurationMain;
+
+  factory CurationMain.fromJson(Map<String, Object?> json) =>
+      _$CurationMainFromJson(json);
+}
+
+@freezed
 class CurationCreateRequest with _$CurationCreateRequest {
   const factory CurationCreateRequest({
     required final Local localInfo,

@@ -42,6 +42,9 @@ abstract class IImageSystem {
   SvgPicture get iconSearch;
   Image get iconLike;
   Image get iconLikeClicked;
+  SvgPicture get iconLikeBorder;
+  SvgPicture get iconLikeBorderClicked;
+
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
   SvgPicture get rightArrow;

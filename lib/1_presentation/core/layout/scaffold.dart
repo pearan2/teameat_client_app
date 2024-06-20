@@ -19,6 +19,7 @@ class TEScaffold extends StatelessWidget {
   final void Function(bool didPop)? onPop;
   final void Function()? onFloatingButtonClick;
   final bool resizeToAvoidBottomInset;
+  final Widget? bottomFloatingButton;
   const TEScaffold({
     super.key,
     required this.body,
@@ -30,6 +31,7 @@ class TEScaffold extends StatelessWidget {
     this.loading = false,
     this.onPop,
     this.onFloatingButtonClick,
+    this.bottomFloatingButton,
     this.resizeToAvoidBottomInset = false,
   });
 
@@ -45,6 +47,7 @@ class TEScaffold extends StatelessWidget {
               bottomSheet: bottomSheet,
               bottomSheetBackgroundColor: bottomSheetBackgroundColor,
               onFloatingButtonClick: onFloatingButtonClick,
+              bottomFloatingButton: bottomFloatingButton,
               resizeToAvoidBottomInset: resizeToAvoidBottomInset,
             ),
           ),
@@ -62,6 +65,7 @@ class TEScaffold extends StatelessWidget {
         bottomSheet: bottomSheet,
         bottomSheetBackgroundColor: bottomSheetBackgroundColor,
         onFloatingButtonClick: onFloatingButtonClick,
+        bottomFloatingButton: bottomFloatingButton,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       );
     }
@@ -118,6 +122,7 @@ class _InnerScaffold extends StatefulWidget {
   final Color? bottomSheetBackgroundColor;
   final void Function()? onFloatingButtonClick;
   final bool resizeToAvoidBottomInset;
+  final Widget? bottomFloatingButton;
 
   const _InnerScaffold({
     super.key,
@@ -126,6 +131,7 @@ class _InnerScaffold extends StatefulWidget {
     this.bottomSheet,
     this.bottomSheetBackgroundColor,
     this.onFloatingButtonClick,
+    this.bottomFloatingButton,
     required this.resizeToAvoidBottomInset,
   });
 
@@ -172,12 +178,24 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
         }
         return true;
       },
-      child: Padding(
-        padding: EdgeInsets.only(
-            bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
-                ? TEScaffold.iosBottomPadding
-                : 0.0),
-        child: widget.body,
+      child: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
+                    ? TEScaffold.iosBottomPadding
+                    : 0.0),
+            child: widget.body,
+          ),
+          widget.bottomFloatingButton == null
+              ? const SizedBox()
+              : Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0,
+                  child: widget.bottomFloatingButton!,
+                ),
+        ],
       ),
     );
   }

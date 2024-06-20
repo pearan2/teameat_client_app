@@ -201,4 +201,5 @@ abstract class ITextSystem {
   String get wayToCome;
   String get warningNotice;
   String get itemWarningNotice;
+  String get unknownErrorPleaseCallManager;
 }

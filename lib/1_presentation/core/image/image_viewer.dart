@@ -82,8 +82,8 @@ class ImageViewPageBody extends StatelessWidget {
 class ImageMultiViewPage extends StatefulWidget {
   final dynamic nowImageSrc;
   final List<dynamic> imageSrcs;
-  final Function(int oldIdx, int newIdx) onReorder;
-  final Function(int targetIdx) onRemove;
+  final Function(int oldIdx, int newIdx)? onReorder;
+  final Function(int targetIdx)? onRemove;
   final double ratio;
 
   const ImageMultiViewPage({
@@ -91,8 +91,8 @@ class ImageMultiViewPage extends StatefulWidget {
     required this.nowImageSrc,
     required this.imageSrcs,
     required this.ratio,
-    required this.onReorder,
-    required this.onRemove,
+    this.onReorder,
+    this.onRemove,
   });
 
   @override
@@ -127,7 +127,7 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
     setState(() {
       imageSrcs = newImageSrcs;
       tabController.index = rhs;
-      widget.onReorder(lhs, rhs);
+      widget.onReorder?.call(lhs, rhs);
     });
   }
 
@@ -140,7 +140,7 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
       nextIdx = idx;
     }
     if (newImageSrcs.isEmpty) {
-      widget.onRemove(idx);
+      widget.onRemove?.call(idx);
       Get.back();
       return;
     }
@@ -148,7 +148,7 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
     setState(() {
       imageSrcs = newImageSrcs;
       initTabController(nextIdx);
-      widget.onRemove(nextIdx);
+      widget.onRemove?.call(nextIdx);
     });
   }
 
@@ -222,15 +222,26 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
             LimitedBox(
               maxHeight: imageHeight,
               maxWidth: Get.mediaQuery.size.width,
-              child: ReorderableListView.builder(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: DS.space.xSmall),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
-                itemCount: imageSrcs.length,
-                onReorder: onReorder,
-              ),
+              child: widget.onRemove == null
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: DS.space.xSmall),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
+                      itemCount: imageSrcs.length,
+                    )
+                  : ReorderableListView.builder(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: DS.space.xSmall),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
+                      itemCount: imageSrcs.length,
+                      onReorder: onReorder,
+                    ),
             ),
             DS.space.vMedium,
           ],
@@ -271,23 +282,26 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
         Positioned(
           top: 0,
           right: 0,
-          child: TEonTap(
-            onTap: () => onRemove(idx),
-            child: Container(
-              width: DS.space.base,
-              height: DS.space.base,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(DS.space.xxTiny),
-                border: Border.all(
-                  width: DS.space.xxTiny,
-                  color: DS.color.background000,
+          child: Visibility(
+            visible: widget.onRemove != null,
+            child: TEonTap(
+              onTap: () => onRemove(idx),
+              child: Container(
+                width: DS.space.base,
+                height: DS.space.base,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(DS.space.xxTiny),
+                  border: Border.all(
+                    width: DS.space.xxTiny,
+                    color: DS.color.background000,
+                  ),
+                  color: DS.color.background800,
                 ),
-                color: DS.color.background800,
-              ),
-              child: Icon(
-                Icons.delete,
-                color: DS.color.background000,
-                size: DS.space.xBase,
+                child: Icon(
+                  Icons.delete,
+                  color: DS.color.background000,
+                  size: DS.space.xBase,
+                ),
               ),
             ),
           ),
@@ -344,7 +358,7 @@ void showImageViewer(String imageUrl, {bool isNetworkImage = true}) {
   );
 }
 
-void showMultiImageViewer({
+void showMultiImageEditViewer({
   required dynamic imageSrc,
   required List<dynamic> imageSrcs,
   required double imageRatio,
@@ -358,6 +372,25 @@ void showMultiImageViewer({
       ratio: imageRatio,
       onRemove: onRemove,
       onReorder: onReorder,
+    ),
+    isScrollControlled: true,
+    isDismissible: false,
+    enableDrag: false,
+    enterBottomSheetDuration: Duration.zero,
+    exitBottomSheetDuration: Duration.zero,
+  );
+}
+
+void showMultiImageViewer({
+  required dynamic imageSrc,
+  required List<dynamic> imageSrcs,
+  required double imageRatio,
+}) {
+  Get.bottomSheet(
+    ImageMultiViewPage(
+      nowImageSrc: imageSrc,
+      imageSrcs: imageSrcs,
+      ratio: imageRatio,
     ),
     isScrollControlled: true,
     isDismissible: false,

@@ -616,4 +616,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get itemWarningNotice => '∘ 메뉴 사진은 연출된 이미지로 실제 이미지와 다를 수 있습니다';
+
+  @override
+  String get unknownErrorPleaseCallManager =>
+      '알 수 없는 문제가 발생하였습니다. 지속된다면 관리자에게 문의하여 주세요';
 }

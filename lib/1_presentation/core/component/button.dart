@@ -682,7 +682,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
         if (loadings.contains(true)) {
           return;
         }
-        showMultiImageViewer(
+        showMultiImageEditViewer(
           imageSrc: imageSrc,
           imageSrcs: imageSrcs,
           imageRatio: imageRatio,

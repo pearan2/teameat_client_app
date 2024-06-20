@@ -103,28 +103,28 @@ class VoucherImage extends StatelessWidget {
 
   final DateTime willBeExpiredAt;
   final int quantity;
-  final List<String> imageUrls;
+  final List<dynamic> imageSrcs;
 
   const VoucherImage({
     super.key,
     required this.willBeExpiredAt,
     required this.quantity,
-    required this.imageUrls,
+    required this.imageSrcs,
     this.stackVerticalOffset = 0.0,
     this.borderRadius = 0.0,
-  }) : assert(imageUrls.length > 0);
+  }) : assert(imageSrcs.length > 0);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        imageUrls.length == 1
+        imageSrcs.length == 1
             ? TECacheImage(
-                src: imageUrls.first,
+                src: imageSrcs.first,
                 borderRadius: borderRadius,
               )
             : CarouselSlider(
-                items: imageUrls
+                items: imageSrcs
                     .map((e) => TECacheImage(
                           src: e,
                           borderRadius: borderRadius,

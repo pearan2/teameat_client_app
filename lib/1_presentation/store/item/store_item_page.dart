@@ -40,7 +40,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
     return TEScaffold(
       appBar: TEAppBar(
         leadingIconOnPressed: controller.react.back,
-        homeOnPressed: controller.react.toHomeOffAll,
+        homeOnPressed: c.absorbing ? null : controller.react.toHomeOffAll,
         titleWidget: c.item.obx(
           (item) => Container(
             alignment: Alignment.center,
@@ -54,45 +54,50 @@ class StoreItemPage extends GetView<StoreItemPageController> {
           ),
         ),
       ),
-      bottomFloatingButton: StoreItemBuyButton(tag: tag),
+      bottomFloatingButton: c.onApplyCuration != null
+          ? StoreItemCurationButton(tag: tag)
+          : StoreItemBuyButton(tag: tag),
       body: CustomScrollView(
         slivers: [
           ItemImageCarouselSliver(
               imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppWidget.horizontalPadding),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DS.space.vTiny,
-                  c.item.obx((item) => StoreItemSellType(
-                        rowShapeAlignment: MainAxisAlignment.spaceEvenly,
-                        textStyle: DS.textStyle.paragraph3
-                            .copyWith(fontWeight: FontWeight.w600),
-                        sellType: item.sellType,
-                        salesWillBeEndedAt: item.salesWillBeEndedAt,
-                        quantity: item.quantity,
-                      )),
-                  DS.space.vSmall,
-                  c.item.obx((item) => StoreSimpleInfoRow(
-                        location: item.store.location,
-                        storeId: item.store.id,
-                        profileImageUrl: item.store.profileImageUrl,
-                        name: item.store.name,
-                        subInfo: item.store.address,
-                      )),
-                  DS.space.vXBase,
-                  ItemSimpleInfoAndLikeRow(tag: tag),
-                  DS.space.vXBase,
-                  c.item.obx((item) => StoreItemPrice(
-                        originalPrice: item.originalPrice,
-                        price: item.price,
-                        isTitle: true,
-                      )),
-                ],
+            child: AbsorbPointer(
+              absorbing: c.absorbing,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppWidget.horizontalPadding),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DS.space.vTiny,
+                    c.item.obx((item) => StoreItemSellType(
+                          rowShapeAlignment: MainAxisAlignment.spaceEvenly,
+                          textStyle: DS.textStyle.paragraph3
+                              .copyWith(fontWeight: FontWeight.w600),
+                          sellType: item.sellType,
+                          salesWillBeEndedAt: item.salesWillBeEndedAt,
+                          quantity: item.quantity,
+                        )),
+                    DS.space.vSmall,
+                    c.item.obx((item) => StoreSimpleInfoRow(
+                          location: item.store.location,
+                          storeId: item.store.id,
+                          profileImageUrl: item.store.profileImageUrl,
+                          name: item.store.name,
+                          subInfo: item.store.address,
+                        )),
+                    DS.space.vXBase,
+                    ItemSimpleInfoAndLikeRow(tag: tag),
+                    DS.space.vXBase,
+                    c.item.obx((item) => StoreItemPrice(
+                          originalPrice: item.originalPrice,
+                          price: item.price,
+                          isTitle: true,
+                        )),
+                  ],
+                ),
               ),
             ),
           ),
@@ -168,7 +173,7 @@ class CurationInfo extends StatelessWidget {
             ? const SizedBox()
             : TEImageCarousel(
                 width: MediaQuery.of(context).size.width,
-                imageUrls: curation.storeImageUrls,
+                imageSrcs: curation.storeImageUrls,
               ),
         curation.storeImageUrls.isEmpty ? const SizedBox() : DS.space.vSmall,
         Text(curation.oneLineIntroduce, style: DS.textStyle.title3)
@@ -264,7 +269,7 @@ class ItemImageCarouselSliver extends GetView<StoreItemPageController> {
       expandedHeight: imageWidth / imageRatio,
       flexibleSpace: c.item.obx((item) => TEImageCarousel(
             width: imageWidth,
-            imageUrls: item.imageUrls,
+            imageSrcs: item.imageUrls,
             ratio: 3 / 4,
             bottomLeft: Padding(
               padding:
@@ -360,9 +365,10 @@ class StoreLocation extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(DS.space.tiny),
           child: TEStoreMap.single(
-              height: DS.space.large * 4,
-              store: StorePoint.fromDetail(item.store),
-              isLoading: false),
+            height: DS.space.large * 4,
+            store: StorePoint.fromDetail(item.store),
+            isLoading: item == ItemDetail.empty(),
+          ),
         ),
       ],
     ).withBasePadding;
@@ -423,6 +429,25 @@ class StoreItemBuyButton extends StatelessWidget {
           showTEBottomSheet(StoreItemBuyBottomButton(tag));
         },
         text: DS.text.buy,
+      ),
+    );
+  }
+}
+
+class StoreItemCurationButton extends GetView<StoreItemPageController> {
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const StoreItemCurationButton({super.key, required this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+      child: TEPrimaryButton(
+        listenEventLoading: false,
+        onTap: c.onApplyCuration,
+        text: DS.text.menuApplication,
       ),
     );
   }

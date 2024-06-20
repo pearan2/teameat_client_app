@@ -71,6 +71,7 @@ class TECupertinoTextField extends StatefulWidget {
   final bool Function(String value)? validate;
   final void Function()? onEditingComplete;
   final void Function(String value)? onSubmitted;
+  final void Function()? onFocused;
 
   final bool isEssential;
 
@@ -87,6 +88,7 @@ class TECupertinoTextField extends StatefulWidget {
     this.validate,
     this.onEditingComplete,
     this.onSubmitted,
+    this.onFocused,
     String? hintText,
     this.keyboardType,
     TextStyle? hintTextStyle,
@@ -162,7 +164,12 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
   void focusNodeListener() {
     if (isDisposed) return;
     setState(() {
+      final before = isFocused;
       isFocused = widget.controller.focusNode.hasFocus;
+      final after = isFocused;
+      if (after && !before) {
+        widget.onFocused?.call();
+      }
     });
   }
 

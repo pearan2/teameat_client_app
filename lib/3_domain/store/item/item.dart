@@ -69,7 +69,7 @@ class ItemDetail with _$ItemDetail {
     int? willBeExpiredAfterDay,
     int? weight,
     required String originInformation,
-    required List<String> imageUrls,
+    required List<dynamic> imageUrls,
     CurationMain? curation,
   }) = _ItemDetail;
 
@@ -89,11 +89,10 @@ class ItemDetail with _$ItemDetail {
       salesWillBeEndedAt: DateTime.now(),
       currentGroupBuyingWillBeEndedAt: DateTime.now(),
       store: StoreDetail.empty(),
-      introduce:
-          "이것은 아주 맛있고 토마토소스를 직접 매장에서 끓여 만든화덕 피자로 어쩌고 저쩌고 매우 맛있으니 꼭 드셔보세요 아주 훌륭한 피자랍니다 ",
+      introduce: "사장님께서 입력하시는 메뉴 한줄 소개",
       numberOfLikes: 824,
       willBeExpiredAt: DateTime.now(),
-      originInformation: "원 산지 산지 산지 산지 산지 산지 직송",
+      originInformation: "원산지 정보",
       imageUrls: List.generate(
           5,
           (_) =>

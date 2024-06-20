@@ -120,7 +120,7 @@ class CurationMain with _$CurationMain {
     required String curatorProfileImageUrl,
     required String curatorNickname,
     String? curatorOneLineIntroduce,
-    required List<String> storeImageUrls,
+    required List<dynamic> storeImageUrls,
     required String oneLineIntroduce,
     required String introduce,
   }) = _CurationMain;

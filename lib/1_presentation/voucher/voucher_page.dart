@@ -140,7 +140,7 @@ class VoucherCard extends StatelessWidget {
       children: [
         VoucherImage(
           borderRadius: DS.space.tiny,
-          imageUrls: [voucher.imageUrl],
+          imageSrcs: [voucher.imageUrl],
           willBeExpiredAt: voucher.willBeExpiredAt,
           quantity: voucher.quantity,
         ),

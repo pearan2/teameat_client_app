@@ -177,7 +177,7 @@ class VoucherShadowCard extends GetView<VoucherDetailPageController> {
             child: VoucherImage(
               willBeExpiredAt: controller.voucher.willBeExpiredAt,
               quantity: controller.voucher.quantity,
-              imageUrls: controller.voucher.itemImageUrls,
+              imageSrcs: controller.voucher.itemImageUrls,
               stackVerticalOffset: DS.space.medium,
               borderRadius: DS.space.medium,
             ),

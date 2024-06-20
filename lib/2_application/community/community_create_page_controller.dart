@@ -5,23 +5,32 @@ import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/component/local_search_dialog.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
+import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/3_domain/user/i_user_repository.dart';
+import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/image.dart';
+import 'package:flutter/material.dart' as mt;
 
 class CommunityCreatePageController extends PageController {
   final double menuImageRatio = 3 / 4;
   final double storeImageRatio = 1 / 1;
+  final primaryButtonKey = mt.GlobalKey();
 
   final bytes = Rxn<Uint8List>();
 
 // repo
   final _storeRepo = Get.find<IStoreRepository>();
   final _curationRepo = Get.find<ICurationRepository>();
+  final _userRepo = Get.find<IUserRepository>();
 
   // service
   final _fileService = Get.find<IFileService>();
@@ -57,11 +66,69 @@ class CommunityCreatePageController extends PageController {
   set isStoreImageLoading(bool isLoading) => _isStoreImageLoading = isLoading;
   set storeImages(List<ImageResizeResult> images) => _storeImages = images;
 
-  void toPreview() {
+  Future<void> onLastInputFocused() async {
+    // 추후 제거해야되는 기능이 될수도 있음.
+    await Future.delayed(const Duration(seconds: 1));
+    final context = primaryButtonKey.currentContext;
+    if (context == null) {
+      return;
+    }
+    // ignore: use_build_context_synchronously
+    mt.Scrollable.ensureVisible(context,
+        duration: const Duration(milliseconds: 300));
+  }
+
+  Future<void> toPreview() async {
     if (!checkInputValidIfNotShowError()) {
       return;
     }
-    _onCreateCuration();
+    _isLoading.value = true;
+    final meEither = await _userRepo.getMe();
+    if (meEither.isLeft()) {
+      return showError('unknown error occurred, please contact developer');
+    }
+    final me = meEither.getOrElse(() => User.visitor());
+    _isLoading.value = false;
+
+    final menuOriginalPrice = int.parse(menuPriceController.text);
+
+    final item = ItemDetail.empty().copyWith(
+      name: menuNameController.text,
+      originalPrice: menuOriginalPrice,
+      price: (menuOriginalPrice * 0.9).round(),
+      imageUrls: _menuImages.map((r) => r.bytes).toList(),
+      store: StoreDetail.empty().copyWith(
+        name: local!.title,
+        address: local!.roadAddress,
+        location: local!.location,
+      ),
+      curation: CurationMain(
+        curatorId: -1,
+        curatorProfileImageUrl: me.profileImageUrl,
+        curatorNickname: me.nickname,
+        storeImageUrls: _storeImages.map((r) => r.bytes).toList(),
+        oneLineIntroduce: menuOneLineIntroduceController.text,
+        introduce: menuIntroduceController.text,
+      ),
+    );
+
+    Get.to(
+      () => StoreItemPage(item.id.toString()),
+      arguments: {
+        'itemId': item.id,
+        'itemDetail': item,
+        'onApplyCuration': () async {
+          Get.back();
+          _isLoading.value = true;
+          await _onCreateCuration();
+          _isLoading.value = false;
+        }
+      },
+      preventDuplicates: false,
+      binding: StoreItemPageBinding(),
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
   }
 
   bool _showErrorAndReturnFalse(String errorText) {
@@ -119,7 +186,7 @@ class CommunityCreatePageController extends PageController {
     if (local == null) {
       return;
     }
-    _isLoading.value = true;
+
     final imageUrlLists = await Future.wait(
         [_uploadImage(_menuImages), _uploadImage(_storeImages)]);
 
@@ -132,7 +199,6 @@ class CommunityCreatePageController extends PageController {
       itemImageUrls: imageUrlLists[0],
       storeImageUrls: imageUrlLists[1],
     ));
-    _isLoading.value = false;
     ret.fold(
       (l) => showError(l.desc),
       (_) {

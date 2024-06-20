@@ -623,6 +623,21 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   List<ImageResizeResult> croppedImages = [];
   List<bool> loadings = [];
 
+  bool isDisposed = false;
+
+  void changeState(void Function() callback) {
+    if (isDisposed) {
+      return;
+    }
+    setState(() => callback());
+  }
+
+  @override
+  void dispose() {
+    isDisposed = true;
+    super.dispose();
+  }
+
   Widget _buildContainer(Widget child) {
     return Container(
       width: widget.imagePreviewWidth,
@@ -660,7 +675,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     nextCroppedImage[rhs] = lhsCroppedImage;
     nextSelectedImage[rhs] = lhsSelectedImage;
 
-    setState(() {
+    changeState(() {
       loadings = nextLoading;
       croppedImages = nextCroppedImage;
       selectedImages = nextSelectedImage;
@@ -753,7 +768,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     final nextLoadings = [...loadings]..removeAt(idx);
     final nextCroppedImages = [...croppedImages]..removeAt(idx);
     final nextSelectedImages = [...selectedImages]..removeAt(idx);
-    setState(() {
+    changeState(() {
       loadings = nextLoadings;
       croppedImages = nextCroppedImages;
       selectedImages = nextSelectedImages;
@@ -764,7 +779,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   Future<void> _cropImage(int idx) async {
     final ret = await resize(
         ImageResizeParameter(selectedImages[idx], ratio: imageRatio));
-    setState(() {
+    changeState(() {
       final nextLoadings = [...loadings];
       nextLoadings[idx] = false;
       final nextCroppedImages = [...croppedImages];
@@ -790,7 +805,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
       return;
     }
     final beforeLength = this.selectedImages.length;
-    setState(() {
+    changeState(() {
       this.selectedImages = [...this.selectedImages, ...selectedImages];
       loadings = [
         ...loadings,

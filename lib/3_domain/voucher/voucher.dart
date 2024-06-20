@@ -93,7 +93,7 @@ class VoucherDetail with _$VoucherDetail {
     required String orderId,
     required String itemName,
     required String voucherUseDefaultType,
-    required List<String> itemImageUrls,
+    required List<dynamic> itemImageUrls,
     required List<VoucherUseLog> useLogs,
   }) = _VoucherDetail;
 

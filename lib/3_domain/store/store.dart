@@ -173,14 +173,13 @@ class StoreDetail with _$StoreDetail {
       id: -1,
       name: "벨로",
       profileImageUrl:
-          "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
+          "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
       address: "대구 북구 대흥동 13길 24",
       location: Point.empty(),
       items: List.generate(5, (_) => ItemSimple.empty()),
       phone: "010-0000-1257",
-      oneLineIntroduce: "맛있는 양식집 이올시다",
-      introduce:
-          "벨로는 오래된 양식집의 향기가 내 안에 바람을 타고와서 우리집 밑에 있는 재료보다는 갈래 말래 우리가 지금 함께 하는 이길에서 지금 여기 특이한 만두를 가지고 가는 느낌의 오늘 하루 하하 호호 하는 기분 ",
+      oneLineIntroduce: "사장님께서 입력해주시는 가게 한줄 소개",
+      introduce: "사장님께서 입력해주시는 가게 소개",
       operationTime:
           "월 09:00 ~ 21:00\n화 09:00 ~ 21:00\n수 09:00 ~ 21:00\n목 정기 휴무\n금 09:00 ~ 21:00\n토 09:00 ~ 22:00\n일 09:00 ~ 22:00",
       breakTime: "매일 11:00 ~ 12:00",

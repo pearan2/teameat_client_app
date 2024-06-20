@@ -18,8 +18,13 @@ class StoreItemPageController extends PageController {
   int get buyQuantity => _buyQuantity.value;
   int get totalPrice => buyQuantity * item.value.price;
 
+  late final absorbing = itemDetail != null;
+
   final int itemId;
-  StoreItemPageController({required this.itemId});
+  final ItemDetail? itemDetail;
+  final void Function()? onApplyCuration;
+  StoreItemPageController(
+      {required this.itemId, this.itemDetail, this.onApplyCuration});
 
   void onBuyQuantityChanged(int newValue) {
     if (newValue < 1 || newValue > 99) {
@@ -33,6 +38,11 @@ class StoreItemPageController extends PageController {
   }
 
   Future<Either<Failure, ItemDetail>> _loadStoreItemInfo() async {
+    if (itemDetail != null) {
+      await Future.delayed(const Duration(seconds: 1));
+      return right(itemDetail!);
+    }
+
     final ret = await _storeItemRepo.findById(itemId);
     ret.fold((l) {
       react.back(closeOverlays: true);

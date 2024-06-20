@@ -7,9 +7,13 @@ import 'package:teameat/3_domain/user/user.dart';
 
 class UserRepository implements IUserRepository {
   final _conn = Get.find<IConnection>();
+  User? _cached;
 
   @override
   Future<Either<Failure, User>> getMe() async {
+    if (_cached != null) {
+      return right(_cached!);
+    }
     try {
       const path = 'api/member/me';
       final ret = await _conn.get(path, null);
@@ -26,8 +30,11 @@ class UserRepository implements IUserRepository {
     try {
       const path = 'api/member/me';
       final ret = await _conn.patch(path, update.toJson());
-      return ret.fold(
-          (l) => left(l), (r) => right(User.fromJson(r as JsonMap)));
+      return ret.fold((l) => left(l), (r) {
+        final user = User.fromJson(r as JsonMap);
+        _cached = user;
+        return right(user);
+      });
     } catch (e) {
       return left(
           const Failure.updateMeFail('내 정보를 업데이트 하는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
@@ -39,7 +46,10 @@ class UserRepository implements IUserRepository {
     try {
       const path = 'api/member/me';
       final ret = await _conn.delete(path, null);
-      return ret.fold((l) => left(l), (r) => right(r as bool));
+      return ret.fold((l) => left(l), (r) {
+        _cached = null;
+        return right(r as bool);
+      });
     } catch (e) {
       return left(const Failure.deleteMeFail('회원탈퇴에 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }

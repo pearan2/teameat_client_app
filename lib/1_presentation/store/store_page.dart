@@ -38,7 +38,7 @@ class StorePage extends GetView<StorePageController> {
               surfaceTintColor: DS.color.background000,
               expandedHeight: width,
               flexibleSpace: c.store.obx((store) =>
-                  TEImageCarousel(width: width, imageUrls: store.imageUrls)),
+                  TEImageCarousel(width: width, imageSrcs: store.imageUrls)),
             ),
             SliverAppBar(
               leading: const SizedBox(),

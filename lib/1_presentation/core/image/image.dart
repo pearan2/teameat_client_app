@@ -129,14 +129,14 @@ class TEImageCarouselCounter extends StatelessWidget {
 
 class TEImageCarousel extends StatefulWidget {
   final double width;
-  final List<String> imageUrls;
+  final List<dynamic> imageSrcs;
   final double ratio;
   final Widget? bottomLeft;
 
   const TEImageCarousel({
     super.key,
     required this.width,
-    required this.imageUrls,
+    required this.imageSrcs,
     this.ratio = 1 / 1,
     this.bottomLeft,
   });
@@ -156,7 +156,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
         fit: StackFit.expand,
         children: [
           CarouselSlider(
-            items: widget.imageUrls
+            items: widget.imageSrcs
                 .map(
                   (e) => TECacheImage(
                     key: ObjectKey(e),
@@ -180,7 +180,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
             bottom: DS.space.tiny,
             child: TEImageCarouselCounter(
               now: nowImageIdx + 1,
-              total: widget.imageUrls.length,
+              total: widget.imageSrcs.length,
             ),
           ),
           Positioned(

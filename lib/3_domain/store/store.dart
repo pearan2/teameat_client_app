@@ -102,13 +102,6 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
       ret['baseLocation.longitude'] = target.baseLocation!.longitude.toString();
       ret['baseLocation.latitude'] = target.baseLocation!.latitude.toString();
     }
-
-    // if (target.baseLocation != null) {
-    //   ret['baseLocation'] = {
-    //     'longitude': target.baseLocation!.longitude.toString(),
-    //     'latitude': target.baseLocation!.latitude.toString()
-    //   };
-    // }
     if (target.withInMeter != null) {
       ret['withInMeter'] = target.withInMeter.toString();
     }
@@ -126,15 +119,7 @@ class StoreSimple with _$StoreSimple {
     required String profileImageUrl,
     required String address,
     required Point location,
-    required List<ItemSimple> items,
   }) = _StoreSimple;
-
-  factory StoreSimple.fromJsonWithItemSort(Map<String, Object?> json) {
-    final ret = StoreSimple.fromJson(json);
-    final sorted = [...ret.items];
-    sorted.sort((lhs, rhs) => lhs.orderReference - rhs.orderReference);
-    return ret.copyWith(items: sorted);
-  }
 
   factory StoreSimple.fromJson(Map<String, Object?> json) =>
       _$StoreSimpleFromJson(json);

@@ -8,6 +8,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/99_util/extension/list.dart';
 
 class ImageViewPage extends StatelessWidget {
   final String imageUrl;
@@ -114,16 +115,7 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
     if (lhs < rhs) {
       rhs--;
     }
-    if (lhs < 0 ||
-        lhs >= imageSrcs.length ||
-        rhs < 0 ||
-        rhs >= imageSrcs.length) {
-      return;
-    }
-    final newImageSrcs = [...imageSrcs];
-
-    final lhsTarget = newImageSrcs.removeAt(lhs);
-    newImageSrcs.insert(rhs, lhsTarget);
+    final newImageSrcs = imageSrcs.reorder(lhs, rhs);
     setState(() {
       imageSrcs = newImageSrcs;
       tabController.index = rhs;
@@ -147,8 +139,9 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
 
     setState(() {
       imageSrcs = newImageSrcs;
+      nowIdx = nextIdx;
       initTabController(nextIdx);
-      widget.onRemove?.call(nextIdx);
+      widget.onRemove?.call(idx);
     });
   }
 

@@ -12,6 +12,7 @@ import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/99_util/extension/list.dart';
 import 'package:teameat/99_util/image.dart';
 import 'package:teameat/99_util/text.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -649,36 +650,22 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 
   void _changeIdx(int lhs, int rhs) {
-    if (lhs < 0 ||
-        lhs >= selectedImages.length ||
-        rhs < 0 ||
-        rhs >= selectedImages.length) {
-      return;
-    }
-    if (loadings[lhs] || loadings[rhs]) {
-      return;
-    }
-
-    final lhsLoading = loadings[lhs];
-    final lhsCroppedImage = croppedImages[lhs];
-    final lhsSelectedImage = selectedImages[lhs];
-
-    final nextLoading = [...loadings];
-    final nextCroppedImage = [...croppedImages];
-    final nextSelectedImage = [...selectedImages];
-
-    nextLoading[lhs] = nextLoading[rhs];
-    nextCroppedImage[lhs] = nextCroppedImage[rhs];
-    nextSelectedImage[lhs] = nextSelectedImage[rhs];
-
-    nextLoading[rhs] = lhsLoading;
-    nextCroppedImage[rhs] = lhsCroppedImage;
-    nextSelectedImage[rhs] = lhsSelectedImage;
-
     changeState(() {
-      loadings = nextLoading;
-      croppedImages = nextCroppedImage;
-      selectedImages = nextSelectedImage;
+      loadings = loadings.reorder(lhs, rhs);
+      croppedImages = croppedImages.reorder(lhs, rhs);
+      selectedImages = selectedImages.reorder(lhs, rhs);
+      _tryInvokeCallback();
+    });
+  }
+
+  void _removeImage(int idx) {
+    final nextLoadings = [...loadings]..removeAt(idx);
+    final nextCroppedImages = [...croppedImages]..removeAt(idx);
+    final nextSelectedImages = [...selectedImages]..removeAt(idx);
+    changeState(() {
+      loadings = nextLoadings;
+      croppedImages = nextCroppedImages;
+      selectedImages = nextSelectedImages;
       _tryInvokeCallback();
     });
   }
@@ -762,18 +749,6 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
       widget.onLoading(false);
       widget.onImageChanged(croppedImages);
     }
-  }
-
-  void _removeImage(int idx) {
-    final nextLoadings = [...loadings]..removeAt(idx);
-    final nextCroppedImages = [...croppedImages]..removeAt(idx);
-    final nextSelectedImages = [...selectedImages]..removeAt(idx);
-    changeState(() {
-      loadings = nextLoadings;
-      croppedImages = nextCroppedImages;
-      selectedImages = nextSelectedImages;
-      _tryInvokeCallback();
-    });
   }
 
   Future<void> _cropImage(int idx) async {

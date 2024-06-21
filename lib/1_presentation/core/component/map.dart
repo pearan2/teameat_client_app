@@ -168,7 +168,7 @@ class _TEStoreMapState extends State<TEStoreMap> {
       child: NaverMap(
         onCameraChange: (reason, animated) => _onCameraChanged(),
         onCameraIdle: _onCameraIdle,
-        forceGesture: true,
+        forceGesture: widget.gestureEnabled,
         options: NaverMapViewOptions(
           initialCameraPosition: NCameraPosition(
             target: widget.defaultCameraCenter.toNLatLng(),

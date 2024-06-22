@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -64,7 +65,7 @@ class _TEStoreMapState extends State<TEStoreMap> {
     if (oldWidget.isLoading != widget.isLoading) {
       setState(() => isLoading = widget.isLoading);
     }
-    if (oldWidget.stores != widget.stores) {
+    if (!listEquals(oldWidget.stores, widget.stores)) {
       _addAllStoreMarkers();
     }
     super.didUpdateWidget(oldWidget);

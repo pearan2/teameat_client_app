@@ -204,4 +204,10 @@ abstract class ITextSystem {
   String get unknownErrorPleaseCallManager;
   String get storeItemPicture;
   String get etcPicture;
+  String get groupBuying;
+  String get ing;
+  String get buy2Lonely;
+  String get openGroupBuying;
+  String get joinToGroupBuying;
+  String get groupBuyingTimeOver;
 }

@@ -14,7 +14,8 @@ abstract class IRouter {
 
   Future<void> toLogin();
 
-  void toItemPurchase(Map<ItemDetail, int> items);
+  Future<T?> toItemPurchase<T>(Map<ItemDetail, int> items,
+      {required bool withOpenGroupBuying, int? groupBuyingId});
 
   void toPaymentOff(Order order, PaymentMethod paymentMethod);
 

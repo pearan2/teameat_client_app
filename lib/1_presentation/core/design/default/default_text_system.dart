@@ -626,4 +626,22 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get storeItemPicture => '메뉴 사진';
+
+  @override
+  String get groupBuying => '2인 팀 구매';
+
+  @override
+  String get ing => '진행중';
+
+  @override
+  String get buy2Lonely => '혼자 2개 구매하기';
+
+  @override
+  String get openGroupBuying => '공동 구매 열기';
+
+  @override
+  String get groupBuyingTimeOver => '타임오버(환불진행 중)';
+
+  @override
+  String get joinToGroupBuying => '참여하기';
 }

@@ -20,6 +20,13 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  Image get mainIconXsm => Image.asset(
+        'assets/image/main_icon_no_bg.png',
+        height: 16,
+        width: 24,
+      );
+
+  @override
   Image get mainIconSm => Image.asset(
         'assets/image/main_icon_no_bg.png',
         height: 24,

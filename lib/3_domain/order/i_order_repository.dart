@@ -4,5 +4,8 @@ import 'package:teameat/3_domain/order/order.dart' as dto;
 
 abstract class IOrderRepository {
   Future<Either<Failure, dto.Order>> registerOrder(
-      dto.RegisterOrderDto registerOrderDto);
+      dto.RegisterOrderDto registerOrderDto,
+      {bool isGroupBuying = false});
+
+  Future<Either<Failure, List<dto.GroupBuying>>> findGroupBuy(int itemId);
 }

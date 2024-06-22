@@ -12,6 +12,8 @@ class PurchasePageController extends PageController {
   final _orderRepo = Get.find<IOrderRepository>();
 
   final Map<ItemDetail, int> items;
+  final bool withOpenGroupBuying;
+  final int? groupBuyingId;
 
   // state
   final _purchaseMethod = Rxn<PaymentMethod>();
@@ -38,13 +40,20 @@ class PurchasePageController extends PageController {
       return;
     }
     resolve<Order>(
-        _orderRepo.registerOrder(RegisterOrderDto(
-            itemIdAndQuantities: items.entries
-                .map((e) =>
-                    ItemIdAndQuantity(itemId: e.key.id, quantity: e.value))
-                .toList())),
+        _orderRepo.registerOrder(
+          RegisterOrderDto(
+              groupBuyingId: groupBuyingId,
+              itemIdAndQuantities: items.entries
+                  .map((e) =>
+                      ItemIdAndQuantity(itemId: e.key.id, quantity: e.value))
+                  .toList()),
+          isGroupBuying: withOpenGroupBuying,
+        ),
         (r) => react.toPaymentOff(r, purchaseMethod!));
   }
 
-  PurchasePageController({required this.items});
+  PurchasePageController(
+      {required this.items,
+      required this.withOpenGroupBuying,
+      this.groupBuyingId});
 }

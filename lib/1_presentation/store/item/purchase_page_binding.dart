@@ -7,7 +7,12 @@ class PurchasePageBinding implements Bindings {
   void dependencies() {
     final argMap = Get.arguments as Map<String, dynamic>;
     final items = argMap['items'] as Map<ItemDetail, int>;
+    final withOpenGroupBuying = argMap['withOpenGroupBuying'] as bool;
+    final groupBuyingId = argMap['groupBuyingId'] as int?;
 
-    Get.put(PurchasePageController(items: items));
+    Get.put(PurchasePageController(
+        items: items,
+        withOpenGroupBuying: withOpenGroupBuying,
+        groupBuyingId: groupBuyingId));
   }
 }

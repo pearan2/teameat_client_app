@@ -14,6 +14,8 @@ class Failure with _$Failure {
   const factory Failure.fetchSocialLoginUrlFail(String desc) =
       _FetchSocialLoginFail;
   const factory Failure.registerOrderFail(String desc) = _RegisterOrderFail;
+  const factory Failure.fetchGroupBuyingFail(String desc) =
+      _FetchGroupBuyingFail;
   const factory Failure.fetchVoucherFail(String desc) = _FetchVoucherFail;
   const factory Failure.useVoucherFail(String desc) = _UseVoucherFail;
   const factory Failure.fetchMeFail(String desc) = _FetchMeFail;

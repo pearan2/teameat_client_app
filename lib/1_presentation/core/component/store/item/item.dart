@@ -347,6 +347,15 @@ class StoreItemSellType extends StatelessWidget {
           DS.image.quantityLimit
         ],
       );
+    } else if (sellType == DS.text.groupBuying) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildText(sellType, DS.color.primary600),
+          DS.space.hTiny,
+          DS.image.mainIconXsm
+        ],
+      );
     } else {
       return const SizedBox();
     }
@@ -362,6 +371,8 @@ class StoreItemSellType extends StatelessWidget {
     } else if (sellType == DS.text.sellTypeQuantityLimit) {
       return _buildText(
           quantity.format(DS.text.voucherCountFormat), DS.color.background600);
+    } else if (sellType == DS.text.groupBuying) {
+      return _buildText(DS.text.ing, DS.color.background600);
     } else {
       return const SizedBox();
     }

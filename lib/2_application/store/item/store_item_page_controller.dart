@@ -1,9 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/failure.dart';
+import 'package:teameat/3_domain/order/i_order_repository.dart';
+import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/get.dart';
@@ -11,8 +14,12 @@ import 'package:teameat/99_util/get.dart';
 class StoreItemPageController extends PageController {
   final _storeItemRepo = Get.find<IStoreItemRepository>();
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
+  final _orderRepo = Get.find<IOrderRepository>();
 
   late final item = ItemDetail.empty().wrap(_loadStoreItemInfo);
+  late final groupBuyings =
+      <GroupBuying>[].wrap(_loadGroupBuyings, autoStartLoad: false);
+
   final _buyQuantity = 1.obs;
 
   int get buyQuantity => _buyQuantity.value;
@@ -34,7 +41,20 @@ class StoreItemPageController extends PageController {
   }
 
   void onBuyClickHandler() {
-    react.toItemPurchase({item.value: buyQuantity});
+    react.toItemPurchase({item.value: buyQuantity}, withOpenGroupBuying: false);
+  }
+
+  void onOpenGroupBuyingClickHandler() {
+    react.toItemPurchase({item.value: 1}, withOpenGroupBuying: true);
+  }
+
+  void onGroupBuyingSelfClickHandler() {
+    react.toItemPurchase({item.value: 2}, withOpenGroupBuying: false);
+  }
+
+  void onEnterGroupBuying(int groupBuyingId) {
+    react.toItemPurchase({item.value: 1},
+        withOpenGroupBuying: false, groupBuyingId: groupBuyingId);
   }
 
   Future<Either<Failure, ItemDetail>> _loadStoreItemInfo() async {
@@ -44,6 +64,19 @@ class StoreItemPageController extends PageController {
     }
 
     final ret = await _storeItemRepo.findById(itemId);
+    ret.fold((l) {
+      react.back(closeOverlays: true);
+      showError(l.desc);
+    }, (r) {
+      if (r.sellType == DS.text.groupBuying) {
+        groupBuyings.load();
+      }
+    });
+    return ret;
+  }
+
+  Future<Either<Failure, List<GroupBuying>>> _loadGroupBuyings() async {
+    final ret = await _orderRepo.findGroupBuy(itemId);
     ret.fold((l) {
       react.back(closeOverlays: true);
       showError(l.desc);

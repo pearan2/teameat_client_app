@@ -8,6 +8,7 @@ abstract class IImageSystem {
   Image get nearbyMeIcon;
 
   /// main icon (logo)
+  Image get mainIconXsm;
   Image get mainIconSm;
   Image get mainLargeIconNoBg;
   Image get mainMediumIconNoBg;

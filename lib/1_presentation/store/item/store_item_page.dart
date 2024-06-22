@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
@@ -15,6 +17,7 @@ import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/store_item_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
@@ -80,6 +83,10 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                           salesWillBeEndedAt: item.salesWillBeEndedAt,
                           quantity: item.quantity,
                         )),
+                    c.groupBuyings.obx((groupBuyings) => OpenedGroupBuyingList(
+                          groupBuyings: groupBuyings,
+                          onGroupBuyingClick: c.onEnterGroupBuying,
+                        )),
                     DS.space.vSmall,
                     c.item.obx((item) => StoreSimpleInfoRow(
                           location: item.store.location,
@@ -112,12 +119,168 @@ class StoreItemPage extends GetView<StoreItemPageController> {
           SliverToBoxAdapter(child: c.item.obx((i) => StoreLocation(i))),
           SliverToBoxAdapter(child: DS.space.vBase),
           // Todo 이 사이에 상품고시정보, 취소/환불 안내 들어가야함
-
           SliverToBoxAdapter(child: TEDivider.thin()),
           const SliverToBoxAdapter(child: ItemNotice()),
           SliverToBoxAdapter(child: DS.space.vLarge),
           SliverToBoxAdapter(child: DS.space.vLarge),
         ],
+      ),
+    );
+  }
+}
+
+class GroupBuyingListItem extends StatefulWidget {
+  final GroupBuying gb;
+  final void Function() onClick;
+
+  const GroupBuyingListItem(
+      {super.key, required this.gb, required this.onClick});
+
+  @override
+  State<GroupBuyingListItem> createState() => _GroupBuyingListItemState();
+}
+
+class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
+  int millis = 0;
+  Timer? timer;
+  late Duration diff;
+
+  void timerCallback() {
+    setState(() => millis += 100);
+  }
+
+  void init() {
+    millis = 0;
+    timer?.cancel();
+    diff = widget.gb.willBeClosedAt.difference(DateTime.now());
+    timer = Timer.periodic(
+        const Duration(milliseconds: 100), (timer) => timerCallback());
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  String calcRemainSaleDuration() {
+    final remainMillis = diff.inMilliseconds - millis;
+    if (remainMillis < 0) return '';
+
+    final remainSec = remainMillis ~/ 1000;
+    final intHour = remainSec ~/ 3600;
+    final intMin = remainSec % 3600 ~/ 60;
+    final intSec = remainSec % 60;
+
+    String hourString = intHour.toString();
+    if (hourString.length == 1) {
+      hourString = '0$hourString';
+    }
+    String minString = intMin.toString();
+    if (minString.length == 1) {
+      minString = '0$minString';
+    }
+    String secString = intSec.toString();
+    if (secString.length == 1) {
+      secString = '0$secString';
+    }
+    return '$hourString:$minString:$secString.${((remainMillis % 1000) / 100).floor()} ';
+  }
+
+  Widget _buildCreatorInfoRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TECacheImage(
+          src: widget.gb.creatorProfileImageUrl,
+          borderRadius: 300,
+          ratio: 1 / 1,
+          width: DS.space.medium,
+        ),
+        DS.space.hTiny,
+        Text("${widget.gb.creatorNickname.substring(0, 2)}*"),
+      ],
+    );
+  }
+
+  Widget _buildButton() {
+    final remainMillis = diff.inMilliseconds - millis;
+    if (remainMillis < 0) {
+      return Text(DS.text.groupBuyingTimeOver, style: DS.textStyle.caption1);
+    }
+    return TEonTap(
+      onTap: widget.onClick,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: DS.space.xTiny,
+          horizontal: DS.space.tiny,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: DS.color.point500, width: DS.space.xxTiny),
+          borderRadius: BorderRadius.circular(DS.space.medium),
+        ),
+        child: Text(DS.text.joinToGroupBuying),
+      ),
+    );
+  }
+
+  Widget _buildRemainTimeAndJoinButtonRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(calcRemainSaleDuration()),
+        DS.space.hTiny,
+        _buildButton(),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [_buildCreatorInfoRow(), _buildRemainTimeAndJoinButtonRow()],
+    );
+  }
+}
+
+class OpenedGroupBuyingList extends StatelessWidget {
+  final List<GroupBuying> groupBuyings;
+  final void Function(int) onGroupBuyingClick;
+  const OpenedGroupBuyingList({
+    super.key,
+    required this.groupBuyings,
+    required this.onGroupBuyingClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final borderSide = BorderSide(color: DS.color.background400);
+
+    if (groupBuyings.isEmpty) {
+      return const SizedBox();
+    }
+    return Container(
+      constraints: BoxConstraints(maxHeight: DS.space.large * 4),
+      decoration: BoxDecoration(
+        border: Border(right: borderSide, left: borderSide, bottom: borderSide),
+        borderRadius: BorderRadius.circular(DS.space.xxTiny),
+      ),
+      child: ListView.separated(
+        padding: EdgeInsets.all(DS.space.small),
+        shrinkWrap: true,
+        itemBuilder: (_, idx) => GroupBuyingListItem(
+            key: ValueKey(groupBuyings[idx].id),
+            gb: groupBuyings[idx],
+            onClick: () => onGroupBuyingClick(groupBuyings[idx].id)),
+        separatorBuilder: (_, __) => DS.space.vTiny,
+        itemCount: groupBuyings.length,
       ),
     );
   }
@@ -415,7 +578,35 @@ class StoreItemBuyBottomButton extends GetView<StoreItemPageController> {
   }
 }
 
-class StoreItemBuyButton extends StatelessWidget {
+class StoreItemGroupBuyButton extends GetView<StoreItemPageController> {
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const StoreItemGroupBuyButton({super.key, required this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: TESecondaryButton(
+          text: DS.text.buy2Lonely,
+          onTap: c.onGroupBuyingSelfClickHandler,
+        )),
+        DS.space.hTiny,
+        Expanded(
+            child: TEPrimaryButton(
+          text: DS.text.openGroupBuying,
+          onTap: c.onOpenGroupBuyingClickHandler,
+        ))
+      ],
+    );
+  }
+}
+
+class StoreItemBuyButton extends GetView<StoreItemPageController> {
+  @override
+  // ignore: overridden_fields
   final String tag;
   const StoreItemBuyButton({super.key, required this.tag});
 
@@ -423,13 +614,15 @@ class StoreItemBuyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-      child: TEPrimaryButton(
-        listenEventLoading: false,
-        onTap: () {
-          showTEBottomSheet(StoreItemBuyBottomButton(tag));
-        },
-        text: DS.text.buy,
-      ),
+      child: c.item.obx((item) => item.sellType == DS.text.groupBuying
+          ? StoreItemGroupBuyButton(tag: tag)
+          : TEPrimaryButton(
+              listenEventLoading: false,
+              onTap: () {
+                showTEBottomSheet(StoreItemBuyBottomButton(tag));
+              },
+              text: DS.text.buy,
+            )),
     );
   }
 }

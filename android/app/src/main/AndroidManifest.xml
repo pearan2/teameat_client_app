@@ -45,7 +45,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="link.teameat.shop"/>
-                <data android:scheme="https" android:host="link.teameat.shop"/>
+                <data android:scheme="https" />
             </intent-filter>
         </activity>
 

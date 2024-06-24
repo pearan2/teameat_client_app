@@ -63,6 +63,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ItemImageCarouselSliver(
                 imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),

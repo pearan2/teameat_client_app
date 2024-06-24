@@ -60,12 +60,13 @@ class StoreItemPage extends GetView<StoreItemPageController> {
       bottomFloatingButton: c.onApplyCuration != null
           ? StoreItemCurationButton(tag: tag)
           : StoreItemBuyButton(tag: tag),
-      body: CustomScrollView(
-        slivers: [
-          ItemImageCarouselSliver(
-              imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),
-          SliverToBoxAdapter(
-            child: AbsorbPointer(
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          children: [
+            ItemImageCarouselSliver(
+                imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),
+            AbsorbPointer(
               absorbing: c.absorbing,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -107,23 +108,21 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                 ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(child: DS.space.vMedium),
-          SliverToBoxAdapter(child: TEDivider.thick()),
-          SliverToBoxAdapter(
-              child: c.item.obx((i) => i.curation == null
-                  ? const SizedBox()
-                  : (CurationInfo(i.curation!)))),
-          SliverToBoxAdapter(
-              child: c.item.obx((i) => StoreItemUsageInfo(item: i))),
-          SliverToBoxAdapter(child: c.item.obx((i) => StoreLocation(i))),
-          SliverToBoxAdapter(child: DS.space.vBase),
-          // Todo 이 사이에 상품고시정보, 취소/환불 안내 들어가야함
-          SliverToBoxAdapter(child: TEDivider.thin()),
-          const SliverToBoxAdapter(child: ItemNotice()),
-          SliverToBoxAdapter(child: DS.space.vLarge),
-          SliverToBoxAdapter(child: DS.space.vLarge),
-        ],
+            DS.space.vMedium,
+            TEDivider.thick(),
+            c.item.obx((i) => i.curation == null
+                ? const SizedBox()
+                : (CurationInfo(i.curation!))),
+            c.item.obx((i) => StoreItemUsageInfo(item: i)),
+            c.item.obx((i) => StoreLocation(i)),
+            DS.space.vBase,
+            // Todo 이 사이에 상품고시정보, 취소/환불 안내 들어가야함
+            TEDivider.thin(),
+            const ItemNotice(),
+            DS.space.vLarge,
+            DS.space.vLarge,
+          ],
+        ),
       ),
     );
   }
@@ -171,7 +170,6 @@ class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
 
   String calcRemainSaleDuration() {
     final remainMillis = diff.inMilliseconds - millis;
-    if (remainMillis < 0) return '';
 
     final remainSec = remainMillis ~/ 1000;
     final intHour = remainSec ~/ 3600;
@@ -190,7 +188,7 @@ class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
     if (secString.length == 1) {
       secString = '0$secString';
     }
-    return '$hourString:$minString:$secString.${((remainMillis % 1000) / 100).floor()} ';
+    return '$hourString:$minString:$secString.${((remainMillis % 1000) / 100).floor()}';
   }
 
   Widget _buildCreatorInfoRow() {
@@ -216,17 +214,41 @@ class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
     }
     return TEonTap(
       onTap: widget.onClick,
+      isLoginRequired: true,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: DS.space.xTiny,
-          horizontal: DS.space.tiny,
-        ),
+        padding: EdgeInsets.all(DS.space.tiny),
         decoration: BoxDecoration(
-          border: Border.all(color: DS.color.point500, width: DS.space.xxTiny),
-          borderRadius: BorderRadius.circular(DS.space.medium),
+          color: DS.color.point500,
+          borderRadius: BorderRadius.circular(DS.space.xTiny),
         ),
-        child: Text(DS.text.joinToGroupBuying),
+        child: Text(
+          DS.text.joinToGroupBuying,
+          style: DS.textStyle.paragraph3.b000,
+        ),
       ),
+    );
+  }
+
+  Widget _remainSaleDurationColumn() {
+    final remainMillis = diff.inMilliseconds - millis;
+    if (remainMillis < 0) return const SizedBox();
+
+    final style = DS.textStyle.caption1.b700;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          children: [
+            Text(DS.text.onePerson, style: style.p500.bold),
+            DS.space.hXXTiny,
+            Text(DS.text.remain, style: style)
+          ],
+        ),
+        DS.space.vXXTiny,
+        Text(calcRemainSaleDuration(), style: style),
+      ],
     );
   }
 
@@ -234,7 +256,7 @@ class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(calcRemainSaleDuration()),
+        _remainSaleDurationColumn(),
         DS.space.hTiny,
         _buildButton(),
       ],
@@ -423,26 +445,17 @@ class ItemImageCarouselSliver extends GetView<StoreItemPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      leading: const SizedBox(),
-      backgroundColor: DS.color.background000,
-      surfaceTintColor: DS.color.background000,
-      snap: false,
-      floating: false,
-      expandedHeight: imageWidth / imageRatio,
-      flexibleSpace: c.item.obx((item) => TEImageCarousel(
-            width: imageWidth,
-            imageSrcs: item.imageUrls,
-            ratio: 3 / 4,
-            bottomLeft: Padding(
-              padding:
-                  EdgeInsets.only(left: DS.space.xSmall, bottom: DS.space.tiny),
-              child: item.curation == null
-                  ? const SizedBox()
-                  : DS.image.dangolPick,
-            ),
-          )),
-    );
+    return c.item.obx((item) => TEImageCarousel(
+          width: imageWidth,
+          imageSrcs: item.imageUrls,
+          ratio: 3 / 4,
+          bottomLeft: Padding(
+            padding:
+                EdgeInsets.only(left: DS.space.xSmall, bottom: DS.space.tiny),
+            child:
+                item.curation == null ? const SizedBox() : DS.image.dangolPick,
+          ),
+        ));
   }
 }
 
@@ -590,12 +603,14 @@ class StoreItemGroupBuyButton extends GetView<StoreItemPageController> {
       children: [
         Expanded(
             child: TESecondaryButton(
+          isLoginRequired: true,
           text: DS.text.buy2Lonely,
           onTap: c.onGroupBuyingSelfClickHandler,
         )),
         DS.space.hTiny,
         Expanded(
             child: TEPrimaryButton(
+          isLoginRequired: true,
           text: DS.text.openGroupBuying,
           onTap: c.onOpenGroupBuyingClickHandler,
         ))

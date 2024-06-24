@@ -53,14 +53,18 @@ class React extends IReact {
   }
 
   @override
-  void toPaymentOff(Order order, PaymentMethod paymentMethod) {
-    Get.offNamed('/payment',
-        arguments: {'order': order, 'paymentMethod': paymentMethod});
+  void toPaymentOff(Order order, PaymentMethod paymentMethod, int? itemId) {
+    Get.offNamed('/payment', arguments: {
+      'order': order,
+      'paymentMethod': paymentMethod,
+      'itemId': itemId
+    });
   }
 
   @override
-  void toPaymentResultOff(Map<String, String> result) {
-    Get.offNamed('/payment/result', arguments: {'result': result});
+  void toPaymentResultOff(Map<String, String> result, int? itemId) {
+    Get.offNamed('/payment/result',
+        arguments: {'result': result, 'itemId': itemId});
   }
 
   @override

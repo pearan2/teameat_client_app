@@ -644,4 +644,15 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get joinToGroupBuying => '참여하기';
+
+  @override
+  String get remain => '남음';
+  @override
+  String get onePerson => '1명';
+
+  @override
+  String get groupBuyingOpened => '2인 팀 구매가 오픈 되었어요!';
+
+  @override
+  String get backToItemPage => '상품 페이지로 돌아가기';
 }

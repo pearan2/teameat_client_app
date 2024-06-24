@@ -141,11 +141,11 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   void _onCameraIdle() {
-    print('onCameraIdle');
+    // print('onCameraIdle');
   }
 
   void _onCameraChanged() {
-    print('onCameraChanged');
+    // print('onCameraChanged');
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/core/payment/payment_result_page_controller.dart';
+import 'package:teameat/99_util/get.dart';
 
 class PaymentResultPage extends GetView<PaymentResultPageController> {
   const PaymentResultPage({super.key});
@@ -18,7 +19,7 @@ class PaymentResultPage extends GetView<PaymentResultPageController> {
           DS.image.mainIconWithText,
           DS.space.vXSmall,
           Text(
-            '${DS.text.paymentFinished}!',
+            '${c.itemId == null ? DS.text.paymentFinished : DS.text.groupBuyingOpened}!',
             style: DS.textStyle.paragraph1,
           ),
           DS.space.vTiny,
@@ -37,8 +38,16 @@ class PaymentResultPage extends GetView<PaymentResultPageController> {
           SizedBox(
             width: DS.space.large * 4,
             child: TEPrimaryButton(
-                onTap: controller.react.toVoucherOffAll,
-                text: DS.text.toVoucherInventory),
+              onTap: c.itemId == null
+                  ? controller.react.toVoucherOffAll
+                  : () {
+                      c.react.toHomeOffAll();
+                      c.react.toStoreItemDetail(c.itemId!);
+                    },
+              text: c.itemId == null
+                  ? DS.text.toVoucherInventory
+                  : DS.text.backToItemPage,
+            ),
           ),
         ],
       ),

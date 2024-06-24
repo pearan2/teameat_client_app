@@ -5,10 +5,15 @@ import 'package:teameat/3_domain/order/order.dart';
 class PaymentPageController extends PageController {
   final Order order;
   final PaymentMethod paymentMethod;
+  final int? itemId;
 
-  PaymentPageController({required this.order, required this.paymentMethod});
+  PaymentPageController({
+    required this.order,
+    required this.paymentMethod,
+    this.itemId,
+  });
 
   void paymentResultCallback(Map<String, String> result) {
-    react.toPaymentResultOff(result);
+    react.toPaymentResultOff(result, itemId);
   }
 }

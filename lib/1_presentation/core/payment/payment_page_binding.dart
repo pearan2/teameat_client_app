@@ -9,6 +9,11 @@ class PaymentPageBinding implements Bindings {
     final argMap = Get.arguments as Map<String, dynamic>;
     final order = argMap['order'] as Order;
     final paymentMethod = argMap['paymentMethod'] as PaymentMethod;
-    Get.put(PaymentPageController(order: order, paymentMethod: paymentMethod));
+    final itemId = argMap['itemId'] as int?;
+    Get.put(PaymentPageController(
+      order: order,
+      paymentMethod: paymentMethod,
+      itemId: itemId,
+    ));
   }
 }

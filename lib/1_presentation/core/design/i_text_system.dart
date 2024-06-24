@@ -210,4 +210,8 @@ abstract class ITextSystem {
   String get openGroupBuying;
   String get joinToGroupBuying;
   String get groupBuyingTimeOver;
+  String get remain;
+  String get onePerson;
+  String get groupBuyingOpened;
+  String get backToItemPage;
 }

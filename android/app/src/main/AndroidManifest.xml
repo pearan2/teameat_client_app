@@ -47,6 +47,15 @@
                 <data android:scheme="http" android:host="link.teameat.shop"/>
                 <data android:scheme="https" />
             </intent-filter>
+
+            <!-- kakao 용 URI Scheme -->
+            <intent-filter>
+	            <action android:name="android.intent.action.VIEW"/>
+	            <category android:name="android.intent.category.DEFAULT"/>
+	            <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="teameat" />
+            </intent-filter>
+
         </activity>
 
         <!-- flutter web auth  -->

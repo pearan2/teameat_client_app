@@ -158,7 +158,19 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
       isValid = widget.validate!(widget.controller.text);
     }
     widget.controller.focusNode.addListener(focusNodeListener);
-    widget.controller.validate = widget.validate;
+    widget.controller.validate = validate;
+  }
+
+  bool validate(String value) {
+    final trimmed = value.trim();
+    if (trimmed != value) {
+      return false;
+    }
+    if (widget.validate != null) {
+      return widget.validate!(trimmed);
+    } else {
+      return true;
+    }
   }
 
   void focusNodeListener() {
@@ -203,8 +215,18 @@ class _TECupertinoTextFieldState extends State<TECupertinoTextField> {
     if (widget.validate == null) {
       return const SizedBox();
     } else {
+      final trimmed = widget.controller.text.trim();
+
       late final String errorText;
-      if (widget.controller.text.isEmpty) {
+
+      if (trimmed != widget.controller.text) {
+        return Padding(
+          padding: EdgeInsets.only(top: DS.space.tiny),
+          child: Text(DS.text.noTrimmed, style: widget.errorTextStyle),
+        );
+      }
+
+      if (trimmed.isEmpty) {
         errorText = '';
       } else {
         if (isValid) {

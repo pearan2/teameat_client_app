@@ -59,14 +59,14 @@ class CommunityViewPage extends GetView<CommunityViewPageController> {
                 )),
             DS.space.vSmall,
             ////////////////////////////////
-            Text(DS.text.menuOneLineIntroduce),
+            Text(DS.text.oneLineIntroduce),
             c.curation.obx((curation) => Text(
                   curation.oneLineIntroduce,
                   style: DS.textStyle.paragraph2.semiBold,
                 )),
             DS.space.vSmall,
             ////////////////////////////////
-            Text(DS.text.menuOneLineIntroduce),
+            Text(DS.text.oneLineIntroduce),
             c.curation.obx((curation) => Text(
                   curation.introduce,
                   style: DS.textStyle.paragraph2Long.semiBold,

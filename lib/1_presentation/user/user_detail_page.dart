@@ -70,14 +70,23 @@ class UserDetailPage extends GetView<UserPageController> {
                       helperText: DS.text.userNickname,
                       hintText: 'teamEat',
                       validate: (value) {
-                        final trimmed = value.trim();
-                        if (trimmed.length != value.length) {
-                          return false;
-                        }
-                        return trimmed.length >= 2 && trimmed.length <= 8;
+                        return value.length >= 2 && value.length <= 8;
+                      },
+                      onEditingComplete:
+                          c.oneLineIntroduceController.requestFocus,
+                      errorText: DS.text.nicknameValidateFail,
+                    ),
+                    DS.space.vSmall,
+                    TECupertinoTextField(
+                      controller: c.oneLineIntroduceController,
+                      autoFocus: false,
+                      helperText: DS.text.oneLineIntroduce,
+                      validate: (value) {
+                        return value.isEmpty ||
+                            (value.length >= 2 && value.length <= 30);
                       },
                       onEditingComplete: c.bankNameController.requestFocus,
-                      errorText: DS.text.nicknameValidateFail,
+                      errorText: DS.text.memberOneLineIntroduceError,
                     ),
                     DS.space.vMedium,
                     Text(DS.text.bankAccountInfo,
@@ -90,12 +99,8 @@ class UserDetailPage extends GetView<UserPageController> {
                       helperText: DS.text.bankAccountBankName,
                       hintText: DS.text.bankAccountBankNameHint,
                       validate: (value) {
-                        final trimmed = value.trim();
-                        if (trimmed.length != value.length) {
-                          return false;
-                        }
-                        return (trimmed.length >= 2 && trimmed.length <= 10) ||
-                            trimmed.isEmpty;
+                        return (value.length >= 2 && value.length <= 10) ||
+                            value.isEmpty;
                       },
                       onEditingComplete: c.holderNameController.requestFocus,
                       errorText: DS.text.bankAccountBankNameValidateFail,
@@ -107,12 +112,8 @@ class UserDetailPage extends GetView<UserPageController> {
                       helperText: DS.text.bankAccountHolderName,
                       hintText: DS.text.bankAccountHolderNameHint,
                       validate: (value) {
-                        final trimmed = value.trim();
-                        if (trimmed.length != value.length) {
-                          return false;
-                        }
-                        return (trimmed.length >= 2 && trimmed.length <= 10) ||
-                            trimmed.isEmpty;
+                        return (value.length >= 2 && value.length <= 10) ||
+                            value.isEmpty;
                       },
                       onEditingComplete:
                           c.bankAccountNumberController.requestFocus,
@@ -125,12 +126,8 @@ class UserDetailPage extends GetView<UserPageController> {
                       helperText: DS.text.bankAccountNumber,
                       hintText: DS.text.bankAccountNumberHint,
                       validate: (value) {
-                        final trimmed = value.trim();
-                        if (trimmed.length != value.length) {
-                          return false;
-                        }
-                        return (trimmed.length >= 2 && trimmed.length <= 20) ||
-                            trimmed.isEmpty;
+                        return (value.length >= 2 && value.length <= 20) ||
+                            value.isEmpty;
                       },
                       errorText: DS.text.bankAccountNumberValidateFail,
                       keyboardType: TextInputType.number,

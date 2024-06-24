@@ -18,14 +18,16 @@ class BankAccount with _$BankAccount {
 
 @freezed
 class User with _$User {
-  const factory User(
-      {required String email,
-      required String socialLoginType,
-      required DateTime createdAt,
-      required String nickname,
-      required String profileImageUrl,
-      required String id,
-      BankAccount? bankAccount}) = _User;
+  const factory User({
+    required String email,
+    required String socialLoginType,
+    required DateTime createdAt,
+    required String nickname,
+    required String profileImageUrl,
+    required String id,
+    String? oneLineIntroduce,
+    BankAccount? bankAccount,
+  }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
@@ -48,6 +50,7 @@ class UserUpdate with _$UserUpdate {
     required String email,
     required String profileImageUrl,
     required String nickname,
+    String? oneLineIntroduce,
     BankAccount? bankAccount,
   }) = _UserUpdate;
 

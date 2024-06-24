@@ -44,6 +44,7 @@ class UserPageController extends PageController {
 
   final emailController = TECupertinoTextFieldController();
   final nicknameController = TECupertinoTextFieldController();
+  final oneLineIntroduceController = TECupertinoTextFieldController();
   final bankNameController = TECupertinoTextFieldController();
   final holderNameController = TECupertinoTextFieldController();
   final bankAccountNumberController = TECupertinoTextFieldController();
@@ -112,6 +113,7 @@ class UserPageController extends PageController {
     return ret.fold((l) => right(User.visitor()), (r) {
       emailController.text = r.email;
       nicknameController.text = r.nickname;
+      oneLineIntroduceController.text = r.oneLineIntroduce ?? '';
       bankAccountNumberController.text = r.bankAccount?.number ?? '';
       holderNameController.text = r.bankAccount?.holderName ?? '';
       bankNameController.text = r.bankAccount?.bankName ?? '';
@@ -138,6 +140,7 @@ class UserPageController extends PageController {
 
     if (!emailController.checkIsValid() ||
         !nicknameController.checkIsValid() ||
+        !oneLineIntroduceController.checkIsValid() ||
         !bankNameController.checkIsValid() ||
         !holderNameController.checkIsValid() ||
         !bankAccountNumberController.checkIsValid()) {
@@ -147,6 +150,7 @@ class UserPageController extends PageController {
 
     emailController.unFocus();
     nicknameController.unFocus();
+    oneLineIntroduceController.unFocus();
     bankNameController.unFocus();
     holderNameController.unFocus();
     bankAccountNumberController.unFocus();
@@ -177,6 +181,7 @@ class UserPageController extends PageController {
       email: emailController.text,
       profileImageUrl: profileImageUrl,
       nickname: nicknameController.text,
+      oneLineIntroduce: oneLineIntroduceController.text,
       bankAccount: bankAccount,
     ));
     ret.fold((l) => showError(l.desc), (r) {
@@ -191,6 +196,7 @@ class UserPageController extends PageController {
   void onClose() {
     emailController.dispose();
     nicknameController.dispose();
+    oneLineIntroduceController.dispose();
     bankNameController.dispose();
     holderNameController.dispose();
     bankAccountNumberController.dispose();

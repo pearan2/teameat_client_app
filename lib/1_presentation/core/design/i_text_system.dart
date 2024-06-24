@@ -179,7 +179,7 @@ abstract class ITextSystem {
   String get menuPriceError;
   String get menuPriceHint;
   String get koreanWon;
-  String get menuOneLineIntroduce;
+  String get oneLineIntroduce;
   String get menuOneLineIntroduceError;
   String get pleaseInputMenuOneLineIntroduce;
   String get etcInfo;
@@ -214,4 +214,6 @@ abstract class ITextSystem {
   String get onePerson;
   String get groupBuyingOpened;
   String get backToItemPage;
+  String get noTrimmed;
+  String get memberOneLineIntroduceError;
 }

@@ -96,7 +96,7 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
                 TECupertinoTextField(
                   isEssential: true,
                   autoFocus: false,
-                  helperText: DS.text.menuOneLineIntroduce,
+                  helperText: DS.text.oneLineIntroduce,
                   hintText: DS.text.pleaseInputMenuOneLineIntroduce,
                   maxLines: 1,
                   controller: c.menuOneLineIntroduceController,

@@ -386,10 +386,10 @@ class DefaultTextSystem extends ITextSystem {
   String get userNickname => '닉네임';
 
   @override
-  String get emailValidateFail => '이메일 형식이 아닙니다';
+  String get emailValidateFail => '이메일 형식이 아니에요';
 
   @override
-  String get nicknameValidateFail => '닉네임은 2자 이상, 8자 이하이고 앞뒤 공백이 없어야 합니다';
+  String get nicknameValidateFail => '닉네임은 2자 이상, 8자 이하여야 해요';
 
   @override
   String get userEmail => '이메일';
@@ -459,16 +459,13 @@ class DefaultTextSystem extends ITextSystem {
   String get bankAccountInfo => '계좌정보';
 
   @override
-  String get bankAccountBankNameValidateFail =>
-      '은행명은 2자 이상, 10자 이하이고 앞뒤 공백이 없어야 합니다';
+  String get bankAccountBankNameValidateFail => '은행명은 2자 이상, 10자 이하여야 해요';
 
   @override
-  String get bankAccountHolderNameValidateFail =>
-      '예금주명은 2자 이상, 10자 이하이고 앞뒤 공백이 없어야 합니다';
+  String get bankAccountHolderNameValidateFail => '예금주명은 2자 이상, 10자 이하여야 해요';
 
   @override
-  String get bankAccountNumberValidateFail =>
-      '계좌번호는 2자 이상, 20자 이하이고 앞뒤 공백이 없어야 합니다';
+  String get bankAccountNumberValidateFail => '계좌번호는 2자 이상, 20자 이하여야 해요';
 
   @override
   String get bankAccountBankNameHint => '신한은행';
@@ -480,7 +477,7 @@ class DefaultTextSystem extends ITextSystem {
   String get bankAccountNumberHint => '64204337829';
 
   @override
-  String get bankAccountInfoValidateFail => '계좌정보는 모두 작성되거나 모두 비어있어야 합니다';
+  String get bankAccountInfoValidateFail => '계좌정보는 모두 작성되거나 모두 비어있어야 해요';
 
   @override
   String get localStoreNotFound => '검색 결과가 없어요';
@@ -542,7 +539,7 @@ class DefaultTextSystem extends ITextSystem {
   String get koreanWon => '원';
 
   @override
-  String get menuOneLineIntroduce => '한줄 소개';
+  String get oneLineIntroduce => '한줄 소개';
 
   @override
   String get menuPrice => '메뉴 가격';
@@ -557,16 +554,16 @@ class DefaultTextSystem extends ITextSystem {
   String get pleaseInputMenuOneLineIntroduce => '메뉴를 한 줄로 소개해 주세요';
 
   @override
-  String get etcInfoError => '기타 설명은 1자 이상, 1024자 이하 입니다';
+  String get etcInfoError => '기타 설명은 1자 이상, 1024자 이하여야 해요';
 
   @override
-  String get menuNameError => '메뉴명은 1자 이상, 30자 이하 입니다';
+  String get menuNameError => '메뉴명은 1자 이상, 30자 이하여야 해요';
 
   @override
-  String get menuOneLineIntroduceError => '한줄 소개는 1자 이상, 100자 이하 입니다';
+  String get menuOneLineIntroduceError => '한줄 소개는 1자 이상, 100자 이하여야 해요';
 
   @override
-  String get menuPriceError => '가격은 1000원 이상, 100,000원 이하 입니다';
+  String get menuPriceError => '가격은 1000원 이상, 100,000원 이하여야 해요';
 
   @override
   String get storeIsEnteredText => '팀잇에 입점해 있는 가게에요! 사장님께 즉시 전달될 수 있어요 ;)';
@@ -655,4 +652,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get backToItemPage => '상품 페이지로 돌아가기';
+
+  @override
+  String get noTrimmed => '앞, 뒤 공백이 없어야 해요';
+
+  @override
+  String get memberOneLineIntroduceError => '한줄 소개는 2자 이상, 30자 이하여야 해요';
 }

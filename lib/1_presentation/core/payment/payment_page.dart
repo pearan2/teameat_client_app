@@ -33,7 +33,7 @@ class PaymentPage extends GetView<PaymentPageController> {
         name: controller.order.name, // 주문명
         merchantUid: controller.order.orderId, // 주문번호
         amount: controller.order.totalAmount, // 결제금액
-        buyerName: controller.order.memberEmail, // 주문자 이메일
+        buyerName: controller.order.memberSocialId, // 주문자 소셜 id
         buyerTel: controller.order.memberSocialId, // 구매자 연락처
         buyerEmail: controller.order.memberEmail, // 구매자 이메일
         appScheme: 'teameatiospaymentappscheme', // 앱 URL scheme (ios)

@@ -87,6 +87,13 @@ class VoucherPageController extends PageController {
     super.onReady();
   }
 
+  Future<void> refreshData() async {
+    _loadNumberOfRemainVouchers();
+    pagingController.error = '';
+    pagingController.refresh();
+    pagingController.error = null;
+  }
+
   @override
   Future<bool> initialLoad() async {
     pagingController.itemList = [];

@@ -42,6 +42,22 @@ class UserRepository implements IUserRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> updateToken(String token) async {
+    try {
+      const path = 'api/member/message-token';
+      final ret = await _conn.put(path, {'token': token});
+      return ret.fold((l) => left(l), (r) {
+        final user = User.fromJson(r as JsonMap);
+        _cached = user;
+        return right(unit);
+      });
+    } catch (e) {
+      return left(const Failure.updateMeFail(
+          '메시지 토큰을 업데이트 하는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> deleteMe() async {
     try {
       const path = 'api/member/me';

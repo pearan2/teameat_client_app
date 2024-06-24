@@ -9,6 +9,8 @@ abstract class IUserRepository {
 
   Future<Either<Failure, User>> updateMe(UserUpdate update);
 
+  Future<Either<Failure, Unit>> updateToken(String token);
+
   Future<Either<Failure, List<int>>> getMyStoreItemLikes();
 
   Future<Either<Failure, List<int>>> getMyStoreLikes();

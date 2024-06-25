@@ -33,7 +33,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>teameatapplinkscheme</string>
+				<string>teameat</string>
 			</array>
 		</dict>
 	</array>

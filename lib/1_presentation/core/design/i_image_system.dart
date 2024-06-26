@@ -56,6 +56,7 @@ abstract class IImageSystem {
   SvgPicture get timeLimit;
   SvgPicture get quantityLimit;
 
-  /// banner
+  /// banner & guide
   Image get communityBanner1;
+  Image get curationGuide;
 }

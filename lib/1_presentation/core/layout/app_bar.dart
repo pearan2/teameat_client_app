@@ -12,6 +12,8 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? homeOnPressed;
   final String? title;
   final Widget? titleWidget;
+  final Color? backgroundColor;
+  final Color? leadingIconColor;
 
   TEAppBar({
     super.key,
@@ -20,6 +22,8 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleWidget,
     this.homeOnPressed,
     this.action,
+    this.backgroundColor,
+    this.leadingIconColor,
     double? height,
   })  : assert(!(action != null && homeOnPressed != null)),
         assert(!(title != null && titleWidget != null)),
@@ -63,14 +67,14 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return IconButton(
           onPressed: leadingIconOnPressed,
-          icon: const Icon(Icons.arrow_back_ios));
+          icon: Icon(Icons.arrow_back_ios, color: leadingIconColor));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: DS.color.background000,
+      backgroundColor: backgroundColor ?? DS.color.background000,
       surfaceTintColor: DS.color.background000,
       leading: _buildLeading(),
       actions: _buildActions(),

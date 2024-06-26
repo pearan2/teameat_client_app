@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
@@ -84,13 +85,22 @@ class BannerSliver extends StatelessWidget {
       snap: true,
       floating: true,
       expandedHeight: DS.space.large * 3,
-      flexibleSpace: ClipRRect(
-        borderRadius: BorderRadius.circular(DS.space.xTiny),
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          color: DS.color.primary600,
-          child: DS.image.communityBanner1,
+      flexibleSpace: TEonTap(
+        onTap: () {
+          Get.to(
+            const CurationGuidePage(),
+            duration: const Duration(milliseconds: 200),
+            transition: Transition.rightToLeft,
+          );
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(DS.space.xTiny),
+          child: Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            color: DS.color.primary600,
+            child: DS.image.communityBanner1,
+          ),
         ),
       ),
     );

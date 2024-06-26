@@ -11,6 +11,10 @@ class LoginPageController extends PageController {
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
   final _storeLikeController = Get.find<LikeController<IStoreRepository>>();
 
+  final _isLoading = false.obs;
+
+  bool get isLoading => _isLoading.value;
+
   Future<void> loginWithKakao() async {
     return _loginWith('KAKAO');
   }
@@ -20,9 +24,9 @@ class LoginPageController extends PageController {
   }
 
   Future<void> _loginWith(String socialLoginType) async {
-    react.isEventLoading = true;
+    _isLoading.value = true;
     final ret = await _authService.getLoginUrl(socialLoginType);
-    react.isEventLoading = false;
+    _isLoading.value = false;
     if (ret.isLeft()) return;
     final loginUrl = ret.getOrElse(() => '');
     try {

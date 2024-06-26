@@ -6,13 +6,15 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/core/auth/login_page_controller.dart';
+import 'package:teameat/99_util/get.dart';
 
 class LoginPage extends GetView<LoginPageController> {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
+    return Obx(() => TEScaffold(
+        loading: c.isLoading,
         appBar: TEAppBar(
             leadingIconOnPressed: controller.react.back, title: DS.text.login),
         body: Padding(
@@ -46,7 +48,7 @@ class LoginPage extends GetView<LoginPageController> {
               )
             ],
           ),
-        ));
+        )));
   }
 }
 

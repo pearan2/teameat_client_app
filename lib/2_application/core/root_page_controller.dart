@@ -1,3 +1,4 @@
+import 'package:app_links/app_links.dart';
 import 'package:get/get.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
@@ -32,6 +33,19 @@ class RootPageController extends PageController {
       return true;
     };
     react.toHomeOffAll();
+
+    final appLinks = AppLinks(); // AppLinks is singleton
+
+    appLinks.uriLinkStream.listen((uri) async {
+      final params = uri.queryParameters;
+      if (uri.path.contains('/item') &&
+          params['id'] != null &&
+          int.tryParse(params['id']!) is int) {
+        // Todo 우선은 1초로 해둠.
+        Future.delayed(const Duration(seconds: 1),
+            () => react.toStoreItemDetail(int.parse(params['id']!)));
+      }
+    });
   }
 
   // message callback setting

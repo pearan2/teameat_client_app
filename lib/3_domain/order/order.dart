@@ -25,6 +25,8 @@ class Order with _$Order {
     required final String memberEmail,
     required final String memberSocialId,
     required final int totalAmount,
+    required final String userCode,
+    required final String pg,
   }) = _Order;
 
   factory Order.fromJson(Map<String, Object?> json) => _$OrderFromJson(json);

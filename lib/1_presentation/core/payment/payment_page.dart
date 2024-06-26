@@ -6,6 +6,7 @@ import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/2_application/core/payment/payment_page_controller.dart';
+import 'package:teameat/99_util/get.dart';
 
 class PaymentPage extends GetView<PaymentPageController> {
   const PaymentPage({super.key});
@@ -26,9 +27,9 @@ class PaymentPage extends GetView<PaymentPageController> {
         ),
       ),
 
-      userCode: 'imp66624150', // 고객사 식별 코드
+      userCode: c.order.userCode, // 고객사 식별 코드
       data: PaymentData(
-        pg: 'welcome.welcometst', // PG사 (웰컴페이먼츠로 변경) '{PG_PROVIDER}.{MID}'
+        pg: c.order.pg, // PG사 (웰컴페이먼츠로 변경) '{PG_PROVIDER}.{MID}'
         payMethod: controller.paymentMethod.value, // 결제수단
         name: controller.order.name, // 주문명
         merchantUid: controller.order.orderId, // 주문번호

@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
@@ -16,6 +18,8 @@ class StoreItemPageController extends PageController {
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
   final _orderRepo = Get.find<IOrderRepository>();
 
+  final _isLoading = false.obs;
+
   late final item = ItemDetail.empty().wrap(_loadStoreItemInfo);
   late final groupBuyings =
       <GroupBuying>[].wrap(_loadGroupBuyings, autoStartLoad: false);
@@ -24,6 +28,7 @@ class StoreItemPageController extends PageController {
 
   int get buyQuantity => _buyQuantity.value;
   int get totalPrice => buyQuantity * item.value.price;
+  bool get isLoading => _isLoading.value;
 
   late final absorbing = itemDetail != null;
 
@@ -55,6 +60,12 @@ class StoreItemPageController extends PageController {
   void onEnterGroupBuying(int groupBuyingId) {
     react.toItemPurchase({item.value: 1},
         withOpenGroupBuying: false, groupBuyingId: groupBuyingId);
+  }
+
+  Future<void> onShareClickHandler() async {
+    _isLoading.value = true;
+    await Share.shareUri(Uri.https(Environment().linkBaseUrl, '/item/$itemId'));
+    _isLoading.value = false;
   }
 
   Future<Either<Failure, ItemDetail>> _loadStoreItemInfo() async {

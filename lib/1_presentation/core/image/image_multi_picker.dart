@@ -9,6 +9,7 @@ import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 
 class TEMultiPhotoPicker extends StatefulWidget {
   final Widget loading;
@@ -104,6 +105,7 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
   }
 
   Future<void> finish() async {
+    setState(() => isLoading = true);
     final selectedMedia = <AssetEntity>[];
     for (final idx in selectedIndexs) {
       selectedMedia.add(media[idx]);
@@ -162,7 +164,22 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
   @override
   Widget build(BuildContext context) {
     if (!isAuth) return Center(child: widget.noPermission);
-    if (isLoading) return Center(child: widget.loading);
+    if (isLoading) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '이미지 처리 중 입니다\n잠시만 기다려주세요',
+              style: DS.textStyle.paragraph3.bold,
+              textAlign: TextAlign.center,
+            ),
+            DS.space.vSmall,
+            widget.loading,
+          ],
+        ),
+      );
+    }
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -278,6 +295,8 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
 Future<List<File>?> showMultiPhotoPickerBottomSheet(
     {int? limit, double? height, int? widthRatio, int? heightRatio}) async {
   return Get.bottomSheet<List<File>>(
+    isDismissible: false,
+    enableDrag: false,
     isScrollControlled: true,
     Container(
       height: height,

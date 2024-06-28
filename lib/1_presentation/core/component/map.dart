@@ -79,7 +79,9 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<Widget> _makeMakerIconWidget(StorePoint store) async {
+    if (isDisposed) return const SizedBox();
     await precacheImage(NetworkImage(store.profileImageUrl), context);
+    if (isDisposed) return const SizedBox();
     await precacheImage(
         const AssetImage('assets/image/map_marker.png'), context);
     return Stack(
@@ -113,16 +115,18 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<NMarker> _makeMarker(Widget child, StorePoint store) async {
-    final overlayImage = await NOverlayImage.fromWidget(
-      widget: Container(child: child),
-      size: Size(DS.space.medium, DS.space.large),
-      context: context,
-    );
     final marker = NMarker(
       id: store.id.toString(),
       position: store.location.toNLatLng(),
     );
-    marker.setIcon(overlayImage);
+    if (!isDisposed) {
+      final overlayImage = await NOverlayImage.fromWidget(
+        widget: Container(child: child),
+        size: Size(DS.space.medium, DS.space.large),
+        context: context,
+      );
+      marker.setIcon(overlayImage);
+    }
     marker.setOnTapListener(
         (m) => widget.onStoreSelected?.call(int.parse(m.info.id)));
     return marker;

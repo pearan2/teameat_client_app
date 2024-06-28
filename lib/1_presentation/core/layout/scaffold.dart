@@ -148,7 +148,10 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
       curve: Curves.easeIn,
       opacity: visible ? 1 : 0,
       child: TEonTap(
-        onTap: () => widget.onFloatingButtonClick?.call(),
+        onTap: () {
+          if (!visible) return;
+          widget.onFloatingButtonClick?.call();
+        },
         child: Container(
           width: DS.space.large,
           height: DS.space.large,

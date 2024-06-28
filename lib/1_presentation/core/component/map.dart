@@ -57,6 +57,7 @@ class TEStoreMap extends StatefulWidget {
 class _TEStoreMapState extends State<TEStoreMap> {
   late final NaverMapController controller;
   bool isInit = false;
+  bool isDisposed = false;
 
   late bool isLoading = widget.isLoading;
 
@@ -128,15 +129,17 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<void> _addAllStoreMarkers() async {
-    if (!isInit) {
+    if (!isInit || isDisposed) {
       return;
     }
     final markers = await Future.wait(widget.stores
         .map((s) async => _makeMarker(await _makeMakerIconWidget(s), s)));
+    if (isDisposed) return;
     _addAllMarkers(markers.toSet());
   }
 
-  Future<void> _addAllMarkers(Set<NMarker> markers) {
+  Future<void> _addAllMarkers(Set<NMarker> markers) async {
+    if (isDisposed) return;
     return controller.addOverlayAll(markers);
   }
 
@@ -153,6 +156,7 @@ class _TEStoreMapState extends State<TEStoreMap> {
     if (isInit) {
       controller.dispose();
     }
+    isDisposed = true;
     super.dispose();
   }
 

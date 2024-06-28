@@ -9,6 +9,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
+import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 
 class UserPage extends GetView<UserPageController> {
@@ -72,15 +73,7 @@ class UserPage extends GetView<UserPageController> {
                       borderRadius: DS.space.tiny,
                     )),
                 DS.space.vSmall,
-                const UserPageDivider(),
-                TERowButton(
-                  onTap: controller.onLogOut,
-                  text: DS.text.logOut,
-                ),
-                TERowButton(
-                  onTap: controller.onSignOut,
-                  text: DS.text.signOut,
-                ),
+                const LogOutSignOutColumn(),
               ],
             ),
           ),
@@ -169,5 +162,33 @@ class RecentSeeItemsNotFound extends GetView<UserPageController> {
         ],
       ),
     );
+  }
+}
+
+class LogOutSignOutColumn extends GetView<UserPageController> {
+  const LogOutSignOutColumn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return c.user.obx((user) {
+      if (user == User.visitor()) {
+        return const SizedBox();
+      } else {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const UserPageDivider(),
+            TERowButton(
+              onTap: controller.onLogOut,
+              text: DS.text.logOut,
+            ),
+            TERowButton(
+              onTap: controller.onSignOut,
+              text: DS.text.signOut,
+            ),
+          ],
+        );
+      }
+    });
   }
 }

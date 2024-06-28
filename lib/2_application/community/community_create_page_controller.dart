@@ -152,6 +152,10 @@ class CommunityCreatePageController extends PageController {
         !menuIntroduceController.checkIsValid()) {
       return false;
     }
+    menuNameController.unFocus();
+    menuPriceController.unFocus();
+    menuOneLineIntroduceController.unFocus();
+    menuIntroduceController.unFocus();
     return true;
   }
 

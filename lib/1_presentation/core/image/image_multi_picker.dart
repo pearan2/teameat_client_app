@@ -118,6 +118,10 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
     widget.photoSelectHandler(files);
   }
 
+  void cancel() {
+    widget.photoSelectHandler([]);
+  }
+
   Future<File?> _loadLastFile() async {
     final idx = selectedIndexs.last;
     final selectedMedia = media[idx];
@@ -216,13 +220,26 @@ class _TEMultiPhotoPickerState extends State<TEMultiPhotoPicker> {
           padding: const EdgeInsets.all(16.0),
           child: Text(_getSelectedIndexLabel(), style: DS.textStyle.paragraph3),
         ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: finish,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('완료', style: DS.textStyle.paragraph3),
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: cancel,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text('취소', style: DS.textStyle.paragraph3),
+              ),
+            ),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: finish,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text('완료', style: DS.textStyle.paragraph3),
+              ),
+            ),
+          ],
         ),
       ],
     );

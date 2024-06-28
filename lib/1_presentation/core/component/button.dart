@@ -752,17 +752,17 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 
   Future<void> _cropImage(int idx) async {
-    final ret = await resize(
-        ImageResizeParameter(selectedImages[idx], ratio: imageRatio));
-    changeState(() {
-      final nextLoadings = [...loadings];
-      nextLoadings[idx] = false;
-      final nextCroppedImages = [...croppedImages];
-      nextCroppedImages[idx] = ret;
-      loadings = nextLoadings;
-      croppedImages = nextCroppedImages;
-      _tryInvokeCallback();
-    });
+    resize(
+        ImageResizeParameter(selectedImages[idx], ratio: imageRatio),
+        (ret) => changeState(() {
+              final nextLoadings = [...loadings];
+              nextLoadings[idx] = false;
+              final nextCroppedImages = [...croppedImages];
+              nextCroppedImages[idx] = ret;
+              loadings = nextLoadings;
+              croppedImages = nextCroppedImages;
+              _tryInvokeCallback();
+            }));
   }
 
   Future<void> _onAddImage() async {

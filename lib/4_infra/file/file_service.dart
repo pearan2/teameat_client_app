@@ -14,7 +14,7 @@ class FileService implements IFileService {
 
   @override
   Future<Either<Failure, String>> uploadImageFile(File file) async {
-    final resizeResult = await resize(ImageResizeParameter(file));
+    final resizeResult = await resizeAsync(ImageResizeParameter(file));
     return uploadImage(resizeResult);
   }
 

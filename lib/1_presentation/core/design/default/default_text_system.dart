@@ -518,7 +518,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get canNotAddMorePictures =>
-      '더 이상 사진을 추가할 수 없어요. 사진을 더블 클릭 하면 삭제 하실 수 있어요! 삭제 후 추가 해주세요.';
+      '더 이상 사진을 추가할 수 없어요. 사진을 클릭 하면 삭제 하실 수 있어요! 삭제 후 추가 해주세요.';
 
   @override
   String get orderId => '주문번호';

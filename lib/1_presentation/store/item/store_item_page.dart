@@ -240,7 +240,7 @@ class _GroupBuyingListItemState extends State<GroupBuyingListItem> {
       children: [
         Row(
           children: [
-            Text(DS.text.onePerson, style: style.p500.bold),
+            Text(DS.text.onePerson, style: style.point.bold),
             DS.space.hXXTiny,
             Text(DS.text.remain, style: style)
           ],

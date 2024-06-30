@@ -17,7 +17,9 @@ extension TETextStyleExtension on TextStyle {
 
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
 
-  TextStyle get p500 => copyWith(color: DS.color.point500);
+  TextStyle get point => copyWith(color: DS.color.point500);
+
+  TextStyle get p500 => copyWith(color: DS.color.primary500);
 
   TextStyle get p600 => copyWith(color: DS.color.primary600);
 

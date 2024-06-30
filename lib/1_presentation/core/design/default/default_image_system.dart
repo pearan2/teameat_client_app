@@ -270,9 +270,9 @@ class DefaultImageSystem extends IImageSystem {
   @override
   Image get communityBanner1 => Image.asset(
         'assets/image/banner/community_banner_1.png',
-        height: 164,
-        width: 357,
-        fit: BoxFit.cover,
+        height: 330,
+        width: 1536,
+        fit: BoxFit.fitHeight,
       );
 
   @override

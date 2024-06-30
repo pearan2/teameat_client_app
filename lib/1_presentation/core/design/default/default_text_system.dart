@@ -298,7 +298,7 @@ class DefaultTextSystem extends ITextSystem {
   String get willBeExpiredAfterDayFormat => '구매일로 부터 #일';
 
   @override
-  String get willBeExpiredAtFormat => 'yyyy년 M월 d일 hh시 mm분';
+  String get willBeExpiredAtFormat => 'yyyy년 M월 d일 HH시 mm분';
 
   @override
   String get weight => '중량';

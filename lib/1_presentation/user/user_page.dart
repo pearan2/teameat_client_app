@@ -24,6 +24,7 @@ class UserPage extends GetView<UserPageController> {
         body: Padding(
           padding: EdgeInsets.only(top: topAreaHeight),
           child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

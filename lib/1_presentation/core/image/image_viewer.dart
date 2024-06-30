@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +106,9 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
   final imageWidth = DS.space.large + DS.space.base;
   late final imageHeight = imageWidth / widget.ratio;
 
+  final scrollController = ScrollController();
   late var imageSrcs = [...widget.imageSrcs];
+  final imageBoxWidth = (DS.space.tiny * 2 + DS.space.large + DS.space.base);
   late int nowIdx = widget.imageSrcs.indexOf(widget.nowImageSrc);
 
   bool isInitialized = false;
@@ -173,14 +176,27 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
     super.dispose();
   }
 
+  void moveScroll() {
+    final nowIdx = tabController.index;
+    scrollController.animateTo(
+      (nowIdx - 2) * imageBoxWidth,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.bounceInOut,
+    );
+  }
+
+  void ensureVisible() {}
+
   void _tabListener() {
     setState(() {
       nowIdx = tabController.index;
+      ensureVisible();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, moveScroll);
     return Container(
       padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
       color: Colors.black,
@@ -217,8 +233,9 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
               maxWidth: Get.mediaQuery.size.width,
               child: widget.onRemove == null
                   ? ListView.builder(
+                      controller: scrollController,
                       shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       padding:
                           EdgeInsets.symmetric(horizontal: DS.space.xSmall),
                       scrollDirection: Axis.horizontal,
@@ -226,8 +243,9 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
                       itemCount: imageSrcs.length,
                     )
                   : ReorderableListView.builder(
+                      scrollController: scrollController,
                       shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       padding:
                           EdgeInsets.symmetric(horizontal: DS.space.xSmall),
                       scrollDirection: Axis.horizontal,

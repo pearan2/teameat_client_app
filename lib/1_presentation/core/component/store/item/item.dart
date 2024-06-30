@@ -754,6 +754,7 @@ class StoreItemList extends GetView<IReact> {
       return notFound!;
     }
     return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.only(left: AppWidget.horizontalPadding),
       scrollDirection: Axis.horizontal,
       child: Row(

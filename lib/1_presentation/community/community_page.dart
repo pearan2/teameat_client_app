@@ -299,7 +299,7 @@ class CurationRewardRow extends StatelessWidget {
 }
 
 class CurationCard extends GetView<CommunityPageController> {
-  static const imageSize = 120.0;
+  static const imageSize = 128.0;
   final CurationSimple curation;
 
   const CurationCard({super.key, required this.curation});

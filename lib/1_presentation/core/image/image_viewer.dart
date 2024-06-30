@@ -177,6 +177,7 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
   }
 
   void moveScroll() {
+    if (!mounted) return;
     final nowIdx = tabController.index;
     scrollController.animateTo(
       (nowIdx - 2) * imageBoxWidth,

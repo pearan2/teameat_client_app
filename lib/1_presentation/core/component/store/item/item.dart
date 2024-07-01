@@ -372,6 +372,9 @@ class StoreItemSellType extends StatelessWidget {
       return _buildText(
           quantity.format(DS.text.voucherCountFormat), DS.color.background600);
     } else if (sellType == DS.text.groupBuying) {
+      if (quantity <= 0 || salesWillBeEndedAt.isBefore(DateTime.now())) {
+        return _buildText(DS.text.saleEnd, DS.color.background600);
+      }
       return _buildText(DS.text.ing, DS.color.background600);
     } else {
       return const SizedBox();

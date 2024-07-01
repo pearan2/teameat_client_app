@@ -13,7 +13,7 @@ abstract class IImageSystem {
   Image get mainLargeIconNoBg;
   Image get mainMediumIconNoBg;
 
-  ///
+  ///fd
   Image get kakaoLogo;
   Image get appleLogo;
   SvgPicture get iconHome;

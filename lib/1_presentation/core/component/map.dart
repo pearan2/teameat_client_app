@@ -57,7 +57,6 @@ class TEStoreMap extends StatefulWidget {
 class _TEStoreMapState extends State<TEStoreMap> {
   late final NaverMapController controller;
   bool isInit = false;
-  bool isDisposed = false;
 
   late bool isLoading = widget.isLoading;
 
@@ -79,9 +78,9 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<Widget> _makeMakerIconWidget(StorePoint store) async {
-    if (isDisposed) return const SizedBox();
+    if (!mounted) return const SizedBox();
     await precacheImage(NetworkImage(store.profileImageUrl), context);
-    if (isDisposed) return const SizedBox();
+    if (!mounted) return const SizedBox();
     await precacheImage(
         const AssetImage('assets/image/map_marker.png'), context);
     return Stack(
@@ -119,7 +118,7 @@ class _TEStoreMapState extends State<TEStoreMap> {
       id: store.id.toString(),
       position: store.location.toNLatLng(),
     );
-    if (!isDisposed) {
+    if (mounted) {
       final overlayImage = await NOverlayImage.fromWidget(
         widget: Container(child: child),
         size: Size(DS.space.medium, DS.space.large),
@@ -133,17 +132,17 @@ class _TEStoreMapState extends State<TEStoreMap> {
   }
 
   Future<void> _addAllStoreMarkers() async {
-    if (!isInit || isDisposed) {
+    if (!isInit || !mounted) {
       return;
     }
     final markers = await Future.wait(widget.stores
         .map((s) async => _makeMarker(await _makeMakerIconWidget(s), s)));
-    if (isDisposed) return;
+    if (!mounted) return;
     _addAllMarkers(markers.toSet());
   }
 
   Future<void> _addAllMarkers(Set<NMarker> markers) async {
-    if (isDisposed) return;
+    if (!mounted) return;
     return controller.addOverlayAll(markers);
   }
 
@@ -160,7 +159,6 @@ class _TEStoreMapState extends State<TEStoreMap> {
     if (isInit) {
       controller.dispose();
     }
-    isDisposed = true;
     super.dispose();
   }
 

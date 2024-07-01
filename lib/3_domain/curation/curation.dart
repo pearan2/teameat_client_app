@@ -11,23 +11,33 @@ part 'curation.g.dart';
 
 extension CurationExtension on CurationSimple {
   String getStatusText() {
-    if (isSellFinished == null) {
+    if (isSellFinished == null || isInSell == null) {
       return DS.text.applicationCompleted;
-    } else if (!isSellFinished!) {
-      return DS.text.inSale;
-    } else {
+    }
+    if (isSellFinished!) {
       return DS.text.saleFinished;
     }
+    if (isInSell!) {
+      return DS.text.inSale;
+    }
+
+    return DS.text.applicationCompleted;
   }
 
   Color getStatusColor() {
-    if (isSellFinished == null) {
+    if (isSellFinished == null || isInSell == null) {
       return DS.color.background500;
-    } else if (!isSellFinished!) {
-      return DS.color.primary600;
-    } else {
+    }
+
+    if (isSellFinished!) {
       return DS.color.secondary500;
     }
+
+    if (isInSell!) {
+      return DS.color.primary600;
+    }
+
+    return DS.color.background500;
   }
 }
 
@@ -70,6 +80,7 @@ class CurationSimple with _$CurationSimple {
     required final String storeName,
     ItemSimple? item,
     bool? isSellFinished,
+    bool? isInSell,
     int? itemSellTotalAmount,
   }) = _CurationSimple;
 
@@ -86,6 +97,7 @@ class CurationSimple with _$CurationSimple {
         storeName: detail.storeName,
         item: detail.item,
         isSellFinished: detail.isSellFinished,
+        isInSell: detail.isInSell,
         itemSellTotalAmount: detail.itemSellTotalAmount,
       );
 }
@@ -106,6 +118,7 @@ class CurationDetail with _$CurationDetail {
     required final String storeName,
     ItemSimple? item,
     bool? isSellFinished,
+    bool? isInSell,
     int? itemSellTotalAmount,
   }) = _CurationDetail;
 

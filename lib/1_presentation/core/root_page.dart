@@ -7,8 +7,9 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DS.color.primary600,
-      body: Center(child: DS.image.splashBackground),
+      backgroundColor: DS.color.background000,
+      // body: Center(child: DS.image.splashBackground),
+      body: Center(child: DS.image.mainIconWithText),
     );
   }
 }

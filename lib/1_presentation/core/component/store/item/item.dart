@@ -701,6 +701,7 @@ class StoreItemRowCard extends StatelessWidget {
               itemId: item.id,
               ratio: 1 / 1,
               borderRadius: borderRadius,
+              curatorProfileImageUrl: item.curatorProfileImageUrl,
             ),
             DS.space.hBase,
             Expanded(

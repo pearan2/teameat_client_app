@@ -66,7 +66,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ItemImageCarouselSliver(
+                ItemImageCarousel(
                     imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),
                 AbsorbPointer(
                   absorbing: c.absorbing,
@@ -455,12 +455,12 @@ class ItemSimpleInfoAndLikeRow extends GetView<StoreItemPageController> {
   }
 }
 
-class ItemImageCarouselSliver extends GetView<StoreItemPageController> {
+class ItemImageCarousel extends GetView<StoreItemPageController> {
   @override
   // ignore: overridden_fields
   final String tag;
 
-  const ItemImageCarouselSliver({
+  const ItemImageCarousel({
     super.key,
     required this.imageWidth,
     required this.imageRatio,

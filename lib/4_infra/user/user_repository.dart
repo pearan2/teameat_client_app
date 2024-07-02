@@ -95,4 +95,9 @@ class UserRepository implements IUserRepository {
   Future<Either<Failure, List<int>>> getMyStoreLikes() {
     return _getMyLikes('api/member/like/store');
   }
+
+  @override
+  void clearCache() {
+    _cached = null;
+  }
 }

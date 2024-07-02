@@ -280,4 +280,9 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/curation/curation_guide.jpg',
         fit: BoxFit.fitWidth,
       );
+  @override
+  Image get curationGuideAppBar => Image.asset(
+        'assets/image/curation/curation_guide_app_bar.png',
+        fit: BoxFit.fitHeight,
+      );
 }

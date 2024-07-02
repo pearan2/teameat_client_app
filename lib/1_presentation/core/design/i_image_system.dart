@@ -59,4 +59,5 @@ abstract class IImageSystem {
   /// banner & guide
   Image get communityBanner1;
   Image get curationGuide;
+  Image get curationGuideAppBar;
 }

@@ -78,6 +78,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: DS.color.background000,
       leading: _buildLeading(),
       actions: _buildActions(),
+      scrolledUnderElevation: 0,
       centerTitle: true,
       title: _buildTitle(MediaQuery.of(context).size.width / 1.8),
     );

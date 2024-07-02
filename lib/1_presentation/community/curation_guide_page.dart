@@ -9,24 +9,17 @@ class CurationGuidePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        TEScaffold(
-            body: SingleChildScrollView(
-          padding: EdgeInsets.zero,
-          child: DS.image.curationGuide,
-        )),
-        Positioned(
-          left: 0,
-          top: 0,
-          right: 0,
-          child: TEAppBar(
-            leadingIconOnPressed: Get.back,
-            backgroundColor: Colors.transparent,
-            leadingIconColor: DS.color.background000,
-          ),
-        )
-      ],
+    return TEScaffold(
+      appBar: TEAppBar(
+        leadingIconOnPressed: Get.back,
+        backgroundColor: const Color(0xFF0089FF),
+        leadingIconColor: DS.color.background000,
+      ),
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        child: DS.image.curationGuide,
+      ),
     );
   }
 }

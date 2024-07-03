@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
@@ -38,13 +39,10 @@ class HomePage extends GetView<HomePageController> {
             left: AppWidget.horizontalPadding,
             right: AppWidget.horizontalPadding,
           ),
-          child: RefreshIndicator(
-            onRefresh: () async {
-              controller.pageRefresh();
-            },
-            displacement: 0.0,
-            edgeOffset: toolbarHeight + DS.space.large,
+          child: TERefreshIndicator(
+            onRefresh: controller.pageRefresh,
             child: CustomScrollView(
+              physics: const ClampingScrollPhysics(),
               slivers: [
                 SliverAppBar(
                   key: controller.topKey,

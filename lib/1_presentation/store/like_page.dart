@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/not_found.dart';
+import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/store.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -21,7 +22,7 @@ class StoreLikePage extends GetView<StoreLikePageController> {
       ),
       body: Padding(
         padding: EdgeInsets.all(DS.space.xBase),
-        child: RefreshIndicator(
+        child: TERefreshIndicator(
           onRefresh: () async {
             controller.pagingController.refresh();
           },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/not_found.dart';
+import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -23,7 +24,7 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
         ),
         body: Padding(
           padding: EdgeInsets.all(DS.space.xBase),
-          child: RefreshIndicator(
+          child: TERefreshIndicator(
             onRefresh: () async {
               controller.pagingController.refresh();
             },
@@ -46,7 +47,7 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     /// 4/3 비율로 갈거라서 변경해줌
                     childAspectRatio:
-                        width / (width * (4 / 3) + DS.space.large * 5),
+                        width / (width * (4 / 3) + DS.space.large * 8),
                     crossAxisSpacing: DS.space.small,
                     mainAxisSpacing: DS.space.small,
                     crossAxisCount: 2,

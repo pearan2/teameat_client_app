@@ -42,8 +42,11 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
   }
 
   void onSearchTextRefresh() {
-    textEditController.text = '';
-    focusNode.requestFocus();
+    // 24/07/03 다시 검색하기 버튼의 동작을 검색하기 동작과 동일하게 변경
+    onSearch();
+
+    // textEditController.text = '';
+    // focusNode.requestFocus();
   }
 
   Future<void> onSearch() async {

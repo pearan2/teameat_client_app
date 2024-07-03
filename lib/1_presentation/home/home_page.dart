@@ -24,6 +24,8 @@ class HomePage extends GetView<HomePageController> {
             (AppWidget.horizontalPadding * 2) -
             (AppWidget.itemHorizontalSpace)) /
         2;
+
+    final toolbarHeight = DS.space.base;
     return Obx(
       () => TEScaffold(
         loadingText: DS.text.accessToLocationPleaseWait,
@@ -40,6 +42,8 @@ class HomePage extends GetView<HomePageController> {
             onRefresh: () async {
               controller.pageRefresh();
             },
+            displacement: 0.0,
+            edgeOffset: toolbarHeight + DS.space.large,
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -48,7 +52,7 @@ class HomePage extends GetView<HomePageController> {
                   surfaceTintColor: DS.color.background000,
                   snap: true,
                   floating: true,
-                  toolbarHeight: DS.space.base,
+                  toolbarHeight: toolbarHeight,
                   expandedHeight:
                       GetPlatform.isAndroid ? DS.space.medium : null,
                   flexibleSpace: const HomePageSearcher(),

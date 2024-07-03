@@ -36,6 +36,7 @@ class MessageHelper {
 
   static late final AndroidNotificationChannel _channel;
   static bool _isFlutterLocalNotificationsInitialized = false;
+  static bool _isListenerAdded = false;
   static late final FlutterLocalNotificationsPlugin
       _flutterLocalNotificationsPlugin;
 
@@ -120,6 +121,8 @@ class MessageHelper {
   }
 
   static Future<void> _addMessageListener() async {
+    if (_isListenerAdded) return;
+
     // foreground 에서 알람이 왔을때 추가 동작 (android 의 경우 추가 동작 필요)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (GetPlatform.isAndroid) {
@@ -132,6 +135,7 @@ class MessageHelper {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _push(MessageWrapper.fromOpenApp(message));
     });
+    _isListenerAdded = true;
   }
 
   static Future<String?> getToken() async {
@@ -163,13 +167,9 @@ class MessageHelper {
 
   static Future<bool> configMessage() async {
     final isPermitted = await _requestPermission();
-    if (!isPermitted) {
-      return false;
-    } else {
-      await _setupFlutterNotifications();
-      _addMessageListener();
-      return true;
-    }
+    await _setupFlutterNotifications();
+    _addMessageListener();
+    return isPermitted;
   }
 
   static void _push(MessageWrapper message) {

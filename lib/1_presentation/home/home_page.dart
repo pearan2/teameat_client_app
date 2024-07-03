@@ -99,15 +99,6 @@ class HomePageSearcher extends GetView<HomePageController> {
         children: [
           DS.image.mainIconSm,
           DS.space.hXSmall,
-          Obx(
-            () => Expanded(
-              child: TextSearcher(
-                onCompleted: controller.onSearchTextCompleted,
-                value: controller.searchOption.searchText,
-              ),
-            ),
-          ),
-          DS.space.hXSmall,
           Obx(() => TESelectorBottomSheet<int?>(
                 borderRadius: DS.space.tiny,
                 candidates: const [500, 1000, 2000, null],
@@ -124,6 +115,15 @@ class HomePageSearcher extends GetView<HomePageController> {
                 selectedValue: controller.withInMeter,
                 text: DS.text.distance,
               )),
+          DS.space.hXSmall,
+          Obx(
+            () => Expanded(
+              child: TextSearcher(
+                onCompleted: controller.onSearchTextCompleted,
+                value: controller.searchOption.searchText,
+              ),
+            ),
+          ),
         ],
       ),
     );

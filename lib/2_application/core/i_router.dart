@@ -50,5 +50,5 @@ abstract class IRouter {
 
   void toCommunityView(int curationId);
 
-  void to(dynamic page);
+  void toPermissionSetting();
 }

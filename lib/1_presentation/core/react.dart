@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
+import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/3_domain/order/order.dart';
@@ -144,9 +145,9 @@ class React extends IReact {
   }
 
   @override
-  void to(dynamic page) {
+  void toPermissionSetting() {
     Get.to(
-      page,
+      () => const UserPermissionPage(),
       duration: const Duration(milliseconds: 200),
       transition: Transition.rightToLeft,
     );

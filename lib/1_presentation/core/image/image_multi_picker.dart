@@ -5,11 +5,56 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+
+class _NoPermission extends StatelessWidget {
+  const _NoPermission();
+
+  @override
+  Widget build(BuildContext context) {
+    final router = Get.find<IReact>();
+
+    return Padding(
+      padding: EdgeInsets.all(DS.space.large),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '사진 권한을 확인해주세요',
+            style: DS.textStyle.title3,
+          ),
+          DS.space.vSmall,
+          Row(
+            children: [
+              Expanded(
+                child: TESecondaryButton(
+                  text: '닫기',
+                  onTap: router.back,
+                ),
+              ),
+              DS.space.hTiny,
+              Expanded(
+                child: TEPrimaryButton(
+                  text: '권한 보기',
+                  onTap: () {
+                    router.back();
+                    router.toPermissionSetting();
+                  },
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
 
 class TEMultiPhotoPicker extends StatefulWidget {
   final Widget loading;
@@ -23,7 +68,7 @@ class TEMultiPhotoPicker extends StatefulWidget {
   const TEMultiPhotoPicker({
     super.key,
     this.loading = const Text('loading...'),
-    this.noPermission = const Text('앨범 접근 권한을 확인해주세요.'),
+    this.noPermission = const _NoPermission(),
     this.limit = 1,
     this.thumbnailImageSize = 480,
     this.widthRatio,

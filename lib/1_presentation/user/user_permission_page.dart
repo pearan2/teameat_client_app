@@ -7,6 +7,7 @@ import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/location_controller.dart';
+import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/main.dart';
 
@@ -17,6 +18,7 @@ class UserPermissionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final locationController = Get.find<LocationController>();
     final router = Get.find<IReact>();
+    final authService = Get.find<IAuthService>();
 
     return TEScaffold(
       appBar: TEAppBar(
@@ -39,7 +41,10 @@ class UserPermissionPage extends StatelessWidget {
             OnOffButtonWrapper(
               DS.text.notificationInfoTitle,
               desc: DS.text.notificationInfoDesc,
-              child: const TEPermissionButton(Permission.notification),
+              child: TEPermissionButton(
+                Permission.notification,
+                onPermitted: authService.startUpdateToken,
+              ),
             ),
             OnOffButtonWrapper(DS.text.photoInfoTitle,
                 desc: DS.text.photoInfoDesc,

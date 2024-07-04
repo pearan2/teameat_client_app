@@ -146,11 +146,16 @@ class MessageHelper {
     }
   }
 
-  static void startUpdateToken(void Function(String token) updater) {
+  static Future<void> startUpdateToken(
+      void Function(String token) updater) async {
+    if (!await isMessagePermitted()) {
+      return;
+    }
     getToken().then((token) {
       if (token != null) {
         updater(token);
       }
+      // ignore: argument_type_not_assignable_to_error_handler
     });
     FirebaseMessaging.instance.onTokenRefresh.listen(updater);
   }

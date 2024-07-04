@@ -49,4 +49,6 @@ abstract class IRouter {
   void toCommunityCreate();
 
   void toCommunityView(int curationId);
+
+  void to(dynamic page);
 }

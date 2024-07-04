@@ -142,4 +142,13 @@ class React extends IReact {
   void toCommunityView(int curationId) {
     Get.toNamed('/community/view', arguments: {'curationId': curationId});
   }
+
+  @override
+  void to(dynamic page) {
+    Get.to(
+      page,
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
+  }
 }

@@ -216,4 +216,13 @@ abstract class ITextSystem {
   String get backToItemPage;
   String get noTrimmed;
   String get memberOneLineIntroduceError;
+  String get permissionSetting;
+  String get locationInfoTitle;
+  String get locationInfoDesc;
+  String get cameraInfoTitle;
+  String get cameraInfoDesc;
+  String get photoInfoTitle;
+  String get photoInfoDesc;
+  String get notificationInfoTitle;
+  String get notificationInfoDesc;
 }

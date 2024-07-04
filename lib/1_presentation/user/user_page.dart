@@ -8,6 +8,7 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
@@ -74,6 +75,11 @@ class UserPage extends GetView<UserPageController> {
                       borderRadius: DS.space.tiny,
                     )),
                 DS.space.vSmall,
+                const UserPageDivider(),
+                TERowButton(
+                  onTap: () => c.react.to(() => const UserPermissionPage()),
+                  text: DS.text.permissionSetting,
+                ),
                 const LogOutSignOutColumn(),
               ],
             ),

@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
@@ -13,6 +15,7 @@ import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/99_util/extension/list.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/image.dart';
 import 'package:teameat/99_util/text.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -831,6 +834,134 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
         separatorBuilder: (_, __) => DS.space.hXTiny,
         itemCount: selectedImages.length + 1,
       ),
+    );
+  }
+}
+
+class TEOnOffButton extends StatelessWidget {
+  final bool value;
+  final bool isLoading;
+  final void Function(bool) onChange;
+
+  const TEOnOffButton(
+      {super.key,
+      required this.value,
+      required this.onChange,
+      this.isLoading = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedToggleSwitch<bool>.dual(
+      loading: isLoading,
+      indicatorTransition: const ForegroundIndicatorTransition.fading(),
+      styleBuilder: (on) => ToggleStyle(
+        indicatorColor: DS.color.background000,
+        backgroundColor: DS.color.background000,
+        borderColor: on ? DS.color.primary500 : DS.color.background400,
+      ),
+      textBuilder: (on) => Text(
+        on ? 'ON' : 'OFF',
+        style: on
+            ? DS.textStyle.caption1.semiBold.b800
+            : DS.textStyle.caption1.b600,
+      ),
+      animationDuration: const Duration(milliseconds: 300),
+      iconBuilder: (on) => Container(
+        width: DS.space.xBase,
+        height: DS.space.xBase,
+        color: on ? DS.color.primary600 : DS.color.background300,
+      ),
+      indicatorSize: Size.fromWidth(DS.space.xBase),
+      spacing: DS.space.medium,
+      height: DS.space.base,
+      current: value,
+      first: false,
+      second: true,
+      onChanged: onChange,
+    );
+  }
+}
+
+// Future<void> toPermissionSetting() async {
+//   openAppSettings();
+// }
+
+class TEPermissionButton extends StatefulWidget {
+  final Permission permission;
+  final void Function()? onPermitted;
+
+  const TEPermissionButton(this.permission, {super.key, this.onPermitted});
+
+  @override
+  State<TEPermissionButton> createState() => _TEPermissionButtonState();
+}
+
+class _TEPermissionButtonState extends State<TEPermissionButton>
+    with WidgetsBindingObserver {
+  bool isLoading = true;
+  bool isPermitted = false;
+
+  /// 기본 false 값으로 시작
+
+  void changeState(void Function() stateChanger) {
+    if (!mounted) {
+      return;
+    }
+    setState(stateChanger);
+  }
+
+  void startLoading() {
+    changeState(() => isLoading = true);
+  }
+
+  void endLoading() {
+    changeState(() => isLoading = false);
+  }
+
+  void changePermitted(bool isPermitted) {
+    changeState(() {
+      this.isPermitted = isPermitted;
+      if (this.isPermitted) {
+        widget.onPermitted?.call();
+      }
+    });
+  }
+
+  Future<void> checkPermission() async {
+    startLoading();
+    final isPermitted = await widget.permission.isGranted;
+    changePermitted(isPermitted);
+    endLoading();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    checkPermission();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      checkPermission();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TEOnOffButton(
+      isLoading: isLoading,
+      value: isPermitted,
+      onChange: (_) {
+        openAppSettings();
+      },
     );
   }
 }

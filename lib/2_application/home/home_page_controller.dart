@@ -58,7 +58,9 @@ class HomePageController extends PageController {
 
   Future<void> pageRefresh() async {
     _searchOption.value = searchOption.copyWith(pageNumber: 0);
+    pagingController.error = '';
     pagingController.refresh();
+    pagingController.error = null;
   }
 
   void clearSearchOption() {

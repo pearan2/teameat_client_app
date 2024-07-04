@@ -658,4 +658,31 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get memberOneLineIntroduceError => '한줄 소개는 2자 이상, 30자 이하여야 해요';
+
+  @override
+  String get cameraInfoDesc => '바로 찍은 사진으로 프로필 사진을 변경하고 싶으실 때 사용돼요';
+
+  @override
+  String get cameraInfoTitle => '카메라';
+
+  @override
+  String get locationInfoDesc => '음식점을 거리 기준으로 검색할 때나, 음식점까지의 거리를 표기할 때 사용돼요';
+
+  @override
+  String get locationInfoTitle => '위치 정보';
+
+  @override
+  String get notificationInfoDesc => '2인 팀 구매 성공 등 정말 중요한 내용을 전달 드릴 때 사용돼요';
+
+  @override
+  String get notificationInfoTitle => '알림';
+
+  @override
+  String get permissionSetting => '권한 세팅';
+
+  @override
+  String get photoInfoDesc => '맛집 정보 신청 등 게시글에 추가하실 사진을 선택할 때 사용돼요';
+
+  @override
+  String get photoInfoTitle => '사진';
 }

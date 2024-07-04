@@ -413,7 +413,7 @@ class DefaultTextSystem extends ITextSystem {
   String get noDistanceLimit => '거리제한 없음';
 
   @override
-  String get distance => '거리';
+  String get distance => '거리 순';
 
   @override
   String get distanceFormat => '###.# KM';
@@ -685,4 +685,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get photoInfoTitle => '사진';
+
+  @override
+  String get searchEupMyeonDong => '동 선택';
 }

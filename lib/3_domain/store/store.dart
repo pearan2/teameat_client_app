@@ -70,6 +70,7 @@ class StorePoint with _$StorePoint {
 @freezed
 class SearchStoreSimpleList with _$SearchStoreSimpleList {
   const factory SearchStoreSimpleList({
+    String? address,
     String? searchText,
     List<String>? hashTags,
     List<String>? categories,
@@ -81,6 +82,7 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
 
   factory SearchStoreSimpleList.empty() {
     return const SearchStoreSimpleList(
+      address: "",
       searchText: "",
       hashTags: [],
       categories: [],
@@ -95,6 +97,7 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
 
   static Map<String, dynamic> toStringJson(SearchStoreSimpleList target) {
     final ret = <String, dynamic>{};
+    if (target.address != null) ret['address'] = target.address;
     if (target.searchText != null) ret['searchText'] = target.searchText;
     if (target.hashTags != null) ret['hashTags'] = target.hashTags;
     if (target.categories != null) ret['categories'] = target.categories;

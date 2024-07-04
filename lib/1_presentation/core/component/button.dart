@@ -375,7 +375,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   final void Function(T) onSelected;
   final String Function(T)? toLabel;
   final String text;
-  final IconData icon;
+  final IconData? icon;
   final double? height;
   final double? width;
   final double? borderRadius;
@@ -387,7 +387,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     required this.onSelected,
     required this.text,
     this.toLabel,
-    this.icon = Icons.flashlight_on,
+    this.icon,
     this.height,
     this.width,
     this.borderRadius,
@@ -410,16 +410,6 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     } else {
       return isEqual!(selectedValue as T, value);
     }
-
-    // if (selectedValue == null) {
-    //   return false;
-    // } else {
-    //   if (isEqual == null) {
-    //     return selectedValue! == value;
-    //   } else {
-    //     return isEqual!(selectedValue as T, value);
-    //   }
-    // }
   }
 
   TextStyle getTextStyle(T value) {
@@ -476,11 +466,13 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
               text,
               style: DS.textStyle.caption1,
             ),
-            DS.space.hXXTiny,
-            Icon(
-              icon,
-              size: DS.space.xSmall,
-            ),
+            icon == null ? const SizedBox() : DS.space.hXXTiny,
+            icon == null
+                ? const SizedBox()
+                : Icon(
+                    icon,
+                    size: DS.space.xSmall,
+                  ),
           ],
         ),
       ),

@@ -15,7 +15,8 @@ class RootPageController extends PageController {
     return Future.wait([
       _codeRepo.getCode(CodeKey.voucherFilter()),
       _codeRepo.getCode(CodeKey.voucherOrder()),
-      _codeRepo.getCode(CodeKey.curationFilter())
+      _codeRepo.getCode(CodeKey.curationFilter()),
+      _codeRepo.getSearchableAddress(),
     ]);
   }
 

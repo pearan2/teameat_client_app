@@ -225,4 +225,5 @@ abstract class ITextSystem {
   String get photoInfoDesc;
   String get notificationInfoTitle;
   String get notificationInfoDesc;
+  String get searchEupMyeonDong;
 }

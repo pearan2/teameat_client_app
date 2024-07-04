@@ -96,7 +96,7 @@ class HomePageSearcher extends GetView<HomePageController> {
       child: Row(
         children: [
           DS.image.mainIconSm,
-          DS.space.hXSmall,
+          DS.space.hTiny,
           Obx(() => TESelectorBottomSheet<int?>(
                 borderRadius: DS.space.tiny,
                 candidates: const [500, 1000, 2000, null],
@@ -109,11 +109,27 @@ class HomePageSearcher extends GetView<HomePageController> {
                     return v.format(DS.text.withInMeterFormat);
                   }
                 },
-                icon: Icons.location_pin,
+                // icon: Icons.location_pin,
                 selectedValue: controller.withInMeter,
                 text: DS.text.distance,
               )),
-          DS.space.hXSmall,
+          DS.space.hTiny,
+          Obx(() => TESelectorBottomSheet<int?>(
+                borderRadius: DS.space.tiny,
+                candidates: const [500, 1000, 2000, null],
+                onSelected: c.onWithInMeterChanged,
+                isEqual: (lhs, rhs) => lhs == rhs,
+                toLabel: (v) {
+                  if (v == null) {
+                    return DS.text.noDistanceLimit;
+                  } else {
+                    return v.format(DS.text.withInMeterFormat);
+                  }
+                },
+                selectedValue: controller.withInMeter,
+                text: DS.text.searchEupMyeonDong,
+              )),
+          DS.space.hTiny,
           Obx(
             () => Expanded(
               child: TextSearcher(

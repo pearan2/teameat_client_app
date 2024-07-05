@@ -413,7 +413,7 @@ class DefaultTextSystem extends ITextSystem {
   String get noDistanceLimit => '거리제한 없음';
 
   @override
-  String get distance => '거리 순';
+  String get distance => '거리';
 
   @override
   String get distanceFormat => '###.# KM';
@@ -688,4 +688,11 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get searchEupMyeonDong => '동 선택';
+
+  @override
+  String get noEupMyeonDongLimit => '읍면동 제한 없음';
+
+  @override
+  String get numberOfServicedEupMyeonDongFormat =>
+      '현재 팀잇은 총 ###개의 지역에서 사용하실 수 있어요';
 }

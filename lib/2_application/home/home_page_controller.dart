@@ -5,6 +5,8 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/3_domain/core/code/i_code_repository.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -18,6 +20,7 @@ class HomePageController extends PageController {
   /// repos
   final _storeRepo = Get.find<IStoreRepository>();
   final _itemRepo = Get.find<IStoreItemRepository>();
+  final _codeRepo = Get.find<ICodeRepository>();
 
   /// controllers
   final PagingController<int, ItemSimple> pagingController =
@@ -25,6 +28,8 @@ class HomePageController extends PageController {
   final locationController = Get.find<LocationController>();
 
   /// 상태
+  final _searchableAddresses = <SearchableAddress>[].obs;
+  final _selectedAddress = Rxn<SearchableAddress>();
   final _searchOption = SearchStoreSimpleList.empty().obs;
   final _isNearbyMe = false.obs;
   final _recommendedItems = <ItemSimple>[].obs;
@@ -40,6 +45,10 @@ class HomePageController extends PageController {
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
 
   int? get withInMeter => _searchOption.value.withInMeter;
+
+  // ignore: invalid_use_of_protected_member
+  List<SearchableAddress> get searchableAddresses => _searchableAddresses.value;
+  SearchableAddress? get selectedAddress => _selectedAddress.value;
 
   bool get loading => _isLoading.value;
 
@@ -71,6 +80,13 @@ class HomePageController extends PageController {
   void onSearchTextCompleted(String searchText) {
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);
+    pagingController.refresh();
+  }
+
+  Future<void> onSelectedAddressChanged(SearchableAddress? address) async {
+    _selectedAddress.value = address;
+    _searchOption.value =
+        searchOption.copyWith(address: address?.toFullAddress(), pageNumber: 0);
     pagingController.refresh();
   }
 
@@ -130,6 +146,12 @@ class HomePageController extends PageController {
     }
   }
 
+  Future<void> _loadSearchableAddresses() async {
+    final ret = await _codeRepo.getSearchableAddress();
+    return ret.fold(
+        (l) => showError(l.desc), (r) => _searchableAddresses.value = r);
+  }
+
   @override
   void onReady() {
     pagingController.error = '';
@@ -140,6 +162,7 @@ class HomePageController extends PageController {
 
   @override
   Future<bool> initialLoad() async {
+    _loadSearchableAddresses();
     pagingController.itemList = [];
     pagingController.addPageRequestListener(loadStores);
     pagingController.addStatusListener(pagingControllerStatusChangeListener);

@@ -4,6 +4,7 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
@@ -369,6 +370,7 @@ class TESelectorGrid<T> extends StatelessWidget {
 }
 
 class TESelectorBottomSheet<T> extends StatelessWidget {
+  final String? title;
   final List<T> candidates;
   final T? selectedValue;
   final bool Function(T lhs, T rhs)? isEqual;
@@ -386,6 +388,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     required this.candidates,
     required this.onSelected,
     required this.text,
+    this.title,
     this.toLabel,
     this.icon,
     this.height,
@@ -420,27 +423,49 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     );
   }
 
+  Widget _buildTitleText() {
+    if (title == null) {
+      return const SizedBox();
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(title!, style: DS.textStyle.caption1),
+        DS.space.vXTiny,
+        TEDivider.thin(),
+        DS.space.vSmall,
+      ],
+    );
+  }
+
   void showSelector(double maxHeight) {
     final react = Get.find<IReact>();
 
     showTEBottomSheet(
       Container(
         constraints: BoxConstraints(maxHeight: maxHeight),
-        child: ListView.separated(
-          padding: EdgeInsets.only(bottom: DS.space.xBase),
-          shrinkWrap: true,
-          itemBuilder: (_, idx) => TEonTap(
-            onTap: () {
-              onSelected(candidates[idx]);
-              react.back();
-            },
-            child: Text(
-              toLabelString(candidates[idx]),
-              style: getTextStyle(candidates[idx]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildTitleText(),
+            ListView.separated(
+              padding: EdgeInsets.only(bottom: DS.space.xBase),
+              shrinkWrap: true,
+              itemBuilder: (_, idx) => TEonTap(
+                onTap: () {
+                  onSelected(candidates[idx]);
+                  react.back();
+                },
+                child: Text(
+                  toLabelString(candidates[idx]),
+                  style: getTextStyle(candidates[idx]),
+                ),
+              ),
+              separatorBuilder: (_, __) => DS.space.vSmall,
+              itemCount: candidates.length,
             ),
-          ),
-          separatorBuilder: (_, __) => DS.space.vSmall,
-          itemCount: candidates.length,
+          ],
         ),
       ),
     );

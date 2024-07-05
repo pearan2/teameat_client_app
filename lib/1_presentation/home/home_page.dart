@@ -9,6 +9,7 @@ import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/get.dart';
@@ -114,19 +115,21 @@ class HomePageSearcher extends GetView<HomePageController> {
                 text: DS.text.distance,
               )),
           DS.space.hTiny,
-          Obx(() => TESelectorBottomSheet<int?>(
+          Obx(() => TESelectorBottomSheet<SearchableAddress?>(
                 borderRadius: DS.space.tiny,
-                candidates: const [500, 1000, 2000, null],
-                onSelected: c.onWithInMeterChanged,
+                candidates: [...c.searchableAddresses, null],
+                onSelected: c.onSelectedAddressChanged,
                 isEqual: (lhs, rhs) => lhs == rhs,
                 toLabel: (v) {
                   if (v == null) {
-                    return DS.text.noDistanceLimit;
+                    return DS.text.noEupMyeonDongLimit;
                   } else {
-                    return v.format(DS.text.withInMeterFormat);
+                    return v.toFullAddress();
                   }
                 },
-                selectedValue: controller.withInMeter,
+                selectedValue: c.selectedAddress,
+                title: c.searchableAddresses.length
+                    .format(DS.text.numberOfServicedEupMyeonDongFormat),
                 text: DS.text.searchEupMyeonDong,
               )),
           DS.space.hTiny,

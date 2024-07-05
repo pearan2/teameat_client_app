@@ -4,6 +4,12 @@ part 'searchable_address.freezed.dart';
 
 part 'searchable_address.g.dart';
 
+extension SearchableAddressExtension on SearchableAddress {
+  String toFullAddress() {
+    return '$siDo $siGunGu $eupMyeonDong';
+  }
+}
+
 @freezed
 class SearchableAddress with _$SearchableAddress {
   const factory SearchableAddress({

@@ -226,4 +226,6 @@ abstract class ITextSystem {
   String get notificationInfoTitle;
   String get notificationInfoDesc;
   String get searchEupMyeonDong;
+  String get noEupMyeonDongLimit;
+  String get numberOfServicedEupMyeonDongFormat;
 }

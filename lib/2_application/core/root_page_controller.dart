@@ -1,5 +1,6 @@
 import 'package:app_links/app_links.dart';
 import 'package:get/get.dart';
+import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
@@ -42,9 +43,15 @@ class RootPageController extends PageController {
       if (uri.path.contains('/item') &&
           params['id'] != null &&
           int.tryParse(params['id']!) is int) {
-        // Todo 우선은 1초로 해둠.
-        Future.delayed(const Duration(seconds: 1),
+        Future.delayed(const Duration(milliseconds: 500),
             () => react.toStoreItemDetail(int.parse(params['id']!)));
+      } else if (uri.authority.contains('gift') &&
+          params['id'] != null &&
+          params['id'] is String) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          loginWrapper(
+              () => react.toGiftReceive(giftId: params['id'] as String));
+        });
       }
     });
   }

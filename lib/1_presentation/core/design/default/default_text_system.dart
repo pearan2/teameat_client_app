@@ -695,4 +695,25 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get numberOfServicedEupMyeonDongFormat =>
       '현재 팀잇은 총 ###개의 지역에서 사용하실 수 있어요';
+
+  @override
+  String get giftMessageError => '비어있거나, 255자 이하여야 해요';
+
+  @override
+  String get giftMessage => '카드 메시지';
+
+  @override
+  String get giftMessageHint => '마음을 함께 전해보세요!';
+
+  @override
+  String get giftSuccess => '이용권 선물 코드가 생성되었어요!\n선물 받을 분에게 공유해주세요!';
+
+  @override
+  String get copyGiftCode => '선물 코드 복사';
+
+  @override
+  String get shareGiftCode => '선물 코드 공유 하기';
+
+  @override
+  String get receiveGift => '선물 받기';
 }

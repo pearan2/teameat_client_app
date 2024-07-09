@@ -51,4 +51,11 @@ abstract class IRouter {
   void toCommunityView(int curationId);
 
   void toPermissionSetting();
+
+  void toGiftCreate(
+      {required VoucherDetail voucher, required int giftQuantity});
+
+  void toGiftSuccess({required String giftId});
+
+  void toGiftReceive({required String giftId});
 }

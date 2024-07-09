@@ -228,4 +228,12 @@ abstract class ITextSystem {
   String get searchEupMyeonDong;
   String get noEupMyeonDongLimit;
   String get numberOfServicedEupMyeonDongFormat;
+  String get giftMessageError;
+  String get giftMessageHint;
+  String get giftMessage;
+  String get giftSuccess;
+  String get copyGiftCode;
+  String get shareGiftCode;
+
+  String get receiveGift;
 }

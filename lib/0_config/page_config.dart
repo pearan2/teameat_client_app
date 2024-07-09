@@ -13,6 +13,12 @@ import 'package:teameat/1_presentation/core/payment/payment_result_page.dart';
 import 'package:teameat/1_presentation/core/payment/payment_result_page_binding.dart';
 import 'package:teameat/1_presentation/core/root_page.dart';
 import 'package:teameat/1_presentation/core/root_page_binding.dart';
+import 'package:teameat/1_presentation/gift/gift_create_page.dart';
+import 'package:teameat/1_presentation/gift/gift_create_page_binding.dart';
+import 'package:teameat/1_presentation/gift/gift_receive_page.dart';
+import 'package:teameat/1_presentation/gift/gift_receive_page_binding.dart';
+import 'package:teameat/1_presentation/gift/gift_success_page.dart';
+import 'package:teameat/1_presentation/gift/gift_success_page_binding.dart';
 import 'package:teameat/1_presentation/home/home_page.dart';
 import 'package:teameat/1_presentation/home/home_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/like_page.dart';
@@ -100,6 +106,26 @@ List<GetPage> allPages() => [
         binding: VoucherUsedPageBinding(),
         page: () => const VoucherUsedPage(),
         transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/voucher/gift",
+        binding: GiftCreatePageBinding(),
+        page: () => const GiftCreatePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/voucher/gift/success",
+        binding: GiftSuccessPageBinding(),
+        page: () => const GiftSuccessPage(),
+        transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/voucher/gift/receive",
+        binding: GiftReceivePageBinding(),
+        page: () => const GiftReceivePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/store",

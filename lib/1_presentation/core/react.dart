@@ -152,4 +152,23 @@ class React extends IReact {
       transition: Transition.rightToLeft,
     );
   }
+
+  @override
+  void toGiftCreate({
+    required VoucherDetail voucher,
+    required int giftQuantity,
+  }) {
+    Get.toNamed('/voucher/gift',
+        arguments: {'voucher': voucher, 'giftQuantity': giftQuantity});
+  }
+
+  @override
+  void toGiftSuccess({required String giftId}) {
+    Get.toNamed('/voucher/gift/success', arguments: {'giftId': giftId});
+  }
+
+  @override
+  void toGiftReceive({required String giftId}) {
+    Get.toNamed('/voucher/gift/receive', arguments: {'giftId': giftId});
+  }
 }

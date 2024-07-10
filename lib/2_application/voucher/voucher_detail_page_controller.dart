@@ -31,6 +31,7 @@ class VoucherDetailPageController extends PageController {
   int get useVoucherRemainQuantity => voucher.quantity - useVoucherQuantity;
   bool get isLoading => _isLoading.value;
   bool get isUpdated => _isUpdated;
+  bool get isGifted => _voucher.value.isGifted ?? false;
 
   void onUseQuantityChanged(int newQuantity) {
     if (newQuantity < 1 || newQuantity > 99) {

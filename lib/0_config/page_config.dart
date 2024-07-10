@@ -15,6 +15,8 @@ import 'package:teameat/1_presentation/core/root_page.dart';
 import 'package:teameat/1_presentation/core/root_page_binding.dart';
 import 'package:teameat/1_presentation/gift/gift_create_page.dart';
 import 'package:teameat/1_presentation/gift/gift_create_page_binding.dart';
+import 'package:teameat/1_presentation/gift/gift_page.dart';
+import 'package:teameat/1_presentation/gift/gift_page_binding.dart';
 import 'package:teameat/1_presentation/gift/gift_receive_page.dart';
 import 'package:teameat/1_presentation/gift/gift_receive_page_binding.dart';
 import 'package:teameat/1_presentation/gift/gift_success_page.dart';
@@ -80,6 +82,13 @@ List<GetPage> allPages() => [
         binding: UserPageBinding(),
         page: () => const UserPage(),
         transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/gift",
+        binding: GiftPageBinding(),
+        page: () => const GiftPage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/user/detail",

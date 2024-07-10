@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/failure.dart';
@@ -16,7 +17,16 @@ class GiftReceivePageController extends PageController {
   late final gift = GiftPreview.empty().wrap(_loadGift);
   bool get isLoading => _isLoading.value;
 
-  Future<Either<Failure, GiftPreview>> _loadGift() {
+  Future<Either<Failure, GiftPreview>> _loadGift() async {
+    final ret = await _giftRepo.findGiftPreview(giftId);
+    ret.fold((l) {
+      react.back();
+      showError(DS.text.wrongGift);
+    }, (r) {
+      if (!r.isUsable) {
+        showError(DS.text.giftIsAlreadyUsed);
+      }
+    });
     return _giftRepo.findGiftPreview(giftId);
   }
 

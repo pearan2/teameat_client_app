@@ -25,8 +25,10 @@ class TEMainButton extends GetView<LoadingProvider> {
   final void Function()? onTap;
   final bool isLoginRequired;
   final String text;
+  final TextStyle? textStyle;
   final bool listenEventLoading;
 
+  final double? height;
   final Color? borderColor;
   final double? borderWidth;
   final double? borderRadius;
@@ -44,8 +46,10 @@ class TEMainButton extends GetView<LoadingProvider> {
     super.key,
     required this.onTap,
     required this.text,
+    this.textStyle,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
+    this.height,
     this.borderColor,
     this.borderWidth,
     this.borderRadius,
@@ -58,9 +62,9 @@ class TEMainButton extends GetView<LoadingProvider> {
   });
 
   TextStyle getContentStyle() {
-    return DS.textStyle.paragraph1.copyWith(
+    final style = textStyle ?? DS.textStyle.paragraph1.bold;
+    return style.copyWith(
       color: onTap == null ? contentColor.withOpacity(0.5) : contentColor,
-      fontWeight: FontWeight.bold,
     );
   }
 
@@ -107,7 +111,7 @@ class TEMainButton extends GetView<LoadingProvider> {
                 DS.space
                     .tiny // Todo 계산완료 후 tiny 정도를 더해준다. 왜 이래야 정상적으로 레이아웃이 1줄로 나오는지 잘 모르겠음.
             : double.infinity,
-        height: DS.space.large,
+        height: height ?? DS.space.large,
         decoration: BoxDecoration(
           border: _buildBorder(),
           color: fillColor,
@@ -140,6 +144,8 @@ class TEPrimaryButton extends StatelessWidget {
   final void Function()? onTap;
   final bool isLoginRequired;
   final String text;
+  final TextStyle? textStyle;
+  final double? height;
   final bool listenEventLoading;
   final double? contentHorizontalPadding;
   final double? contentVerticalPadding;
@@ -151,6 +157,8 @@ class TEPrimaryButton extends StatelessWidget {
     super.key,
     this.onTap,
     required this.text,
+    this.textStyle,
+    this.height,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
     this.contentHorizontalPadding,
@@ -165,6 +173,8 @@ class TEPrimaryButton extends StatelessWidget {
     return TEMainButton(
       onTap: onTap,
       text: text,
+      textStyle: textStyle,
+      height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
       fillColor: DS.color.primary600,
@@ -182,6 +192,8 @@ class TESecondaryButton extends GetView<LoadingProvider> {
   final void Function()? onTap;
   final bool isLoginRequired;
   final String text;
+  final TextStyle? textStyle;
+  final double? height;
   final bool listenEventLoading;
   final double? contentHorizontalPadding;
   final double? contentVerticalPadding;
@@ -193,6 +205,8 @@ class TESecondaryButton extends GetView<LoadingProvider> {
     super.key,
     this.onTap,
     required this.text,
+    this.textStyle,
+    this.height,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
     this.contentHorizontalPadding,
@@ -207,6 +221,8 @@ class TESecondaryButton extends GetView<LoadingProvider> {
     return TEMainButton(
       onTap: onTap,
       text: text,
+      textStyle: textStyle,
+      height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
       fillColor: DS.color.background000,

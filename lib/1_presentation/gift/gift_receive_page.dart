@@ -17,11 +17,11 @@ class GiftReceivePage extends GetView<GiftReceivePageController> {
   Widget build(BuildContext context) {
     return Obx(
       () => TEScaffold(
-        bottomSheet: TEPrimaryButton(
-          isLoginRequired: true,
-          text: DS.text.receiveGift,
-          onTap: c.onReceiveGift,
-        ),
+        bottomSheet: c.gift.obx((gift) => TEPrimaryButton(
+              isLoginRequired: true,
+              text: gift.isUsable ? DS.text.receiveGift : DS.text.back,
+              onTap: gift.isUsable ? c.onReceiveGift : c.react.back,
+            )),
         bottomSheetBackgroundColor: DS.color.primary600,
         loading: c.isLoading,
         appBar: TEAppBar(

@@ -9,6 +9,7 @@ import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/like_page_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/main.dart';
 
 class StoreLikePage extends GetView<StoreLikePageController> {
   const StoreLikePage({super.key});
@@ -21,7 +22,7 @@ class StoreLikePage extends GetView<StoreLikePageController> {
         title: DS.text.followStore,
       ),
       body: Padding(
-        padding: EdgeInsets.all(DS.space.xBase),
+        padding: const EdgeInsets.all(AppWidget.horizontalPadding),
         child: TERefreshIndicator(
           onRefresh: () async {
             controller.pagingController.refresh();

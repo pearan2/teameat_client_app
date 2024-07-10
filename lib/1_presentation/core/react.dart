@@ -171,4 +171,9 @@ class React extends IReact {
   void toGiftReceive({required String giftId}) {
     Get.toNamed('/voucher/gift/receive', arguments: {'giftId': giftId});
   }
+
+  @override
+  void toGift() {
+    Get.toNamed('/gift');
+  }
 }

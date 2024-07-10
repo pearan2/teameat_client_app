@@ -8,5 +8,8 @@ abstract class IGiftRepository {
 
   Future<Either<Failure, GiftPreview>> findGiftPreview(String giftId);
 
+  Future<Either<Failure, List<GiftPreview>>> findMyGiftPreview(
+      {required int pageNumber, required int pageSize});
+
   Future<Either<Failure, Unit>> receiveGift(String giftId);
 }

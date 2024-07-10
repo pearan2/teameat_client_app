@@ -42,12 +42,25 @@ class UserPageController extends PageController {
   bool get loading => _isLoading.value;
   File? get selectedProfileImageFile => _selectedProfileImageFile.value;
 
+  final receiveGiftFromUrlController = TECupertinoTextFieldController();
+
   final emailController = TECupertinoTextFieldController();
   final nicknameController = TECupertinoTextFieldController();
   final oneLineIntroduceController = TECupertinoTextFieldController();
   final bankNameController = TECupertinoTextFieldController();
   final holderNameController = TECupertinoTextFieldController();
   final bankAccountNumberController = TECupertinoTextFieldController();
+
+  void onReceiveGiftFromUrl() {
+    final input = receiveGiftFromUrlController.text.trim();
+    late final String giftId;
+    if (input.isURL) {
+      giftId = input.split('gift/').last;
+    } else {
+      giftId = input;
+    }
+    react.toGiftReceive(giftId: giftId);
+  }
 
   Future<void> onLogOut() async {
     if (!_authService.isLogined()) {

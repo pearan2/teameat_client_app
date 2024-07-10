@@ -236,4 +236,14 @@ abstract class ITextSystem {
   String get shareGiftCode;
 
   String get receiveGift;
+  String get giftIsAlreadyUsed;
+  String get toGiftPage;
+  String get giftNotFound;
+  String get goToBuyGift;
+  String get giftReceived;
+  String get shareGiftCodeAgain;
+  String get receiveGiftFromUrl;
+  String get receiveGiftFromUrlHelperText;
+  String get receiveGiftFromUrlHintText;
+  String get wrongGift;
 }

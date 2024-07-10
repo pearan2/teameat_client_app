@@ -716,4 +716,35 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get receiveGift => '선물 받기';
+
+  @override
+  String get giftIsAlreadyUsed => '이미 사용된 선물 이에요';
+
+  @override
+  String get toGiftPage => '내가 보낸 선물';
+
+  @override
+  String get giftNotFound => '선물한 기록이 없어요';
+
+  @override
+  String get goToBuyGift => '선물 사러 가기';
+
+  @override
+  String get giftReceived => '등록 완료';
+
+  @override
+  String get shareGiftCodeAgain => '선물 코드 공유 하기';
+
+  @override
+  String get receiveGiftFromUrl => '선물 코드 직접 등록';
+
+  @override
+  String get receiveGiftFromUrlHelperText => '공유받은 선물 코드(URL)을 입력해주세요';
+
+  @override
+  String get receiveGiftFromUrlHintText =>
+      'ex) https://link.teameat.shop/gift/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+
+  @override
+  String get wrongGift => '잘못된 선물 코드 입니다';
 }

@@ -134,13 +134,14 @@ class TEImageCarousel extends StatefulWidget {
   final List<dynamic> imageSrcs;
   final double ratio;
   final Widget? bottomLeft;
-
+  final double overlayAdditionalHorizontalPadding;
   const TEImageCarousel({
     super.key,
     required this.width,
     required this.imageSrcs,
     this.ratio = 1 / 1,
     this.bottomLeft,
+    this.overlayAdditionalHorizontalPadding = AppWidget.horizontalPadding,
   });
 
   @override
@@ -178,7 +179,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
             ),
           ),
           Positioned(
-            right: DS.space.tiny + AppWidget.horizontalPadding,
+            right: DS.space.tiny + widget.overlayAdditionalHorizontalPadding,
             bottom: DS.space.tiny,
             child: TEImageCarouselCounter(
               now: nowImageIdx + 1,
@@ -186,7 +187,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
             ),
           ),
           Positioned(
-              left: AppWidget.horizontalPadding,
+              left: widget.overlayAdditionalHorizontalPadding,
               bottom: 0,
               child: widget.bottomLeft ?? const SizedBox()),
         ],

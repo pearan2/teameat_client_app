@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
+import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/user.dart';
@@ -42,18 +44,15 @@ class UserPage extends GetView<UserPageController> {
                   onTap: controller.react.toStoreLike,
                   text: DS.text.followStore,
                 ),
-                const UserPageDivider(),
                 TERowButton(
-                  onTap: controller.react.toCustomerService,
-                  text: DS.text.customerQuestion,
+                  isLoginRequired: true,
+                  onTap: controller.react.toGift,
+                  text: DS.text.toGiftPage,
                 ),
-                const TEServicePolicyButton(),
-                const TEPrivacyPolicyButton(),
                 TERowButton(
-                  onTap: () {
-                    showTEBottomSheet(const BusinessRegistrationInformation());
-                  },
-                  text: DS.text.businessRegistrationInformation,
+                  isLoginRequired: true,
+                  onTap: () => showTEDialog(child: const ReceiveGiftFromUrl()),
+                  text: DS.text.receiveGiftFromUrl,
                 ),
                 const UserPageDivider(),
                 DS.space.vSmall,
@@ -78,6 +77,19 @@ class UserPage extends GetView<UserPageController> {
                 TERowButton(
                   onTap: c.react.toPermissionSetting,
                   text: DS.text.permissionSetting,
+                ),
+                const UserPageDivider(),
+                TERowButton(
+                  onTap: controller.react.toCustomerService,
+                  text: DS.text.customerQuestion,
+                ),
+                const TEServicePolicyButton(),
+                const TEPrivacyPolicyButton(),
+                TERowButton(
+                  onTap: () {
+                    showTEBottomSheet(const BusinessRegistrationInformation());
+                  },
+                  text: DS.text.businessRegistrationInformation,
                 ),
                 const LogOutSignOutColumn(),
               ],
@@ -196,5 +208,32 @@ class LogOutSignOutColumn extends GetView<UserPageController> {
         );
       }
     });
+  }
+}
+
+class ReceiveGiftFromUrl extends GetView<UserPageController> {
+  const ReceiveGiftFromUrl({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(DS.space.tiny),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TECupertinoTextField(
+            isEssential: true,
+            autoFocus: false,
+            helperText: DS.text.receiveGiftFromUrlHelperText,
+            hintText: DS.text.receiveGiftFromUrlHintText,
+            maxLines: null,
+            controller: c.receiveGiftFromUrlController,
+            validate: (value) => value.isNotEmpty,
+          ),
+          TEPrimaryButton(
+              text: DS.text.receiveGiftFromUrl, onTap: c.onReceiveGiftFromUrl),
+        ],
+      ),
+    );
   }
 }

@@ -47,4 +47,24 @@ class GiftRepository implements IGiftRepository {
           const Failure.createGiftFail('선물코드를 입력하는데 실패하였습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<GiftPreview>>> findMyGiftPreview(
+      {required int pageNumber, required int pageSize}) async {
+    try {
+      const path = "api/voucher/gift/my";
+      final ret = await _conn.get(path, {
+        'pageNumber': pageNumber.toString(),
+        'pageSize': pageSize.toString()
+      });
+      return ret.fold(
+          (l) => left(l),
+          (r) => right((r as Iterable)
+              .map((json) => GiftPreview.fromJson(json))
+              .toList()));
+    } catch (e) {
+      return left(
+          const Failure.fetchGiftFail('선물 데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
 }

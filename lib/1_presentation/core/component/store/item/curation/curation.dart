@@ -4,17 +4,6 @@ import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 
-class CurationMainInfo extends StatelessWidget {
-  final CurationMain curation;
-
-  const CurationMainInfo(this.curation, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
 class CurationCuratorInfo extends StatelessWidget {
   final double height;
 

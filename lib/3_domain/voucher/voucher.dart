@@ -95,6 +95,7 @@ class VoucherDetail with _$VoucherDetail {
     required String voucherUseDefaultType,
     required List<dynamic> itemImageUrls,
     required List<VoucherUseLog> useLogs,
+    bool? isGifted,
   }) = _VoucherDetail;
 
   factory VoucherDetail.fromJson(Map<String, Object?> json) =>

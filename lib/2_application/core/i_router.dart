@@ -58,4 +58,6 @@ abstract class IRouter {
   void toGiftSuccess({required String giftId});
 
   void toGiftReceive({required String giftId});
+
+  void toGift();
 }

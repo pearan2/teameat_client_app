@@ -11,6 +11,7 @@ class GiftPreview with _$GiftPreview {
     required String title,
     required String description,
     required String profileImageUrl,
+    required bool isUsable,
   }) = _GiftPreview;
 
   factory GiftPreview.fromJson(Map<String, Object?> json) =>
@@ -22,5 +23,6 @@ class GiftPreview with _$GiftPreview {
         description: "gift preview empty desc",
         profileImageUrl:
             "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
+        isUsable: false,
       );
 }

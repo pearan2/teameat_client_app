@@ -67,8 +67,8 @@ class HomePage extends GetView<HomePageController> {
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: imageWidth /
-                          (imageWidth +
-                              DS.space.large * 3 +
+                          (imageWidth * (4 / 3) +
+                              DS.space.large * 2 +
                               DS.space.base * 2), // Todo 비율 조정
                       crossAxisSpacing: DS.space.small,
                       mainAxisSpacing: DS.space.base,

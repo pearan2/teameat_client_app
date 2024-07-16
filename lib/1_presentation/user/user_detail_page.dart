@@ -41,7 +41,7 @@ class UserDetailPage extends GetView<UserPageController> {
                         size: DS.space.large * 2,
                         url: user.profileImageUrl,
                         file: c.selectedProfileImageFile,
-                        onTap: c.onProfileImageClicked,
+                        onTap: () => c.onProfileImageClicked(context),
                       ))),
               DS.space.vSmall,
               TEDivider.thick(),

@@ -6,5 +6,5 @@ import 'package:teameat/99_util/image.dart';
 
 abstract class IFileService {
   Future<Either<Failure, String>> uploadImageFile(File file);
-  Future<Either<Failure, String>> uploadImage(ImageResizeResult image);
+  Future<Either<Failure, String>> uploadImage(ImageComputeResult image);
 }

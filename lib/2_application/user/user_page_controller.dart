@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart' as mt;
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -134,12 +135,14 @@ class UserPageController extends PageController {
     });
   }
 
-  Future<void> onProfileImageClicked() async {
-    final files = await showMultiPhotoPickerBottomSheet(limit: 1);
-    if (files == null || files.length != 1) {
-      return;
-    }
-    _selectedProfileImageFile.value = files.first;
+  Future<void> onProfileImageClicked(mt.BuildContext context) async {
+    showInstaAssetPicker(context, maxAssets: 1, onCompleted: (stream) {
+      stream.listen((data) {
+        if (data.croppedFiles.isNotEmpty) {
+          _selectedProfileImageFile.value = data.croppedFiles.first;
+        }
+      });
+    });
   }
 
   Future<void> updateMe() async {

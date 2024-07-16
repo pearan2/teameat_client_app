@@ -6,21 +6,21 @@ import 'package:queue/queue.dart';
 
 final queue = Queue(parallel: 3);
 
-class ImageResizeResult {
+class ImageComputeResult {
   final int width;
   final int height;
   final Uint8List bytes;
   final String contentType;
 
-  ImageResizeResult({
+  ImageComputeResult({
     required this.width,
     required this.height,
     required this.bytes,
     required this.contentType,
   });
 
-  factory ImageResizeResult.empty() {
-    return ImageResizeResult(
+  factory ImageComputeResult.empty() {
+    return ImageComputeResult(
       width: 0,
       height: 0,
       bytes: Uint8List(0),
@@ -46,7 +46,7 @@ class ImageResizeParameter {
       {this.sideMax = 1024, this.quality = 100, this.ratio});
 }
 
-Future<ImageResizeResult> _resize(ImageResizeParameter param) async {
+Future<ImageComputeResult> _resize(ImageResizeParameter param) async {
   final File file = param.file;
   final int sideMax = param.sideMax;
   final int quality = param.quality;
@@ -95,7 +95,7 @@ Future<ImageResizeResult> _resize(ImageResizeParameter param) async {
     maintainAspect: true,
   );
 
-  return ImageResizeResult(
+  return ImageComputeResult(
     width: resizedImage.width,
     height: resizedImage.height,
     bytes: img.encodeJpg(resizedImage, quality: quality),
@@ -103,17 +103,35 @@ Future<ImageResizeResult> _resize(ImageResizeParameter param) async {
   );
 }
 
-Future<ImageResizeResult> resizeAsync(ImageResizeParameter param) async {
+Future<ImageComputeResult> _compute(File file, {int quality = 85}) async {
+  final img.Image? image = img.decodeImage(file.readAsBytesSync());
+  if (image == null) {
+    throw "이미지를 불러오는 도중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요.";
+  }
+
+  return ImageComputeResult(
+    width: image.width,
+    height: image.height,
+    bytes: img.encodeJpg(image, quality: quality),
+    contentType: 'image/jpg',
+  );
+}
+
+Future<ImageComputeResult> computeAsync(File imageFile) async {
+  return _compute(imageFile);
+}
+
+Future<ImageComputeResult> resizeAsync(ImageResizeParameter param) async {
   return compute(_resize, param);
 }
 
 Future<void> _resizeWithCallback(ImageResizeParameter param,
-    void Function(ImageResizeResult result) callback) async {
+    void Function(ImageComputeResult result) callback) async {
   final ret = await compute(_resize, param);
   callback(ret);
 }
 
 Future<void> resize(ImageResizeParameter param,
-    void Function(ImageResizeResult result) callback) async {
+    void Function(ImageComputeResult result) callback) async {
   queue.add(() => _resizeWithCallback(param, callback));
 }

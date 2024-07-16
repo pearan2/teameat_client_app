@@ -17,7 +17,6 @@ import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/99_util/extension/list.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
-import 'package:teameat/99_util/image.dart';
 import 'package:teameat/99_util/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -656,7 +655,7 @@ class TEMultiImageSelector extends StatefulWidget {
 class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   late final imageRatio = widget.imageWidthRatio / widget.imageHeightRatio;
 
-  List<File> selectedImages = [];
+  List<File?> selectedImages = [];
 
   bool isDisposed = false;
 
@@ -664,7 +663,10 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     if (isDisposed) {
       return;
     }
-    setState(() => callback());
+    setState(() {
+      callback();
+      _tryInvokeCallback();
+    });
   }
 
   @override
@@ -686,7 +688,6 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   void _changeIdx(int lhs, int rhs) {
     changeState(() {
       selectedImages = selectedImages.reorder(lhs, rhs);
-      _tryInvokeCallback();
     });
   }
 
@@ -694,11 +695,16 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     final nextSelectedImages = [...selectedImages]..removeAt(idx);
     changeState(() {
       selectedImages = nextSelectedImages;
-      _tryInvokeCallback();
     });
   }
 
   Widget _buildContent(int idx) {
+    if (selectedImages[idx] == null) {
+      return const Center(
+        child: TELoading(),
+      );
+    }
+
     final imageSrc = selectedImages[idx];
     final imageSrcs = selectedImages.toList();
 
@@ -717,7 +723,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
       child: Stack(
         children: [
           Image.file(
-            selectedImages[idx],
+            selectedImages[idx]!,
             fit: BoxFit.fill,
           ),
           Positioned(
@@ -766,17 +772,40 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 
   void _tryInvokeCallback() {
-    widget.onImageChanged(selectedImages);
+    if (selectedImages.where((s) => s == null).isEmpty) {
+      widget.onImageChanged(selectedImages.map((i) => i as File).toList());
+      widget.onLoading(false);
+    } else {
+      widget.onLoading(true);
+    }
   }
 
   Future<void> _onAddImage() async {
+    if (selectedImages.length >= widget.numberOfMaximumImages) {
+      return showError(DS.text.canNotAddMorePictures);
+    }
+
+    final originalImages = [...selectedImages];
+
     showInstaAssetPicker(context,
         maxAssets: widget.numberOfMaximumImages - selectedImages.length,
+        cropRatio: widget.imageWidthRatio / widget.imageHeightRatio,
         onCompleted: (stream) => {
               stream.listen((data) {
-                changeState(() {
-                  selectedImages = [...selectedImages, ...data.croppedFiles];
-                });
+                if (selectedImages.length !=
+                    originalImages.length + data.selectedAssets.length) {
+                  changeState(() {
+                    selectedImages = [
+                      ...originalImages,
+                      ...data.selectedAssets.map((_) => null)
+                    ];
+                  });
+                }
+                if (data.selectedAssets.length == data.croppedFiles.length) {
+                  changeState(() {
+                    selectedImages = [...originalImages, ...data.croppedFiles];
+                  });
+                }
               })
             });
     widget.onLoading(true);
@@ -862,10 +891,6 @@ class TEOnOffButton extends StatelessWidget {
     );
   }
 }
-
-// Future<void> toPermissionSetting() async {
-//   openAppSettings();
-// }
 
 class TEPermissionButton extends StatefulWidget {
   final Permission permission;

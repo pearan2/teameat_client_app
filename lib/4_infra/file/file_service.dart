@@ -14,12 +14,12 @@ class FileService implements IFileService {
 
   @override
   Future<Either<Failure, String>> uploadImageFile(File file) async {
-    final resizeResult = await resizeAsync(ImageResizeParameter(file));
+    final resizeResult = await computeAsync(file);
     return uploadImage(resizeResult);
   }
 
   @override
-  Future<Either<Failure, String>> uploadImage(ImageResizeResult image) async {
+  Future<Either<Failure, String>> uploadImage(ImageComputeResult image) async {
     try {
       const path = '/api/common/upload-url';
       final ret = await _conn.get(

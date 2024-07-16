@@ -484,6 +484,8 @@ class InstaAssetPickerTextDelegate extends AssetPickerTextDelegate {
 
 void showInstaAssetPicker(BuildContext context,
     {required int maxAssets,
+    double preferSize = 1024,
+    double cropRatio = 3 / 4,
     int gridCount = 3,
     required dynamic Function(Stream<InstaAssetsExportDetails>)
         onCompleted}) async {
@@ -533,8 +535,8 @@ void showInstaAssetPicker(BuildContext context,
         ),
       ),
     ),
-    cropDelegate:
-        const InstaAssetCropDelegate(preferredSize: 1024, cropRatios: [3 / 4]),
+    cropDelegate: InstaAssetCropDelegate(
+        preferredSize: preferSize, cropRatios: [cropRatio]),
     onCompleted: onCompleted,
   );
 }

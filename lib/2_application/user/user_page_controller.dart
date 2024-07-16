@@ -136,7 +136,8 @@ class UserPageController extends PageController {
   }
 
   Future<void> onProfileImageClicked(mt.BuildContext context) async {
-    showInstaAssetPicker(context, maxAssets: 1, onCompleted: (stream) {
+    showInstaAssetPicker(context, cropRatio: 1 / 1, maxAssets: 1,
+        onCompleted: (stream) {
       stream.listen((data) {
         if (data.croppedFiles.isNotEmpty) {
           _selectedProfileImageFile.value = data.croppedFiles.first;

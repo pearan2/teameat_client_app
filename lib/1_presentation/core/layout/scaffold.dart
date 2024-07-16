@@ -314,7 +314,7 @@ class _BottomNavigatorToggle extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           clicked ? type.getIconClicked() : type.getIcon(),
-          DS.space.vXXTiny,
+          DS.space.vXTiny,
           clicked ? type.getTextClicked() : type.getText(),
         ],
       ),

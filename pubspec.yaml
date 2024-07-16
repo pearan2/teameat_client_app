@@ -71,6 +71,7 @@ dependencies:
   custom_refresh_indicator: ^3.1.0
   permission_handler: ^11.3.1
   animated_toggle_switch: ^0.8.2
+  insta_assets_picker: ^2.3.1
 
 dev_dependencies:
   flutter_test:

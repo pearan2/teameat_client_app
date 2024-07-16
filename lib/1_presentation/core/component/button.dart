@@ -802,35 +802,42 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 
   Future<void> _onAddImage() async {
-    if (this.selectedImages.length >= widget.numberOfMaximumImages) {
-      return showError(DS.text.canNotAddMorePictures);
-    }
+    showInstaAssetPicker(context,
+        maxAssets: widget.numberOfMaximumImages - selectedImages.length,
+        onCompleted: (stream) => {
+              stream.listen((data) {
+                print(data.croppedFiles);
+              })
+            });
+    // if (this.selectedImages.length >= widget.numberOfMaximumImages) {
+    //   return showError(DS.text.canNotAddMorePictures);
+    // }
 
-    final selectedImages = await showMultiPhotoPickerBottomSheet(
-      limit: widget.numberOfMaximumImages - this.selectedImages.length,
-      widthRatio: widget.imageWidthRatio,
-      heightRatio: widget.imageHeightRatio,
-      height: Get.mediaQuery.size.height - Get.mediaQuery.padding.top,
-    );
-    if (selectedImages == null) {
-      return;
-    }
-    final beforeLength = this.selectedImages.length;
-    changeState(() {
-      this.selectedImages = [...this.selectedImages, ...selectedImages];
-      loadings = [
-        ...loadings,
-        ...List.generate(selectedImages.length, (_) => true)
-      ];
-      croppedImages = [
-        ...croppedImages,
-        ...List.generate(
-            selectedImages.length, (_) => ImageResizeResult.empty())
-      ];
-    });
-    for (int i = beforeLength; i < this.selectedImages.length; i++) {
-      _cropImage(i);
-    }
+    // final selectedImages = await showMultiPhotoPickerBottomSheet(
+    //   limit: widget.numberOfMaximumImages - this.selectedImages.length,
+    //   widthRatio: widget.imageWidthRatio,
+    //   heightRatio: widget.imageHeightRatio,
+    //   height: Get.mediaQuery.size.height - Get.mediaQuery.padding.top,
+    // );
+    // if (selectedImages == null) {
+    //   return;
+    // }
+    // final beforeLength = this.selectedImages.length;
+    // changeState(() {
+    //   this.selectedImages = [...this.selectedImages, ...selectedImages];
+    //   loadings = [
+    //     ...loadings,
+    //     ...List.generate(selectedImages.length, (_) => true)
+    //   ];
+    //   croppedImages = [
+    //     ...croppedImages,
+    //     ...List.generate(
+    //         selectedImages.length, (_) => ImageResizeResult.empty())
+    //   ];
+    // });
+    // for (int i = beforeLength; i < this.selectedImages.length; i++) {
+    //   _cropImage(i);
+    // }
     widget.onLoading(true);
   }
 

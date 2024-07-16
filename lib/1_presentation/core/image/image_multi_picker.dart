@@ -494,6 +494,9 @@ void showInstaAssetPicker(BuildContext context,
 
   await InstaAssetPicker.pickAssets(
     context,
+    loadingIndicatorBuilder: (context, isAssetsEmpty) => const Center(
+      child: TELoading(),
+    ),
     onPermissionDenied: (context, delegateDescription) {
       showTEBottomSheet(Column(
         mainAxisSize: MainAxisSize.min,

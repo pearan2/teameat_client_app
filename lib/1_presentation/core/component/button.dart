@@ -633,7 +633,7 @@ class TEMultiImageSelector extends StatefulWidget {
   final bool isFirstCover;
 
   final String addButtonTitle;
-  final Function(List<ImageResizeResult> images) onImageChanged;
+  final Function(List<File> images) onImageChanged;
   final Function(bool isLoading) onLoading;
 
   const TEMultiImageSelector({
@@ -657,8 +657,6 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   late final imageRatio = widget.imageWidthRatio / widget.imageHeightRatio;
 
   List<File> selectedImages = [];
-  List<ImageResizeResult> croppedImages = [];
-  List<bool> loadings = [];
 
   bool isDisposed = false;
 
@@ -687,39 +685,26 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
 
   void _changeIdx(int lhs, int rhs) {
     changeState(() {
-      loadings = loadings.reorder(lhs, rhs);
-      croppedImages = croppedImages.reorder(lhs, rhs);
       selectedImages = selectedImages.reorder(lhs, rhs);
       _tryInvokeCallback();
     });
   }
 
   void _removeImage(int idx) {
-    final nextLoadings = [...loadings]..removeAt(idx);
-    final nextCroppedImages = [...croppedImages]..removeAt(idx);
     final nextSelectedImages = [...selectedImages]..removeAt(idx);
     changeState(() {
-      loadings = nextLoadings;
-      croppedImages = nextCroppedImages;
       selectedImages = nextSelectedImages;
       _tryInvokeCallback();
     });
   }
 
   Widget _buildContent(int idx) {
-    final isLoading = loadings[idx];
-    if (isLoading) {
-      return const Center(child: TELoading());
-    }
-    final imageSrc = croppedImages[idx].bytes;
-    final imageSrcs = croppedImages.map((c) => c.bytes).toList();
+    final imageSrc = selectedImages[idx];
+    final imageSrcs = selectedImages.toList();
 
     return GestureDetector(
       key: ValueKey(idx),
       onTap: () {
-        if (loadings.contains(true)) {
-          return;
-        }
         showMultiImageEditViewer(
           imageSrc: imageSrc,
           imageSrcs: imageSrcs,
@@ -731,8 +716,8 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
       behavior: HitTestBehavior.opaque,
       child: Stack(
         children: [
-          Image.memory(
-            croppedImages[idx].bytes,
+          Image.file(
+            selectedImages[idx],
             fit: BoxFit.fill,
           ),
           Positioned(
@@ -781,24 +766,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 
   void _tryInvokeCallback() {
-    if (!loadings.contains(true)) {
-      widget.onLoading(false);
-      widget.onImageChanged(croppedImages);
-    }
-  }
-
-  Future<void> _cropImage(int idx) async {
-    resize(
-        ImageResizeParameter(selectedImages[idx], ratio: imageRatio),
-        (ret) => changeState(() {
-              final nextLoadings = [...loadings];
-              nextLoadings[idx] = false;
-              final nextCroppedImages = [...croppedImages];
-              nextCroppedImages[idx] = ret;
-              loadings = nextLoadings;
-              croppedImages = nextCroppedImages;
-              _tryInvokeCallback();
-            }));
+    widget.onImageChanged(selectedImages);
   }
 
   Future<void> _onAddImage() async {
@@ -806,38 +774,11 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
         maxAssets: widget.numberOfMaximumImages - selectedImages.length,
         onCompleted: (stream) => {
               stream.listen((data) {
-                print(data.croppedFiles);
+                changeState(() {
+                  selectedImages = [...selectedImages, ...data.croppedFiles];
+                });
               })
             });
-    // if (this.selectedImages.length >= widget.numberOfMaximumImages) {
-    //   return showError(DS.text.canNotAddMorePictures);
-    // }
-
-    // final selectedImages = await showMultiPhotoPickerBottomSheet(
-    //   limit: widget.numberOfMaximumImages - this.selectedImages.length,
-    //   widthRatio: widget.imageWidthRatio,
-    //   heightRatio: widget.imageHeightRatio,
-    //   height: Get.mediaQuery.size.height - Get.mediaQuery.padding.top,
-    // );
-    // if (selectedImages == null) {
-    //   return;
-    // }
-    // final beforeLength = this.selectedImages.length;
-    // changeState(() {
-    //   this.selectedImages = [...this.selectedImages, ...selectedImages];
-    //   loadings = [
-    //     ...loadings,
-    //     ...List.generate(selectedImages.length, (_) => true)
-    //   ];
-    //   croppedImages = [
-    //     ...croppedImages,
-    //     ...List.generate(
-    //         selectedImages.length, (_) => ImageResizeResult.empty())
-    //   ];
-    // });
-    // for (int i = beforeLength; i < this.selectedImages.length; i++) {
-    //   _cropImage(i);
-    // }
     widget.onLoading(true);
   }
 

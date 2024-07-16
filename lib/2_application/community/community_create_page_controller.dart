@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/3_domain/user/user.dart';
-import 'package:teameat/99_util/image.dart';
+
 import 'package:flutter/material.dart' as mt;
 
 class CommunityCreatePageController extends PageController {
@@ -42,9 +43,9 @@ class CommunityCreatePageController extends PageController {
   // final _isInputValid = false.obs;
 
   bool _isMenuImageLoading = false;
-  List<ImageResizeResult> _menuImages = [];
+  List<File> _menuImages = [];
   bool _isStoreImageLoading = false;
-  List<ImageResizeResult> _storeImages = [];
+  List<File> _storeImages = [];
 
   final storeNameController = TECupertinoTextFieldController();
   final menuNameController = TECupertinoTextFieldController();
@@ -62,9 +63,9 @@ class CommunityCreatePageController extends PageController {
 
   // setter
   set isMenuImageLoading(bool isLoading) => _isMenuImageLoading = isLoading;
-  set menuImages(List<ImageResizeResult> images) => _menuImages = images;
+  set menuImages(List<File> images) => _menuImages = images;
   set isStoreImageLoading(bool isLoading) => _isStoreImageLoading = isLoading;
-  set storeImages(List<ImageResizeResult> images) => _storeImages = images;
+  set storeImages(List<File> images) => _storeImages = images;
 
   Future<void> onLastInputFocused() async {
     // 추후 제거해야되는 기능이 될수도 있음.
@@ -96,7 +97,7 @@ class CommunityCreatePageController extends PageController {
       name: menuNameController.text,
       originalPrice: menuOriginalPrice,
       price: (menuOriginalPrice * 0.9).round(),
-      imageUrls: _menuImages.map((r) => r.bytes).toList(),
+      imageUrls: _menuImages,
       store: StoreDetail.empty().copyWith(
         name: local!.title,
         address: local!.roadAddress,
@@ -106,7 +107,7 @@ class CommunityCreatePageController extends PageController {
         curatorId: -1,
         curatorProfileImageUrl: me.profileImageUrl,
         curatorNickname: me.nickname,
-        storeImageUrls: _storeImages.map((r) => r.bytes).toList(),
+        storeImageUrls: _storeImages,
         oneLineIntroduce: menuOneLineIntroduceController.text,
         introduce: menuIntroduceController.text,
       ),
@@ -176,9 +177,9 @@ class CommunityCreatePageController extends PageController {
     ret.fold((l) => showError(l.desc), (r) => _localIsEntered.value = r);
   }
 
-  Future<List<String>> _uploadImage(List<ImageResizeResult> images) async {
+  Future<List<String>> _uploadImage(List<File> images) async {
     final uploadResults =
-        await Future.wait(images.map(_fileService.uploadImage));
+        await Future.wait(images.map(_fileService.uploadImageFile));
     final rets = <String>[];
     for (final uploadResult in uploadResults) {
       uploadResult.fold((l) => showError(l.desc), (r) => rets.add(r));

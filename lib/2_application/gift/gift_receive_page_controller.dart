@@ -20,7 +20,7 @@ class GiftReceivePageController extends PageController {
   Future<Either<Failure, GiftPreview>> _loadGift() async {
     final ret = await _giftRepo.findGiftPreview(giftId);
     ret.fold((l) {
-      react.back();
+      react.back(closeOverlays: true);
       showError(DS.text.wrongGift);
     }, (r) {
       if (!r.isUsable) {

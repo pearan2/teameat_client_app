@@ -221,6 +221,8 @@ class CurationItemInfoColumn extends StatelessWidget {
         ),
         DS.space.vTiny,
         Text(curation.name,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
             style: DS.textStyle.paragraph3
                 .copyWith(color: DS.color.background700)),
         DS.space.vTiny,
@@ -332,7 +334,7 @@ class CurationCard extends GetView<CommunityPageController> {
               children: [
                 CurationImage(curation: curation),
                 DS.space.hXSmall,
-                CurationItemInfoColumn(curation: curation),
+                Expanded(child: CurationItemInfoColumn(curation: curation)),
               ],
             ),
             curation.item == null ? const SizedBox() : DS.space.vTiny,

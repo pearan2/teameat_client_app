@@ -69,12 +69,11 @@ class TEMainButton extends GetView<LoadingProvider> {
 
   double getContentWidth() {
     return getTextPainter(
-            text: text,
-            style: getContentStyle(),
-            maxLine: 1,
-            maxWidth: double.infinity)
-        .size
-        .width;
+      text: text,
+      style: getContentStyle(),
+      maxLine: 1,
+      maxWidth: double.infinity,
+    ).size.width;
   }
 
   double getContainerWidth() {

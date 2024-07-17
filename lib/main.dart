@@ -53,8 +53,16 @@ class AppWidget extends StatelessWidget {
         getPages: allPages(),
         initialRoute: "/",
         debugShowCheckedModeBanner: env.isDev,
-        builder: (_, child) =>
-            ScrollConfiguration(behavior: NoGlowBehavior(), child: child!),
+        builder: (_, child) {
+          final MediaQueryData data = MediaQuery.of(context);
+          return MediaQuery(
+            data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: ScrollConfiguration(
+              behavior: NoGlowBehavior(),
+              child: child!,
+            ),
+          );
+        },
         theme: ThemeData(
           colorScheme: ColorScheme.light(primary: DS.color.primary600),
           useMaterial3: true,

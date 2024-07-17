@@ -2,9 +2,6 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
-import 'package:queue/queue.dart';
-
-final queue = Queue(parallel: 3);
 
 class ImageComputeResult {
   final int width;
@@ -123,15 +120,4 @@ Future<ImageComputeResult> computeAsync(File imageFile) async {
 
 Future<ImageComputeResult> resizeAsync(ImageResizeParameter param) async {
   return compute(_resize, param);
-}
-
-Future<void> _resizeWithCallback(ImageResizeParameter param,
-    void Function(ImageComputeResult result) callback) async {
-  final ret = await compute(_resize, param);
-  callback(ret);
-}
-
-Future<void> resize(ImageResizeParameter param,
-    void Function(ImageComputeResult result) callback) async {
-  queue.add(() => _resizeWithCallback(param, callback));
 }

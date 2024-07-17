@@ -732,18 +732,17 @@ packages:
     dependency: transitive
     description:
       name: insta_assets_crop
-      sha256: c6ca1786b19e0d270843346c8205b1e90418f0c5146a8a4476ba618f768b0e89
+      sha256: "1ad0627d0d79e695063be940ba9df34699ddbab2d80ccdddbf00666dda0022c5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.1.0-dev.2"
   insta_assets_picker:
     dependency: "direct main"
     description:
-      name: insta_assets_picker
-      sha256: "518ab5b51b77dbfb76a334d8e72df41cef2f0c40014fac777ea9686c06cc25ed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
+      path: "/Users/hongkwonlee/Desktop/project/flutter_local_library/insta_assets_picker"
+      relative: false
+    source: path
+    version: "3.0.0-dev.1"
   intl:
     dependency: "direct main"
     description:
@@ -1112,14 +1111,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  queue:
-    dependency: "direct main"
-    description:
-      name: queue
-      sha256: "9a41ecadc15db79010108c06eae229a45c56b18db699760f34e8c9ac9b831ff9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0+2"
   share_plus:
     dependency: "direct main"
     description:
@@ -1544,10 +1535,9 @@ packages:
   wechat_assets_picker:
     dependency: transitive
     description:
-      name: wechat_assets_picker
-      sha256: f4b3eb0662f9a9f0453a591f056f5f63244586b772b62b79730a54e501b02671
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/hongkwonlee/Desktop/project/flutter_local_library/flutter_wechat_assets_picker"
+      relative: false
+    source: path
     version: "9.1.0"
   wechat_picker_library:
     dependency: transitive

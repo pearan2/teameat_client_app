@@ -482,21 +482,61 @@ class InstaAssetPickerTextDelegate extends AssetPickerTextDelegate {
   String get accessiblePathName => '접근 가능한 경로';
 }
 
+class InstaAssetPickerResult {
+  final List<AssetEntity> selectedAssets;
+  final List<File> croppedFiles;
+
+  InstaAssetPickerResult({
+    required this.selectedAssets,
+    required this.croppedFiles,
+  });
+}
+
 void showInstaAssetPicker(BuildContext context,
     {required int maxAssets,
     double preferSize = 1024,
     double cropRatio = 3 / 4,
     int gridCount = 3,
-    required dynamic Function(Stream<InstaAssetsExportDetails>)
+    required dynamic Function(Stream<InstaAssetPickerResult>)
         onCompleted}) async {
   final router = Get.find<IReact>();
   final theme = InstaAssetPicker.themeData(Theme.of(context).primaryColor);
+  final pickerTheme = theme.copyWith(
+    canvasColor: DS.color.background800, // body background color
+    splashColor: DS.color.background500, // onTap splash color
+    colorScheme: theme.colorScheme.copyWith(
+      surface: DS.color.background800, // albums list background color
+    ),
+
+    appBarTheme: theme.appBarTheme.copyWith(
+      backgroundColor: DS.color.background800, // app bar background color
+      titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+          color: DS.color
+              .background000), // change app bar title text style to be like app theme
+    ),
+    // edit `confirm` button style
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: DS.color.primary600,
+        disabledForegroundColor: DS.color.point500,
+      ),
+    ),
+  );
 
   await InstaAssetPicker.pickAssets(
     context,
-    loadingIndicatorBuilder: (context, isAssetsEmpty) => const Center(
-      child: TELoading(),
+    pickerConfig: InstaAssetPickerConfig(
+      loadingIndicatorBuilder: (context, isAssetsEmpty) => const Center(
+        child: TELoading(),
+      ),
+      closeOnComplete: true,
+      textDelegate: InstaAssetPickerTextDelegate(),
+      gridCount: gridCount,
+      pickerTheme: pickerTheme,
+      cropDelegate: InstaAssetCropDelegate(
+          preferredSize: preferSize, cropRatios: [cropRatio]),
     ),
+    requestType: RequestType.image,
     pageSize: 30,
     onPermissionDenied: (context, delegateDescription) {
       showTEBottomSheet(Column(
@@ -515,32 +555,11 @@ void showInstaAssetPicker(BuildContext context,
         ],
       ));
     },
-    closeOnComplete: true,
-    textDelegate: InstaAssetPickerTextDelegate(),
-    gridCount: gridCount,
     maxAssets: maxAssets,
-    pickerTheme: theme.copyWith(
-      canvasColor: DS.color.background800, // body background color
-      splashColor: DS.color.background500, // onTap splash color
-      colorScheme: theme.colorScheme.copyWith(
-        surface: DS.color.background800, // albums list background color
-      ),
-      appBarTheme: theme.appBarTheme.copyWith(
-        backgroundColor: DS.color.background800, // app bar background color
-        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
-            color: DS.color
-                .background000), // change app bar title text style to be like app theme
-      ),
-      // edit `confirm` button style
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: DS.color.primary600,
-          disabledForegroundColor: DS.color.point500,
-        ),
-      ),
-    ),
-    cropDelegate: InstaAssetCropDelegate(
-        preferredSize: preferSize, cropRatios: [cropRatio]),
-    onCompleted: onCompleted,
+    onCompleted: (stream) => stream.map((detail) => InstaAssetPickerResult(
+          selectedAssets: detail.selectedAssets,
+          croppedFiles:
+              detail.data.map((croppedFile) => croppedFile as File).toList(),
+        )),
   );
 }

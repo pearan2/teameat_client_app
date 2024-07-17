@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.8+64
+version: 1.0.8+65
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
@@ -67,12 +67,13 @@ dependencies:
   photo_view: ^0.15.0
   app_links: ^6.1.1
   share_plus: ^9.0.0
-  queue: ^3.1.0+2
   custom_refresh_indicator: ^3.1.0
   permission_handler: ^11.3.1
   animated_toggle_switch: ^0.8.2
-  insta_assets_picker: ^2.3.1
 
+  insta_assets_picker: 
+    path: /Users/hongkwonlee/Desktop/project/flutter_local_library/insta_assets_picker
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

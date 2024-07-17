@@ -1,17 +1,14 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+
 import 'package:get/get.dart';
 import 'package:teameat/0_config/dependency_config.dart';
 import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/0_config/firebase_options.dart';
-// import 'package:teameat/0_config/firebase_message_config.dart';
-// import 'package:teameat/0_config/firebase_options.dart';
 import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
-// import 'package:teameat/1_presentation/core/root_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/99_util/firebase_cloud_message.dart';

@@ -71,6 +71,8 @@ dependencies:
   permission_handler: ^11.3.1
   animated_toggle_switch: ^0.8.2
 
+  # 추후 초기 Recent 의 앨범 세팅을 잘 못가져오는 버그가 해결되면 (3.0.0-dev 까지는 존재)
+  # hosted 로 변경할 것
   insta_assets_picker: 
     path: /Users/hongkwonlee/Desktop/project/flutter_local_library/insta_assets_picker
   

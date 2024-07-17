@@ -556,10 +556,13 @@ void showInstaAssetPicker(BuildContext context,
       ));
     },
     maxAssets: maxAssets,
-    onCompleted: (stream) => stream.map((detail) => InstaAssetPickerResult(
-          selectedAssets: detail.selectedAssets,
-          croppedFiles:
-              detail.data.map((croppedFile) => croppedFile as File).toList(),
-        )),
+    onCompleted: (stream) => onCompleted(stream.map((detail) {
+      final filtered = detail.data.where((data) => data.croppedFile != null);
+
+      return InstaAssetPickerResult(
+        selectedAssets: detail.selectedAssets,
+        croppedFiles: filtered.map((data) => data.croppedFile as File).toList(),
+      );
+    })),
   );
 }

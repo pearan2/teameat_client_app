@@ -790,24 +790,24 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
     showInstaAssetPicker(context,
         maxAssets: widget.numberOfMaximumImages - selectedImages.length,
         cropRatio: widget.imageWidthRatio / widget.imageHeightRatio,
-        onCompleted: (stream) => {
-              stream.listen((data) {
-                if (selectedImages.length !=
-                    originalImages.length + data.selectedAssets.length) {
-                  changeState(() {
-                    selectedImages = [
-                      ...originalImages,
-                      ...data.selectedAssets.map((_) => null)
-                    ];
-                  });
-                }
-                if (data.selectedAssets.length == data.croppedFiles.length) {
-                  changeState(() {
-                    selectedImages = [...originalImages, ...data.croppedFiles];
-                  });
-                }
-              })
-            });
+        onCompleted: (stream) {
+      stream.listen((data) {
+        if (selectedImages.length !=
+            originalImages.length + data.selectedAssets.length) {
+          changeState(() {
+            selectedImages = [
+              ...originalImages,
+              ...data.selectedAssets.map((_) => null)
+            ];
+          });
+        }
+        if (data.selectedAssets.length == data.croppedFiles.length) {
+          changeState(() {
+            selectedImages = [...originalImages, ...data.croppedFiles];
+          });
+        }
+      });
+    });
     widget.onLoading(true);
   }
 

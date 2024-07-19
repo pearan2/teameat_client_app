@@ -747,4 +747,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get wrongGift => '잘못된 선물 코드 입니다';
+
+  @override
+  String get copyAddress => '주소 복사';
+
+  @override
+  String get goToMapApp => '지도 앱으로 이동';
+
+  @override
+  String get mapAppNotLaunched => '네이버 지도 앱이 설치되어 있지 않아요';
 }

@@ -10,7 +10,6 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
@@ -133,23 +132,11 @@ class UserDetailPage extends GetView<UserPageController> {
                       keyboardType: TextInputType.number,
                     ),
                     DS.space.vLarge,
-                    TEonTap(
-                      onTap: () => TEClipboard.setText(c.user.value.id),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            DS.text.copyUserId,
-                            style: DS.textStyle.caption1,
-                          ),
-                          DS.space.hXTiny,
-                          Icon(
-                            Icons.copy,
-                            size: DS.space.xSmall,
-                          )
-                        ],
-                      ),
-                    )
+                    TETextCopyButton(
+                      textData: c.user.value.id,
+                      style: DS.textStyle.caption1,
+                      text: DS.text.copyUserId,
+                    ),
                   ],
                 ),
               )

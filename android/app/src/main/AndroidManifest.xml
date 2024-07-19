@@ -93,4 +93,9 @@
             <action android:name="android.intent.action.TTS_SERVICE" />
         </intent>
     </queries>
+    <!-- NAVER MAP 설치 확인 -->
+    <!-- <queries>
+        <package android:name="com.nhn.android.nmap"/>
+    </queries> -->
+    
 </manifest>

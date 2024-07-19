@@ -13,6 +13,7 @@ import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
 import 'package:teameat/1_presentation/core/image/image_viewer.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
 import 'package:teameat/99_util/extension/list.dart';
@@ -967,6 +968,40 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
       onChange: (_) {
         openAppSettings();
       },
+    );
+  }
+}
+
+class TETextCopyButton extends StatelessWidget {
+  final String textData;
+  final TextStyle style;
+  final String text;
+
+  const TETextCopyButton({
+    super.key,
+    required this.textData,
+    required this.style,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () => TEClipboard.setText(textData),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            text,
+            style: style,
+          ),
+          DS.space.hXTiny,
+          Icon(
+            Icons.copy,
+            size: DS.space.xSmall,
+          )
+        ],
+      ),
     );
   }
 }

@@ -556,6 +556,8 @@ class StoreLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StorePoint.fromDetail(item.store);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -569,9 +571,24 @@ class StoreLocation extends StatelessWidget {
           borderRadius: BorderRadius.circular(DS.space.tiny),
           child: TEStoreMap.single(
             height: DS.space.large * 4,
-            store: StorePoint.fromDetail(item.store),
+            store: store,
             isLoading: item == ItemDetail.empty(),
           ),
+        ),
+        DS.space.vTiny,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoToMap(
+              store: store,
+              name: item.store.name,
+            ),
+            TETextCopyButton(
+              textData: item.store.address,
+              style: DS.textStyle.caption1,
+              text: DS.text.copyAddress,
+            ),
+          ],
         ),
       ],
     ).withBasePadding;

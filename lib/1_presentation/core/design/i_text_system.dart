@@ -246,4 +246,8 @@ abstract class ITextSystem {
   String get receiveGiftFromUrlHelperText;
   String get receiveGiftFromUrlHintText;
   String get wrongGift;
+
+  String get mapAppNotLaunched;
+  String get goToMapApp;
+  String get copyAddress;
 }

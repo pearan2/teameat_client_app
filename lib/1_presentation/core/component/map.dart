@@ -2,9 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 extension _TEPointExtension on Point {
   NLatLng toNLatLng() {
@@ -194,6 +197,33 @@ class _TEStoreMapState extends State<TEStoreMap> {
           _init(nController);
         },
       ),
+    );
+  }
+}
+
+class GoToMap extends StatelessWidget {
+  final StorePoint store;
+  final String name;
+  const GoToMap({super.key, required this.store, required this.name});
+
+  Future<void> isMapLaunched() async {
+    final isLaunched = await launchUrlString(
+        'nmap://place?lat=${store.location.latitude}&lng=${store.location.longitude}&name=$name');
+    if (!isLaunched) {
+      showError(DS.text.mapAppNotLaunched);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TEPrimaryButton(
+      text: DS.text.goToMapApp,
+      fitContentWidth: true,
+      textStyle: DS.textStyle.caption1,
+      contentHorizontalPadding: DS.space.tiny,
+      height: DS.space.base,
+      borderRadius: DS.space.xTiny,
+      onTap: isMapLaunched,
     );
   }
 }

@@ -20,6 +20,7 @@ class CommunityPageController extends PageController {
   final _filterCodes = RxList<Code>.empty();
   final _searchOption = SearchCurationSimpleList.empty().obs;
   late final me = User.visitor().wrap(_userRepo.getMe);
+  bool _isLoading = true;
 
   // controllers
   final PagingController<int, CurationSimple> pagingController =
@@ -33,7 +34,13 @@ class CommunityPageController extends PageController {
     react.toCommunityCreate();
   }
 
+  void pageRefresh() {
+    _searchOption.value = SearchCurationSimpleList.empty();
+    pagingController.refresh();
+  }
+
   void onFilterChanged(Code newFilter) {
+    if (_isLoading) return;
     _searchOption.value =
         searchOption.copyWith(status: newFilter, pageNumber: 0);
     pagingController.refresh();
@@ -45,7 +52,9 @@ class CommunityPageController extends PageController {
   }
 
   Future<void> _loadCurations(int currentPageNumber) async {
+    _isLoading = true;
     final ret = await _curationRepo.findAll(searchOption);
+    _isLoading = false;
     return ret.fold((l) => showError(l.desc), (r) {
       if (r.length < searchOption.pageSize) {
         pagingController.appendLastPage(r);

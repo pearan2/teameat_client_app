@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_permission_page.dart';
+import 'package:teameat/2_application/community/community_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/3_domain/order/order.dart';
@@ -131,6 +132,10 @@ class React extends IReact {
 
   @override
   void toCommunityOffAll() {
+    if (Get.isRegistered<CommunityPageController>()) {
+      final controller = Get.find<CommunityPageController>();
+      controller.pageRefresh();
+    }
     Get.offAllNamed('/community');
   }
 

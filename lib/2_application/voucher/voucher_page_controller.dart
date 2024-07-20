@@ -16,6 +16,7 @@ class VoucherPageController extends PageController {
   /// controllers
   final PagingController<int, VoucherSimple> pagingController =
       PagingController(firstPageKey: 0);
+  bool _isLoading = false;
 
   final _numberOfRemainVouchers = RxInt(0);
   final _filterCodes = RxList<Code>.empty();
@@ -28,6 +29,7 @@ class VoucherPageController extends PageController {
   List<Code> get orders => _orderCodes;
 
   void onFilterChanged(Code newFilter) {
+    if (_isLoading) return;
     _searchOption.value =
         searchOption.copyWith(status: newFilter, pageNumber: 0);
     pagingController.refresh();
@@ -61,7 +63,9 @@ class VoucherPageController extends PageController {
   }
 
   Future<void> _loadVouchers(int currentPageNumber) async {
+    _isLoading = true;
     final ret = await _voucherRepo.findAllVouchers(_searchOption.value);
+    _isLoading = false;
     return ret.fold((l) => showError(l.desc), (r) {
       if (r.length < numberOfVouchersPerPage) {
         pagingController.appendLastPage(r);

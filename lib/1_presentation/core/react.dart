@@ -5,6 +5,7 @@ import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/community/community_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
+import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
@@ -76,6 +77,10 @@ class React extends IReact {
 
   @override
   void toVoucherOffAll() {
+    if (Get.isRegistered<VoucherPageController>()) {
+      final controller = Get.find<VoucherPageController>();
+      controller.refreshPage();
+    }
     Get.offAllNamed('/voucher');
   }
 
@@ -134,7 +139,7 @@ class React extends IReact {
   void toCommunityOffAll() {
     if (Get.isRegistered<CommunityPageController>()) {
       final controller = Get.find<CommunityPageController>();
-      controller.pageRefresh();
+      controller.refreshPage();
     }
     Get.offAllNamed('/community');
   }

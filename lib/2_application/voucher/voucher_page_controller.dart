@@ -28,6 +28,11 @@ class VoucherPageController extends PageController {
   List<Code> get filters => _filterCodes;
   List<Code> get orders => _orderCodes;
 
+  void refreshPage() {
+    _searchOption.value = SearchVoucherSimpleList.empty();
+    pagingController.refresh();
+  }
+
   void onFilterChanged(Code newFilter) {
     if (_isLoading) return;
     _searchOption.value =

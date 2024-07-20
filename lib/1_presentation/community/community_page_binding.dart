@@ -5,6 +5,5 @@ class CommunityPageBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(CommunityPageController(), permanent: true);
-    // Get.lazyPut(() => CommunityPageController(), fenix: true);
   }
 }

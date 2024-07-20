@@ -34,7 +34,7 @@ class CommunityPageController extends PageController {
     react.toCommunityCreate();
   }
 
-  void pageRefresh() {
+  void refreshPage() {
     _searchOption.value = SearchCurationSimpleList.empty();
     pagingController.refresh();
   }

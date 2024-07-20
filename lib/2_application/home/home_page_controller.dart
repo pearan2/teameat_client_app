@@ -32,6 +32,7 @@ class HomePageController extends PageController {
   final _isNearbyMe = false.obs;
   final _recommendedItems = <ItemSimple>[].obs;
   final _isLoading = false.obs;
+  bool _isPagingLoading = false;
 
   /// getter
   bool get isNearbyMe => _isNearbyMe.value;
@@ -115,7 +116,10 @@ class HomePageController extends PageController {
   }
 
   Future<void> loadStores(int currentPageNumber) async {
+    if (_isPagingLoading) return;
+    _isPagingLoading = true;
     final ret = await _storeRepo.getStores(_searchOption.value);
+    _isPagingLoading = false;
     ret.fold((l) => showError(l.desc), (r) {
       if (r.length < _searchOption.value.pageSize) {
         pagingController.appendLastPage(r);

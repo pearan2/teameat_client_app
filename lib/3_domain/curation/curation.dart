@@ -52,7 +52,7 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
   factory SearchCurationSimpleList.empty() {
     return SearchCurationSimpleList(
       status: Code.empty(),
-      pageSize: 5,
+      pageSize: 10,
       pageNumber: 0,
     );
   }

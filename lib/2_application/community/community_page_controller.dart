@@ -20,7 +20,7 @@ class CommunityPageController extends PageController {
   final _filterCodes = RxList<Code>.empty();
   final _searchOption = SearchCurationSimpleList.empty().obs;
   late final me = User.visitor().wrap(_userRepo.getMe);
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   // controllers
   final PagingController<int, CurationSimple> pagingController =
@@ -52,6 +52,7 @@ class CommunityPageController extends PageController {
   }
 
   Future<void> _loadCurations(int currentPageNumber) async {
+    if (_isLoading) return;
     _isLoading = true;
     final ret = await _curationRepo.findAll(searchOption);
     _isLoading = false;

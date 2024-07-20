@@ -68,6 +68,7 @@ class VoucherPageController extends PageController {
   }
 
   Future<void> _loadVouchers(int currentPageNumber) async {
+    if (_isLoading) return;
     _isLoading = true;
     final ret = await _voucherRepo.findAllVouchers(_searchOption.value);
     _isLoading = false;

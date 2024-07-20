@@ -55,8 +55,6 @@ class HomePage extends GetView<HomePageController> {
               physics: const ClampingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  // key: controller.topKey,
-                  // key: topKey,
                   backgroundColor: DS.color.background000,
                   surfaceTintColor: DS.color.background000,
                   snap: true,

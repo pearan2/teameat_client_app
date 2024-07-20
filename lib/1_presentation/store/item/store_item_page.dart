@@ -113,7 +113,10 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                     ? const SizedBox()
                     : (CurationInfo(i.curation!))),
                 c.item.obx((i) => StoreItemUsageInfo(item: i)),
-                c.item.obx((i) => StoreLocation(i)),
+                c.item.obx((i) => AbsorbPointer(
+                      absorbing: c.absorbing,
+                      child: StoreLocation(i),
+                    )),
                 DS.space.vBase,
                 // Todo 이 사이에 상품고시정보, 취소/환불 안내 들어가야함
                 TEDivider.thin(),

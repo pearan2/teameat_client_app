@@ -8,6 +8,7 @@ import 'package:teameat/2_application/core/i_react.dart';
 
 class TEScaffold extends StatelessWidget {
   static const iosBottomPadding = 24.0;
+  static const androidBottomPadding = 0.0;
 
   final Widget body;
   final PreferredSizeWidget? appBar;
@@ -187,7 +188,7 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
             padding: EdgeInsets.only(
                 bottom: (GetPlatform.isIOS && widget.bottomSheet != null)
                     ? TEScaffold.iosBottomPadding
-                    : 0.0),
+                    : TEScaffold.androidBottomPadding),
             child: widget.body,
           ),
           widget.bottomFloatingButton == null
@@ -195,7 +196,9 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
               : Positioned(
                   left: 0,
                   right: 0,
-                  bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0,
+                  bottom: GetPlatform.isIOS
+                      ? TEScaffold.iosBottomPadding
+                      : TEScaffold.androidBottomPadding,
                   child: widget.bottomFloatingButton!,
                 ),
         ],
@@ -223,7 +226,9 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
         color: widget.bottomSheetBackgroundColor,
         child: Padding(
           padding: EdgeInsets.only(
-              bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
+              bottom: GetPlatform.isIOS
+                  ? TEScaffold.iosBottomPadding
+                  : TEScaffold.androidBottomPadding),
           child: widget.bottomSheet,
         ),
       ),
@@ -334,9 +339,13 @@ class _TEBottomNavigator extends StatelessWidget {
       style: const TextStyle(),
       child: Container(
         height: DS.space.large +
-            (GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
+            (GetPlatform.isIOS
+                ? TEScaffold.iosBottomPadding
+                : TEScaffold.androidBottomPadding),
         padding: EdgeInsets.only(
-            bottom: GetPlatform.isIOS ? TEScaffold.iosBottomPadding : 0.0),
+            bottom: GetPlatform.isIOS
+                ? TEScaffold.iosBottomPadding
+                : TEScaffold.androidBottomPadding),
         decoration: BoxDecoration(
           color: DS.color.background000,
         ),

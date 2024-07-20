@@ -70,7 +70,7 @@ class StoreItemPageController extends PageController {
 
   Future<Either<Failure, ItemDetail>> _loadStoreItemInfo() async {
     if (itemDetail != null) {
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 500));
       return right(itemDetail!);
     }
 

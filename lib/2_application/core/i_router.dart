@@ -19,7 +19,7 @@ abstract class IRouter {
 
   void toPaymentOff(Order order, PaymentMethod paymentMethod, int? itemId);
 
-  void toPaymentResultOff(Map<String, String> result, int? itemId);
+  void toPaymentResultOffAll(Map<String, String> result, int? itemId);
 
   void toVoucherOffAll();
 

@@ -14,6 +14,6 @@ class PaymentPageController extends PageController {
   });
 
   void paymentResultCallback(Map<String, String> result) {
-    react.toPaymentResultOff(result, itemId);
+    react.toPaymentResultOffAll(result, itemId);
   }
 }

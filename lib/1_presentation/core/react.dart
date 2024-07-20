@@ -5,6 +5,7 @@ import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/community/community_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
+import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -18,6 +19,10 @@ class React extends IReact {
 
   @override
   void toHomeOffAll() {
+    if (Get.isRegistered<HomePageController>()) {
+      final controller = Get.find<HomePageController>();
+      controller.refreshPage();
+    }
     Get.offAllNamed('/home');
   }
 

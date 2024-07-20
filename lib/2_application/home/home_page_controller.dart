@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' as mt;
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -15,7 +14,6 @@ import 'package:teameat/3_domain/store/store.dart';
 class HomePageController extends PageController {
   /// 상수
   final numberOfRecommendRequestItems = 1;
-  final topKey = mt.GlobalKey();
 
   /// repos
   final _storeRepo = Get.find<IStoreRepository>();
@@ -52,20 +50,11 @@ class HomePageController extends PageController {
 
   bool get loading => _isLoading.value;
 
-  void onFloatingButtonClickHandler() {
-    final context = topKey.currentContext;
-    if (context == null) {
-      return;
-    }
-    mt.Scrollable.ensureVisible(context,
-        duration: const Duration(milliseconds: 300));
-  }
-
   void onStoreItemCardClickHandler(int itemId) {
     return react.toStoreItemDetail(itemId);
   }
 
-  Future<void> pageRefresh() async {
+  Future<void> refreshPage() async {
     _searchOption.value = searchOption.copyWith(pageNumber: 0);
     pagingController.error = '';
     pagingController.refresh();

@@ -27,12 +27,20 @@ class HomePage extends GetView<HomePageController> {
             (AppWidget.itemHorizontalSpace)) /
         2;
 
+    final scrollController = ScrollController();
+
     final toolbarHeight = DS.space.base;
     return Obx(
       () => TEScaffold(
         loadingText: DS.text.accessToLocationPleaseWait,
         loading: c.loading,
-        onFloatingButtonClick: controller.onFloatingButtonClickHandler,
+        onFloatingButtonClick: () {
+          if (scrollController.hasClients) {
+            scrollController.animateTo(0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.bounceInOut);
+          }
+        },
         activated: BottomNavigatorType.home,
         body: Padding(
           padding: EdgeInsets.only(
@@ -41,12 +49,14 @@ class HomePage extends GetView<HomePageController> {
             right: AppWidget.horizontalPadding,
           ),
           child: TERefreshIndicator(
-            onRefresh: controller.pageRefresh,
+            onRefresh: controller.refreshPage,
             child: CustomScrollView(
+              controller: scrollController,
               physics: const ClampingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  key: controller.topKey,
+                  // key: controller.topKey,
+                  // key: topKey,
                   backgroundColor: DS.color.background000,
                   surfaceTintColor: DS.color.background000,
                   snap: true,

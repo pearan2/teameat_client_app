@@ -52,6 +52,15 @@ class UserPermissionPage extends StatelessWidget {
             OnOffButtonWrapper(DS.text.cameraInfoTitle,
                 desc: DS.text.cameraInfoDesc,
                 child: const TEPermissionButton(Permission.camera)),
+            const Expanded(child: SizedBox()),
+            GetPlatform.isIOS
+                ? Text(
+                    DS.text.permissionsAreRequestedWhenItNeeded,
+                    style: DS.textStyle.paragraph2Long,
+                    textAlign: TextAlign.center,
+                  )
+                : const SizedBox(),
+            DS.space.vLarge,
           ],
         ),
       ),

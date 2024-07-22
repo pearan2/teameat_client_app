@@ -763,4 +763,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get creatingCurationPleaseWait => '신청 중입니다\n잠시만 기다려주세요';
+
+  @override
+  String get permissionsAreRequestedWhenItNeeded =>
+      '권한들은 필요할 때만 요청돼요\n한번도 요청되지 않은 권한은\nOn / Off 할 수 없어요';
 }

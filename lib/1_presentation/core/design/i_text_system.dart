@@ -253,4 +253,6 @@ abstract class ITextSystem {
 
   String get errorOccurredDuringFileUploadingPleaseReTry;
   String get creatingCurationPleaseWait;
+
+  String get permissionsAreRequestedWhenItNeeded;
 }

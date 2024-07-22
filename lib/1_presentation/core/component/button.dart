@@ -906,6 +906,7 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
     with WidgetsBindingObserver {
   bool isLoading = true;
   bool isPermitted = false;
+  bool isRequested = false;
 
   /// 기본 false 값으로 시작
 
@@ -924,9 +925,13 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
     changeState(() => isLoading = false);
   }
 
-  void changePermitted(bool isPermitted) {
+  void changePermitted(PermissionStatus status) {
+    final isPermitted = status.isGranted;
+    final isRequested = GetPlatform.isAndroid ? true : !status.isDenied;
+
     changeState(() {
       this.isPermitted = isPermitted;
+      this.isRequested = isRequested;
       if (this.isPermitted) {
         widget.onPermitted?.call();
       }
@@ -936,8 +941,8 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
   Future<void> checkPermission() async {
     startLoading();
 
-    final isPermitted = await widget.permission.isGranted;
-    changePermitted(isPermitted);
+    final permissionStatus = await widget.permission.status;
+    changePermitted(permissionStatus);
     endLoading();
   }
 
@@ -963,6 +968,9 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
 
   @override
   Widget build(BuildContext context) {
+    if (!isRequested) {
+      return const SizedBox();
+    }
     return TEOnOffButton(
       isLoading: isLoading,
       value: isPermitted,

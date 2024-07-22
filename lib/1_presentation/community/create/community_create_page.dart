@@ -17,6 +17,7 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
   Widget build(BuildContext context) {
     return Obx(() => TEScaffold(
           loading: c.isLoading,
+          loadingText: DS.text.creatingCurationPleaseWait,
           appBar: TEAppBar(
             leadingIconOnPressed: c.react.back,
             title: DS.text.menuApplication,

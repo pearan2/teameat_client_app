@@ -250,4 +250,7 @@ abstract class ITextSystem {
   String get mapAppNotLaunched;
   String get goToMapApp;
   String get copyAddress;
+
+  String get errorOccurredDuringFileUploadingPleaseReTry;
+  String get creatingCurationPleaseWait;
 }

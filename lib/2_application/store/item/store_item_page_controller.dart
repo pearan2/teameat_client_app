@@ -34,7 +34,7 @@ class StoreItemPageController extends PageController {
 
   final int itemId;
   final ItemDetail? itemDetail;
-  final void Function()? onApplyCuration;
+  final Future<void> Function()? onApplyCuration;
   StoreItemPageController(
       {required this.itemId, this.itemDetail, this.onApplyCuration});
 

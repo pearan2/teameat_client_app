@@ -935,6 +935,7 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
 
   Future<void> checkPermission() async {
     startLoading();
+
     final isPermitted = await widget.permission.isGranted;
     changePermitted(isPermitted);
     endLoading();

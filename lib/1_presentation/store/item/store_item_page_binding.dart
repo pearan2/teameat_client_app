@@ -8,7 +8,8 @@ class StoreItemPageBinding implements Bindings {
     final argMap = Get.arguments as Map<String, dynamic>;
     final itemId = argMap['itemId'] as int;
     final itemDetail = argMap['itemDetail'] as ItemDetail?;
-    final onApplyCuration = argMap['onApplyCuration'] as void Function()?;
+    final onApplyCuration =
+        argMap['onApplyCuration'] as Future<void> Function()?;
 
     Get.put(
         StoreItemPageController(

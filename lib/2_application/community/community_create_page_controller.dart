@@ -121,8 +121,10 @@ class CommunityCreatePageController extends PageController {
         'onApplyCuration': () async {
           Get.back();
           _isLoading.value = true;
-          await _onCreateCuration();
-          _isLoading.value = false;
+          Future.delayed(const Duration(milliseconds: 500), () async {
+            await _onCreateCuration();
+            _isLoading.value = false;
+          });
         }
       },
       preventDuplicates: false,
@@ -194,6 +196,15 @@ class CommunityCreatePageController extends PageController {
 
     final imageUrlLists = await Future.wait(
         [_uploadImage(_menuImages), _uploadImage(_storeImages)]);
+
+    /// 모든 파일이 다 업로드 되었는지
+    final uploadedMenuImages = imageUrlLists[0];
+    final uploadedStoreImages = imageUrlLists[1];
+
+    if (uploadedMenuImages.length != _menuImages.length ||
+        uploadedStoreImages.length != _storeImages.length) {
+      return showError(DS.text.errorOccurredDuringFileUploadingPleaseReTry);
+    }
 
     final ret = await _curationRepo.registerCuration(CurationCreateRequest(
       localInfo: local!,

@@ -756,4 +756,11 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get mapAppNotLaunched => '네이버 지도 앱이 설치되어 있지 않아요';
+
+  @override
+  String get errorOccurredDuringFileUploadingPleaseReTry =>
+      '파일 업로드 도중 문제가 발생했어요 다시 시도해주세요';
+
+  @override
+  String get creatingCurationPleaseWait => '신청 중입니다\n잠시만 기다려주세요';
 }

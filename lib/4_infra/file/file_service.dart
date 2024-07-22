@@ -35,11 +35,15 @@ class FileService implements IFileService {
       final headers = <String, String>{
         HttpHeaders.contentTypeHeader: image.contentType,
       };
-      await http.put(
+      final uploadResult = await http.put(
         Uri.parse(url),
         headers: headers,
         body: image.bytes,
       );
+      if (uploadResult.statusCode != 200) {
+        return left(const Failure.uploadFileFail(
+            '파일 업로드 도중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요.'));
+      }
       return right(url.split('?')[0]);
     } catch (e) {
       return left(const Failure.uploadFileFail(

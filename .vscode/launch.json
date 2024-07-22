@@ -5,28 +5,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // "name": "teameat(dev)",
-      // "request": "launch",
-      // "type": "dart",
-      // "flutterMode": "debug",
-      // "args": [
-      //   "--dart-define",
-      //   "IS_DEV=true",
-      //   "--dart-define",
-      //   "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
-      // ]
+      "name": "teameat(dev)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "--dart-define",
+        "IS_DEV=true",
+        "--dart-define",
+        "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
+      ]
     },
     {
-      // "name": "teameat",
-      // "request": "launch",
-      // "type": "dart",
-      // "flutterMode": "release",
-      // "args": [
-      //   "--dart-define",
-      //   "IS_DEV=false",
-      //   "--dart-define",
-      //   "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
-      // ]
+      "name": "teameat",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "args": [
+        "--dart-define",
+        "IS_DEV=false",
+        "--dart-define",
+        "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
+      ]
     }
   ]
 }

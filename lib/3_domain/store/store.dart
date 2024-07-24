@@ -40,6 +40,7 @@ class StorePoint with _$StorePoint {
   const factory StorePoint({
     required int id,
     required String profileImageUrl,
+    String? naverMapPlaceId,
     required Point location,
   }) = _StorePoint;
 
@@ -54,6 +55,7 @@ class StorePoint with _$StorePoint {
     return StorePoint(
       id: store.id,
       profileImageUrl: store.profileImageUrl,
+      naverMapPlaceId: store.naverMapPlaceId,
       location: store.location,
     );
   }
@@ -62,6 +64,7 @@ class StorePoint with _$StorePoint {
     return StorePoint(
       id: store.id,
       profileImageUrl: store.profileImageUrl,
+      naverMapPlaceId: store.naverMapPlaceId,
       location: store.location,
     );
   }
@@ -122,6 +125,7 @@ class StoreSimple with _$StoreSimple {
     required String profileImageUrl,
     required String address,
     required Point location,
+    String? naverMapPlaceId,
   }) = _StoreSimple;
 
   factory StoreSimple.fromJson(Map<String, Object?> json) =>
@@ -137,6 +141,7 @@ class StoreDetail with _$StoreDetail {
     required List<String> imageUrls,
     required String address,
     required Point location,
+    String? naverMapPlaceId,
     required List<ItemSimple> items,
     required String phone,
     required String oneLineIntroduce,

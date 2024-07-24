@@ -207,8 +207,15 @@ class GoToMap extends StatelessWidget {
   const GoToMap({super.key, required this.store, required this.name});
 
   Future<void> isMapLaunched() async {
-    final isLaunched = await launchUrlString(
-        'nmap://place?lat=${store.location.latitude}&lng=${store.location.longitude}&name=$name');
+    late final bool isLaunched;
+    if (store.naverMapPlaceId == null) {
+      isLaunched = await launchUrlString(
+          'nmap://place?lat=${store.location.latitude}&lng=${store.location.longitude}&name=$name');
+    } else {
+      isLaunched =
+          await launchUrlString('nmap://place?id=${store.naverMapPlaceId}');
+    }
+
     if (!isLaunched) {
       showError(DS.text.mapAppNotLaunched);
     }

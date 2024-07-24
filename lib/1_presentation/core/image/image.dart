@@ -16,11 +16,13 @@ class TECacheImage extends StatelessWidget {
 
   final double borderRadius;
   final double ratio;
+  final BoxFit fit;
 
   const TECacheImage({
     super.key,
     required this.src,
     this.width,
+    this.fit = BoxFit.cover,
     this.borderRadius = 0,
     this.ratio = 1.0,
   }) : assert((src is String) | (src is Uint8List) | (src is File),
@@ -30,7 +32,7 @@ class TECacheImage extends StatelessWidget {
     if (src is String) {
       return ExtendedImage.network(
         src, width: width,
-        fit: BoxFit.cover,
+        fit: fit,
         cache: true,
         retries: 3, // 3회까지 리트라이
         timeLimit: const Duration(seconds: 5), // 5초 내로 불러오지 못하면 리트라이
@@ -49,7 +51,7 @@ class TECacheImage extends StatelessWidget {
       return ExtendedImage.memory(
         src,
         width: width,
-        fit: BoxFit.cover,
+        fit: fit,
         loadStateChanged: (state) {
           switch (state.extendedImageLoadState) {
             case LoadState.loading:
@@ -65,7 +67,7 @@ class TECacheImage extends StatelessWidget {
       return ExtendedImage.file(
         src,
         width: width,
-        fit: BoxFit.cover,
+        fit: fit,
         loadStateChanged: (state) {
           switch (state.extendedImageLoadState) {
             case LoadState.loading:

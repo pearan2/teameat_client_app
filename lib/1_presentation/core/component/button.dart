@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +7,7 @@ import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/image/image_multi_picker.dart';
 import 'package:teameat/1_presentation/core/image/image_viewer.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
@@ -632,7 +631,8 @@ class TEMultiImageSelector extends StatefulWidget {
   final bool isFirstCover;
 
   final String addButtonTitle;
-  final Function(List<File> images) onImageChanged;
+  final List<String> images;
+  final Function(List<dynamic> images) onImageChanged;
   final Function(bool isLoading) onLoading;
 
   const TEMultiImageSelector({
@@ -644,6 +644,7 @@ class TEMultiImageSelector extends StatefulWidget {
     this.imageHeightRatio = 4,
     this.addButtonTitle = '사진 추가',
     this.isFirstCover = false,
+    this.images = const [],
     required this.onImageChanged,
     required this.onLoading,
   });
@@ -655,7 +656,7 @@ class TEMultiImageSelector extends StatefulWidget {
 class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   late final imageRatio = widget.imageWidthRatio / widget.imageHeightRatio;
 
-  List<File?> selectedImages = [];
+  late List<dynamic> selectedImages = [...widget.images];
 
   bool isDisposed = false;
 
@@ -722,9 +723,10 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
       behavior: HitTestBehavior.opaque,
       child: Stack(
         children: [
-          Image.file(
-            selectedImages[idx]!,
+          TECacheImage(
+            src: selectedImages[idx]!,
             fit: BoxFit.fill,
+            ratio: imageRatio,
           ),
           Positioned(
               left: DS.space.xTiny,
@@ -773,7 +775,7 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
 
   void _tryInvokeCallback() {
     if (selectedImages.where((s) => s == null).isEmpty) {
-      widget.onImageChanged(selectedImages.map((i) => i as File).toList());
+      widget.onImageChanged(selectedImages);
       widget.onLoading(false);
     } else {
       widget.onLoading(true);

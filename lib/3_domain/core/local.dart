@@ -20,12 +20,12 @@ class Local with _$Local {
 
   factory Local.empty() {
     return Local(
-      title: '',
-      category: '',
-      address: '',
-      roadAddress: '',
+      title: 'title',
+      category: 'category',
+      address: 'address',
+      roadAddress: 'roadAddress',
       location: Point.empty(),
-      storeId: '',
+      storeId: 'storeId',
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
-import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/local/local_selector.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
@@ -48,19 +48,10 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
                   onLoading: (isLoading) => c.isStoreImageLoading = isLoading,
                 ),
                 DS.space.vSmall,
-                TEonTap(
-                  onTap: c.onSearchStore,
-                  child: TECupertinoTextField(
-                    isEssential: true,
-                    autoFocus: false,
-                    helperText: DS.text.store,
-                    hintText: DS.text.pleaseSearchLocalStore,
-                    maxLines: null,
-                    enabled: false,
-                    controller: c.storeNameController,
-                  ),
+                TELocalSelector(
+                  onSelected: c.setLocal,
+                  selected: c.local,
                 ),
-                const IsStoreEnteredText(),
                 DS.space.vSmall,
                 TECupertinoTextField(
                   isEssential: true,
@@ -158,10 +149,6 @@ class IsStoreEnteredText extends GetView<CommunityCreatePageController> {
         );
       } else {
         return const SizedBox();
-        // return Text(
-        //   DS.text.storeIsNotEnteredText,
-        //   style: DS.textStyle.caption1.copyWith(color: DS.color.background500),
-        // );
       }
     });
   }

@@ -116,6 +116,7 @@ class CurationDetail with _$CurationDetail {
     required final double rewardRatio,
     required final DateTime createdAt,
     required final String storeName,
+    required final Local localInfo,
     ItemSimple? item,
     bool? isSellFinished,
     bool? isInSell,
@@ -144,6 +145,7 @@ class CurationDetail with _$CurationDetail {
       rewardRatio: 0.01,
       createdAt: DateTime.now(),
       storeName: '팀잇',
+      localInfo: Local.empty(),
     );
   }
 }

@@ -42,8 +42,6 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
                   addButtonTitle: DS.text.addEtcImage,
                   numberOfMiniumImages: 0,
                   numberOfMaximumImages: 10,
-                  imageWidthRatio: 1,
-                  imageHeightRatio: 1,
                   onImageChanged: (images) => c.storeImages = images,
                   onLoading: (isLoading) => c.isStoreImageLoading = isLoading,
                 ),

@@ -66,5 +66,7 @@ Future<void> configDependency() async {
       LikeController<IStoreItemRepository>()..load());
   Get.put<LikeController<IStoreRepository>>(
       LikeController<IStoreRepository>()..load());
+  Get.put<LikeController<ICurationRepository>>(
+      LikeController<ICurationRepository>()..load());
   Get.put<LocationController>(LocationController());
 }

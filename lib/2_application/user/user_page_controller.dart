@@ -13,6 +13,7 @@ import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/core/failure.dart';
+import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
@@ -38,6 +39,8 @@ class UserPageController extends PageController {
 
   final _storeLikeController = Get.find<LikeController<IStoreRepository>>();
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
+  final _curationLikeController =
+      Get.find<LikeController<ICurationRepository>>();
 
   // ignore: invalid_use_of_protected_member
   bool get loading => _isLoading.value;
@@ -78,6 +81,7 @@ class UserPageController extends PageController {
     _authService.logOut();
     _itemLikeController.clean();
     _storeLikeController.clean();
+    _curationLikeController.clean();
     user.value = User.visitor();
     showSuccess(DS.text.successLogOut);
   }

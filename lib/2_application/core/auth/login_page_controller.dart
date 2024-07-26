@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
+import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 
@@ -10,6 +11,8 @@ class LoginPageController extends PageController {
   final _authService = Get.find<IAuthService>();
   final _itemLikeController = Get.find<LikeController<IStoreItemRepository>>();
   final _storeLikeController = Get.find<LikeController<IStoreRepository>>();
+  final _curationLikeController =
+      Get.find<LikeController<ICurationRepository>>();
 
   final _isLoading = false.obs;
 
@@ -37,6 +40,7 @@ class LoginPageController extends PageController {
       _authService.login(accessToken);
       _itemLikeController.load();
       _storeLikeController.load();
+      _curationLikeController.load();
       react.back(result: true);
     } catch (_) {}
   }

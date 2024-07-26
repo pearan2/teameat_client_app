@@ -4,8 +4,10 @@ import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
+import 'package:teameat/4_infra/core/likable_repository.dart';
 
-class CurationRepository implements ICurationRepository {
+class CurationRepository extends ICurationRepository<CurationListSimple>
+    with LikableRepositoryMixin<CurationListSimple> {
   final _conn = Get.find<IConnection>();
 
   @override
@@ -74,4 +76,30 @@ class CurationRepository implements ICurationRepository {
           '신청 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
+
+  @override
+  Future<Either<dynamic, Object>> Function(List<int> ids) get dataLoader =>
+      (ids) => _conn
+          .get('/api/store/list/by-ids', {'ids': ids.map((e) => e.toString())});
+
+  @override
+  String get key => 'curationLikeLocalDateKey';
+
+  @override
+  String get likeLoadPath => '/api/member/like/curation';
+
+  @override
+  String Function(int id) get likeCallbackPathBuilder =>
+      (id) => '/api/store/curation/like/$id';
+
+  @override
+  String Function(int id) get unlikeCallbackPathBuilder =>
+      (id) => '/api/store/curation/unlike/$id';
+
+  @override
+  CurationListSimple Function(JsonMap json) get dataResolver =>
+      CurationListSimple.fromJson;
+
+  @override
+  int get numberOfLikeDatasPerPage => 20;
 }

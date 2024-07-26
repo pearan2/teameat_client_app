@@ -3,12 +3,16 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/not_found.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
+import 'package:teameat/2_application/core/component/like_controller.dart';
+import 'package:teameat/3_domain/core/i_likable_repository.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
@@ -143,7 +147,11 @@ class CurationCard extends StatelessWidget {
                   ),
                   child: CurationImageOverlay(curation),
                 ),
-              )
+              ),
+              Positioned(
+                  right: DS.space.xSmall,
+                  top: DS.space.xSmall,
+                  child: Like<ICurationRepository>.base(curation.id)),
             ],
           ),
           Padding(
@@ -153,6 +161,70 @@ class CurationCard extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
+  final int targetId;
+  final Widget liked;
+  final Widget base;
+  final int? numberOfLikes;
+
+  const Like({
+    super.key,
+    required this.targetId,
+    required this.liked,
+    required this.base,
+    this.numberOfLikes,
+  });
+  factory Like.base(int targetId, {int? numberOfLikes}) {
+    return Like(
+      targetId: targetId,
+      liked: DS.image.iconLikeClicked,
+      base: DS.image.iconLike,
+      numberOfLikes: numberOfLikes,
+    );
+  }
+
+  factory Like.border(int targetId, {int? numberOfLikes}) {
+    return Like(
+      targetId: targetId,
+      liked: DS.image.iconLikeBorderClicked,
+      base: DS.image.iconLikeBorder,
+      numberOfLikes: numberOfLikes,
+    );
+  }
+
+  Widget _buildContent() {
+    final notIncludeMeLikeCount =
+        (numberOfLikes ?? 0) - (controller.isLike(targetId) ? 1 : 0);
+
+    if (numberOfLikes == null) {
+      return Obx(
+        () => controller.isLike(targetId) ? liked : base,
+      );
+    } else {
+      return Obx(() {
+        return Column(
+          children: [
+            c.isLike(targetId) ? liked : base,
+            Text(
+              (notIncludeMeLikeCount + (c.isLike(targetId) ? 1 : 0)).toString(),
+              style: DS.textStyle.caption3.b000,
+            )
+          ],
+        );
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () => c.toggleLike(targetId),
+      isLoginRequired: true,
+      child: _buildContent(),
     );
   }
 }

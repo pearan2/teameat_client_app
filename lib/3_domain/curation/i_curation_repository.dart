@@ -3,11 +3,14 @@ import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 
 abstract class ICurationRepository {
-  Future<Either<Failure, CurationDetail>> registerCuration(
+  Future<Either<Failure, MyCurationDetail>> registerCuration(
       CurationCreateRequest request);
 
-  Future<Either<Failure, CurationDetail>> findById(int id);
+  Future<Either<Failure, MyCurationDetail>> findById(int id);
 
-  Future<Either<Failure, List<CurationSimple>>> findAll(
+  Future<Either<Failure, List<MyCurationSimple>>> findAll(
+      SearchMyCurationSimpleList searchOption);
+
+  Future<Either<Failure, List<CurationListSimple>>> findCurationList(
       SearchCurationSimpleList searchOption);
 }

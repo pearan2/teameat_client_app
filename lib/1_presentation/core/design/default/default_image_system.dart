@@ -142,7 +142,7 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get location => SvgPicture.asset(
+  SvgPicture get address => SvgPicture.asset(
         'assets/image/icon/address_icon.svg',
         width: 24,
         height: 24,
@@ -279,5 +279,33 @@ class DefaultImageSystem extends IImageSystem {
   Image get curationGuide => Image.asset(
         'assets/image/curation/curation_guide.png',
         fit: BoxFit.fitWidth,
+      );
+
+  @override
+  SvgPicture get location => SvgPicture.asset(
+        'assets/image/icon/location.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get locationLg => SvgPicture.asset(
+        'assets/image/icon/location.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get map => SvgPicture.asset(
+        'assets/image/icon/map.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get mapLg => SvgPicture.asset(
+        'assets/image/icon/map.svg',
+        height: 24,
+        width: 24,
       );
 }

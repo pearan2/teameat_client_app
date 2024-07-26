@@ -107,7 +107,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.image.location,
+                      icon: DS.image.address,
                       title: DS.text.address,
                       content: controller.voucher.storeAddress,
                     ))),

@@ -76,7 +76,7 @@ class StorePage extends GetView<StorePageController> {
                       (store) => TEonTap(
                         onTap: () => TEClipboard.setText(store.address),
                         child: InfoRow(
-                          icon: DS.image.location,
+                          icon: DS.image.address,
                           title: DS.text.address,
                           content: store.address,
                         ),

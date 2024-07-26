@@ -10,7 +10,7 @@ import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 
-class CommunityPageController extends PageController {
+class UserCurationPageController extends PageController {
   // repos
   final _codeRepo = Get.find<ICodeRepository>();
   final _curationRepo = Get.find<ICurationRepository>();
@@ -18,25 +18,20 @@ class CommunityPageController extends PageController {
 
   // states
   final _filterCodes = RxList<Code>.empty();
-  final _searchOption = SearchCurationSimpleList.empty().obs;
+  final _searchOption = SearchMyCurationSimpleList.empty().obs;
   late final me = User.visitor().wrap(_userRepo.getMe);
   bool _isLoading = false;
 
   // controllers
-  final PagingController<int, CurationSimple> pagingController =
+  final PagingController<int, MyCurationSimple> pagingController =
       PagingController(firstPageKey: 0);
 
   // getter
-  SearchCurationSimpleList get searchOption => _searchOption.value;
+  SearchMyCurationSimpleList get searchOption => _searchOption.value;
   List<Code> get filters => _filterCodes;
 
   void onCurationApplicationClicked() {
     react.toCommunityCreate();
-  }
-
-  void refreshPage() {
-    _searchOption.value = SearchCurationSimpleList.empty();
-    pagingController.refresh();
   }
 
   void onFilterChanged(Code newFilter) {

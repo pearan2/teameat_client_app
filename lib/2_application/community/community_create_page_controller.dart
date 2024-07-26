@@ -106,7 +106,7 @@ class CommunityCreatePageController extends PageController {
         address: local!.roadAddress,
         location: local!.location,
       ),
-      curation: CurationMain(
+      curation: MyCurationMain(
         curatorId: -1,
         curatorProfileImageUrl: me.profileImageUrl,
         curatorNickname: me.nickname,

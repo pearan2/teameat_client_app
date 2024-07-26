@@ -287,7 +287,7 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
         );
       case BottomNavigatorType.community:
         return Text(
-          DS.text.menuApplication,
+          DS.text.curation,
           style: DS.textStyle.caption2
               .copyWith(color: color ?? DS.color.background500),
         );
@@ -369,7 +369,6 @@ class _TEBottomNavigator extends StatelessWidget {
                   react.toCommunityOffAll();
                 }
               },
-              isLoginRequired: true,
               child: _BottomNavigatorToggle(
                 clicked: activated == BottomNavigatorType.community,
                 type: BottomNavigatorType.community,

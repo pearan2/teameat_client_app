@@ -12,12 +12,12 @@ class CommunityViewPageController extends PageController {
   final _curationRepo = Get.find<ICurationRepository>();
   final _userRepo = Get.find<IUserRepository>();
 
-  late final curation = CurationDetail.empty().wrap(_loadCuration);
+  late final curation = MyCurationDetail.empty().wrap(_loadCuration);
   late final me = User.visitor().wrap(_userRepo.getMe);
 
   final int curationId;
 
-  Future<Either<Failure, CurationDetail>> _loadCuration() {
+  Future<Either<Failure, MyCurationDetail>> _loadCuration() {
     return _curationRepo.findById(curationId);
   }
 

@@ -10,7 +10,7 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/community/community_page_controller.dart';
+import 'package:teameat/2_application/user/user_curation_page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -19,15 +19,17 @@ import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
-class CommunityPage extends GetView<CommunityPageController> {
-  const CommunityPage({super.key});
+class UserCurationPage extends GetView<UserCurationPageController> {
+  const UserCurationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return TEScaffold(
-      appBar: TEAppBar(height: 0),
-      activated: BottomNavigatorType.community,
-      bottomFloatingButton: const CurationApplicationButton(),
+      appBar: TEAppBar(
+        leadingIconOnPressed: c.react.back,
+        title: DS.text.toMyCuration,
+        homeOnPressed: c.react.toHomeOffAll,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: DS.space.tiny, horizontal: AppWidget.horizontalPadding),
@@ -46,7 +48,7 @@ class CommunityPage extends GetView<CommunityPageController> {
   }
 }
 
-class UserInfoSliver extends GetView<CommunityPageController> {
+class UserInfoSliver extends GetView<UserCurationPageController> {
   const UserInfoSliver({super.key});
 
   @override
@@ -107,7 +109,7 @@ class BannerSliver extends StatelessWidget {
   }
 }
 
-class CurationStatusSelectorSliver extends GetView<CommunityPageController> {
+class CurationStatusSelectorSliver extends GetView<UserCurationPageController> {
   const CurationStatusSelectorSliver({super.key});
 
   @override
@@ -146,7 +148,7 @@ class CurationStatusSelectorSliver extends GetView<CommunityPageController> {
   }
 }
 
-class CurationApplicationButton extends GetView<CommunityPageController> {
+class CurationApplicationButton extends GetView<UserCurationPageController> {
   const CurationApplicationButton({super.key});
 
   @override
@@ -165,7 +167,7 @@ class CurationApplicationButton extends GetView<CommunityPageController> {
 }
 
 class CurationCreatedAtAndStatusRow extends StatelessWidget {
-  final CurationSimple curation;
+  final MyCurationSimple curation;
   const CurationCreatedAtAndStatusRow({super.key, required this.curation});
 
   @override
@@ -189,7 +191,7 @@ class CurationCreatedAtAndStatusRow extends StatelessWidget {
 }
 
 class CurationImage extends StatelessWidget {
-  final CurationSimple curation;
+  final MyCurationSimple curation;
 
   const CurationImage({super.key, required this.curation});
 
@@ -205,7 +207,7 @@ class CurationImage extends StatelessWidget {
 }
 
 class CurationItemInfoColumn extends StatelessWidget {
-  final CurationSimple curation;
+  final MyCurationSimple curation;
   const CurationItemInfoColumn({super.key, required this.curation});
 
   @override
@@ -300,9 +302,9 @@ class CurationRewardRow extends StatelessWidget {
   }
 }
 
-class CurationCard extends GetView<CommunityPageController> {
+class CurationCard extends GetView<UserCurationPageController> {
   static const imageSize = 144.0;
-  final CurationSimple curation;
+  final MyCurationSimple curation;
 
   const CurationCard({super.key, required this.curation});
 
@@ -352,14 +354,14 @@ class CurationCard extends GetView<CommunityPageController> {
   }
 }
 
-class CurationList extends GetView<CommunityPageController> {
+class CurationList extends GetView<UserCurationPageController> {
   const CurationList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return PagedSliverList.separated(
       pagingController: controller.pagingController,
-      builderDelegate: PagedChildBuilderDelegate<CurationSimple>(
+      builderDelegate: PagedChildBuilderDelegate<MyCurationSimple>(
         noItemsFoundIndicatorBuilder: (_) => Center(
           child: SimpleNotFound(
             title: DS.text.curationNotFound,

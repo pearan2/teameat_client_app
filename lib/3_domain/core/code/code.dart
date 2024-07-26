@@ -43,4 +43,5 @@ class CodeKey with _$CodeKey {
   factory CodeKey.storeHashTag() => const CodeKey(key: 'STORE_HASHTAG');
   factory CodeKey.voucherFilter() => const CodeKey(key: 'VOUCHER_FILTER');
   factory CodeKey.voucherOrder() => const CodeKey(key: 'VOUCHER_ORDER');
+  factory CodeKey.curationOrder() => const CodeKey(key: 'CURATION_ORDER');
 }

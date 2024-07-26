@@ -7,7 +7,7 @@ import 'package:teameat/99_util/extension/text_style.dart';
 class CurationCuratorInfo extends StatelessWidget {
   final double height;
 
-  final CurationMain curation;
+  final MyCurationMain curation;
   const CurationCuratorInfo(this.curation, {super.key, this.height = 32.0});
 
   @override

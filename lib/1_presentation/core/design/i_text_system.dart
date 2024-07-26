@@ -255,4 +255,9 @@ abstract class ITextSystem {
   String get creatingCurationPleaseWait;
 
   String get permissionsAreRequestedWhenItNeeded;
+
+  String get curation;
+  String get toMyCuration;
+
+  String get curatorInfoDateFormat;
 }

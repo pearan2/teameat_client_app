@@ -56,11 +56,16 @@ class DistanceWithIcon extends GetView<LocationController> {
 
 class DistanceText extends GetView<LocationController> {
   final Point point;
+  final Color? textColor;
 
-  const DistanceText({super.key, required this.point});
+  const DistanceText({super.key, required this.point, this.textColor});
 
   @override
   Widget build(BuildContext context) {
+    final style = DS.textStyle.caption1.copyWith(
+        color: textColor ?? DS.color.background700,
+        fontWeight: FontWeight.w600);
+
     return Obx(() {
       final basePoint = c.data?.toPoint();
       if (basePoint == null) {
@@ -70,8 +75,7 @@ class DistanceText extends GetView<LocationController> {
 
       return Text(
         kilo.format(DS.text.distanceFormat),
-        style: DS.textStyle.caption1.copyWith(
-            color: DS.color.background700, fontWeight: FontWeight.w600),
+        style: style,
       );
     });
   }

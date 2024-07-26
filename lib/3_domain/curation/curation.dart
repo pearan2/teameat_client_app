@@ -4,12 +4,13 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
 
 part 'curation.freezed.dart';
 
 part 'curation.g.dart';
 
-extension CurationExtension on CurationSimple {
+extension CurationExtension on MyCurationSimple {
   String getStatusText() {
     if (isSellFinished == null || isInSell == null) {
       return DS.text.applicationCompleted;
@@ -42,24 +43,24 @@ extension CurationExtension on CurationSimple {
 }
 
 @freezed
-class SearchCurationSimpleList with _$SearchCurationSimpleList {
-  const factory SearchCurationSimpleList({
+class SearchMyCurationSimpleList with _$SearchMyCurationSimpleList {
+  const factory SearchMyCurationSimpleList({
     required Code status,
     required int pageSize,
     required int pageNumber,
-  }) = _SearchCurationSimpleList;
+  }) = _SearchMyCurationSimpleList;
 
-  factory SearchCurationSimpleList.empty() {
-    return SearchCurationSimpleList(
+  factory SearchMyCurationSimpleList.empty() {
+    return SearchMyCurationSimpleList(
       status: Code.empty(),
       pageSize: 10,
       pageNumber: 0,
     );
   }
-  factory SearchCurationSimpleList.fromJson(Map<String, Object?> json) =>
-      _$SearchCurationSimpleListFromJson(json);
+  factory SearchMyCurationSimpleList.fromJson(Map<String, Object?> json) =>
+      _$SearchMyCurationSimpleListFromJson(json);
 
-  static Map<String, dynamic> toStringJson(SearchCurationSimpleList target) {
+  static Map<String, dynamic> toStringJson(SearchMyCurationSimpleList target) {
     final ret = <String, dynamic>{};
     ret['status'] = target.status.code;
     ret['pageSize'] = target.pageSize.toString();
@@ -69,8 +70,8 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
 }
 
 @freezed
-class CurationSimple with _$CurationSimple {
-  const factory CurationSimple({
+class MyCurationSimple with _$MyCurationSimple {
+  const factory MyCurationSimple({
     required final int id,
     required final String name,
     required final String imageUrl,
@@ -82,12 +83,13 @@ class CurationSimple with _$CurationSimple {
     bool? isSellFinished,
     bool? isInSell,
     int? itemSellTotalAmount,
-  }) = _CurationSimple;
+  }) = _MyCurationSimple;
 
-  factory CurationSimple.fromJson(Map<String, Object?> json) =>
-      _$CurationSimpleFromJson(json);
+  factory MyCurationSimple.fromJson(Map<String, Object?> json) =>
+      _$MyCurationSimpleFromJson(json);
 
-  factory CurationSimple.fromDetail(CurationDetail detail) => CurationSimple(
+  factory MyCurationSimple.fromDetail(MyCurationDetail detail) =>
+      MyCurationSimple(
         id: detail.id,
         name: detail.name,
         imageUrl: detail.imageUrl,
@@ -103,8 +105,8 @@ class CurationSimple with _$CurationSimple {
 }
 
 @freezed
-class CurationDetail with _$CurationDetail {
-  const factory CurationDetail({
+class MyCurationDetail with _$MyCurationDetail {
+  const factory MyCurationDetail({
     required final int id,
     required final String name,
     required final String imageUrl,
@@ -121,13 +123,13 @@ class CurationDetail with _$CurationDetail {
     bool? isSellFinished,
     bool? isInSell,
     int? itemSellTotalAmount,
-  }) = _CurationDetail;
+  }) = _MyCurationDetail;
 
-  factory CurationDetail.fromJson(Map<String, Object?> json) =>
-      _$CurationDetailFromJson(json);
+  factory MyCurationDetail.fromJson(Map<String, Object?> json) =>
+      _$MyCurationDetailFromJson(json);
 
-  factory CurationDetail.empty() {
-    return CurationDetail(
+  factory MyCurationDetail.empty() {
+    return MyCurationDetail(
       id: -1,
       name: '',
       imageUrl: '',
@@ -151,8 +153,8 @@ class CurationDetail with _$CurationDetail {
 }
 
 @freezed
-class CurationMain with _$CurationMain {
-  const factory CurationMain({
+class MyCurationMain with _$MyCurationMain {
+  const factory MyCurationMain({
     required int curatorId,
     required String curatorProfileImageUrl,
     required String curatorNickname,
@@ -160,10 +162,10 @@ class CurationMain with _$CurationMain {
     required List<dynamic> storeImageUrls,
     required String oneLineIntroduce,
     required String introduce,
-  }) = _CurationMain;
+  }) = _MyCurationMain;
 
-  factory CurationMain.fromJson(Map<String, Object?> json) =>
-      _$CurationMainFromJson(json);
+  factory MyCurationMain.fromJson(Map<String, Object?> json) =>
+      _$MyCurationMainFromJson(json);
 }
 
 @freezed
@@ -192,4 +194,100 @@ class CurationCreateRequest with _$CurationCreateRequest {
       storeImageUrls: [],
     );
   }
+}
+
+@freezed
+class SearchCurationSimpleList with _$SearchCurationSimpleList {
+  const factory SearchCurationSimpleList({
+    String? address,
+    String? searchText,
+    Point? baseLocation,
+    int? withInMeter,
+    required Code order,
+    required int pageSize,
+    required int pageNumber,
+  }) = _SearchCurationSimpleList;
+
+  factory SearchCurationSimpleList.empty() {
+    return SearchCurationSimpleList(
+      order: Code.orderEmpty(),
+      pageSize: 10,
+      pageNumber: 0,
+    );
+  }
+  factory SearchCurationSimpleList.fromJson(Map<String, Object?> json) =>
+      _$SearchCurationSimpleListFromJson(json);
+
+  static Map<String, dynamic> toStringJson(SearchCurationSimpleList target) {
+    final ret = <String, dynamic>{};
+    if (target.address != null) ret['address'] = target.address;
+    if (target.searchText != null) ret['searchText'] = target.searchText;
+    if (target.baseLocation != null) {
+      ret['baseLocation.longitude'] = target.baseLocation!.longitude.toString();
+      ret['baseLocation.latitude'] = target.baseLocation!.latitude.toString();
+    }
+    if (target.withInMeter != null) {
+      ret['withInMeter'] = target.withInMeter.toString();
+    }
+    ret['order'] = target.order.code;
+    ret['pageNumber'] = target.pageNumber.toString();
+    ret['pageSize'] = target.pageSize.toString();
+    return ret;
+  }
+}
+
+@freezed
+class CurationListStoreInfo with _$CurationListStoreInfo {
+  const factory CurationListStoreInfo({
+    required int id,
+    required String name,
+    required String address,
+    required Point location,
+  }) = _CurationListStoreInfo;
+
+  factory CurationListStoreInfo.fromJson(Map<String, Object?> json) =>
+      _$CurationListStoreInfoFromJson(json);
+}
+
+@freezed
+class CurationListCuratorInfo with _$CurationListCuratorInfo {
+  const factory CurationListCuratorInfo({
+    required int id,
+    required String nickname,
+    String? oneLineIntroduce,
+    required String profileImageUrl,
+  }) = _CurationListCuratorInfo;
+
+  factory CurationListCuratorInfo.fromJson(Map<String, Object?> json) =>
+      _$CurationListCuratorInfoFromJson(json);
+}
+
+extension CurationListExtension on CurationListSimple {
+  String? getStatusText() {
+    if (isSaleFinished) {
+      return DS.text.saleFinished;
+    }
+    if (isInSale) {
+      return DS.text.inSale;
+    }
+    return null;
+  }
+}
+
+@freezed
+class CurationListSimple with _$CurationListSimple {
+  const factory CurationListSimple({
+    required int id,
+    required String name,
+    required CurationListStoreInfo store,
+    required CurationListCuratorInfo curator,
+    required String imageUrl,
+    required int numberOfLikes,
+    required bool isInSale,
+    required bool isSaleFinished,
+    required DateTime createdAt,
+  }) = _CurationListSimple;
+
+  factory CurationListSimple.fromJson(Map<String, Object?> json) =>
+      _$CurationListSimpleFromJson(json);
 }

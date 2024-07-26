@@ -70,7 +70,7 @@ class CommunityViewPage extends GetView<CommunityViewPageController> {
 }
 
 class CurationInfo extends StatelessWidget {
-  final CurationDetail curation;
+  final MyCurationDetail curation;
   const CurationInfo(this.curation, {super.key});
 
   @override

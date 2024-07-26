@@ -70,7 +70,7 @@ class ItemDetail with _$ItemDetail {
     int? weight,
     required String originInformation,
     required List<dynamic> imageUrls,
-    CurationMain? curation,
+    MyCurationMain? curation,
   }) = _ItemDetail;
 
   factory ItemDetail.fromJson(Map<String, Object?> json) =>

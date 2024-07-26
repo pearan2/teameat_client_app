@@ -328,7 +328,7 @@ class InfoTitle extends StatelessWidget {
 }
 
 class CurationInfo extends StatelessWidget {
-  final CurationMain curation;
+  final MyCurationMain curation;
   const CurationInfo(this.curation, {super.key});
 
   Widget _buildDangolPick() {

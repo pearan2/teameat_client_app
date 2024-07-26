@@ -46,6 +46,8 @@ abstract class IRouter {
 
   void toCommunityOffAll();
 
+  void toUserCuration();
+
   void toCommunityCreate();
 
   void toCommunityView(int curationId);

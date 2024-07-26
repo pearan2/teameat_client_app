@@ -767,4 +767,13 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get permissionsAreRequestedWhenItNeeded =>
       '권한들은 필요할 때만 요청돼요\n한번도 요청되지 않은 권한은\nOn / Off 할 수 없어요';
+
+  @override
+  String get toMyCuration => '내가 쓴 푸드로그';
+
+  @override
+  String get curation => '푸드로그';
+
+  @override
+  String get curatorInfoDateFormat => 'yyyy/MM/dd';
 }

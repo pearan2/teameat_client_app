@@ -46,6 +46,11 @@ class UserPage extends GetView<UserPageController> {
                 ),
                 TERowButton(
                   isLoginRequired: true,
+                  onTap: controller.react.toUserCuration,
+                  text: DS.text.toMyCuration,
+                ),
+                TERowButton(
+                  isLoginRequired: true,
                   onTap: controller.react.toGift,
                   text: DS.text.toGiftPage,
                 ),

@@ -29,7 +29,7 @@ abstract class IImageSystem {
   SvgPicture get bottomIconUserClicked;
 
   /// store 관련 아이콘들
-  SvgPicture get location;
+  SvgPicture get address;
   SvgPicture get clock;
   SvgPicture get store;
   SvgPicture get phone;
@@ -51,6 +51,11 @@ abstract class IImageSystem {
   SvgPicture get rightArrow;
   Image get dangolPick;
   SvgPicture get addImage;
+
+  SvgPicture get location;
+  SvgPicture get locationLg;
+  SvgPicture get map;
+  SvgPicture get mapLg;
 
   /// sell type icon
   SvgPicture get timeLimit;

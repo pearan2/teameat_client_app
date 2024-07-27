@@ -19,6 +19,7 @@ class TEScaffold extends StatelessWidget {
   final String? loadingText;
   final void Function(bool didPop)? onPop;
   final void Function()? onFloatingButtonClick;
+  final Widget? floatingButtonIcon;
   final bool resizeToAvoidBottomInset;
   final Widget? bottomFloatingButton;
   const TEScaffold({
@@ -32,6 +33,7 @@ class TEScaffold extends StatelessWidget {
     this.loading = false,
     this.onPop,
     this.onFloatingButtonClick,
+    this.floatingButtonIcon,
     this.bottomFloatingButton,
     this.resizeToAvoidBottomInset = false,
   });
@@ -48,6 +50,7 @@ class TEScaffold extends StatelessWidget {
               bottomSheet: bottomSheet,
               bottomSheetBackgroundColor: bottomSheetBackgroundColor,
               onFloatingButtonClick: onFloatingButtonClick,
+              floatingButtonIcon: floatingButtonIcon,
               bottomFloatingButton: bottomFloatingButton,
               resizeToAvoidBottomInset: resizeToAvoidBottomInset,
             ),
@@ -66,6 +69,7 @@ class TEScaffold extends StatelessWidget {
         bottomSheet: bottomSheet,
         bottomSheetBackgroundColor: bottomSheetBackgroundColor,
         onFloatingButtonClick: onFloatingButtonClick,
+        floatingButtonIcon: floatingButtonIcon,
         bottomFloatingButton: bottomFloatingButton,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       );
@@ -122,6 +126,7 @@ class _InnerScaffold extends StatefulWidget {
   final Widget? bottomSheet;
   final Color? bottomSheetBackgroundColor;
   final void Function()? onFloatingButtonClick;
+  final Widget? floatingButtonIcon;
   final bool resizeToAvoidBottomInset;
   final Widget? bottomFloatingButton;
 
@@ -132,6 +137,7 @@ class _InnerScaffold extends StatefulWidget {
     this.bottomSheet,
     this.bottomSheetBackgroundColor,
     this.onFloatingButtonClick,
+    this.floatingButtonIcon,
     this.bottomFloatingButton,
     required this.resizeToAvoidBottomInset,
   });
@@ -161,11 +167,12 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
             color: DS.color.primary600,
             borderRadius: const BorderRadius.all(Radius.circular(300)),
           ),
-          child: Icon(
-            Icons.keyboard_arrow_up,
-            size: DS.space.medium,
-            color: DS.color.background000,
-          ),
+          child: widget.floatingButtonIcon ??
+              Icon(
+                Icons.keyboard_arrow_up,
+                size: DS.space.medium,
+                color: DS.color.background000,
+              ),
         ),
       ),
     );

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
-import 'package:teameat/1_presentation/core/component/not_found.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
@@ -32,6 +31,9 @@ class CurationPage extends GetView<CurationPageController> {
     return Obx(() => TEScaffold(
           loading: c.isPageLoading,
           activated: BottomNavigatorType.community,
+          floatingButtonIcon:
+              Icon(Icons.post_add, color: DS.color.background000),
+          onFloatingButtonClick: c.react.toCommunityCreate,
           body: Padding(
             padding: EdgeInsets.only(
               top: topAreaHeight,
@@ -74,9 +76,11 @@ class CurationPageToolbar extends GetView<CurationPageController> {
           Text(DS.text.curation, style: DS.textStyle.paragraph2.semiBold.b800),
           DS.space.hXSmall,
           Expanded(
-            child: TextSearcher(
-              onCompleted: c.onSearchTextCompleted,
-              value: controller.searchOption.searchText,
+            child: Obx(
+              () => TextSearcher(
+                onCompleted: c.onSearchTextCompleted,
+                value: controller.searchOption.searchText,
+              ),
             ),
           ),
           DS.space.hXSmall,
@@ -123,17 +127,41 @@ class CurationList extends GetView<CurationPageController> {
     return PagedSliverList.separated(
       pagingController: controller.pagingController,
       builderDelegate: PagedChildBuilderDelegate<CurationListSimple>(
-        noItemsFoundIndicatorBuilder: (_) => Center(
-          child: SimpleNotFound(
-            title: DS.text.curationNotFound,
-            buttonText: DS.text.goToApplyMyFavoriteMenu,
-            onTap: controller.react.toCommunityCreate,
-          ),
-        ),
+        noItemsFoundIndicatorBuilder: (_) =>
+            const Center(child: CurationNotFound()),
         itemBuilder: (_, curation, idx) =>
             CurationCard(curation, key: ValueKey(curation.id)),
       ),
       separatorBuilder: (_, idx) => DS.space.vXSmall,
+    );
+  }
+}
+
+class CurationNotFound extends GetView<CurationPageController> {
+  const CurationNotFound({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(DS.space.xBase),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            DS.text.searchedCurationNotFound,
+            style: DS.textStyle.paragraph2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          DS.space.vTiny,
+          TEPrimaryButton(
+            onTap: c.clearSearchOption,
+            text: DS.text.clearSearchOption,
+            contentHorizontalPadding: DS.space.small,
+            fitContentWidth: true,
+          ),
+        ],
+      ),
     );
   }
 }

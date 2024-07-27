@@ -260,4 +260,5 @@ abstract class ITextSystem {
   String get toMyCuration;
 
   String get curatorInfoDateFormat;
+  String get searchedCurationNotFound;
 }

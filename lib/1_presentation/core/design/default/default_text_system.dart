@@ -776,4 +776,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get curatorInfoDateFormat => 'yyyy/MM/dd';
+
+  @override
+  String get searchedCurationNotFound => '검색된 푸드로그가 없어요';
 }

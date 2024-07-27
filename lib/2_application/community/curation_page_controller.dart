@@ -39,6 +39,11 @@ class CurationPageController extends PageController {
     pagingController.error = null;
   }
 
+  void clearSearchOption() {
+    _searchOption.value = SearchCurationSimpleList.empty();
+    pagingController.refresh();
+  }
+
   void onSearchTextCompleted(String searchText) {
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);

@@ -20,7 +20,7 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
           loadingText: DS.text.creatingCurationPleaseWait,
           appBar: TEAppBar(
             leadingIconOnPressed: c.react.back,
-            title: DS.text.menuApplication,
+            title: DS.text.curation,
             action: const ToPreviewButton(),
           ),
           resizeToAvoidBottomInset: true,

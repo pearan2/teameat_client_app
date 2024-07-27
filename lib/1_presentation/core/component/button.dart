@@ -390,8 +390,9 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   final bool Function(T lhs, T rhs)? isEqual;
   final void Function(T) onSelected;
   final String Function(T)? toLabel;
-  final String text;
-  final IconData? icon;
+  final String? text;
+  final Widget? icon;
+  final Widget? iconActivated;
   final double? height;
   final double? width;
   final double? borderRadius;
@@ -401,17 +402,19 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     super.key,
     required this.candidates,
     required this.onSelected,
-    required this.text,
+    this.text,
     this.title,
     this.toLabel,
     this.icon,
+    this.iconActivated,
     this.height,
     this.width,
     this.borderRadius,
     this.backgroundColor,
     this.selectedValue,
     this.isEqual,
-  });
+  }) : assert((text == null && icon != null && iconActivated != null) ||
+            (text != null && icon == null && iconActivated == null));
 
   String toLabelString(T value) {
     if (toLabel == null) {
@@ -431,9 +434,8 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
 
   TextStyle getTextStyle(T value) {
     return DS.textStyle.paragraph2.copyWith(
-      color:
-          isSelected(value) ? DS.color.background800 : DS.color.background700,
-      fontWeight: isSelected(value) ? FontWeight.bold : null,
+      color: isSelected(value) ? DS.color.primary600 : DS.color.background800,
+      fontWeight: isSelected(value) ? FontWeight.w600 : null,
     );
   }
 
@@ -453,68 +455,83 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     );
   }
 
-  void showSelector(double maxHeight) {
+  Widget _buildItem(T value) {
     final react = Get.find<IReact>();
-
-    showTEBottomSheet(
-      Container(
-        constraints: BoxConstraints(maxHeight: maxHeight),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    return TEonTap(
+      onTap: () {
+        onSelected(value);
+        react.back();
+      },
+      child: SizedBox(
+        height: DS.space.large,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildTitleText(),
-            ListView.separated(
-              padding: EdgeInsets.only(bottom: DS.space.xBase),
-              shrinkWrap: true,
-              itemBuilder: (_, idx) => TEonTap(
-                onTap: () {
-                  onSelected(candidates[idx]);
-                  react.back();
-                },
-                child: Text(
-                  toLabelString(candidates[idx]),
-                  style: getTextStyle(candidates[idx]),
-                ),
-              ),
-              separatorBuilder: (_, __) => DS.space.vSmall,
-              itemCount: candidates.length,
+            Text(
+              toLabelString(value),
+              style: getTextStyle(value),
             ),
+            isSelected(value) ? DS.image.selected : const SizedBox(),
           ],
         ),
       ),
     );
   }
 
+  void showSelector(double maxHeight) {
+    showTEBottomSheet(
+      Container(
+        constraints: BoxConstraints(maxHeight: maxHeight),
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(bottom: DS.space.xBase),
+          itemBuilder: (_, idx) {
+            if (idx == 0) {
+              return _buildTitleText();
+            }
+            return _buildItem(candidates[idx - 1]);
+          },
+          itemCount: candidates.length + 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextButton() {
+    final bColor = backgroundColor ?? DS.color.background100;
+
+    return Container(
+      width: width,
+      height: height ?? DS.space.medium,
+      padding: EdgeInsets.symmetric(horizontal: DS.space.tiny),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: selectedValue == null ? bColor : DS.color.primary600),
+        color: bColor,
+        borderRadius: BorderRadius.circular(borderRadius ?? 300.0),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            text!,
+            style: DS.textStyle.caption1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIconButton() {
+    return selectedValue == null ? icon! : iconActivated!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TEonTap(
       onTap: () => showSelector(MediaQuery.of(context).size.height / 2),
-      child: Container(
-        width: width,
-        height: height ?? DS.space.medium,
-        padding: EdgeInsets.symmetric(horizontal: DS.space.tiny),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: backgroundColor ?? DS.color.background100,
-          borderRadius: BorderRadius.circular(borderRadius ?? 300.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: DS.textStyle.caption1,
-            ),
-            icon == null ? const SizedBox() : DS.space.hXXTiny,
-            icon == null
-                ? const SizedBox()
-                : Icon(
-                    icon,
-                    size: DS.space.xSmall,
-                  ),
-          ],
-        ),
-      ),
+      child: text != null ? _buildTextButton() : _buildIconButton(),
     );
   }
 }

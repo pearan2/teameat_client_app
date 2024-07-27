@@ -53,8 +53,10 @@ abstract class IImageSystem {
   SvgPicture get addImage;
 
   SvgPicture get location;
+  SvgPicture get locationActivated;
   SvgPicture get locationLg;
   SvgPicture get map;
+  SvgPicture get mapActivated;
   SvgPicture get mapLg;
 
   /// sell type icon
@@ -64,4 +66,6 @@ abstract class IImageSystem {
   /// banner & guide
   Image get communityBanner1;
   Image get curationGuide;
+
+  SvgPicture get selected;
 }

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/not_found.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
+import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
+import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/i_likable_repository.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
+import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
@@ -25,34 +29,35 @@ class CurationPage extends GetView<CurationPageController> {
   @override
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
-    return TEScaffold(
-      activated: BottomNavigatorType.community,
-      body: Padding(
-        padding: EdgeInsets.only(
-          top: topAreaHeight,
-          left: AppWidget.horizontalPadding,
-          right: AppWidget.horizontalPadding,
-        ),
-        child: TERefreshIndicator(
-          onRefresh: c.refreshPage,
-          child: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                backgroundColor: DS.color.background000,
-                surfaceTintColor: DS.color.background000,
-                snap: true,
-                floating: true,
-                toolbarHeight: 0,
-                flexibleSpace: const CurationPageToolbar(),
+    return Obx(() => TEScaffold(
+          loading: c.isPageLoading,
+          activated: BottomNavigatorType.community,
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: topAreaHeight,
+              left: AppWidget.horizontalPadding,
+              right: AppWidget.horizontalPadding,
+            ),
+            child: TERefreshIndicator(
+              onRefresh: c.refreshPage,
+              child: CustomScrollView(
+                physics: const ClampingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    backgroundColor: DS.color.background000,
+                    surfaceTintColor: DS.color.background000,
+                    snap: true,
+                    floating: true,
+                    toolbarHeight: 0,
+                    flexibleSpace: const CurationPageToolbar(),
+                  ),
+                  SliverToBoxAdapter(child: DS.space.vXBase),
+                  const CurationList(),
+                ],
               ),
-              SliverToBoxAdapter(child: DS.space.vXBase),
-              const CurationList(),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -63,20 +68,47 @@ class CurationPageToolbar extends GetView<CurationPageController> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: DS.space.xSmall),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: DS.space.xBase * 2 + DS.space.xSmall),
           Text(DS.text.curation, style: DS.textStyle.paragraph2.semiBold.b800),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DS.image.map,
-              DS.space.hXSmall,
-              DS.image.location,
-            ],
+          DS.space.hXSmall,
+          Expanded(
+            child: TextSearcher(
+              onCompleted: c.onSearchTextCompleted,
+              value: controller.searchOption.searchText,
+            ),
           ),
+          DS.space.hXSmall,
+          Obx(
+            () => TESelectorBottomSheet<Code>(
+              borderRadius: DS.space.tiny,
+              candidates: c.orders,
+              onSelected: c.onOrderChanged,
+              isEqual: (lhs, rhs) => lhs.code == rhs.code,
+              toLabel: (v) => v.title,
+              selectedValue: c.searchOption.order,
+              icon: DS.image.map,
+              iconActivated: DS.image.map,
+            ),
+          ),
+          DS.space.hXSmall,
+          Obx(() => TESelectorBottomSheet<int?>(
+                borderRadius: DS.space.tiny,
+                candidates: const [500, 1000, 2000, null],
+                onSelected: c.onWithInMeterChanged,
+                isEqual: (lhs, rhs) => lhs == rhs,
+                toLabel: (v) {
+                  if (v == null) {
+                    return DS.text.noDistanceLimit;
+                  } else {
+                    return v.format(DS.text.withInMeterFormat);
+                  }
+                },
+                selectedValue: controller.withInMeter,
+                icon: DS.image.location,
+                iconActivated: DS.image.locationActivated,
+              )),
         ],
       ),
     );

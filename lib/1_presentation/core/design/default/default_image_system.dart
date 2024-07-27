@@ -289,6 +289,14 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  SvgPicture get locationActivated => SvgPicture.asset(
+        'assets/image/icon/location.svg',
+        color: DS.color.primary600,
+        height: 20,
+        width: 20,
+      );
+
+  @override
   SvgPicture get locationLg => SvgPicture.asset(
         'assets/image/icon/location.svg',
         height: 24,
@@ -303,9 +311,24 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  SvgPicture get mapActivated => SvgPicture.asset(
+        'assets/image/icon/map.svg',
+        color: DS.color.primary600,
+        height: 20,
+        width: 20,
+      );
+
+  @override
   SvgPicture get mapLg => SvgPicture.asset(
         'assets/image/icon/map.svg',
         height: 24,
         width: 24,
+      );
+
+  @override
+  SvgPicture get selected => SvgPicture.asset(
+        'assets/image/icon/selected.svg',
+        height: 20,
+        width: 20,
       );
 }

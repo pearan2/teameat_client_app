@@ -299,6 +299,8 @@ class CurationListStoreAdditionalInfo with _$CurationListStoreAdditionalInfo {
     required String category,
     required int numberOfCurations,
     required bool isEntered,
+    required String profileImageUrl,
+    String? naverMapPlaceId,
   }) = _CurationListStoreAdditionalInfo;
 
   factory CurationListStoreAdditionalInfo.fromJson(Map<String, Object?> json) =>
@@ -306,9 +308,30 @@ class CurationListStoreAdditionalInfo with _$CurationListStoreAdditionalInfo {
 
   factory CurationListStoreAdditionalInfo.empty() {
     return const CurationListStoreAdditionalInfo(
-      category: "",
-      numberOfCurations: 0,
-      isEntered: false,
+        category: "",
+        numberOfCurations: 0,
+        isEntered: false,
+        profileImageUrl:
+            "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png");
+  }
+}
+
+@freezed
+class CurationListStoreItemInfo with _$CurationListStoreItemInfo {
+  const factory CurationListStoreItemInfo({
+    required int id,
+    required int price,
+    required int originalPrice,
+  }) = _CurationListStoreItemInfo;
+
+  factory CurationListStoreItemInfo.fromJson(Map<String, Object?> json) =>
+      _$CurationListStoreItemInfoFromJson(json);
+
+  factory CurationListStoreItemInfo.empty() {
+    return const CurationListStoreItemInfo(
+      id: -1,
+      price: 1000,
+      originalPrice: 2000,
     );
   }
 }
@@ -319,6 +342,7 @@ class CurationListSimple with _$CurationListSimple {
     required int id,
     required String name,
     required String oneLineIntroduce,
+    required String introducePreview,
     required CurationListStoreInfo store,
     required CurationListCuratorInfo curator,
     required String imageUrl,
@@ -336,6 +360,7 @@ class CurationListSimple with _$CurationListSimple {
         id: detail.id,
         name: detail.name,
         oneLineIntroduce: detail.oneLineIntroduce,
+        introducePreview: detail.introducePreview,
         store: detail.store,
         curator: detail.curator,
         imageUrl: detail.imageUrl,
@@ -352,7 +377,9 @@ class CurationListDetail with _$CurationListDetail {
     required int id,
     required String name,
     required String oneLineIntroduce,
+    required String introducePreview,
     required CurationListStoreInfo store,
+    CurationListStoreItemInfo? item,
     required CurationListStoreAdditionalInfo storeAdditional,
     required CurationListCuratorInfo curator,
     required String imageUrl,
@@ -382,6 +409,7 @@ class CurationListDetail with _$CurationListDetail {
       isSaleFinished: false,
       createdAt: DateTime.now(),
       oneLineIntroduce: "",
+      introducePreview: "",
       introduce: "",
       itemImageUrls: [
         "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png"

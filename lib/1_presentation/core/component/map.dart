@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 extension _TEPointExtension on Point {
@@ -206,7 +208,7 @@ class GoToMap extends StatelessWidget {
   final String name;
   const GoToMap({super.key, required this.store, required this.name});
 
-  Future<void> isMapLaunched() async {
+  Future<void> goToMap() async {
     late final bool isLaunched;
     if (store.naverMapPlaceId == null || store.naverMapPlaceId!.isEmpty) {
       isLaunched = await launchUrlString(
@@ -223,14 +225,45 @@ class GoToMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TEPrimaryButton(
-      text: DS.text.goToMapApp,
-      fitContentWidth: true,
-      textStyle: DS.textStyle.caption1,
-      contentHorizontalPadding: DS.space.tiny,
-      height: DS.space.base,
-      borderRadius: DS.space.xTiny,
-      onTap: isMapLaunched,
+    return TEonTap(
+      onTap: goToMap,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: DS.space.xTiny, horizontal: DS.space.small),
+        decoration: BoxDecoration(
+            border: Border.all(color: DS.color.background300),
+            borderRadius: BorderRadius.circular(DS.space.xSmall)),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DS.image.naverMap,
+            DS.space.hXTiny,
+            Text(DS.text.goToMapApp, style: DS.textStyle.caption2.b800),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TEMapToolbar extends StatelessWidget {
+  final StorePoint store;
+  final String name;
+  final String address;
+  const TEMapToolbar(
+      {super.key,
+      required this.store,
+      required this.name,
+      required this.address});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: TETextCopyButton(textData: address)),
+        DS.space.hTiny,
+        GoToMap(store: store, name: name),
+      ],
     );
   }
 }

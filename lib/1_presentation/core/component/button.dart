@@ -1013,14 +1013,14 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
 
 class TETextCopyButton extends StatelessWidget {
   final String textData;
-  final TextStyle style;
-  final String text;
+  final TextStyle? style;
+  final String? text;
 
   const TETextCopyButton({
     super.key,
     required this.textData,
-    required this.style,
-    required this.text,
+    this.style,
+    this.text,
   });
 
   @override
@@ -1029,16 +1029,16 @@ class TETextCopyButton extends StatelessWidget {
       onTap: () => TEClipboard.setText(textData),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            text,
-            style: style,
+          Expanded(
+            child: Text(
+              text ?? textData,
+              style: style ?? DS.textStyle.caption1.b700,
+            ),
           ),
           DS.space.hXTiny,
-          Icon(
-            Icons.copy,
-            size: DS.space.xSmall,
-          )
+          DS.image.copy,
         ],
       ),
     );

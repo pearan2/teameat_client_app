@@ -253,6 +253,14 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 24,
       );
+
+  @override
+  SvgPicture get rightArrowInBox => SvgPicture.asset(
+        'assets/image/icon/right_arrow_in_box.svg',
+        height: 24,
+        width: 24,
+      );
+
   @override
   Image get dangolPick => Image.asset(
         'assets/image/icon/dangol_pick.png',
@@ -365,5 +373,19 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/icon/share.svg',
         height: 20,
         width: 20,
+      );
+
+  @override
+  SvgPicture get copy => SvgPicture.asset(
+        'assets/image/icon/copy.svg',
+        height: 12,
+        width: 12,
+      );
+
+  @override
+  Image get naverMap => Image.asset(
+        'assets/image/icon/naver_map.png',
+        width: 20,
+        height: 20,
       );
 }

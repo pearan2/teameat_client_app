@@ -48,9 +48,13 @@ abstract class IImageSystem {
   SvgPicture get iconLikeSm;
   SvgPicture get iconLikeSmClicked;
 
+  SvgPicture get copy;
+  Image get naverMap;
+
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
   SvgPicture get rightArrow;
+  SvgPicture get rightArrowInBox;
   Image get dangolPick;
   SvgPicture get addImage;
 

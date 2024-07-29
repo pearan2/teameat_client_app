@@ -319,15 +319,17 @@ class NameAndOneLineIntroduceRow extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  curation.name,
+                  curation.oneLineIntroduce,
                   style: DS.textStyle.paragraph3.semiBold.b800,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 DS.space.vTiny,
                 Text(
-                  curation.name,
+                  curation.introducePreview,
                   style: DS.textStyle.caption1.semiBold.b500,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

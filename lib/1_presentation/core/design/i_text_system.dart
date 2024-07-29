@@ -266,4 +266,6 @@ abstract class ITextSystem {
 
   String get follow;
   String get following;
+
+  String get numberOfCurationFormat;
 }

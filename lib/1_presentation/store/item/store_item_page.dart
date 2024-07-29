@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
+import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
 import 'package:teameat/1_presentation/core/component/store/item/curation/curation.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
@@ -18,6 +19,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/store_item_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/order/order.dart';
+import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
@@ -395,7 +397,7 @@ class ItemPriceAndShareRow extends GetView<StoreItemPageController> {
             )),
         TEonTap(
           onTap: c.onShareClickHandler,
-          child: const Icon(Icons.share),
+          child: DS.image.share,
         ),
       ],
     );
@@ -433,26 +435,15 @@ class ItemSimpleInfoAndLikeRow extends GetView<StoreItemPageController> {
           ),
         ),
         DS.space.hBase,
-        c.item.obx((item) => TEonTap(
-              onTap: controller.onLikeClickHandler,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ItemLike.border(controller.itemId),
-                  DS.space.vXXTiny,
-                  item.numberOfLikes > 9999
-                      ? Text(
-                          '9999+',
-                          style: DS.textStyle.caption2,
-                        )
-                      : Text(
-                          item.numberOfLikes
-                              .format(DS.text.numberWithoutUnitFormat),
-                          style: DS.textStyle.caption2,
-                        )
-                ],
-              ),
-            )),
+        c.item.obx(
+          (item) => TEonTap(
+            onTap: controller.onLikeClickHandler,
+            child: Like<IStoreItemRepository>.base(
+              controller.itemId,
+              numberOfLikes: item.numberOfLikes,
+            ),
+          ),
+        ),
       ],
     );
   }

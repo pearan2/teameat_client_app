@@ -373,7 +373,7 @@ class _TEBottomNavigator extends StatelessWidget {
             TEonTap(
               onTap: () {
                 if (activated != BottomNavigatorType.community) {
-                  react.toCommunityOffAll();
+                  react.toCurationOffAll();
                 }
               },
               child: _BottomNavigatorToggle(

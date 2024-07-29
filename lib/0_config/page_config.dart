@@ -5,8 +5,8 @@ import 'package:teameat/1_presentation/user/curation/user_curation_page.dart';
 import 'package:teameat/1_presentation/user/curation/user_curation_page_binding.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page_binding.dart';
-import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
-import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
+import 'package:teameat/1_presentation/community/view/my_curation_detail_view_page.dart';
+import 'package:teameat/1_presentation/community/view/my_curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/core/auth/login_page.dart';
 import 'package:teameat/1_presentation/core/auth/login_page_binding.dart';
 import 'package:teameat/1_presentation/core/payment/payment_page.dart';
@@ -60,22 +60,15 @@ List<GetPage> allPages() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/community",
+        name: "/curation",
         binding: CurationPageBinding(),
         page: () => const CurationPage(),
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/community/create",
-        binding: CommunityCreatePageBinding(),
-        page: () => const CommunityCreatePage(),
-        transitionDuration: const Duration(milliseconds: 200),
-        transition: Transition.rightToLeft,
-      ),
-      GetPage(
-        name: "/community/view",
-        binding: CommunityViewPageBinding(),
-        page: () => const CommunityViewPage(),
+        name: "/curation/create",
+        binding: CurationCreatePageBinding(),
+        page: () => const CurationCreatePage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),
@@ -89,6 +82,13 @@ List<GetPage> allPages() => [
         name: "/user/curation",
         binding: UserCurationPageBinding(),
         page: () => const UserCurationPage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/user/curation/view",
+        binding: MyCurationDetailViewPageBinding(),
+        page: () => const MyCurationDetailViewPage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),

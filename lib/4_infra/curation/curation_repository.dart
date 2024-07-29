@@ -84,8 +84,9 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
       final path = '/api/store/curation/list/$id';
 
       final ret = await _conn.get(path, null);
-      return ret.fold((l) => left(l),
-          (r) => right(CurationListDetail.fromJson(r as JsonMap)));
+      return ret.fold((l) => left(l), (r) {
+        return right(CurationListDetail.fromJson(r as JsonMap));
+      });
     } catch (e) {
       return left(const Failure.fetchCurationFail(
           '푸드 로그를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));

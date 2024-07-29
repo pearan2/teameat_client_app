@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
+import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
+import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
@@ -11,9 +13,8 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
-import 'package:teameat/2_application/core/component/like_controller.dart';
+import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
-import 'package:teameat/3_domain/core/i_likable_repository.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
@@ -21,7 +22,6 @@ import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
-import 'package:teameat/99_util/extension/string.dart';
 
 class CurationPage extends GetView<CurationPageController> {
   const CurationPage({super.key});
@@ -34,12 +34,10 @@ class CurationPage extends GetView<CurationPageController> {
           activated: BottomNavigatorType.community,
           floatingButtonIcon:
               Icon(Icons.post_add, color: DS.color.background000),
-          onFloatingButtonClick: c.react.toCommunityCreate,
+          onFloatingButtonClick: () => loginWrapper(c.react.toCurationCreate),
           body: Padding(
             padding: EdgeInsets.only(
               top: topAreaHeight,
-              left: AppWidget.horizontalPadding,
-              right: AppWidget.horizontalPadding,
             ),
             child: TERefreshIndicator(
               onRefresh: c.refreshPage,
@@ -54,7 +52,7 @@ class CurationPage extends GetView<CurationPageController> {
                     toolbarHeight: 0,
                     flexibleSpace: const CurationPageToolbar(),
                   ),
-                  SliverToBoxAdapter(child: DS.space.vXBase),
+                  SliverToBoxAdapter(child: DS.space.vXSmall),
                   const CurationList(),
                 ],
               ),
@@ -71,6 +69,8 @@ class CurationPageToolbar extends GetView<CurationPageController> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -93,8 +93,8 @@ class CurationPageToolbar extends GetView<CurationPageController> {
               isEqual: (lhs, rhs) => lhs.code == rhs.code,
               toLabel: (v) => v.title,
               selectedValue: c.searchOption.order,
-              icon: DS.image.map,
-              iconActivated: DS.image.map,
+              icon: DS.image.sort,
+              iconActivated: DS.image.sort,
             ),
           ),
           DS.space.hXSmall,
@@ -130,8 +130,9 @@ class CurationList extends GetView<CurationPageController> {
       builderDelegate: PagedChildBuilderDelegate<CurationListSimple>(
         noItemsFoundIndicatorBuilder: (_) =>
             const Center(child: CurationNotFound()),
-        itemBuilder: (_, curation, idx) =>
-            CurationCard(curation, key: ValueKey(curation.id)),
+        itemBuilder: (_, curation, idx) => CurationCard(curation,
+            key: ValueKey(curation.id),
+            onTap: () => c.onCurationTapHandler(curation.id)),
       ),
       separatorBuilder: (_, idx) => DS.space.vXSmall,
     );
@@ -169,27 +170,21 @@ class CurationNotFound extends GetView<CurationPageController> {
 
 class CurationCard extends StatelessWidget {
   final CurationListSimple curation;
+  final void Function() onTap;
 
-  const CurationCard(this.curation, {super.key});
+  const CurationCard(this.curation, {super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(DS.space.tiny),
-        color: DS.color.background000,
-        boxShadow: [
-          BoxShadow(
-            color: DS.color.background800.withOpacity(0.25),
-            blurRadius: DS.space.xTiny,
-            offset: Offset(0, DS.space.xTiny),
-          )
-        ],
-      ),
+    return TEonTap(
+      onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          CuratorInfoRow(curation.curator).paddingSymmetric(
+            vertical: DS.space.tiny,
+            horizontal: DS.space.small,
+          ),
           Stack(
             children: [
               TECacheImage(src: curation.imageUrl),
@@ -209,83 +204,12 @@ class CurationCard extends StatelessWidget {
                   child: CurationImageOverlay(curation),
                 ),
               ),
-              Positioned(
-                  right: DS.space.xSmall,
-                  top: DS.space.xSmall,
-                  child: Like<ICurationRepository>.base(curation.id)),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(DS.space.xSmall),
-            child:
-                CuratorInfoRow(curation.curator, createdAt: curation.createdAt),
-          )
+          LikeAndCreatedAtRow(curation),
+          NameAndOneLineIntroduceRow(curation),
         ],
       ),
-    );
-  }
-}
-
-class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
-  final int targetId;
-  final Widget liked;
-  final Widget base;
-  final int? numberOfLikes;
-
-  const Like({
-    super.key,
-    required this.targetId,
-    required this.liked,
-    required this.base,
-    this.numberOfLikes,
-  });
-  factory Like.base(int targetId, {int? numberOfLikes}) {
-    return Like(
-      targetId: targetId,
-      liked: DS.image.iconLikeClicked,
-      base: DS.image.iconLike,
-      numberOfLikes: numberOfLikes,
-    );
-  }
-
-  factory Like.border(int targetId, {int? numberOfLikes}) {
-    return Like(
-      targetId: targetId,
-      liked: DS.image.iconLikeBorderClicked,
-      base: DS.image.iconLikeBorder,
-      numberOfLikes: numberOfLikes,
-    );
-  }
-
-  Widget _buildContent() {
-    final notIncludeMeLikeCount =
-        (numberOfLikes ?? 0) - (controller.isLike(targetId) ? 1 : 0);
-
-    if (numberOfLikes == null) {
-      return Obx(
-        () => controller.isLike(targetId) ? liked : base,
-      );
-    } else {
-      return Obx(() {
-        return Column(
-          children: [
-            c.isLike(targetId) ? liked : base,
-            Text(
-              (notIncludeMeLikeCount + (c.isLike(targetId) ? 1 : 0)).toString(),
-              style: DS.textStyle.caption3.b000,
-            )
-          ],
-        );
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TEonTap(
-      onTap: () => c.toggleLike(targetId),
-      isLoginRequired: true,
-      child: _buildContent(),
     );
   }
 }
@@ -349,57 +273,65 @@ class CurationImageOverlay extends StatelessWidget {
   }
 }
 
-class CuratorInfoRow extends StatelessWidget {
-  final DateTime createdAt;
-  final CurationListCuratorInfo curator;
-  const CuratorInfoRow(this.curator, {super.key, required this.createdAt});
+class LikeAndCreatedAtRow extends StatelessWidget {
+  final CurationListSimple curation;
+
+  const LikeAndCreatedAtRow(this.curation, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xSmall,
+        horizontal: DS.space.small,
+      ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TECacheImage(
-            src: curator.profileImageUrl,
-            borderRadius: 300,
-            width: DS.space.medium,
+          Like<ICurationRepository>.small(
+            curation.id,
+            numberOfLikes: curation.numberOfLikes,
           ),
-          DS.space.hTiny,
+          Text(curation.createdAt.format(DS.text.curatorInfoDateFormat),
+              style: DS.textStyle.caption2.b600),
+        ],
+      ),
+    );
+  }
+}
+
+class NameAndOneLineIntroduceRow extends StatelessWidget {
+  final CurationListSimple curation;
+  const NameAndOneLineIntroduceRow(this.curation, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xSmall,
+        horizontal: DS.space.small,
+      ),
+      child: Row(
+        children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  curator.nickname,
-                  style: DS.textStyle.caption1.semiBold.b800.h14,
+                  curation.name,
+                  style: DS.textStyle.paragraph3.semiBold.b800,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                curator.oneLineIntroduce.isNotEmpty()
-                    ? const Expanded(child: SizedBox())
-                    : const SizedBox(),
-                curator.oneLineIntroduce.isNotEmpty()
-                    ? Text(
-                        curator.oneLineIntroduce!,
-                        style: DS.textStyle.caption1.b600.h14,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : const SizedBox(),
+                DS.space.vTiny,
+                Text(
+                  curation.name,
+                  style: DS.textStyle.caption1.semiBold.b500,
+                ),
               ],
             ),
           ),
-          DS.space.hXTiny,
-          Container(
-            alignment: Alignment.bottomRight,
-            child: Text(
-              createdAt.format(DS.text.curatorInfoDateFormat),
-              style: DS.textStyle.caption1.b600.h14,
-            ),
-          )
         ],
       ),
     );

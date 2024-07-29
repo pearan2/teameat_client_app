@@ -79,6 +79,10 @@ class CurationPageController extends PageController {
     pagingController.refresh();
   }
 
+  void onCurationTapHandler(int curationId) {
+    react.toCurationDetail(curationId);
+  }
+
   Future<void> _loadCode() async {
     return resolve(_codeRepo.getCode(CodeKey.curationOrder()),
         (codes) => _orderCodes.value = codes);

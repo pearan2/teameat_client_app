@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
+import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -246,42 +247,6 @@ class _ItemSaleRemainDurationTextState
       return _buildSaleEndText();
     }
     return _buildRemainDuration();
-  }
-}
-
-class ItemLike extends GetView<LikeController<IStoreItemRepository>> {
-  final int itemId;
-  final Widget liked;
-  final Widget base;
-
-  const ItemLike({
-    super.key,
-    required this.itemId,
-    required this.liked,
-    required this.base,
-  });
-
-  factory ItemLike.base(int itemId) {
-    return ItemLike(
-      itemId: itemId,
-      liked: DS.image.iconLikeClicked,
-      base: DS.image.iconLike,
-    );
-  }
-
-  factory ItemLike.border(int itemId) {
-    return ItemLike(
-      itemId: itemId,
-      liked: DS.image.iconLikeBorderClicked,
-      base: DS.image.iconLikeBorder,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => controller.isLike(itemId) ? liked : base,
-    );
   }
 }
 
@@ -543,7 +508,7 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
                 horizontal: DS.space.xSmall,
                 vertical: DS.space.xTiny,
               ),
-              child: ItemLike.base(itemId),
+              child: Like<IStoreItemRepository>.whiteWithShadow(itemId),
             ),
           ),
         ),

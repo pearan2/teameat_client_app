@@ -206,31 +206,45 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  Image get iconLike => Image.asset(
-        'assets/image/icon/like.png',
+  Image get iconLikeShadow => Image.asset(
+        'assets/image/icon/like_shadow.png',
         height: 36,
         width: 36,
       );
 
   @override
-  Image get iconLikeClicked => Image.asset(
-        'assets/image/icon/like_liked.png',
+  Image get iconLikeShadowClicked => Image.asset(
+        'assets/image/icon/like_shadow_liked.png',
         height: 36,
         width: 36,
       );
 
   @override
-  SvgPicture get iconLikeBorder => SvgPicture.asset(
-        'assets/image/icon/like_border.svg',
-        height: 31,
-        width: 31,
+  SvgPicture get iconLike => SvgPicture.asset(
+        'assets/image/icon/like.svg',
+        height: 20,
+        width: 20,
       );
 
   @override
-  SvgPicture get iconLikeBorderClicked => SvgPicture.asset(
-        'assets/image/icon/like_border_liked.svg',
-        height: 31,
-        width: 31,
+  SvgPicture get iconLikeClicked => SvgPicture.asset(
+        'assets/image/icon/like_liked.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get iconLikeSm => SvgPicture.asset(
+        'assets/image/icon/like.svg',
+        height: 12,
+        width: 12,
+      );
+
+  @override
+  SvgPicture get iconLikeSmClicked => SvgPicture.asset(
+        'assets/image/icon/like_liked.svg',
+        height: 12,
+        width: 12,
       );
 
   @override
@@ -328,6 +342,27 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get selected => SvgPicture.asset(
         'assets/image/icon/selected.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get more => SvgPicture.asset(
+        'assets/image/icon/more.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get sort => SvgPicture.asset(
+        'assets/image/icon/sort.svg',
+        height: 20,
+        width: 20,
+      );
+
+  @override
+  SvgPicture get share => SvgPicture.asset(
+        'assets/image/icon/share.svg',
         height: 20,
         width: 20,
       );

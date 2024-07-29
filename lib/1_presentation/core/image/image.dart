@@ -103,11 +103,14 @@ class TECacheImage extends StatelessWidget {
 class TEImageCarouselCounter extends StatelessWidget {
   final int total;
   final int now;
-
+  final Color? backgroundColor;
+  final Color? textColor;
   const TEImageCarouselCounter({
     super.key,
     required this.total,
     required this.now,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -119,13 +122,13 @@ class TEImageCarouselCounter extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(300),
-        color: DS.color.background800,
+        color: backgroundColor ?? DS.color.background800,
       ),
       child: Text(
         '$now/$total',
         textAlign: TextAlign.center,
         style: DS.textStyle.paragraph3
-            .copyWith(color: DS.color.background000, height: 1),
+            .copyWith(color: textColor ?? DS.color.background000, height: 1),
       ),
     );
   }
@@ -153,6 +156,10 @@ class TEImageCarousel extends StatefulWidget {
 class _TEImageCarouselState extends State<TEImageCarousel> {
   int nowImageIdx = 0;
 
+  void changeIdx(int newIdx) {
+    setState(() => nowImageIdx = newIdx);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -174,8 +181,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
             options: CarouselOptions(
               autoPlay: false,
               enlargeCenterPage: true,
-              onPageChanged: (index, reason) =>
-                  setState(() => nowImageIdx = index),
+              onPageChanged: (index, reason) => changeIdx(index),
               viewportFraction: 1.0,
               aspectRatio: widget.ratio,
             ),

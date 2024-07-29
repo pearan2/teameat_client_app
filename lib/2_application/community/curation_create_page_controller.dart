@@ -19,7 +19,7 @@ import 'package:teameat/3_domain/user/user.dart';
 
 import 'package:flutter/material.dart' as mt;
 
-class CommunityCreatePageController extends PageController {
+class CurationCreatePageController extends PageController {
   final double menuImageRatio = 3 / 4;
   final double storeImageRatio = 1 / 1;
   final primaryButtonKey = mt.GlobalKey();
@@ -58,7 +58,6 @@ class CommunityCreatePageController extends PageController {
 
   // setter
   set isMenuImageLoading(bool isLoading) {
-    print(isLoading);
     _isMenuImageLoading = isLoading;
   }
 
@@ -209,7 +208,7 @@ class CommunityCreatePageController extends PageController {
     ret.fold(
       (l) => showError(l.desc),
       (_) {
-        react.toCommunityOffAll();
+        react.toCurationOffAll();
         showSuccess(DS.text.registerCurationSuccess);
       },
     );

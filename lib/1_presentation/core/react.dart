@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
+import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_permission_page.dart';
@@ -141,22 +143,29 @@ class React extends IReact {
   }
 
   @override
-  void toCommunityOffAll() {
+  void toCurationOffAll() {
     if (Get.isRegistered<CurationPageController>()) {
       final controller = Get.find<CurationPageController>();
       controller.refreshPage();
     }
-    Get.offAllNamed('/community');
+    Get.offAllNamed('/curation');
   }
 
   @override
-  void toCommunityCreate() {
-    Get.toNamed('/community/create');
+  void toCurationCreate() {
+    Get.toNamed('/curation/create');
   }
 
   @override
-  void toCommunityView(int curationId) {
-    Get.toNamed('/community/view', arguments: {'curationId': curationId});
+  void toCurationDetail(int curationId) {
+    Get.to(
+      () => CurationDetailViewPage(curationId.toString()),
+      arguments: {'curationId': curationId},
+      preventDuplicates: false,
+      binding: CurationDetailViewPageBinding(),
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
   }
 
   @override
@@ -195,5 +204,10 @@ class React extends IReact {
   @override
   void toUserCuration() {
     Get.toNamed('/user/curation');
+  }
+
+  @override
+  void toUserCurationDetail(int curationId) {
+    Get.toNamed('/user/curation/view', arguments: {'curationId': curationId});
   }
 }

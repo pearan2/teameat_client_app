@@ -9,11 +9,12 @@ class CurationStatusText extends StatelessWidget {
 
   const CurationStatusText(this.curation, {super.key, required this.color});
 
-  factory CurationStatusText.fromDetail(CurationListDetail curation,
-      {required Color color}) {
+  factory CurationStatusText.fromDetail(
+    CurationListDetail curation,
+  ) {
     return CurationStatusText(
       CurationListSimple.fromDetail(curation),
-      color: color,
+      color: DS.color.primary600,
     );
   }
 

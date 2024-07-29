@@ -779,4 +779,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get searchedCurationNotFound => '검색된 푸드로그가 없어요';
+
+  @override
+  String get alreadyDeletedOrBlockedCuration => '삭제되었거나, 차단된 푸드로그 입니다';
+
+  @override
+  String get follow => '팔로우';
+
+  @override
+  String get following => '팔로잉';
 }

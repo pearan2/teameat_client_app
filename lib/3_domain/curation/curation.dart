@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/local.dart';
@@ -247,6 +248,15 @@ class CurationListStoreInfo with _$CurationListStoreInfo {
 
   factory CurationListStoreInfo.fromJson(Map<String, Object?> json) =>
       _$CurationListStoreInfoFromJson(json);
+
+  factory CurationListStoreInfo.empty() {
+    return CurationListStoreInfo(
+      id: -1,
+      name: "",
+      address: "",
+      location: Point.empty(),
+    );
+  }
 }
 
 @freezed
@@ -260,6 +270,15 @@ class CurationListCuratorInfo with _$CurationListCuratorInfo {
 
   factory CurationListCuratorInfo.fromJson(Map<String, Object?> json) =>
       _$CurationListCuratorInfoFromJson(json);
+
+  factory CurationListCuratorInfo.empty() {
+    return const CurationListCuratorInfo(
+      id: -1,
+      nickname: "",
+      profileImageUrl:
+          "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
+    );
+  }
 }
 
 extension CurationListExtension on CurationListSimple {
@@ -284,6 +303,14 @@ class CurationListStoreAdditionalInfo with _$CurationListStoreAdditionalInfo {
 
   factory CurationListStoreAdditionalInfo.fromJson(Map<String, Object?> json) =>
       _$CurationListStoreAdditionalInfoFromJson(json);
+
+  factory CurationListStoreAdditionalInfo.empty() {
+    return const CurationListStoreAdditionalInfo(
+      category: "",
+      numberOfCurations: 0,
+      isEntered: false,
+    );
+  }
 }
 
 @freezed
@@ -291,6 +318,7 @@ class CurationListSimple with _$CurationListSimple {
   const factory CurationListSimple({
     required int id,
     required String name,
+    required String oneLineIntroduce,
     required CurationListStoreInfo store,
     required CurationListCuratorInfo curator,
     required String imageUrl,
@@ -307,6 +335,7 @@ class CurationListSimple with _$CurationListSimple {
       CurationListSimple(
         id: detail.id,
         name: detail.name,
+        oneLineIntroduce: detail.oneLineIntroduce,
         store: detail.store,
         curator: detail.curator,
         imageUrl: detail.imageUrl,
@@ -322,6 +351,7 @@ class CurationListDetail with _$CurationListDetail {
   const factory CurationListDetail({
     required int id,
     required String name,
+    required String oneLineIntroduce,
     required CurationListStoreInfo store,
     required CurationListStoreAdditionalInfo storeAdditional,
     required CurationListCuratorInfo curator,
@@ -330,7 +360,6 @@ class CurationListDetail with _$CurationListDetail {
     required bool isInSale,
     required bool isSaleFinished,
     required DateTime createdAt,
-    required String oneLineIntroduce,
     required String introduce,
     required List<String> itemImageUrls,
     required List<String> storeImageUrls,
@@ -338,4 +367,26 @@ class CurationListDetail with _$CurationListDetail {
 
   factory CurationListDetail.fromJson(Map<String, Object?> json) =>
       _$CurationListDetailFromJson(json);
+
+  factory CurationListDetail.empty() {
+    return CurationListDetail(
+      id: -1,
+      name: "",
+      store: CurationListStoreInfo.empty(),
+      storeAdditional: CurationListStoreAdditionalInfo.empty(),
+      curator: CurationListCuratorInfo.empty(),
+      imageUrl:
+          "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
+      numberOfLikes: 0,
+      isInSale: false,
+      isSaleFinished: false,
+      createdAt: DateTime.now(),
+      oneLineIntroduce: "",
+      introduce: "",
+      itemImageUrls: [
+        "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png"
+      ],
+      storeImageUrls: [],
+    );
+  }
 }

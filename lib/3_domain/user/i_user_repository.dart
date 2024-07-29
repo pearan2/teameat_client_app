@@ -16,4 +16,10 @@ abstract class IUserRepository {
   Future<Either<Failure, List<int>>> getMyStoreItemLikes();
 
   Future<Either<Failure, List<int>>> getMyStoreLikes();
+
+  Future<Either<Failure, bool>> isLiked(int targetUserId);
+
+  Future<Either<Failure, Unit>> like(int targetUserId);
+
+  Future<Either<Failure, Unit>> unLike(int targetUserId);
 }

@@ -8,7 +8,7 @@ import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 
-class CommunityViewPageController extends PageController {
+class MyCurationDetailPageController extends PageController {
   final _curationRepo = Get.find<ICurationRepository>();
   final _userRepo = Get.find<IUserRepository>();
 
@@ -21,5 +21,5 @@ class CommunityViewPageController extends PageController {
     return _curationRepo.findMyCurationById(curationId);
   }
 
-  CommunityViewPageController(this.curationId);
+  MyCurationDetailPageController(this.curationId);
 }

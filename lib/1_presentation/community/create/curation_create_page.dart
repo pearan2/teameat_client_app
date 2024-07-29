@@ -6,12 +6,12 @@ import 'package:teameat/1_presentation/core/component/local/local_selector.dart'
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/community/community_create_page_controller.dart';
+import 'package:teameat/2_application/community/curation_create_page_controller.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
-class CommunityCreatePage extends GetView<CommunityCreatePageController> {
-  const CommunityCreatePage({super.key});
+class CurationCreatePage extends GetView<CurationCreatePageController> {
+  const CurationCreatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class CommunityCreatePage extends GetView<CommunityCreatePageController> {
   }
 }
 
-class ToPreviewButton extends GetView<CommunityCreatePageController> {
+class ToPreviewButton extends GetView<CurationCreatePageController> {
   const ToPreviewButton({super.key});
 
   @override
@@ -131,7 +131,7 @@ class ToPreviewButton extends GetView<CommunityCreatePageController> {
   }
 }
 
-class IsStoreEnteredText extends GetView<CommunityCreatePageController> {
+class IsStoreEnteredText extends GetView<CurationCreatePageController> {
   const IsStoreEnteredText({super.key});
 
   @override

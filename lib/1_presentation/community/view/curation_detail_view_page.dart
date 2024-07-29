@@ -1,147 +1,130 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
+import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
-import 'package:teameat/1_presentation/core/component/text.dart';
+import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
-import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
-import 'package:teameat/2_application/community/community_view_page_controller.dart';
+import 'package:teameat/2_application/community/curation_detail_view_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
-import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
-class CommunityViewPage extends GetView<CommunityViewPageController> {
-  const CommunityViewPage({super.key});
+class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const CurationDetailViewPage(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final imageWidth = width - AppWidget.horizontalPadding * 2;
+    const ratio = 3 / 4;
 
     return TEScaffold(
-      appBar: TEAppBar(
-        leadingIconOnPressed: c.react.back,
-        title: DS.text.menuApplication,
-        homeOnPressed: c.react.toHomeOffAll,
-      ),
-      body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TEDivider.thin(),
-            Padding(
-                padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-                child: c.me.obx((me) => CurationCuratorInfo(
-                    creatorProfileImageUrl: me.profileImageUrl,
-                    creatorNickname: me.nickname,
-                    creatorOneLineIntroduce: me.oneLineIntroduce))),
-            TEDivider.thin(),
-            DS.space.vSmall,
-            InfoTitle(DS.text.storeItemPicture).withBasePadding,
-            DS.space.vSmall,
-            c.curation
-                .obx(
-                  (curation) => TEImageCarousel(
-                    width: imageWidth,
-                    imageSrcs: curation.itemImageUrls,
-                    ratio: 3 / 4,
-                    overlayAdditionalHorizontalPadding: 0,
-                  ),
-                )
-                .withBasePadding,
-            DS.space.vSmall,
-            TEDivider.thick(),
-            DS.space.vSmall,
-            InfoTitle(DS.text.itemDescriptionByCurator).withBasePadding,
-            DS.space.vSmall,
-            c.curation.obx((curation) => CurationInfo(curation)),
-            DS.space.vSmall,
-            DS.space.vLarge,
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CurationInfo extends StatelessWidget {
-  final MyCurationDetail curation;
-  const CurationInfo(this.curation, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        curation.storeImageUrls.isEmpty
-            ? const SizedBox()
-            : TEImageCarousel(
-                width: MediaQuery.of(context).size.width,
-                imageSrcs: curation.storeImageUrls,
-                overlayAdditionalHorizontalPadding: 0,
-              ),
-        curation.storeImageUrls.isEmpty ? const SizedBox() : DS.space.vSmall,
-        Text(curation.oneLineIntroduce, style: DS.textStyle.title3)
-            .withBasePadding,
-        DS.space.vSmall,
-        TEReadMoreText(curation.introduce, visibleLength: 72).withBasePadding,
-        DS.space.vSmall,
-      ],
-    );
-  }
-}
-
-class CurationCuratorInfo extends StatelessWidget {
-  final double height;
-  final String creatorProfileImageUrl;
-  final String? creatorOneLineIntroduce;
-  final String creatorNickname;
-
-  const CurationCuratorInfo({
-    super.key,
-    this.height = 32.0,
-    required this.creatorProfileImageUrl,
-    this.creatorOneLineIntroduce,
-    required this.creatorNickname,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: IntrinsicHeight(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TECacheImage(
-              src: creatorProfileImageUrl,
-              width: height,
-              ratio: 1 / 1,
-              borderRadius: 300,
-            ),
-            DS.space.hXSmall,
-            Column(
-              mainAxisAlignment: creatorOneLineIntroduce == null
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(creatorNickname,
-                    style: DS.textStyle.paragraph3.semiBold.b800),
-                creatorOneLineIntroduce == null
-                    ? const SizedBox()
-                    : Text(creatorOneLineIntroduce!,
-                        style: DS.textStyle.caption1.b800),
-              ],
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: DS.color.background000,
+          surfaceTintColor: DS.color.background000,
+          pinned: true,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: DS.image.more,
             )
           ],
+          toolbarHeight: DS.space.large,
+          expandedHeight: (width / ratio) - DS.space.large,
+          flexibleSpace: FlexibleSpaceBar(
+            background: c.curation.obx(
+              (curation) => TEImageCarousel(
+                ratio: ratio,
+                width: width,
+                imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
+                overlayAdditionalHorizontalPadding: 0.0,
+              ),
+            ),
+          ),
         ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.all(DS.space.small),
+            child: c.curation.obx(
+              (curation) =>
+                  CuratorInfoRow(curation.curator, withFollowButton: true),
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(child: TEDivider.thin()),
+        SliverToBoxAdapter(child: DS.space.vBase),
+        SliverToBoxAdapter(
+            child:
+                c.curation.obx((curation) => _CurationDetailStatusAndToolsRow(
+                      curation,
+                      onShare: c.onShare,
+                    ))),
+        SliverToBoxAdapter(child: DS.space.vSmall),
+        SliverToBoxAdapter(
+            child: c.curation.obx((curation) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppWidget.horizontalPadding),
+                  child: Text(
+                    curation.name,
+                    style: DS.textStyle.title3.bold.b800,
+                  ),
+                ))),
+        SliverToBoxAdapter(child: DS.space.vXSmall),
+        SliverToBoxAdapter(
+            child: c.curation.obx((curation) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppWidget.horizontalPadding),
+                  child: Text(
+                    curation.name,
+                    style: DS.textStyle.paragraph2Long.bold.b500,
+                  ),
+                ))),
+      ],
+    ));
+  }
+}
+
+class _CurationDetailStatusAndToolsRow extends StatelessWidget {
+  final CurationListDetail curation;
+  final void Function() onShare;
+
+  const _CurationDetailStatusAndToolsRow(this.curation,
+      {required this.onShare});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CurationStatusText.fromDetail(curation),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DS.image.share,
+              DS.space.hXSmall,
+              Like<ICurationRepository>.base(
+                curation.id,
+                numberOfLikes: curation.numberOfLikes,
+              )
+            ],
+          )
+        ],
       ),
     );
   }

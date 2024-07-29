@@ -44,13 +44,15 @@ abstract class IRouter {
 
   void toUserDetail();
 
-  void toCommunityOffAll();
+  void toCurationOffAll();
 
   void toUserCuration();
 
-  void toCommunityCreate();
+  void toCurationCreate();
 
-  void toCommunityView(int curationId);
+  void toCurationDetail(int curationId);
+
+  void toUserCurationDetail(int curationId);
 
   void toPermissionSetting();
 

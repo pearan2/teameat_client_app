@@ -41,10 +41,12 @@ abstract class IImageSystem {
 
   /// icon
   SvgPicture get iconSearch;
-  Image get iconLike;
-  Image get iconLikeClicked;
-  SvgPicture get iconLikeBorder;
-  SvgPicture get iconLikeBorderClicked;
+  Image get iconLikeShadow;
+  Image get iconLikeShadowClicked;
+  SvgPicture get iconLike;
+  SvgPicture get iconLikeClicked;
+  SvgPicture get iconLikeSm;
+  SvgPicture get iconLikeSmClicked;
 
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
@@ -58,6 +60,10 @@ abstract class IImageSystem {
   SvgPicture get map;
   SvgPicture get mapActivated;
   SvgPicture get mapLg;
+  SvgPicture get more;
+
+  SvgPicture get sort;
+  SvgPicture get share;
 
   /// sell type icon
   SvgPicture get timeLimit;

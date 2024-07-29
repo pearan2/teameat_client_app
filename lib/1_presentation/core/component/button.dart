@@ -15,6 +15,8 @@ import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/3_domain/connection/i_connection.dart';
+import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/99_util/extension/list.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/text.dart';
@@ -27,6 +29,7 @@ class TEMainButton extends GetView<LoadingProvider> {
   final TextStyle? textStyle;
   final bool listenEventLoading;
 
+  final double? width;
   final double? height;
   final Color? borderColor;
   final double? borderWidth;
@@ -48,6 +51,7 @@ class TEMainButton extends GetView<LoadingProvider> {
     this.textStyle,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
+    this.width,
     this.height,
     this.borderColor,
     this.borderWidth,
@@ -104,11 +108,12 @@ class TEMainButton extends GetView<LoadingProvider> {
         padding: EdgeInsets.symmetric(
             vertical: contentVerticalPadding ?? 0.0,
             horizontal: contentHorizontalPadding ?? 0.0),
-        width: fitContentWidth
-            ? getContainerWidth() +
-                DS.space
-                    .tiny // Todo 계산완료 후 tiny 정도를 더해준다. 왜 이래야 정상적으로 레이아웃이 1줄로 나오는지 잘 모르겠음.
-            : double.infinity,
+        width: width ??
+            (fitContentWidth
+                ? getContainerWidth() +
+                    DS.space
+                        .tiny // Todo 계산완료 후 tiny 정도를 더해준다. 왜 이래야 정상적으로 레이아웃이 1줄로 나오는지 잘 모르겠음.
+                : double.infinity),
         height: height ?? DS.space.large,
         decoration: BoxDecoration(
           border: _buildBorder(),
@@ -143,6 +148,7 @@ class TEPrimaryButton extends StatelessWidget {
   final bool isLoginRequired;
   final String text;
   final TextStyle? textStyle;
+  final double? width;
   final double? height;
   final bool listenEventLoading;
   final double? contentHorizontalPadding;
@@ -156,6 +162,7 @@ class TEPrimaryButton extends StatelessWidget {
     this.onTap,
     required this.text,
     this.textStyle,
+    this.width,
     this.height,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
@@ -172,6 +179,7 @@ class TEPrimaryButton extends StatelessWidget {
       onTap: onTap,
       text: text,
       textStyle: textStyle,
+      width: width,
       height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
@@ -191,6 +199,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
   final bool isLoginRequired;
   final String text;
   final TextStyle? textStyle;
+  final double? width;
   final double? height;
   final bool listenEventLoading;
   final double? contentHorizontalPadding;
@@ -204,6 +213,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
     this.onTap,
     required this.text,
     this.textStyle,
+    this.width,
     this.height,
     this.isLoginRequired = false,
     this.listenEventLoading = false,
@@ -220,6 +230,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
       onTap: onTap,
       text: text,
       textStyle: textStyle,
+      width: width,
       height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
@@ -1031,5 +1042,99 @@ class TETextCopyButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class Follow extends StatefulWidget {
+  final int targetUserId;
+  const Follow(this.targetUserId, {super.key});
+
+  @override
+  State<Follow> createState() => _FollowState();
+}
+
+class _FollowState extends State<Follow> {
+  final width = DS.space.large;
+  final height = DS.space.base;
+
+  final _userRepo = Get.find<IUserRepository>();
+
+  bool isLoading = true;
+  bool isFollowing = false;
+  bool isError = !Get.find<IConnection>().isLogined;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  void changeState(void Function() cb) {
+    if (!mounted) return;
+    setState(() => cb());
+  }
+
+  Future<void> init() async {
+    changeState(() => isLoading = true);
+    final ret = await _userRepo.isLiked(widget.targetUserId);
+    ret.fold(
+        (l) => changeState(() => isError = true),
+        (r) => changeState(() {
+              isError = false;
+              isFollowing = r;
+            }));
+    changeState(() => isLoading = false);
+  }
+
+  Future<void> follow() async {
+    changeState(() => isLoading = true);
+    final ret = await _userRepo.like(widget.targetUserId);
+    ret.fold((l) => changeState(() => isError = true),
+        (r) => changeState(() => isFollowing = true));
+    changeState(() => isLoading = false);
+  }
+
+  Future<void> unFollow() async {
+    changeState(() => isLoading = true);
+    final ret = await _userRepo.unLike(widget.targetUserId);
+    ret.fold((l) => changeState(() => isError = true),
+        (r) => changeState(() => isFollowing = false));
+    changeState(() => isLoading = false);
+  }
+
+  Widget _buildLoading() {
+    return Container(
+      alignment: Alignment.center,
+      width: width,
+      height: height,
+      child: const TELoading(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isError) {
+      return const SizedBox();
+    }
+    if (isLoading) {
+      return _buildLoading();
+    }
+    if (isFollowing) {
+      return TESecondaryButton(
+        text: DS.text.following,
+        width: width,
+        height: height,
+        textStyle: DS.textStyle.caption2,
+        onTap: unFollow,
+      );
+    } else {
+      return TEPrimaryButton(
+        text: DS.text.follow,
+        width: width,
+        height: height,
+        textStyle: DS.textStyle.caption2,
+        onTap: follow,
+      );
+    }
   }
 }

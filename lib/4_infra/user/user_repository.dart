@@ -100,4 +100,45 @@ class UserRepository implements IUserRepository {
   void clearCache() {
     _cached = null;
   }
+
+  /// 팔로우 기능
+
+  @override
+  Future<Either<Failure, bool>> isLiked(int targetUserId) async {
+    try {
+      final path = '/api/member/is-like/$targetUserId';
+
+      final ret = await _conn.get(path, null);
+      return ret.fold((l) => left(l), (r) => right(r as bool));
+    } catch (e) {
+      return left(const Failure.fetchCurationFail(
+          '팔로우 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> like(int targetUserId) async {
+    try {
+      final path = '/api/member/like/$targetUserId';
+
+      final ret = await _conn.patch(path, null);
+      return ret.fold((l) => left(l), (r) => right(unit));
+    } catch (e) {
+      return left(
+          const Failure.fetchCurationFail('팔로우에 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> unLike(int targetUserId) async {
+    try {
+      final path = '/api/member/unlike/$targetUserId';
+
+      final ret = await _conn.patch(path, null);
+      return ret.fold((l) => left(l), (r) => right(unit));
+    } catch (e) {
+      return left(
+          const Failure.fetchCurationFail('팔로우 해제에 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
 }

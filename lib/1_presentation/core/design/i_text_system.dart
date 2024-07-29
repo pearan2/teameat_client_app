@@ -261,4 +261,9 @@ abstract class ITextSystem {
 
   String get curatorInfoDateFormat;
   String get searchedCurationNotFound;
+
+  String get alreadyDeletedOrBlockedCuration;
+
+  String get follow;
+  String get following;
 }

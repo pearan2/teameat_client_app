@@ -18,7 +18,7 @@ class CommunityViewPageController extends PageController {
   final int curationId;
 
   Future<Either<Failure, MyCurationDetail>> _loadCuration() {
-    return _curationRepo.findById(curationId);
+    return _curationRepo.findMyCurationById(curationId);
   }
 
   CommunityViewPageController(this.curationId);

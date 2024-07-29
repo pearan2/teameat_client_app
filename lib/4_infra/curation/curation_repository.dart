@@ -11,7 +11,7 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
   final _conn = Get.find<IConnection>();
 
   @override
-  Future<Either<Failure, List<MyCurationSimple>>> findAll(
+  Future<Either<Failure, List<MyCurationSimple>>> findMyAllCurations(
       SearchMyCurationSimpleList searchOption) async {
     try {
       const path = '/api/store/curation/list-by-creator';
@@ -25,12 +25,12 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
               .toList()));
     } catch (e) {
       return left(const Failure.fetchCurationFail(
-          '신청 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+          '푸드 로그를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
 
   @override
-  Future<Either<Failure, MyCurationDetail>> findById(int id) async {
+  Future<Either<Failure, MyCurationDetail>> findMyCurationById(int id) async {
     try {
       final path = '/api/store/curation/$id';
 
@@ -39,7 +39,7 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
           (r) => right(MyCurationDetail.fromJson(r as JsonMap)));
     } catch (e) {
       return left(const Failure.fetchCurationFail(
-          '신청 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+          '푸드 로그를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
 
@@ -54,12 +54,12 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
           (r) => right(MyCurationDetail.fromJson(r as JsonMap)));
     } catch (e) {
       return left(
-          const Failure.registerCurationFail('신청에 실패했습니다. 잠시 후 다시 시도해주세요.'));
+          const Failure.registerCurationFail('등록에 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
 
   @override
-  Future<Either<Failure, List<CurationListSimple>>> findCurationList(
+  Future<Either<Failure, List<CurationListSimple>>> findAllCurations(
       SearchCurationSimpleList searchOption) async {
     try {
       const path = '/api/store/curation/list';
@@ -73,7 +73,22 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
               .toList()));
     } catch (e) {
       return left(const Failure.fetchCurationFail(
-          '신청 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+          '푸드 로그를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CurationListDetail>> findCurationDetailById(
+      int id) async {
+    try {
+      final path = '/api/store/curation/list/$id';
+
+      final ret = await _conn.get(path, null);
+      return ret.fold((l) => left(l),
+          (r) => right(CurationListDetail.fromJson(r as JsonMap)));
+    } catch (e) {
+      return left(const Failure.fetchCurationFail(
+          '푸드 로그를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
 

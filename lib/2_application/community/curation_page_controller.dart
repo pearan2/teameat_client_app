@@ -87,7 +87,7 @@ class CurationPageController extends PageController {
   Future<void> _loadCurations(int currentPageNumber) async {
     if (_isLoading) return;
     _isLoading = true;
-    final ret = await _curationRepo.findCurationList(searchOption);
+    final ret = await _curationRepo.findAllCurations(searchOption);
     _isLoading = false;
     return ret.fold((l) => showError(l.desc), (r) {
       if (r.length < searchOption.pageSize) {

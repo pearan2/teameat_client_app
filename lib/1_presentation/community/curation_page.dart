@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -302,22 +303,6 @@ class CurationImageOverlay extends StatelessWidget {
     );
   }
 
-  Widget _buildSaleStatusTextBox() {
-    final statusText = curation.getStatusText();
-    if (statusText == null) {
-      return const SizedBox();
-    }
-    return Container(
-      width: DS.space.large,
-      height: DS.space.base,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          border: Border.all(color: DS.color.background000),
-          borderRadius: BorderRadius.circular(DS.space.base)),
-      child: Text(statusText, style: DS.textStyle.caption2.semiBold.b000),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -330,7 +315,7 @@ class CurationImageOverlay extends StatelessWidget {
             children: [
               Expanded(child: _buildNameText()),
               DS.space.hSmall,
-              _buildSaleStatusTextBox()
+              CurationStatusText(curation, color: DS.color.background000)
             ],
           ),
           DS.space.vXSmall,

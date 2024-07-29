@@ -275,6 +275,18 @@ extension CurationListExtension on CurationListSimple {
 }
 
 @freezed
+class CurationListStoreAdditionalInfo with _$CurationListStoreAdditionalInfo {
+  const factory CurationListStoreAdditionalInfo({
+    required String category,
+    required int numberOfCurations,
+    required bool isEntered,
+  }) = _CurationListStoreAdditionalInfo;
+
+  factory CurationListStoreAdditionalInfo.fromJson(Map<String, Object?> json) =>
+      _$CurationListStoreAdditionalInfoFromJson(json);
+}
+
+@freezed
 class CurationListSimple with _$CurationListSimple {
   const factory CurationListSimple({
     required int id,
@@ -290,4 +302,40 @@ class CurationListSimple with _$CurationListSimple {
 
   factory CurationListSimple.fromJson(Map<String, Object?> json) =>
       _$CurationListSimpleFromJson(json);
+
+  factory CurationListSimple.fromDetail(CurationListDetail detail) =>
+      CurationListSimple(
+        id: detail.id,
+        name: detail.name,
+        store: detail.store,
+        curator: detail.curator,
+        imageUrl: detail.imageUrl,
+        numberOfLikes: detail.numberOfLikes,
+        isInSale: detail.isInSale,
+        isSaleFinished: detail.isSaleFinished,
+        createdAt: detail.createdAt,
+      );
+}
+
+@freezed
+class CurationListDetail with _$CurationListDetail {
+  const factory CurationListDetail({
+    required int id,
+    required String name,
+    required CurationListStoreInfo store,
+    required CurationListStoreAdditionalInfo storeAdditional,
+    required CurationListCuratorInfo curator,
+    required String imageUrl,
+    required int numberOfLikes,
+    required bool isInSale,
+    required bool isSaleFinished,
+    required DateTime createdAt,
+    required String oneLineIntroduce,
+    required String introduce,
+    required List<String> itemImageUrls,
+    required List<String> storeImageUrls,
+  }) = _CurationListDetail;
+
+  factory CurationListDetail.fromJson(Map<String, Object?> json) =>
+      _$CurationListDetailFromJson(json);
 }

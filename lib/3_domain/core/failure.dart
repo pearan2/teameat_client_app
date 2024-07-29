@@ -29,4 +29,6 @@ class Failure with _$Failure {
   const factory Failure.fetchCurationFail(String desc) = _FetchCurationFail;
   const factory Failure.registerCurationFail(String desc) =
       _RegisterCurationFail;
+  const factory Failure.blockFail(String desc) = _BlockFail;
+  const factory Failure.reportFail(String desc) = _ReportFail;
 }

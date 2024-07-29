@@ -328,12 +328,12 @@ class CurationImageOverlay extends StatelessWidget {
                 children: [
                   Text(
                     curation.store.name,
-                    style: DS.textStyle.caption2.b000.h14,
+                    style: DS.textStyle.caption1.b000.h14,
                   ),
                   DS.space.vXXTiny,
                   Text(
                     curation.store.address,
-                    style: DS.textStyle.caption3.b300.h14,
+                    style: DS.textStyle.caption2.b300.h14,
                   ),
                 ],
               ),
@@ -365,7 +365,7 @@ class CuratorInfoRow extends StatelessWidget {
             borderRadius: 300,
             width: DS.space.medium,
           ),
-          DS.space.hXTiny,
+          DS.space.hTiny,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,7 +384,7 @@ class CuratorInfoRow extends StatelessWidget {
                 curator.oneLineIntroduce.isNotEmpty()
                     ? Text(
                         curator.oneLineIntroduce!,
-                        style: DS.textStyle.caption3.b600.h14,
+                        style: DS.textStyle.caption1.b600.h14,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       )
@@ -397,7 +397,7 @@ class CuratorInfoRow extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Text(
               createdAt.format(DS.text.curatorInfoDateFormat),
-              style: DS.textStyle.caption3.b600.h14,
+              style: DS.textStyle.caption1.b600.h14,
             ),
           )
         ],

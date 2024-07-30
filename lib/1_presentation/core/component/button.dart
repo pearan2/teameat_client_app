@@ -194,6 +194,59 @@ class TEPrimaryButton extends StatelessWidget {
   }
 }
 
+class TEDisableButton extends GetView<LoadingProvider> {
+  final void Function()? onTap;
+  final bool isLoginRequired;
+  final String text;
+  final TextStyle? textStyle;
+  final double? width;
+  final double? height;
+  final bool listenEventLoading;
+  final double? contentHorizontalPadding;
+  final double? contentVerticalPadding;
+  final bool fitContentWidth;
+  final double? borderRadius;
+  final bool withShadow;
+
+  const TEDisableButton({
+    super.key,
+    this.onTap,
+    required this.text,
+    this.textStyle,
+    this.width,
+    this.height,
+    this.isLoginRequired = false,
+    this.listenEventLoading = false,
+    this.contentHorizontalPadding,
+    this.contentVerticalPadding,
+    this.borderRadius,
+    this.fitContentWidth = false,
+    this.withShadow = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEMainButton(
+      onTap: onTap,
+      text: text,
+      textStyle: textStyle,
+      width: width,
+      height: height,
+      isLoginRequired: isLoginRequired,
+      listenEventLoading: listenEventLoading,
+      fillColor: DS.color.background300,
+      contentColor: DS.color.background000,
+      borderColor: DS.color.background300,
+      borderWidth: DS.space.xxTiny,
+      contentHorizontalPadding: contentHorizontalPadding,
+      contentVerticalPadding: contentVerticalPadding,
+      fitContentWidth: fitContentWidth,
+      borderRadius: borderRadius,
+      withShadow: withShadow,
+    );
+  }
+}
+
 class TESecondaryButton extends GetView<LoadingProvider> {
   final void Function()? onTap;
   final bool isLoginRequired;
@@ -1055,8 +1108,8 @@ class Follow extends StatefulWidget {
 }
 
 class _FollowState extends State<Follow> {
-  final width = DS.space.large;
-  final height = DS.space.xBase;
+  final width = DS.space.large + DS.space.tiny;
+  final height = DS.space.base;
 
   final _userRepo = Get.find<IUserRepository>();
 
@@ -1125,7 +1178,7 @@ class _FollowState extends State<Follow> {
       return _buildLoading();
     }
     if (isFollowing) {
-      return TESecondaryButton(
+      return TEDisableButton(
         borderRadius: DS.space.xTiny,
         text: DS.text.following,
         width: width,

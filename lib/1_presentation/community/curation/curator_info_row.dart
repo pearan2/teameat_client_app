@@ -24,28 +24,21 @@ class CuratorInfoRow extends StatelessWidget {
           borderRadius: 300,
           width: DS.space.medium,
         ),
-        DS.space.hXSmall,
+        DS.space.hTiny,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    curator.nickname,
-                    style: DS.textStyle.caption1.semiBold.b800.h14,
-                  ),
-                  withFollowButton ? DS.space.hTiny : const SizedBox(),
-                  withFollowButton ? Follow(curator.id) : const SizedBox(),
-                ],
+              Text(
+                curator.nickname,
+                style: DS.textStyle.caption1.bold.b800.h14,
               ),
               curator.oneLineIntroduce.isNotEmpty()
                   ? Text(
                       curator.oneLineIntroduce!,
-                      style: DS.textStyle.caption3.b500.h14,
+                      style: DS.textStyle.caption2.b600.h14,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     )
@@ -53,6 +46,15 @@ class CuratorInfoRow extends StatelessWidget {
             ],
           ),
         ),
+        withFollowButton ? DS.space.hTiny : const SizedBox(),
+        withFollowButton
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Follow(curator.id),
+                ],
+              )
+            : const SizedBox(),
       ],
     );
   }

@@ -32,7 +32,7 @@ class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
       liked: DS.image.iconLikeShadowClicked,
       base: DS.image.iconLikeShadow,
       numberOfLikes: numberOfLikes,
-      countStyle: DS.textStyle.caption3.b000,
+      countStyle: DS.textStyle.caption1.b000,
     );
   }
 
@@ -42,17 +42,17 @@ class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
       liked: DS.image.iconLikeClicked,
       base: DS.image.iconLike,
       numberOfLikes: numberOfLikes,
-      countStyle: DS.textStyle.caption3.b700,
+      countStyle: DS.textStyle.caption1.b700,
     );
   }
 
   factory Like.small(int targetId, {int? numberOfLikes}) {
     return Like(
       targetId: targetId,
-      liked: DS.image.iconLikeSmClicked,
-      base: DS.image.iconLikeSm,
+      liked: DS.image.iconLikeClicked,
+      base: DS.image.iconLike,
       numberOfLikes: numberOfLikes,
-      countStyle: DS.textStyle.caption2.b700,
+      countStyle: DS.textStyle.caption1.b700,
       isRowShape: true,
     );
   }

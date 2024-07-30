@@ -45,8 +45,6 @@ abstract class IImageSystem {
   Image get iconLikeShadowClicked;
   SvgPicture get iconLike;
   SvgPicture get iconLikeClicked;
-  SvgPicture get iconLikeSm;
-  SvgPicture get iconLikeSmClicked;
 
   SvgPicture get copy;
   Image get naverMap;

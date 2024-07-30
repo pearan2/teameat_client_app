@@ -234,20 +234,6 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get iconLikeSm => SvgPicture.asset(
-        'assets/image/icon/like.svg',
-        height: 12,
-        width: 12,
-      );
-
-  @override
-  SvgPicture get iconLikeSmClicked => SvgPicture.asset(
-        'assets/image/icon/like_liked.svg',
-        height: 12,
-        width: 12,
-      );
-
-  @override
   SvgPicture get rightArrow => SvgPicture.asset(
         'assets/image/icon/right_arrow.svg',
         height: 24,

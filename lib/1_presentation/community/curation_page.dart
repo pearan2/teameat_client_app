@@ -180,6 +180,7 @@ class CurationCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CuratorInfoRow(curation.curator).paddingSymmetric(
             vertical: DS.space.tiny,
@@ -206,8 +207,13 @@ class CurationCard extends StatelessWidget {
               ),
             ],
           ),
-          LikeAndCreatedAtRow(curation),
-          NameAndOneLineIntroduceRow(curation),
+          DS.space.vXSmall,
+          LikeRow(curation),
+          DS.space.vSmall,
+          OneLineIntroduceAndIntroducePreviewRow(curation),
+          DS.space.vSmall,
+          CreatedAtRow(curation),
+          DS.space.vSmall,
         ],
       ),
     );
@@ -221,7 +227,7 @@ class CurationImageOverlay extends StatelessWidget {
   Widget _buildNameText() {
     return Text(
       curation.name,
-      style: DS.textStyle.paragraph1.bold.b000,
+      style: DS.textStyle.paragraph1.bold.b000.h14,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
@@ -230,7 +236,7 @@ class CurationImageOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(DS.space.xSmall),
+      padding: const EdgeInsets.all(AppWidget.horizontalPadding),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -242,28 +248,27 @@ class CurationImageOverlay extends StatelessWidget {
               CurationStatusText(curation, color: DS.color.background000)
             ],
           ),
-          DS.space.vXSmall,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          DS.space.vSmall,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Text(
+                curation.store.name,
+                style: DS.textStyle.caption1.b000.h14,
+              ),
+              DS.space.vXXTiny,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    curation.store.name,
-                    style: DS.textStyle.caption1.b000.h14,
-                  ),
-                  DS.space.vXXTiny,
                   Text(
                     curation.store.address,
                     style: DS.textStyle.caption2.b300.h14,
                   ),
+                  DistanceText(
+                      point: curation.store.location,
+                      style: DS.textStyle.caption2.b300),
                 ],
-              ),
-              DistanceText(
-                point: curation.store.location,
-                textColor: DS.color.background000,
               ),
             ],
           )
@@ -273,44 +278,51 @@ class CurationImageOverlay extends StatelessWidget {
   }
 }
 
-class LikeAndCreatedAtRow extends StatelessWidget {
+class LikeRow extends StatelessWidget {
   final CurationListSimple curation;
 
-  const LikeAndCreatedAtRow(this.curation, {super.key});
+  const LikeRow(this.curation, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DS.space.xSmall,
-        horizontal: DS.space.small,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppWidget.horizontalPadding,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Like<ICurationRepository>.small(
-            curation.id,
-            numberOfLikes: curation.numberOfLikes,
-          ),
-          Text(curation.createdAt.format(DS.text.curatorInfoDateFormat),
-              style: DS.textStyle.caption2.b600),
-        ],
+      child: Like<ICurationRepository>.small(
+        curation.id,
+        numberOfLikes: curation.numberOfLikes,
       ),
     );
   }
 }
 
-class NameAndOneLineIntroduceRow extends StatelessWidget {
+class CreatedAtRow extends StatelessWidget {
   final CurationListSimple curation;
-  const NameAndOneLineIntroduceRow(this.curation, {super.key});
+
+  const CreatedAtRow(this.curation, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DS.space.xSmall,
-        horizontal: DS.space.small,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppWidget.horizontalPadding,
       ),
+      child: Text(curation.createdAt.format(DS.text.curatorInfoDateFormat),
+          style: DS.textStyle.caption2.b500.h14),
+    );
+  }
+}
+
+class OneLineIntroduceAndIntroducePreviewRow extends StatelessWidget {
+  final CurationListSimple curation;
+  const OneLineIntroduceAndIntroducePreviewRow(this.curation, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       child: Row(
         children: [
           Expanded(
@@ -324,10 +336,10 @@ class NameAndOneLineIntroduceRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                DS.space.vXSmall,
+                DS.space.vXTiny,
                 Text(
                   curation.introducePreview,
-                  style: DS.textStyle.caption1.b500,
+                  style: DS.textStyle.caption1.b500.h14,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -54,14 +54,14 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
                       curation,
                       onShare: c.onShare,
                     ))),
-        SliverToBoxAdapter(child: DS.space.vSmall),
+        SliverToBoxAdapter(child: DS.space.vBase),
         SliverToBoxAdapter(
             child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: AppWidget.horizontalPadding),
           child: c.curation.obx((curation) => Text(
                 curation.oneLineIntroduce,
-                style: DS.textStyle.title3.bold.b800.h14,
+                style: DS.textStyle.paragraph1.bold.b800.h14,
               )),
         )),
         SliverToBoxAdapter(child: DS.space.vXSmall),
@@ -71,7 +71,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
               horizontal: AppWidget.horizontalPadding),
           child: c.curation.obx((curation) => Text(
                 curation.introduce,
-                style: DS.textStyle.paragraph2Long.b500,
+                style: DS.textStyle.paragraph3.b500,
               )),
         )),
         SliverToBoxAdapter(child: DS.space.vSmall),

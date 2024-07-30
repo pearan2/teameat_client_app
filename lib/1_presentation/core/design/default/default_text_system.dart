@@ -791,4 +791,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get numberOfCurationFormat => '###개의 푸드로그';
+
+  @override
+  String get close => '닫기';
 }

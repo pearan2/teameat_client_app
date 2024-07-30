@@ -89,7 +89,8 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
         )),
         SliverToBoxAdapter(
             child: c.curation.obx((curation) => StoreMap(curation))),
-        SliverToBoxAdapter(child: DS.space.vMedium),
+        SliverToBoxAdapter(child: DS.space.vLarge),
+        SliverToBoxAdapter(child: DS.space.vLarge),
       ],
     ));
   }

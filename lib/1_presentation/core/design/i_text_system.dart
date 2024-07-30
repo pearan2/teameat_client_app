@@ -268,4 +268,5 @@ abstract class ITextSystem {
   String get following;
 
   String get numberOfCurationFormat;
+  String get close;
 }

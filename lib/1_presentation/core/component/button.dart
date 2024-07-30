@@ -491,11 +491,13 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
 
   void showSelector(double maxHeight) {
     showTEBottomSheet(
+      withBar: true,
+      withClose: true,
       Container(
         constraints: BoxConstraints(maxHeight: maxHeight),
         child: ListView.builder(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
-          padding: EdgeInsets.only(bottom: DS.space.xBase),
           itemBuilder: (_, idx) {
             if (idx == 0) {
               return _buildTitleText();

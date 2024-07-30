@@ -5,11 +5,11 @@ import 'package:teameat/1_presentation/core/design/i_color_system.dart';
 class DefaultColorSystem extends IColorSystem {
   /// primary
   @override
-  Color get primary600 => const Color(0xFF0088FF);
+  Color get primary700 => const Color(0xFF0088FF);
   @override
-  Color get primary500 => const Color(0xFF2FA6FF);
+  Color get primary600 => const Color(0xFF2FA6FF);
   @override
-  Color get primary400 => const Color(0xFF2FA6FF);
+  Color get primary500 => const Color(0xFF8DCBFF);
 
   /// secondary
   @override

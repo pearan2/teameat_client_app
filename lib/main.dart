@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 import 'package:get/get.dart';
+import 'package:statusbarz/statusbarz.dart';
 import 'package:teameat/0_config/dependency_config.dart';
 import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/0_config/firebase_options.dart';
@@ -47,29 +48,32 @@ class AppWidget extends StatelessWidget {
 
     final env = Get.find<Environment>();
 
-    return TEonTap(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: GetMaterialApp(
-        getPages: allPages(),
-        initialRoute: "/",
-        debugShowCheckedModeBanner: env.isDev,
-        builder: (_, child) {
-          final MediaQueryData data = MediaQuery.of(context);
-          return MediaQuery(
-            data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
-            child: ScrollConfiguration(
-              behavior: NoGlowBehavior(),
-              child: child!,
+    return StatusbarzCapturer(
+      child: TEonTap(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: GetMaterialApp(
+          navigatorObservers: [Statusbarz.instance.observer],
+          getPages: allPages(),
+          initialRoute: "/",
+          debugShowCheckedModeBanner: env.isDev,
+          builder: (_, child) {
+            final MediaQueryData data = MediaQuery.of(context);
+            return MediaQuery(
+              data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
+              child: ScrollConfiguration(
+                behavior: NoGlowBehavior(),
+                child: child!,
+              ),
+            );
+          },
+          theme: ThemeData(
+            colorScheme: ColorScheme.light(primary: DS.color.primary600),
+            useMaterial3: true,
+            scaffoldBackgroundColor: DS.color.background000,
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: DS.color.background000,
+              surfaceTintColor: DS.color.background000,
             ),
-          );
-        },
-        theme: ThemeData(
-          colorScheme: ColorScheme.light(primary: DS.color.primary600),
-          useMaterial3: true,
-          scaffoldBackgroundColor: DS.color.background000,
-          bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: DS.color.background000,
-            surfaceTintColor: DS.color.background000,
           ),
         ),
       ),

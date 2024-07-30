@@ -140,6 +140,7 @@ class TEImageCarousel extends StatefulWidget {
   final double ratio;
   final Widget? bottomLeft;
   final double overlayAdditionalHorizontalPadding;
+  final void Function(String newNetworkImageSrc)? onNetworkImageChanged;
   const TEImageCarousel({
     super.key,
     required this.width,
@@ -147,6 +148,7 @@ class TEImageCarousel extends StatefulWidget {
     this.ratio = 1 / 1,
     this.bottomLeft,
     this.overlayAdditionalHorizontalPadding = AppWidget.horizontalPadding,
+    this.onNetworkImageChanged,
   });
 
   @override
@@ -156,8 +158,22 @@ class TEImageCarousel extends StatefulWidget {
 class _TEImageCarouselState extends State<TEImageCarousel> {
   int nowImageIdx = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    tryInvokeImageChangeCallback(null);
+  }
+
+  void tryInvokeImageChangeCallback(int? newIdx) {
+    final newImageSrc = widget.imageSrcs[newIdx ?? 0];
+    if (newImageSrc is String && widget.onNetworkImageChanged != null) {
+      widget.onNetworkImageChanged!(newImageSrc);
+    }
+  }
+
   void changeIdx(int newIdx) {
     setState(() => nowImageIdx = newIdx);
+    tryInvokeImageChangeCallback(newIdx);
   }
 
   @override

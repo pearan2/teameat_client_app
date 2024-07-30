@@ -1028,16 +1028,15 @@ class TETextCopyButton extends StatelessWidget {
     return TEonTap(
       onTap: () => TEClipboard.setText(textData),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
+          Flexible(
             child: Text(
               text ?? textData,
-              style: style ?? DS.textStyle.caption1.b700,
+              style: style ?? DS.textStyle.caption1.b700.h14,
             ),
           ),
-          DS.space.hXTiny,
           DS.image.copy,
         ],
       ),

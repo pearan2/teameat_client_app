@@ -16,6 +16,7 @@ import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/99_util/color.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
@@ -30,36 +31,12 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    const ratio = 3 / 4;
-
     return TEScaffold(
         body: CustomScrollView(
+      cacheExtent: 99999,
       physics: const ClampingScrollPhysics(),
       slivers: [
-        SliverAppBar(
-          backgroundColor: DS.color.background000,
-          surfaceTintColor: DS.color.background000,
-          pinned: true,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: DS.image.more,
-            )
-          ],
-          toolbarHeight: DS.space.large,
-          expandedHeight: (width / ratio) - DS.space.large,
-          flexibleSpace: FlexibleSpaceBar(
-            background: c.curation.obx(
-              (curation) => TEImageCarousel(
-                ratio: ratio,
-                width: width,
-                imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
-                overlayAdditionalHorizontalPadding: 0.0,
-              ),
-            ),
-          ),
-        ),
+        Temp(c),
         SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.all(DS.space.small),
@@ -84,7 +61,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
               horizontal: AppWidget.horizontalPadding),
           child: c.curation.obx((curation) => Text(
                 curation.oneLineIntroduce,
-                style: DS.textStyle.title3.bold.b800,
+                style: DS.textStyle.title3.bold.b800.h14,
               )),
         )),
         SliverToBoxAdapter(child: DS.space.vXSmall),
@@ -94,15 +71,17 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
               horizontal: AppWidget.horizontalPadding),
           child: c.curation.obx((curation) => Text(
                 curation.introduce,
-                style: DS.textStyle.paragraph2Long.bold.b500,
+                style: DS.textStyle.paragraph2Long.b500,
               )),
         )),
         SliverToBoxAdapter(child: DS.space.vSmall),
+        SliverToBoxAdapter(child: DS.space.vMedium),
         SliverToBoxAdapter(
             child: Padding(
           padding: const EdgeInsets.all(AppWidget.horizontalPadding),
           child: c.curation.obx((curation) => ItemNameAndPrice(curation)),
         )),
+        SliverToBoxAdapter(child: DS.space.vMedium),
         SliverToBoxAdapter(
             child: Padding(
           padding: const EdgeInsets.all(AppWidget.horizontalPadding),
@@ -113,6 +92,83 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
         SliverToBoxAdapter(child: DS.space.vMedium),
       ],
     ));
+  }
+}
+
+class Temp extends StatefulWidget {
+  final CurationDetailViewPageController controller;
+  const Temp(this.controller, {super.key});
+
+  @override
+  State<Temp> createState() => _TempState();
+}
+
+class _TempState extends State<Temp> {
+  Color primaryColor = DS.color.background000;
+  bool isCollapsed = false;
+
+  Future<void> onImageChanged(String imageUrl, Size imageSize) async {
+    if (CurationListDetail.empty().itemImageUrls.contains(imageUrl)) {
+      return;
+    }
+    final backgroundColorComputeResult =
+        await calcBackgroundImage(MakePaletteParam(
+      imageUrl: imageUrl,
+      region: Rect.fromLTRB(0, 0, imageSize.width - 1, DS.space.large * 1.75),
+      size: imageSize,
+    ));
+    if (backgroundColorComputeResult == null) return;
+  }
+
+  void changeIsCollapsed(bool isCollapsed) {
+    if (!mounted) return;
+    setState(() => this.isCollapsed = isCollapsed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const ratio = 3 / 4;
+    final width = MediaQuery.of(context).size.width;
+    final height = width / ratio;
+    final toolbarHeight = DS.space.large;
+
+    final c = widget.controller;
+    return SliverAppBar(
+      backgroundColor: DS.color.background000,
+      surfaceTintColor: DS.color.background000,
+      iconTheme: IconThemeData(color: DS.color.background000),
+      pinned: true,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: DS.image.more(DS.color.background000),
+        )
+      ],
+      toolbarHeight: toolbarHeight,
+      expandedHeight: (width / ratio) - DS.space.large,
+      flexibleSpace: LayoutBuilder(builder: (context, constraints) {
+        // final settings = context
+        //     .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
+        // if (settings != null &&
+        //     constraints.biggest.height < settings.minExtent * 1.5) {
+        //   changeIsCollapsed(true);
+        // } else {
+        //   changeIsCollapsed(false);
+        // }
+
+        return FlexibleSpaceBar(
+          collapseMode: CollapseMode.parallax,
+          background: c.curation.obx(
+            (curation) => TEImageCarousel(
+              ratio: ratio,
+              width: width,
+              imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
+              overlayAdditionalHorizontalPadding: 0.0,
+            ),
+          ),
+        );
+      }),
+    );
   }
 }
 
@@ -137,7 +193,7 @@ class _CurationDetailStatusAndToolsRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              DS.image.share,
+              TEonTap(onTap: onShare, child: DS.image.share),
               DS.space.hXSmall,
               Like<ICurationRepository>.base(
                 curation.id,
@@ -175,8 +231,9 @@ class ItemNameAndPrice extends StatelessWidget {
               children: [
                 Text(
                   curation.name,
-                  style: DS.textStyle.paragraph3.semiBold.b800,
+                  style: DS.textStyle.caption1.semiBold.b800.h14,
                 ),
+                curation.item != null ? DS.space.hXXTiny : const SizedBox(),
                 curation.item != null
                     ? DS.image.rightArrowInBox
                     : const SizedBox(),
@@ -194,7 +251,7 @@ class ItemNameAndPrice extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildItemName(),
-        curation.item != null ? DS.space.vTiny : const SizedBox(),
+        curation.item != null ? DS.space.vSmall : const SizedBox(),
         curation.item != null
             ? StoreItemPrice(
                 originalPrice: curation.item!.originalPrice,
@@ -215,6 +272,15 @@ class StoreNameAndCategory extends StatelessWidget {
     Get.find<IReact>().toStoreDetail(curation.store.id);
   }
 
+  String getCategory() {
+    final category = curation.storeAdditional.category;
+    if (!category.contains('>')) {
+      return category;
+    } else {
+      return category.split('>').last;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return TEonTap(
@@ -228,7 +294,7 @@ class StoreNameAndCategory extends StatelessWidget {
             children: [
               Text(
                 curation.store.name,
-                style: DS.textStyle.paragraph2.semiBold.b800,
+                style: DS.textStyle.paragraph2.semiBold.b800.h14,
               ),
               curation.storeAdditional.isEntered
                   ? DS.image.rightArrow
@@ -237,7 +303,9 @@ class StoreNameAndCategory extends StatelessWidget {
           ),
           DS.space.vXTiny,
           Text(
-              "${curation.storeAdditional.category} | ${curation.storeAdditional.numberOfCurations.format(DS.text.numberOfCurationFormat)}")
+            "${getCategory()} | ${curation.storeAdditional.numberOfCurations.format(DS.text.numberOfCurationFormat)}",
+            style: DS.textStyle.caption2.b500.h14,
+          )
         ],
       ),
     );

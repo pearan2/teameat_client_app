@@ -75,6 +75,8 @@ dependencies:
   # hosted 로 변경할 것
   insta_assets_picker: 
     path: /Users/hongkwonlee/Desktop/project/flutter_local_library/insta_assets_picker
+  statusbarz: ^1.0.14
+  palette_generator: ^0.3.3+4
   
 dev_dependencies:
   flutter_test:

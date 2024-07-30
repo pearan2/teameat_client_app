@@ -49,8 +49,8 @@ class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
   factory Like.small(int targetId, {int? numberOfLikes}) {
     return Like(
       targetId: targetId,
-      liked: DS.image.iconLikeClicked,
-      base: DS.image.iconLike,
+      liked: DS.image.iconLikeSmClicked,
+      base: DS.image.iconLikeSm,
       numberOfLikes: numberOfLikes,
       countStyle: DS.textStyle.caption2.b700,
       isRowShape: true,

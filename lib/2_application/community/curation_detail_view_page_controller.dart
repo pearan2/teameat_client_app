@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -31,6 +33,8 @@ class CurationDetailViewPageController extends PageController {
   }
 
   Future<void> onShare() async {}
+
+  Future<void> onMore() async {}
 
   CurationDetailViewPageController(this.curationId);
 }

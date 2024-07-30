@@ -8,6 +8,8 @@ class DefaultColorSystem extends IColorSystem {
   Color get primary600 => const Color(0xFF0088FF);
   @override
   Color get primary500 => const Color(0xFF2FA6FF);
+  @override
+  Color get primary400 => const Color(0xFF2FA6FF);
 
   /// secondary
   @override

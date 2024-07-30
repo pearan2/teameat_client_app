@@ -355,11 +355,14 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get more => SvgPicture.asset(
-        'assets/image/icon/more.svg',
-        height: 24,
-        width: 24,
-      );
+  SvgPicture more(Color color) {
+    return SvgPicture.asset(
+      'assets/image/icon/more.svg',
+      height: 24,
+      width: 24,
+      color: color,
+    );
+  }
 
   @override
   SvgPicture get sort => SvgPicture.asset(
@@ -378,8 +381,8 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get copy => SvgPicture.asset(
         'assets/image/icon/copy.svg',
-        height: 12,
-        width: 12,
+        height: 8,
+        width: 8,
       );
 
   @override

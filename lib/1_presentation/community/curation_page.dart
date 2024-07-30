@@ -320,14 +320,14 @@ class NameAndOneLineIntroduceRow extends StatelessWidget {
               children: [
                 Text(
                   curation.oneLineIntroduce,
-                  style: DS.textStyle.paragraph3.semiBold.b800,
+                  style: DS.textStyle.paragraph3.semiBold.b800.h14,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                DS.space.vTiny,
+                DS.space.vXSmall,
                 Text(
                   curation.introducePreview,
-                  style: DS.textStyle.caption1.semiBold.b500,
+                  style: DS.textStyle.caption1.b500,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

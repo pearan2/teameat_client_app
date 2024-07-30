@@ -229,7 +229,7 @@ class GoToMap extends StatelessWidget {
       onTap: goToMap,
       child: Container(
         padding: EdgeInsets.symmetric(
-            vertical: DS.space.xTiny, horizontal: DS.space.small),
+            vertical: DS.space.xxTiny, horizontal: DS.space.xBase),
         decoration: BoxDecoration(
             border: Border.all(color: DS.color.background300),
             borderRadius: BorderRadius.circular(DS.space.xSmall)),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/design/i_text_style_system.dart';
 
 class DefaultTextStyleSystem extends ITextStyleSystem {
-  static TextStyle get defaultStyle =>
-      const TextStyle(fontFamily: 'Pretendard', height: 1);
+  static TextStyle get defaultStyle => const TextStyle(
+      fontFamily: 'Pretendard', height: 1, letterSpacing: -0.02);
 
   /// title
   @override

@@ -7,6 +7,9 @@ abstract class IColorSystem {
   /// 0xFF356BF7
   Color get primary500;
 
+  /// 0xFF8DCBFF
+  Color get primary400;
+
   /// 0xFFF44E00
   Color get secondary900;
 

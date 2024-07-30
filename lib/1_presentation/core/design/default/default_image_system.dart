@@ -391,4 +391,14 @@ class DefaultImageSystem extends IImageSystem {
         width: 20,
         height: 20,
       );
+
+  @override
+  SvgPicture leftArrowInBox({Color? color}) {
+    return SvgPicture.asset(
+      'assets/image/icon/left_arrow_in_box.svg',
+      height: 20,
+      width: 20,
+      color: color,
+    );
+  }
 }

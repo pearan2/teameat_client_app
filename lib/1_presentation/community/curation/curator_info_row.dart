@@ -17,50 +17,43 @@ class CuratorInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TECacheImage(
-            src: curator.profileImageUrl,
-            borderRadius: 300,
-            width: DS.space.medium,
-          ),
-          DS.space.hTiny,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  curator.nickname,
-                  style: DS.textStyle.caption1.semiBold.b800.h14,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                curator.oneLineIntroduce.isNotEmpty()
-                    ? const Expanded(child: SizedBox())
-                    : const SizedBox(),
-                curator.oneLineIntroduce.isNotEmpty()
-                    ? Text(
-                        curator.oneLineIntroduce!,
-                        style: DS.textStyle.caption1.b600.h14,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : const SizedBox(),
-              ],
-            ),
-          ),
-          Row(
+    return Row(
+      children: [
+        TECacheImage(
+          src: curator.profileImageUrl,
+          borderRadius: 300,
+          width: DS.space.medium,
+        ),
+        DS.space.hXSmall,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              withFollowButton ? DS.space.hXTiny : const SizedBox(),
-              withFollowButton ? Follow(curator.id) : const SizedBox(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    curator.nickname,
+                    style: DS.textStyle.caption1.semiBold.b800.h14,
+                  ),
+                  withFollowButton ? DS.space.hTiny : const SizedBox(),
+                  withFollowButton ? Follow(curator.id) : const SizedBox(),
+                ],
+              ),
+              curator.oneLineIntroduce.isNotEmpty()
+                  ? Text(
+                      curator.oneLineIntroduce!,
+                      style: DS.textStyle.caption3.b500.h14,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  : const SizedBox(),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

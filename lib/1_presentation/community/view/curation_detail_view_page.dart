@@ -36,7 +36,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
       cacheExtent: 99999,
       physics: const ClampingScrollPhysics(),
       slivers: [
-        Temp(c),
+        ColorAdjustAppBar(c),
         SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.all(DS.space.small),
@@ -95,19 +95,21 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
   }
 }
 
-class Temp extends StatefulWidget {
+class ColorAdjustAppBar extends StatefulWidget {
   final CurationDetailViewPageController controller;
-  const Temp(this.controller, {super.key});
+  const ColorAdjustAppBar(this.controller, {super.key});
 
   @override
-  State<Temp> createState() => _TempState();
+  State<ColorAdjustAppBar> createState() => _ColorAdjustAppBarState();
 }
 
-class _TempState extends State<Temp> {
+class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
   Color primaryColor = DS.color.background000;
+  bool needToBeWhite = true;
   bool isCollapsed = false;
 
   Future<void> onImageChanged(String imageUrl, Size imageSize) async {
+    if (isCollapsed) return;
     if (CurationListDetail.empty().itemImageUrls.contains(imageUrl)) {
       return;
     }
@@ -118,11 +120,19 @@ class _TempState extends State<Temp> {
       size: imageSize,
     ));
     if (backgroundColorComputeResult == null) return;
+    if (!mounted || isCollapsed) return;
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        primaryColor = backgroundColorComputeResult.backgroundColor;
+        needToBeWhite = backgroundColorComputeResult.isNeedToBeWhiteText;
+      });
+    });
   }
 
   void changeIsCollapsed(bool isCollapsed) {
-    if (!mounted) return;
-    setState(() => this.isCollapsed = isCollapsed);
+    Future.delayed(Duration.zero, () {
+      setState(() => this.isCollapsed = isCollapsed);
+    });
   }
 
   @override
@@ -132,29 +142,35 @@ class _TempState extends State<Temp> {
     final height = width / ratio;
     final toolbarHeight = DS.space.large;
 
+    final iconColor = isCollapsed
+        ? DS.color.background700
+        : (needToBeWhite ? DS.color.background000 : DS.color.background700);
     final c = widget.controller;
     return SliverAppBar(
-      backgroundColor: DS.color.background000,
-      surfaceTintColor: DS.color.background000,
-      iconTheme: IconThemeData(color: DS.color.background000),
+      backgroundColor: isCollapsed ? DS.color.background000 : primaryColor,
+      surfaceTintColor: isCollapsed ? DS.color.background000 : primaryColor,
+      leading: IconButton(
+        onPressed: c.react.back,
+        icon: DS.image.leftArrowInBox(color: iconColor),
+      ),
       pinned: true,
       actions: [
         IconButton(
           onPressed: () {},
-          icon: DS.image.more(DS.color.background000),
+          icon: DS.image.more(iconColor),
         )
       ],
       toolbarHeight: toolbarHeight,
       expandedHeight: (width / ratio) - DS.space.large,
       flexibleSpace: LayoutBuilder(builder: (context, constraints) {
-        // final settings = context
-        //     .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
-        // if (settings != null &&
-        //     constraints.biggest.height < settings.minExtent * 1.5) {
-        //   changeIsCollapsed(true);
-        // } else {
-        //   changeIsCollapsed(false);
-        // }
+        final settings = context
+            .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
+        if (settings != null &&
+            constraints.biggest.height < settings.minExtent * 1.5) {
+          changeIsCollapsed(true);
+        } else {
+          changeIsCollapsed(false);
+        }
 
         return FlexibleSpaceBar(
           collapseMode: CollapseMode.parallax,
@@ -164,6 +180,8 @@ class _TempState extends State<Temp> {
               width: width,
               imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
               overlayAdditionalHorizontalPadding: 0.0,
+              onNetworkImageChanged: (imageUrl) =>
+                  onImageChanged(imageUrl, Size(width, height)),
             ),
           ),
         );

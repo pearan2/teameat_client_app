@@ -67,7 +67,8 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return IconButton(
           onPressed: leadingIconOnPressed,
-          icon: Icon(Icons.arrow_back_ios, color: leadingIconColor));
+          icon: DS.image.leftArrowInBox(
+              color: leadingIconColor ?? DS.color.background800));
     }
   }
 

@@ -53,6 +53,7 @@ abstract class IImageSystem {
 
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
+  SvgPicture leftArrowInBox({Color? color});
   SvgPicture get rightArrow;
   SvgPicture get rightArrowInBox;
   Image get dangolPick;

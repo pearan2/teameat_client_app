@@ -1054,7 +1054,7 @@ class Follow extends StatefulWidget {
 
 class _FollowState extends State<Follow> {
   final width = DS.space.large;
-  final height = DS.space.base;
+  final height = DS.space.xBase;
 
   final _userRepo = Get.find<IUserRepository>();
 
@@ -1103,6 +1103,10 @@ class _FollowState extends State<Follow> {
 
   Widget _buildLoading() {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: DS.color.primary600),
+        borderRadius: BorderRadius.circular(DS.space.xTiny),
+      ),
       alignment: Alignment.center,
       width: width,
       height: height,
@@ -1120,6 +1124,7 @@ class _FollowState extends State<Follow> {
     }
     if (isFollowing) {
       return TESecondaryButton(
+        borderRadius: DS.space.xTiny,
         text: DS.text.following,
         width: width,
         height: height,
@@ -1128,6 +1133,7 @@ class _FollowState extends State<Follow> {
       );
     } else {
       return TEPrimaryButton(
+        borderRadius: DS.space.xTiny,
         text: DS.text.follow,
         width: width,
         height: height,

@@ -17,7 +17,9 @@ import 'package:teameat/3_domain/message/i_message_repository.dart';
 import 'package:teameat/3_domain/order/i_order_repository.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
+import 'package:teameat/3_domain/user/block/i_user_block_repository.dart';
 import 'package:teameat/3_domain/user/i_user_repository.dart';
+import 'package:teameat/3_domain/user/report/i_report_repository.dart';
 import 'package:teameat/3_domain/voucher/gift/i_gift_repository.dart';
 import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/4_infra/auth/auth_service.dart';
@@ -30,6 +32,8 @@ import 'package:teameat/4_infra/message/message_repository.dart';
 import 'package:teameat/4_infra/order/order_repository.dart';
 import 'package:teameat/4_infra/store/item/item_repository.dart';
 import 'package:teameat/4_infra/store/store_repository.dart';
+import 'package:teameat/4_infra/user/block/user_block_repository.dart';
+import 'package:teameat/4_infra/user/report/user_report_repository.dart';
 import 'package:teameat/4_infra/user/user_repository.dart';
 import 'package:teameat/4_infra/voucher/gift/gift_repository.dart';
 import 'package:teameat/4_infra/voucher/voucher_repository.dart';
@@ -54,6 +58,8 @@ Future<void> configDependency() async {
   Get.put<IUserRepository>(UserRepository());
   Get.put<ILocalRepository>(LocalRepository());
   Get.put<ICurationRepository>(CurationRepository());
+  Get.put<IUserBlockRepository>(UserBlockRepository());
+  Get.put<IReportRepository>(UserReportRepository());
 
   // service
   Get.put<IAuthService>(AuthService());

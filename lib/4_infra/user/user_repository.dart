@@ -17,7 +17,11 @@ class UserRepository implements IUserRepository {
     try {
       const path = 'api/member/me';
       final ret = await _conn.get(path, null);
-      return ret.fold((l) => left(l), (r) {
+      return ret.fold((l) {
+        clearCache();
+        _conn.removeAuthentication();
+        return left(l);
+      }, (r) {
         final user = User.fromJson(r as JsonMap);
         _cached = user;
         return right(user);

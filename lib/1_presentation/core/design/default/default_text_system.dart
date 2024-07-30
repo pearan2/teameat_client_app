@@ -794,4 +794,42 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get close => '닫기';
+
+  @override
+  String get blockThisCuration => '이 푸드로그 차단하기';
+
+  @override
+  String get reportThisCuration => '이 푸드로그 신고하기';
+
+  @override
+  String get areYouSUreToBlockThisUser =>
+      '정말 차단 하시겠어요?\n차단하시면 앞으로 이 유저의 활동을 볼 수 없어요';
+
+  @override
+  String get areYouSureToBlockThisCuration =>
+      '정말 차단 하시겠어요?\n차단하시면 앞으로 이 푸드로그를 볼 수 없어요';
+
+  @override
+  String get yesIWillBlockThis => '차단할래요';
+
+  @override
+  String get blockThisUser => '이 유저 차단하기';
+
+  @override
+  String get reportThisUser => '이 유저 신고하기';
+
+  @override
+  String get report => '신고하기';
+
+  @override
+  String get reportHelperText => '신고 내용을 입력해주세요';
+
+  @override
+  String get reportHintText => '광고에요, 허위사실 이에요 등등';
+
+  @override
+  String get blockSuccess => '정상적으로 차단했어요\n프로필 -> 차단목록에서 다시 차단 해제 하실 수 있어요';
+
+  @override
+  String get reportSuccess => '정상적으로 신고했어요\n팀잇치 최대한 빠르게 처리해볼게요!';
 }

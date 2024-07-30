@@ -269,4 +269,23 @@ abstract class ITextSystem {
 
   String get numberOfCurationFormat;
   String get close;
+
+  String get reportThisCuration;
+  String get blockThisCuration;
+
+  String get yesIWillBlockThis;
+  String get areYouSureToBlockThisCuration;
+
+  String get areYouSUreToBlockThisUser;
+
+  String get reportThisUser;
+  String get blockThisUser;
+
+  String get reportHelperText;
+  String get reportHintText;
+
+  String get report;
+
+  String get blockSuccess;
+  String get reportSuccess;
 }

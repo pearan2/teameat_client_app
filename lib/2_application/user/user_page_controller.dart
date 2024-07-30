@@ -112,9 +112,7 @@ class UserPageController extends PageController {
   }
 
   Future<void> toUserDetail() async {
-    if (user.value == User.visitor()) {
-      await user.load();
-    }
+    await user.load();
     react.toUserDetail();
   }
 

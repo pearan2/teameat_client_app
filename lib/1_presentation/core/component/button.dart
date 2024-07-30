@@ -15,6 +15,7 @@ import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/clipboard.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/loading_provider.dart';
+import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/user/i_user_repository.dart';
 import 'package:teameat/99_util/extension/list.dart';
@@ -234,9 +235,9 @@ class TEDisableButton extends GetView<LoadingProvider> {
       height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
-      fillColor: DS.color.background300,
-      contentColor: DS.color.background000,
-      borderColor: DS.color.background300,
+      fillColor: DS.color.background200,
+      contentColor: DS.color.background400,
+      borderColor: DS.color.background200,
       borderWidth: DS.space.xxTiny,
       contentHorizontalPadding: contentHorizontalPadding,
       contentVerticalPadding: contentVerticalPadding,
@@ -454,6 +455,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   final bool Function(T lhs, T rhs)? isEqual;
   final void Function(T) onSelected;
   final String Function(T)? toLabel;
+  final Color Function(T)? getDefaultColor;
   final String? text;
   final Widget? icon;
   final Widget? iconActivated;
@@ -461,6 +463,8 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   final double? width;
   final double? borderRadius;
   final Color? backgroundColor;
+  final bool closeAfterSelect;
+  final bool isLoginRequested;
 
   const TESelectorBottomSheet({
     super.key,
@@ -469,14 +473,17 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     this.text,
     this.title,
     this.toLabel,
+    this.getDefaultColor,
     this.icon,
     this.iconActivated,
     this.height,
     this.width,
     this.borderRadius,
     this.backgroundColor,
+    this.closeAfterSelect = true,
     this.selectedValue,
     this.isEqual,
+    this.isLoginRequested = false,
   }) : assert((text == null && icon != null && iconActivated != null) ||
             (text != null && icon == null && iconActivated == null));
 
@@ -498,7 +505,11 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
 
   TextStyle getTextStyle(T value) {
     return DS.textStyle.paragraph2.copyWith(
-      color: isSelected(value) ? DS.color.primary600 : DS.color.background800,
+      color: isSelected(value)
+          ? DS.color.primary600
+          : (getDefaultColor == null
+              ? DS.color.background800
+              : getDefaultColor!(value)),
       fontWeight: isSelected(value) ? FontWeight.w600 : null,
     );
   }
@@ -524,7 +535,9 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     return TEonTap(
       onTap: () {
         onSelected(value);
-        react.back();
+        if (closeAfterSelect) {
+          react.back();
+        }
       },
       child: SizedBox(
         height: DS.space.large,
@@ -543,6 +556,14 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   }
 
   void showSelector(double maxHeight) {
+    if (isLoginRequested) {
+      loginWrapper(() => showBottomSheet(maxHeight));
+    } else {
+      showBottomSheet(maxHeight);
+    }
+  }
+
+  void showBottomSheet(double maxHeight) {
     showTEBottomSheet(
       withBar: true,
       withClose: true,
@@ -1143,16 +1164,20 @@ class _FollowState extends State<Follow> {
   Future<void> follow() async {
     changeState(() => isLoading = true);
     final ret = await _userRepo.like(widget.targetUserId);
-    ret.fold((l) => changeState(() => isError = true),
-        (r) => changeState(() => isFollowing = true));
+    ret.fold((l) {
+      showError(l.desc);
+      changeState(() => isError = true);
+    }, (r) => changeState(() => isFollowing = true));
     changeState(() => isLoading = false);
   }
 
   Future<void> unFollow() async {
     changeState(() => isLoading = true);
     final ret = await _userRepo.unLike(widget.targetUserId);
-    ret.fold((l) => changeState(() => isError = true),
-        (r) => changeState(() => isFollowing = false));
+    ret.fold((l) {
+      showError(l.desc);
+      changeState(() => isError = true);
+    }, (r) => changeState(() => isFollowing = false));
     changeState(() => isLoading = false);
   }
 

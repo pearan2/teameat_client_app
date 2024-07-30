@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/community/core/report.dart';
 import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
 import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
@@ -10,6 +12,7 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
+import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_detail_view_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -156,10 +159,10 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
       ),
       pinned: true,
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: DS.image.more(iconColor),
-        )
+        c.curation.obx((curation) => curation.isMine
+            ? EditDeleteTools(iconColor: iconColor)
+            : BlockReportTools(iconColor: iconColor)),
+        DS.space.hXSmall,
       ],
       toolbarHeight: toolbarHeight,
       expandedHeight: (width / ratio) - DS.space.large,
@@ -356,6 +359,60 @@ class StoreMap extends StatelessWidget {
           address: curation.store.address,
         ).paddingSymmetric(horizontal: AppWidget.horizontalPadding)
       ],
+    );
+  }
+}
+
+class BlockReportTools extends GetView<CurationDetailViewPageController> {
+  final Color iconColor;
+
+  const BlockReportTools({super.key, required this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return TESelectorBottomSheet<String>(
+      selectedValue: "",
+      candidates: [DS.text.blockThisCuration, DS.text.reportThisCuration],
+      closeAfterSelect: false,
+      isLoginRequested: true,
+      onSelected: (s) async {
+        if (s == DS.text.blockThisCuration) {
+          final ret = await showTEConfirmDialog(
+            content: DS.text.areYouSureToBlockThisCuration,
+            leftButtonText: DS.text.no,
+            rightButtonText: DS.text.yesIWillBlockThis,
+          );
+          c.react.back();
+          if (!ret) return;
+          c.onBlock();
+        } else if (s == DS.text.reportThisCuration) {
+          await showReport(c.onReport);
+          c.react.back();
+        } else {
+          c.react.back();
+        }
+      },
+      icon: DS.image.more(iconColor),
+      iconActivated: DS.image.more(iconColor),
+    );
+  }
+}
+
+class EditDeleteTools extends GetView<CurationDetailViewPageController> {
+  final Color iconColor;
+
+  const EditDeleteTools({super.key, required this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return TESelectorBottomSheet<String>(
+      selectedValue: "",
+      candidates: ["수정하기", "삭제하기"],
+      closeAfterSelect: false,
+      isLoginRequested: true,
+      onSelected: (s) async {},
+      icon: DS.image.more(iconColor),
+      iconActivated: DS.image.more(iconColor),
     );
   }
 }

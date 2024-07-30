@@ -390,6 +390,7 @@ class CurationListDetail with _$CurationListDetail {
     required String introduce,
     required List<String> itemImageUrls,
     required List<String> storeImageUrls,
+    required bool isMine,
   }) = _CurationListDetail;
 
   factory CurationListDetail.fromJson(Map<String, Object?> json) =>
@@ -415,6 +416,7 @@ class CurationListDetail with _$CurationListDetail {
         "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png"
       ],
       storeImageUrls: [],
+      isMine: false,
     );
   }
 }

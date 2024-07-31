@@ -75,7 +75,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
                   horizontal: AppWidget.horizontalPadding),
               child: c.curation.obx((curation) => Text(
                     curation.introduce,
-                    style: DS.textStyle.paragraph3.b500,
+                    style: DS.textStyle.paragraph3.b500.h14,
                   )),
             )),
             SliverToBoxAdapter(child: DS.space.vSmall),

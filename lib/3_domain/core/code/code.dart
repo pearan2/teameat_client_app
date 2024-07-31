@@ -30,7 +30,7 @@ class Code with _$Code {
   }
 
   factory Code.orderEmpty() {
-    return const Code(code: 'RECENT', title: '최신 순');
+    return const Code(code: 'RECENT', title: '최신순');
   }
 }
 

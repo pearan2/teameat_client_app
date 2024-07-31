@@ -34,68 +34,70 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
+    return Obx(() => TEScaffold(
+        loading: c.isLoading,
         body: CustomScrollView(
-      cacheExtent: 99999,
-      physics: const ClampingScrollPhysics(),
-      slivers: [
-        ColorAdjustAppBar(c),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.all(DS.space.small),
-            child: c.curation.obx(
-              (curation) => CuratorInfoRow(curation.curator,
-                  withFollowButton: !curation.isMine),
+          cacheExtent: 99999,
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            ColorAdjustAppBar(c),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(DS.space.small),
+                child: c.curation.obx(
+                  (curation) => CuratorInfoRow(curation.curator,
+                      withFollowButton: !curation.isMine),
+                ),
+              ),
             ),
-          ),
-        ),
-        SliverToBoxAdapter(child: TEDivider.thin()),
-        SliverToBoxAdapter(child: DS.space.vBase),
-        SliverToBoxAdapter(
-            child:
-                c.curation.obx((curation) => _CurationDetailStatusAndToolsRow(
-                      curation,
-                      onShare: c.onShare,
-                    ))),
-        SliverToBoxAdapter(child: DS.space.vBase),
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppWidget.horizontalPadding),
-          child: c.curation.obx((curation) => Text(
-                curation.oneLineIntroduce,
-                style: DS.textStyle.paragraph1.bold.b800.h14,
-              )),
-        )),
-        SliverToBoxAdapter(child: DS.space.vXSmall),
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppWidget.horizontalPadding),
-          child: c.curation.obx((curation) => Text(
-                curation.introduce,
-                style: DS.textStyle.paragraph3.b500,
-              )),
-        )),
-        SliverToBoxAdapter(child: DS.space.vSmall),
-        SliverToBoxAdapter(child: DS.space.vMedium),
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-          child: c.curation.obx((curation) => ItemNameAndPrice(curation)),
-        )),
-        SliverToBoxAdapter(child: DS.space.vMedium),
-        SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-          child: c.curation.obx((curation) => StoreNameAndCategory(curation)),
-        )),
-        SliverToBoxAdapter(
-            child: c.curation.obx((curation) => StoreMap(curation))),
-        SliverToBoxAdapter(child: DS.space.vLarge),
-        SliverToBoxAdapter(child: DS.space.vLarge),
-      ],
-    ));
+            SliverToBoxAdapter(child: TEDivider.thin()),
+            SliverToBoxAdapter(child: DS.space.vBase),
+            SliverToBoxAdapter(
+                child: c.curation
+                    .obx((curation) => _CurationDetailStatusAndToolsRow(
+                          curation,
+                          onShare: c.onShare,
+                        ))),
+            SliverToBoxAdapter(child: DS.space.vBase),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppWidget.horizontalPadding),
+              child: c.curation.obx((curation) => Text(
+                    curation.oneLineIntroduce,
+                    style: DS.textStyle.paragraph1.bold.b800.h14,
+                  )),
+            )),
+            SliverToBoxAdapter(child: DS.space.vXSmall),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppWidget.horizontalPadding),
+              child: c.curation.obx((curation) => Text(
+                    curation.introduce,
+                    style: DS.textStyle.paragraph3.b500,
+                  )),
+            )),
+            SliverToBoxAdapter(child: DS.space.vSmall),
+            SliverToBoxAdapter(child: DS.space.vMedium),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+              child: c.curation.obx((curation) => ItemNameAndPrice(curation)),
+            )),
+            SliverToBoxAdapter(child: DS.space.vMedium),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+              child:
+                  c.curation.obx((curation) => StoreNameAndCategory(curation)),
+            )),
+            SliverToBoxAdapter(
+                child: c.curation.obx((curation) => StoreMap(curation))),
+            SliverToBoxAdapter(child: DS.space.vLarge),
+            SliverToBoxAdapter(child: DS.space.vLarge),
+          ],
+        )));
   }
 }
 

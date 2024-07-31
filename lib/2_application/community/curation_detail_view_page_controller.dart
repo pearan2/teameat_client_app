@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
@@ -70,7 +72,12 @@ class CurationDetailViewPageController extends PageController {
     });
   }
 
-  Future<void> onShare() async {}
+  Future<void> onShare() async {
+    _isLoading.value = true;
+    await Share.shareUri(
+        Uri.https(Environment().linkBaseUrl, '/food-log/$curationId'));
+    _isLoading.value = false;
+  }
 
   Future<void> onBlock() async {
     if (curation.value.isMine) {

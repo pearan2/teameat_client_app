@@ -53,6 +53,13 @@ class RootPageController extends PageController {
           loginWrapper(
               () => react.toGiftReceive(giftId: params['id'] as String));
         });
+      } else if (uri.authority.contains('curation') &&
+          params['id'] != null &&
+          int.tryParse(params['id']!) is int) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          react.toCurationOffAll();
+          loginWrapper(() => react.toCurationDetail(int.parse(params['id']!)));
+        });
       }
     });
   }

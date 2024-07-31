@@ -25,7 +25,9 @@ import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 import 'package:teameat/4_infra/auth/auth_service.dart';
 import 'package:teameat/4_infra/connection/connection.dart';
 import 'package:teameat/4_infra/core/code/code_repository.dart';
+import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/4_infra/core/local_repository.dart';
+import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/4_infra/curation/curation_repository.dart';
 import 'package:teameat/4_infra/file/file_service.dart';
 import 'package:teameat/4_infra/message/message_repository.dart';
@@ -60,6 +62,8 @@ Future<void> configDependency() async {
   Get.put<ICurationRepository>(CurationRepository());
   Get.put<IUserBlockRepository>(UserBlockRepository());
   Get.put<IReportRepository>(UserReportRepository());
+  Get.put<CurationSearchHistoryRepository>(CurationSearchHistoryRepository());
+  Get.put<StoreItemSearchHistoryRepository>(StoreItemSearchHistoryRepository());
 
   // service
   Get.put<IAuthService>(AuthService());

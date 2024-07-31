@@ -26,11 +26,11 @@ class Code with _$Code {
   factory Code.fromJson(Map<String, Object?> json) => _$CodeFromJson(json);
 
   factory Code.empty() {
-    return const Code(code: 'ALL', title: 'All');
+    return const Code(code: 'ALL', title: '전체');
   }
 
   factory Code.orderEmpty() {
-    return const Code(code: 'RECENT', title: 'Recent');
+    return const Code(code: 'RECENT', title: '최신 순');
   }
 }
 

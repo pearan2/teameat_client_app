@@ -859,4 +859,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get edit => '수정하기';
+
+  @override
+  String get cleanSearchHistory => '검색기록 삭제';
+
+  @override
+  String get recentSearchText => '최근 검색어';
 }

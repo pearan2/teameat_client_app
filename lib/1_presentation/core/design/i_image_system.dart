@@ -40,11 +40,14 @@ abstract class IImageSystem {
   Image get markerBackground;
 
   /// icon
-  SvgPicture get iconSearch;
+  SvgPicture get searchLg;
+  SvgPicture get searchSm;
   Image get iconLikeShadow;
   Image get iconLikeShadowClicked;
   SvgPicture get iconLike;
   SvgPicture get iconLikeClicked;
+  SvgPicture get closeLg;
+  SvgPicture get closeSm;
 
   SvgPicture get copy;
   Image get naverMap;

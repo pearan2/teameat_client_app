@@ -17,6 +17,7 @@ import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
+import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
@@ -48,9 +49,10 @@ class CurationPage extends GetView<CurationPageController> {
                   SliverAppBar(
                     backgroundColor: DS.color.background000,
                     surfaceTintColor: DS.color.background000,
+                    primary: false,
                     snap: true,
                     floating: true,
-                    toolbarHeight: 0,
+                    toolbarHeight: DS.space.large + DS.space.medium,
                     flexibleSpace: const CurationPageToolbar(),
                   ),
                   SliverToBoxAdapter(child: DS.space.vXSmall),
@@ -68,25 +70,58 @@ class CurationPageToolbar extends GetView<CurationPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(DS.text.curation, style: DS.textStyle.paragraph2.semiBold.b800),
-          DS.space.hXSmall,
-          Expanded(
-            child: Obx(
-              () => TextSearcher(
-                onCompleted: c.onSearchTextCompleted,
-                value: controller.searchOption.searchText,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppWidget.horizontalPadding),
+          alignment: Alignment.center,
+          height: DS.space.large,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [DS.space.hXBase, DS.space.hXSmall, DS.space.hXBase],
               ),
-            ),
+              Text(DS.text.curation,
+                  style: DS.textStyle.paragraph2.semiBold.b800),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Obx(() => TextSearchButton<CurationSearchHistoryRepository>(
+                        onCompleted: c.onSearchTextCompleted,
+                        value: controller.searchOption.searchText,
+                      )),
+                  DS.space.hXSmall,
+                  Obx(() => TESelectorBottomSheet<int?>(
+                        borderRadius: DS.space.tiny,
+                        candidates: const [500, 1000, 2000, null],
+                        onSelected: c.onWithInMeterChanged,
+                        isEqual: (lhs, rhs) => lhs == rhs,
+                        toLabel: (v) {
+                          if (v == null) {
+                            return DS.text.noDistanceLimit;
+                          } else {
+                            return v.format(DS.text.withInMeterFormat);
+                          }
+                        },
+                        selectedValue: controller.withInMeter,
+                        icon: DS.image.location,
+                        iconActivated: DS.image.locationActivated,
+                      )),
+                ],
+              ),
+            ],
           ),
-          DS.space.hXSmall,
-          Obx(
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppWidget.horizontalPadding),
+          alignment: Alignment.centerRight,
+          height: DS.space.medium,
+          child: Obx(
             () => TESelectorBottomSheet<Code>(
               borderRadius: DS.space.tiny,
               candidates: c.orders,
@@ -94,29 +129,19 @@ class CurationPageToolbar extends GetView<CurationPageController> {
               isEqual: (lhs, rhs) => lhs.code == rhs.code,
               toLabel: (v) => v.title,
               selectedValue: c.searchOption.order,
-              icon: DS.image.sort,
-              iconActivated: DS.image.sort,
+              icon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(c.searchOption.order.title,
+                      style: DS.textStyle.caption1.b700.h14),
+                  DS.space.hXTiny,
+                  DS.image.sort
+                ],
+              ),
             ),
           ),
-          DS.space.hXSmall,
-          Obx(() => TESelectorBottomSheet<int?>(
-                borderRadius: DS.space.tiny,
-                candidates: const [500, 1000, 2000, null],
-                onSelected: c.onWithInMeterChanged,
-                isEqual: (lhs, rhs) => lhs == rhs,
-                toLabel: (v) {
-                  if (v == null) {
-                    return DS.text.noDistanceLimit;
-                  } else {
-                    return v.format(DS.text.withInMeterFormat);
-                  }
-                },
-                selectedValue: controller.withInMeter,
-                icon: DS.image.location,
-                iconActivated: DS.image.locationActivated,
-              )),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

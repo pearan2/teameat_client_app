@@ -185,10 +185,10 @@ class DefaultImageSystem extends IImageSystem {
 
   /// icon
   @override
-  SvgPicture get iconSearch => SvgPicture.asset(
-        'assets/image/icon/search_icon.svg',
-        height: 16,
-        width: 16,
+  SvgPicture get searchSm => SvgPicture.asset(
+        'assets/image/icon/search_sm.svg',
+        height: 13,
+        width: 13,
       );
 
   @override
@@ -353,8 +353,8 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get sort => SvgPicture.asset(
         'assets/image/icon/sort.svg',
-        height: 20,
-        width: 20,
+        height: 10,
+        width: 10,
       );
 
   @override
@@ -387,4 +387,26 @@ class DefaultImageSystem extends IImageSystem {
       color: color,
     );
   }
+
+  @override
+  SvgPicture get searchLg => SvgPicture.asset(
+        'assets/image/icon/search_sm.svg',
+        height: 20,
+        width: 20,
+        color: DS.color.background700,
+      );
+
+  @override
+  SvgPicture get closeLg => SvgPicture.asset(
+        'assets/image/icon/close_lg.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get closeSm => SvgPicture.asset(
+        'assets/image/icon/close_sm.svg',
+        height: 13,
+        width: 13,
+      );
 }

@@ -484,7 +484,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     this.selectedValue,
     this.isEqual,
     this.isLoginRequested = false,
-  }) : assert((text == null && icon != null && iconActivated != null) ||
+  }) : assert((text == null && icon != null) ||
             (text != null && icon == null && iconActivated == null));
 
   String toLabelString(T value) {
@@ -610,7 +610,8 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   }
 
   Widget _buildIconButton() {
-    return selectedValue == null ? icon! : iconActivated!;
+    final activatedIcon = iconActivated ?? icon!;
+    return selectedValue == null ? icon! : activatedIcon;
   }
 
   @override
@@ -1220,5 +1221,45 @@ class _FollowState extends State<Follow> {
         onTap: follow,
       );
     }
+  }
+}
+
+class TEDeletableButton extends StatelessWidget {
+  final String text;
+  final void Function() onTap;
+  final void Function() onDelete;
+
+  const TEDeletableButton({
+    super.key,
+    required this.onTap,
+    required this.onDelete,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: DS.color.background700),
+            borderRadius: BorderRadius.circular(
+              DS.space.base,
+            )),
+        padding: EdgeInsets.symmetric(
+            horizontal: DS.space.tiny, vertical: DS.space.xTiny),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: DS.textStyle.caption2.h14.b800.semiBold,
+            ),
+            DS.space.hXTiny,
+            TEonTap(onTap: onDelete, child: DS.image.closeSm),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -299,4 +299,7 @@ abstract class ITextSystem {
 
   String get create;
   String get edit;
+
+  String get recentSearchText;
+  String get cleanSearchHistory;
 }

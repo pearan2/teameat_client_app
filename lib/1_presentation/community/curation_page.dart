@@ -52,10 +52,10 @@ class CurationPage extends GetView<CurationPageController> {
                     primary: false,
                     snap: true,
                     floating: true,
-                    toolbarHeight: DS.space.large + DS.space.medium,
+                    toolbarHeight:
+                        DS.space.large + DS.space.medium + DS.space.tiny,
                     flexibleSpace: const CurationPageToolbar(),
                   ),
-                  SliverToBoxAdapter(child: DS.space.vXSmall),
                   const CurationList(),
                 ],
               ),
@@ -141,6 +141,7 @@ class CurationPageToolbar extends GetView<CurationPageController> {
             ),
           ),
         ),
+        DS.space.vTiny,
       ],
     );
   }

@@ -34,7 +34,8 @@ class CurationPage extends GetView<CurationPageController> {
           activated: BottomNavigatorType.community,
           floatingButtonIcon:
               Icon(Icons.post_add, color: DS.color.background000),
-          onFloatingButtonClick: () => loginWrapper(c.react.toCurationCreate),
+          onFloatingButtonClick: () =>
+              loginWrapper(() => c.react.toCurationCreate(null)),
           body: Padding(
             padding: EdgeInsets.only(
               top: topAreaHeight,
@@ -178,6 +179,7 @@ class CurationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return TEonTap(
       onTap: onTap,
+      isLoginRequired: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

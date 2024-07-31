@@ -25,7 +25,15 @@ class TELocalSelector extends StatefulWidget {
 class _TELocalSelectorState extends State<TELocalSelector> {
   late final textController =
       TECupertinoTextFieldController(text: widget.selected?.title);
-  late bool isEntered = widget.selected != null;
+  late bool isEntered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selected != null) {
+      searchLocalIsEntered(widget.selected!);
+    }
+  }
 
   @override
   void didUpdateWidget(covariant TELocalSelector oldWidget) {

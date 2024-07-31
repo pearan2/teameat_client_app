@@ -832,4 +832,30 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get reportSuccess => '정상적으로 신고했어요\n팀잇치 최대한 빠르게 처리해볼게요!';
+
+  @override
+  String get invalidAccessPleaseContentDeveloper =>
+      '잘못된 접근입니다\n지속될 경우 개발자에게 연락해주세요';
+
+  @override
+  String get deleteMyCuration => '내 푸드 로그 삭제하기';
+
+  @override
+  String get editMyCuration => '내 푸드 로그 수정하기';
+
+  @override
+  String get areYouSureToDeleteYourCuration =>
+      '정말 삭제 하시겠어요? 완전히 삭제되어 복구가 불가능해요';
+
+  @override
+  String get yesIWillDeleteMyCuration => '삭제할래요';
+
+  @override
+  String get deleteSuccess => '정상적으로 삭제했어요';
+
+  @override
+  String get create => '등록하기';
+
+  @override
+  String get edit => '수정하기';
 }

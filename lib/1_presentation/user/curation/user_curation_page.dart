@@ -30,6 +30,8 @@ class UserCurationPage extends GetView<UserCurationPageController> {
         title: DS.text.toMyCuration,
         homeOnPressed: c.react.toHomeOffAll,
       ),
+      floatingButtonIcon: Icon(Icons.post_add, color: DS.color.background000),
+      onFloatingButtonClick: () => c.react.toCurationCreate(null),
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: DS.space.tiny, horizontal: AppWidget.horizontalPadding),
@@ -311,7 +313,7 @@ class CurationCard extends GetView<UserCurationPageController> {
   @override
   Widget build(BuildContext context) {
     return TEonTap(
-      onTap: () => c.react.toUserCurationDetail(curation.id),
+      onTap: () => c.react.toCurationDetail(curation.id),
       child: Container(
         padding: EdgeInsets.all(DS.space.small),
         decoration: BoxDecoration(
@@ -366,7 +368,7 @@ class CurationList extends GetView<UserCurationPageController> {
           child: SimpleNotFound(
             title: DS.text.curationNotFound,
             buttonText: DS.text.goToApplyMyFavoriteMenu,
-            onTap: controller.react.toCurationCreate,
+            onTap: () => controller.react.toCurationCreate(null),
           ),
         ),
         itemBuilder: (_, curation, idx) =>

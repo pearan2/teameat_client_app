@@ -29,7 +29,7 @@ class _ReportDialog extends StatelessWidget {
           TECupertinoTextField(
             controller: controller,
             isEssential: false,
-            autoFocus: false,
+            autoFocus: true,
             helperText: DS.text.reportHelperText,
             hintText: DS.text.reportHintText,
             maxLines: 4,

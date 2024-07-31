@@ -31,7 +31,7 @@ class UserCurationPageController extends PageController {
   List<Code> get filters => _filterCodes;
 
   void onCurationApplicationClicked() {
-    react.toCurationCreate();
+    react.toCurationCreate(null);
   }
 
   void onFilterChanged(Code newFilter) {

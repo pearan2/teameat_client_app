@@ -179,6 +179,7 @@ class CurationCreateRequest with _$CurationCreateRequest {
     required final int originalPrice,
     required final List<String> itemImageUrls,
     required final List<String> storeImageUrls,
+    required final bool isPublic,
   }) = _CurationCreateRequest;
 
   factory CurationCreateRequest.fromJson(Map<String, Object?> json) =>
@@ -193,6 +194,7 @@ class CurationCreateRequest with _$CurationCreateRequest {
       originalPrice: 0,
       itemImageUrls: [],
       storeImageUrls: [],
+      isPublic: true,
     );
   }
 }

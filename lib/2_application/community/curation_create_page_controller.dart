@@ -1,34 +1,23 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
+import 'package:teameat/1_presentation/user/curation/user_curation_page.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
-import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/3_domain/store/store.dart';
-import 'package:teameat/3_domain/user/i_user_repository.dart';
-import 'package:teameat/3_domain/user/user.dart';
 
 import 'package:flutter/material.dart' as mt;
 
 class CurationCreatePageController extends PageController {
-  final double menuImageRatio = 3 / 4;
-  final double storeImageRatio = 1 / 1;
   final primaryButtonKey = mt.GlobalKey();
-
-  final bytes = Rxn<Uint8List>();
 
   // repo
   final _curationRepo = Get.find<ICurationRepository>();
-  final _userRepo = Get.find<IUserRepository>();
 
   // service
   final _fileService = Get.find<IFileService>();
@@ -36,14 +25,12 @@ class CurationCreatePageController extends PageController {
   // state
 
   final _local = Rxn<Local>();
-  final _localIsEntered = false.obs;
 
   bool _isMenuImageLoading = false;
-  List<dynamic> _menuImages = [];
+  List<dynamic> menuImages = [];
   bool _isStoreImageLoading = false;
-  List<dynamic> _storeImages = [];
+  List<dynamic> storeImages = [];
 
-  final storeNameController = TECupertinoTextFieldController();
   final menuNameController = TECupertinoTextFieldController();
   final menuPriceController = TECupertinoTextFieldController();
   final menuOneLineIntroduceController = TECupertinoTextFieldController();
@@ -51,19 +38,31 @@ class CurationCreatePageController extends PageController {
 
   final _isLoading = false.obs;
 
-  // getter
-  bool get localIsEntered => _localIsEntered.value;
-  Local? get local => _local.value;
-  bool get isLoading => _isLoading.value;
+  // init
+  final MyCurationDetail? curation;
+  CurationCreatePageController(this.curation);
 
-  // setter
-  set isMenuImageLoading(bool isLoading) {
-    _isMenuImageLoading = isLoading;
+  void _initStates() {
+    if (curation == null) return;
+    _local.value = curation!.localInfo;
+
+    menuImages = curation!.itemImageUrls;
+    storeImages = curation!.storeImageUrls;
+
+    menuNameController.text = curation!.name;
+    menuPriceController.text = curation!.originalPrice.toString();
+    menuOneLineIntroduceController.text = curation!.oneLineIntroduce;
+    menuIntroduceController.text = curation!.introduce;
   }
 
-  set menuImages(List<dynamic> images) => _menuImages = images;
+  // getter
+  Local? get local => _local.value;
+  bool get isLoading => _isLoading.value;
+  bool get isEditMode => curation != null;
+
+  // setter
+  set isMenuImageLoading(bool isLoading) => _isMenuImageLoading = isLoading;
   set isStoreImageLoading(bool isLoading) => _isStoreImageLoading = isLoading;
-  set storeImages(List<dynamic> images) => _storeImages = images;
 
   void setLocal(Local local) {
     _local.value = local;
@@ -81,61 +80,6 @@ class CurationCreatePageController extends PageController {
         duration: const Duration(milliseconds: 300));
   }
 
-  Future<void> toPreview() async {
-    if (!checkInputValidIfNotShowError()) {
-      return;
-    }
-    _isLoading.value = true;
-    final meEither = await _userRepo.getMe();
-    if (meEither.isLeft()) {
-      return showError('unknown error occurred, please contact developer');
-    }
-    final me = meEither.getOrElse(() => User.visitor());
-    _isLoading.value = false;
-
-    final menuOriginalPrice = int.parse(menuPriceController.text);
-
-    final item = ItemDetail.empty().copyWith(
-      name: menuNameController.text,
-      originalPrice: menuOriginalPrice,
-      price: (menuOriginalPrice * 0.9).round(),
-      imageUrls: _menuImages,
-      store: StoreDetail.empty().copyWith(
-        name: local!.title,
-        address: local!.roadAddress,
-        location: local!.location,
-      ),
-      curation: MyCurationMain(
-        curatorId: -1,
-        curatorProfileImageUrl: me.profileImageUrl,
-        curatorNickname: me.nickname,
-        storeImageUrls: _storeImages,
-        oneLineIntroduce: menuOneLineIntroduceController.text,
-        introduce: menuIntroduceController.text,
-      ),
-    );
-
-    Get.to(
-      () => StoreItemPage(item.id.toString()),
-      arguments: {
-        'itemId': item.id,
-        'itemDetail': item,
-        'onApplyCuration': () async {
-          Get.back();
-          _isLoading.value = true;
-          Future.delayed(const Duration(milliseconds: 500), () async {
-            await _onCreateCuration();
-            _isLoading.value = false;
-          });
-        }
-      },
-      preventDuplicates: false,
-      binding: StoreItemPageBinding(),
-      duration: const Duration(milliseconds: 200),
-      transition: Transition.rightToLeft,
-    );
-  }
-
   bool _showErrorAndReturnFalse(String errorText) {
     showError(errorText);
     return false;
@@ -148,7 +92,7 @@ class CurationCreatePageController extends PageController {
     if (local == null) {
       return _showErrorAndReturnFalse(DS.text.localIsEssential);
     }
-    if (_menuImages.isEmpty) {
+    if (menuImages.isEmpty) {
       return _showErrorAndReturnFalse(DS.text.menuPictureIsEssential);
     }
     if (!menuNameController.checkIsValid() ||
@@ -179,24 +123,24 @@ class CurationCreatePageController extends PageController {
     return uploadResults.whereType<String>().toList();
   }
 
-  Future<void> _onCreateCuration() async {
+  Future<void> onPrimaryButtonClick() async {
     if (local == null) {
       return;
     }
 
     final imageUrlLists = await Future.wait(
-        [_uploadImage(_menuImages), _uploadImage(_storeImages)]);
+        [_uploadImage(menuImages), _uploadImage(storeImages)]);
 
     /// 모든 파일이 다 업로드 되었는지
     final uploadedMenuImages = imageUrlLists[0];
     final uploadedStoreImages = imageUrlLists[1];
 
-    if (uploadedMenuImages.length != _menuImages.length ||
-        uploadedStoreImages.length != _storeImages.length) {
+    if (uploadedMenuImages.length != menuImages.length ||
+        uploadedStoreImages.length != storeImages.length) {
       return showError(DS.text.errorOccurredDuringFileUploadingPleaseReTry);
     }
 
-    final ret = await _curationRepo.registerCuration(CurationCreateRequest(
+    final request = CurationCreateRequest(
       localInfo: local!,
       name: menuNameController.text,
       originalPrice: int.parse(menuPriceController.text),
@@ -204,18 +148,37 @@ class CurationCreatePageController extends PageController {
       introduce: menuIntroduceController.text,
       itemImageUrls: imageUrlLists[0],
       storeImageUrls: imageUrlLists[1],
-    ));
-    ret.fold(
-      (l) => showError(l.desc),
-      (_) {
-        react.toCurationOffAll();
-        showSuccess(DS.text.registerCurationSuccess);
-      },
+      isPublic: true,
     );
+
+    if (isEditMode) {
+      final ret = await _curationRepo.updateCuration(curation!.id, request);
+      ret.fold(
+        (l) => showError(l.desc),
+        (_) {
+          react.back(result: true);
+        },
+      );
+    } else {
+      final ret = await _curationRepo.registerCuration(request);
+      ret.fold(
+        (l) => showError(l.desc),
+        (_) {
+          if (Get.isRegistered<UserCurationPage>()) {
+            react.toUserOffAll();
+            react.toUserCuration();
+          } else {
+            react.toCurationOffAll();
+          }
+          showSuccess(DS.text.registerCurationSuccess);
+        },
+      );
+    }
   }
 
   @override
   Future<bool> initialLoad() async {
+    _initStates();
     return true;
   }
 }

@@ -9,6 +9,7 @@ import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
+import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
@@ -152,8 +153,10 @@ class React extends IReact {
   }
 
   @override
-  void toCurationCreate() {
-    Get.toNamed('/curation/create');
+  Future<bool> toCurationCreate(MyCurationDetail? curation) async {
+    final ret = await Get.toNamed('/curation/create',
+        arguments: {'curation': curation});
+    return _parseToBool(ret);
   }
 
   @override
@@ -209,5 +212,17 @@ class React extends IReact {
   @override
   void toUserCurationDetail(int curationId) {
     Get.toNamed('/user/curation/view', arguments: {'curationId': curationId});
+  }
+
+  bool _parseToBool(dynamic routeResult) {
+    if (routeResult == null) {
+      return false;
+    } else {
+      if (routeResult is bool && routeResult) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }

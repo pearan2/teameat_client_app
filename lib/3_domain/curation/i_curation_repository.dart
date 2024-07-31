@@ -16,4 +16,9 @@ abstract class ICurationRepository<T> extends ILikableRepository<T> {
       SearchCurationSimpleList searchOption);
 
   Future<Either<Failure, CurationListDetail>> findCurationDetailById(int id);
+
+  Future<Either<Failure, Unit>> updateCuration(
+      int id, CurationCreateRequest request);
+
+  Future<Either<Failure, Unit>> deleteCuration(int id);
 }

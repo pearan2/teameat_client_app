@@ -27,6 +27,8 @@ class Failure with _$Failure {
   const factory Failure.fetchGiftFail(String desc) = _FetchGiftFail;
   const factory Failure.fetchLocalFail(String desc) = _FetchLocalFail;
   const factory Failure.fetchCurationFail(String desc) = _FetchCurationFail;
+  const factory Failure.updateCurationFail(String desc) = _UpdateCurationFail;
+  const factory Failure.deleteCurationFail(String desc) = _DeleteCurationFail;
   const factory Failure.registerCurationFail(String desc) =
       _RegisterCurationFail;
   const factory Failure.blockFail(String desc) = _BlockFail;

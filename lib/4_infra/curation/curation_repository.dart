@@ -94,6 +94,32 @@ class CurationRepository extends ICurationRepository<CurationListSimple>
   }
 
   @override
+  Future<Either<Failure, Unit>> deleteCuration(int id) async {
+    try {
+      final path = '/api/store/curation/$id';
+
+      final ret = await _conn.delete(path, null);
+      return ret.fold((l) => left(l), (r) => right(unit));
+    } catch (e) {
+      return left(const Failure.deleteCurationFail(
+          '푸드 로그를 삭제하는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateCuration(
+      int id, CurationCreateRequest request) async {
+    try {
+      final path = '/api/store/curation/$id';
+      final ret = await _conn.patch(path, request.toJson());
+      return ret.fold((l) => left(l), (r) => right(unit));
+    } catch (e) {
+      return left(const Failure.updateCurationFail(
+          '푸드 로그를 업데이트 하는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
+  @override
   Future<Either<dynamic, Object>> Function(List<int> ids) get dataLoader =>
       (ids) => _conn
           .get('/api/store/list/by-ids', {'ids': ids.map((e) => e.toString())});

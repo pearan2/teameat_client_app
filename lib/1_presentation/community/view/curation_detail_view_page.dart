@@ -44,8 +44,8 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
           child: Padding(
             padding: EdgeInsets.all(DS.space.small),
             child: c.curation.obx(
-              (curation) =>
-                  CuratorInfoRow(curation.curator, withFollowButton: true),
+              (curation) => CuratorInfoRow(curation.curator,
+                  withFollowButton: !curation.isMine),
             ),
           ),
         ),
@@ -159,9 +159,7 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
       ),
       pinned: true,
       actions: [
-        c.curation.obx((curation) => curation.isMine
-            ? EditDeleteTools(iconColor: iconColor)
-            : BlockReportTools(iconColor: iconColor)),
+        CurationTools(c, iconColor: iconColor),
         DS.space.hXSmall,
       ],
       toolbarHeight: toolbarHeight,
@@ -363,16 +361,32 @@ class StoreMap extends StatelessWidget {
   }
 }
 
-class BlockReportTools extends GetView<CurationDetailViewPageController> {
+class CurationTools extends StatelessWidget {
+  final CurationDetailViewPageController controller;
+  final Color iconColor;
+  const CurationTools(this.controller, {super.key, required this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return controller.curation.obx((curation) => curation.isMine
+        ? EditDeleteTools(controller, iconColor: iconColor)
+        : BlockReportTools(controller, iconColor: iconColor));
+  }
+}
+
+class BlockReportTools extends StatelessWidget {
+  final CurationDetailViewPageController controller;
   final Color iconColor;
 
-  const BlockReportTools({super.key, required this.iconColor});
+  const BlockReportTools(this.controller, {super.key, required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
     return TESelectorBottomSheet<String>(
       selectedValue: "",
       candidates: [DS.text.blockThisCuration, DS.text.reportThisCuration],
+      getDefaultColor: (s) =>
+          s == DS.text.reportThisCuration ? DS.color.point500 : null,
       closeAfterSelect: false,
       isLoginRequested: true,
       onSelected: (s) async {
@@ -382,14 +396,14 @@ class BlockReportTools extends GetView<CurationDetailViewPageController> {
             leftButtonText: DS.text.no,
             rightButtonText: DS.text.yesIWillBlockThis,
           );
-          c.react.back();
+          controller.react.back();
           if (!ret) return;
-          c.onBlock();
+          controller.onBlock();
         } else if (s == DS.text.reportThisCuration) {
-          await showReport(c.onReport);
-          c.react.back();
+          await showReport(controller.onReport);
+          controller.react.back();
         } else {
-          c.react.back();
+          controller.react.back();
         }
       },
       icon: DS.image.more(iconColor),
@@ -398,19 +412,36 @@ class BlockReportTools extends GetView<CurationDetailViewPageController> {
   }
 }
 
-class EditDeleteTools extends GetView<CurationDetailViewPageController> {
+class EditDeleteTools extends StatelessWidget {
+  final CurationDetailViewPageController controller;
   final Color iconColor;
 
-  const EditDeleteTools({super.key, required this.iconColor});
+  const EditDeleteTools(this.controller, {super.key, required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
     return TESelectorBottomSheet<String>(
       selectedValue: "",
-      candidates: ["수정하기", "삭제하기"],
+      candidates: [DS.text.editMyCuration, DS.text.deleteMyCuration],
+      getDefaultColor: (s) =>
+          s == DS.text.deleteMyCuration ? DS.color.point500 : null,
       closeAfterSelect: false,
       isLoginRequested: true,
-      onSelected: (s) async {},
+      onSelected: (s) async {
+        if (s == DS.text.editMyCuration) {
+          controller.onCurationEdit();
+          controller.react.back();
+        } else if (s == DS.text.deleteMyCuration) {
+          final ret = await showTEConfirmDialog(
+            content: DS.text.areYouSureToDeleteYourCuration,
+            leftButtonText: DS.text.no,
+            rightButtonText: DS.text.yesIWillDeleteMyCuration,
+          );
+          controller.react.back();
+          if (!ret) return;
+          controller.onCurationDelete();
+        }
+      },
       icon: DS.image.more(iconColor),
       iconActivated: DS.image.more(iconColor),
     );

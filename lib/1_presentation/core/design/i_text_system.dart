@@ -288,4 +288,15 @@ abstract class ITextSystem {
 
   String get blockSuccess;
   String get reportSuccess;
+
+  String get invalidAccessPleaseContentDeveloper;
+  String get deleteMyCuration;
+  String get deleteSuccess;
+  String get editMyCuration;
+
+  String get areYouSureToDeleteYourCuration;
+  String get yesIWillDeleteMyCuration;
+
+  String get create;
+  String get edit;
 }

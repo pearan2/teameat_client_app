@@ -30,6 +30,9 @@ class CurationCreatePage extends GetView<CurationCreatePageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TEMultiImageSelector(
+                  images: c.isEditMode
+                      ? c.menuImages.map((src) => src as String).toList()
+                      : [],
                   addButtonTitle: DS.text.addMenuImage,
                   isFirstCover: true,
                   numberOfMiniumImages: 1,
@@ -39,6 +42,9 @@ class CurationCreatePage extends GetView<CurationCreatePageController> {
                 ),
                 DS.space.vSmall,
                 TEMultiImageSelector(
+                  images: c.isEditMode
+                      ? c.storeImages.map((src) => src as String).toList()
+                      : [],
                   addButtonTitle: DS.text.addEtcImage,
                   numberOfMiniumImages: 0,
                   numberOfMaximumImages: 10,
@@ -102,15 +108,15 @@ class CurationCreatePage extends GetView<CurationCreatePageController> {
                   maxLines: null,
                   onFocused: c.onLastInputFocused,
                   controller: c.menuIntroduceController,
-                  onEditingComplete: c.toPreview,
+                  onEditingComplete: c.onPrimaryButtonClick,
                   errorText: DS.text.etcInfoError,
                   validate: (value) => value.isNotEmpty && value.length <= 1024,
                 ),
                 DS.space.vSmall,
                 TEPrimaryButton(
                   key: c.primaryButtonKey,
-                  text: DS.text.preview,
-                  onTap: c.toPreview,
+                  text: c.isEditMode ? DS.text.edit : DS.text.create,
+                  onTap: c.onPrimaryButtonClick,
                 ),
               ],
             ),
@@ -125,29 +131,8 @@ class ToPreviewButton extends GetView<CurationCreatePageController> {
   @override
   Widget build(BuildContext context) {
     return TETextButton(
-      text: DS.text.preview,
-      onTap: c.toPreview,
+      text: c.isEditMode ? DS.text.edit : DS.text.create,
+      onTap: c.onPrimaryButtonClick,
     );
-  }
-}
-
-class IsStoreEnteredText extends GetView<CurationCreatePageController> {
-  const IsStoreEnteredText({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      if (c.local == null) {
-        return const SizedBox();
-      }
-      if (c.localIsEntered) {
-        return Text(
-          DS.text.storeIsEnteredText,
-          style: DS.textStyle.caption1.copyWith(color: DS.color.background700),
-        );
-      } else {
-        return const SizedBox();
-      }
-    });
   }
 }

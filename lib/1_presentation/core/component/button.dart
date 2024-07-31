@@ -455,7 +455,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   final bool Function(T lhs, T rhs)? isEqual;
   final void Function(T) onSelected;
   final String Function(T)? toLabel;
-  final Color Function(T)? getDefaultColor;
+  final Color? Function(T)? getDefaultColor;
   final String? text;
   final Widget? icon;
   final Widget? iconActivated;
@@ -504,12 +504,11 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
   }
 
   TextStyle getTextStyle(T value) {
+    final defaultColorFromCustom =
+        getDefaultColor?.call(value) ?? DS.color.background800;
+
     return DS.textStyle.paragraph2.copyWith(
-      color: isSelected(value)
-          ? DS.color.primary600
-          : (getDefaultColor == null
-              ? DS.color.background800
-              : getDefaultColor!(value)),
+      color: isSelected(value) ? DS.color.primary600 : defaultColorFromCustom,
       fontWeight: isSelected(value) ? FontWeight.w600 : null,
     );
   }

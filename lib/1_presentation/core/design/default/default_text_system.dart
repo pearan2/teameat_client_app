@@ -496,7 +496,7 @@ class DefaultTextSystem extends ITextSystem {
   String get discountPrice => '할인가';
 
   @override
-  String get registerCurationSuccess => '메뉴 신청을 잘 접수했어요! 팀잇이 빠르게 영업해볼게요!';
+  String get registerCurationSuccess => '잘 등록 되었어요! 팀잇이 검토 해보고 빠르게 영업해볼게요!';
 
   @override
   String get search => '검색하기';
@@ -762,7 +762,7 @@ class DefaultTextSystem extends ITextSystem {
       '파일 업로드 도중 문제가 발생했어요 다시 시도해주세요';
 
   @override
-  String get creatingCurationPleaseWait => '신청 중입니다\n잠시만 기다려주세요';
+  String get creatingCurationPleaseWait => '등록 중입니다\n잠시만 기다려주세요';
 
   @override
   String get permissionsAreRequestedWhenItNeeded =>
@@ -781,7 +781,8 @@ class DefaultTextSystem extends ITextSystem {
   String get searchedCurationNotFound => '검색된 푸드로그가 없어요';
 
   @override
-  String get alreadyDeletedOrBlockedCuration => '삭제되었거나, 차단된 푸드로그 입니다';
+  String get alreadyDeletedOrBlockedCuration =>
+      '삭제되었거나, 차단 또는 비공개 처리된 푸드로그 입니다';
 
   @override
   String get follow => '팔로우';
@@ -831,7 +832,7 @@ class DefaultTextSystem extends ITextSystem {
   String get blockSuccess => '정상적으로 차단했어요\n프로필 -> 차단목록에서 다시 차단 해제 하실 수 있어요';
 
   @override
-  String get reportSuccess => '정상적으로 신고했어요\n팀잇치 최대한 빠르게 처리해볼게요!';
+  String get reportSuccess => '정상적으로 신고했어요\n팀잇이 최대한 빠르게 처리해볼게요!';
 
   @override
   String get invalidAccessPleaseContentDeveloper =>

@@ -734,7 +734,7 @@ class TEMultiImageSelector extends StatefulWidget {
   final bool isFirstCover;
 
   final String addButtonTitle;
-  final List<String> images;
+  final List<String> initialImages;
   final Function(List<dynamic> images) onImageChanged;
   final Function(bool isLoading) onLoading;
 
@@ -747,7 +747,7 @@ class TEMultiImageSelector extends StatefulWidget {
     this.imageHeightRatio = 4,
     this.addButtonTitle = '사진 추가',
     this.isFirstCover = false,
-    this.images = const [],
+    this.initialImages = const [],
     required this.onImageChanged,
     required this.onLoading,
   });
@@ -759,7 +759,7 @@ class TEMultiImageSelector extends StatefulWidget {
 class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   late final imageRatio = widget.imageWidthRatio / widget.imageHeightRatio;
 
-  late List<dynamic> selectedImages = [...widget.images];
+  late List<dynamic> selectedImages = [...widget.initialImages];
 
   bool isDisposed = false;
 

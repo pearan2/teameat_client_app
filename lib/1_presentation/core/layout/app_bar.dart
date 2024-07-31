@@ -3,7 +3,7 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
-  static const double defaultHeight = 53.0;
+  static const double defaultHeight = 48.0;
 
   @override
   final Size preferredSize;

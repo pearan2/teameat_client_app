@@ -30,9 +30,7 @@ class CurationCreatePage extends GetView<CurationCreatePageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TEMultiImageSelector(
-                  images: c.isEditMode
-                      ? c.menuImages.map((src) => src as String).toList()
-                      : [],
+                  initialImages: c.isEditMode ? c.curation!.itemImageUrls : [],
                   addButtonTitle: DS.text.addMenuImage,
                   isFirstCover: true,
                   numberOfMiniumImages: 1,
@@ -42,9 +40,7 @@ class CurationCreatePage extends GetView<CurationCreatePageController> {
                 ),
                 DS.space.vSmall,
                 TEMultiImageSelector(
-                  images: c.isEditMode
-                      ? c.storeImages.map((src) => src as String).toList()
-                      : [],
+                  initialImages: c.isEditMode ? c.curation!.storeImageUrls : [],
                   addButtonTitle: DS.text.addEtcImage,
                   numberOfMiniumImages: 0,
                   numberOfMaximumImages: 10,

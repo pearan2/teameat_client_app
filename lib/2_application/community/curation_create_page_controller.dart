@@ -127,9 +127,10 @@ class CurationCreatePageController extends PageController {
     if (local == null) {
       return;
     }
-
+    _isLoading.value = true;
     final imageUrlLists = await Future.wait(
         [_uploadImage(menuImages), _uploadImage(storeImages)]);
+    _isLoading.value = false;
 
     /// 모든 파일이 다 업로드 되었는지
     final uploadedMenuImages = imageUrlLists[0];
@@ -152,7 +153,9 @@ class CurationCreatePageController extends PageController {
     );
 
     if (isEditMode) {
+      _isLoading.value = true;
       final ret = await _curationRepo.updateCuration(curation!.id, request);
+      _isLoading.value = false;
       ret.fold(
         (l) => showError(l.desc),
         (_) {
@@ -160,7 +163,9 @@ class CurationCreatePageController extends PageController {
         },
       );
     } else {
+      _isLoading.value = true;
       final ret = await _curationRepo.registerCuration(request);
+      _isLoading.value = false;
       ret.fold(
         (l) => showError(l.desc),
         (_) {

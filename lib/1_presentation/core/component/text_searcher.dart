@@ -227,7 +227,7 @@ class _TextSearcherState extends State<TextSearcher> {
       focusNode: focusNode,
       onEditingComplete: () {
         focusNode.unfocus();
-        widget.onCompleted(controller.text);
+        widget.onCompleted(controller.text.trim());
       },
       onChanged: widget.onChanged,
       cursorColor: DS.color.primary600,

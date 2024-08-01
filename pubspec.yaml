@@ -73,8 +73,11 @@ dependencies:
 
   # 추후 초기 Recent 의 앨범 세팅을 잘 못가져오는 버그가 해결되면 (3.0.0-dev 까지는 존재)
   # hosted 로 변경할 것
+
   insta_assets_picker: 
     path: /Users/hongkwonlee/Desktop/project/flutter_local_library/insta_assets_picker
+
+  # insta_assets_picker: ^3.0.0-dev.1 # 새로 빌드 되면 hosted 로 변경해도 될듯. wechat image picker 가 7월 30일 기준으로 패치됨
   statusbarz: ^1.0.14
   palette_generator: ^0.3.3+4
   

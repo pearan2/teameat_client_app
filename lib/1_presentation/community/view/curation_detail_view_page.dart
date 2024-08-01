@@ -37,8 +37,8 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
     return Obx(() => TEScaffold(
         loading: c.isLoading,
         body: CustomScrollView(
-          cacheExtent: 99999,
-          physics: const ClampingScrollPhysics(),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           slivers: [
             ColorAdjustAppBar(c),
             SliverToBoxAdapter(

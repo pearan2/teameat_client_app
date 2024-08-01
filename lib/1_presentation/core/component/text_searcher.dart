@@ -8,6 +8,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/3_domain/core/i_search_history_repository.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
+import 'package:teameat/99_util/extension/string.dart';
 
 class TextSearchButton<T extends ISearchHistoryRepository>
     extends StatelessWidget {
@@ -29,20 +30,27 @@ class TextSearchButton<T extends ISearchHistoryRepository>
   void onTap() {
     final repo = Get.find<T>();
     Get.to(
-        TextSearchOverlay(
-          onCompleted: onCompleted,
-          focusNode: focusNode,
-          controller: controller,
-          value: value,
-          hintText: hintText,
-          historyRepository: repo,
-        ),
-        transition: Transition.noTransition);
+      TextSearchOverlay(
+        onCompleted: onCompleted,
+        focusNode: focusNode,
+        controller: controller,
+        value: value,
+        hintText: hintText,
+        historyRepository: repo,
+      ),
+      transition: Transition.noTransition,
+      duration: Duration.zero,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return TEonTap(onTap: onTap, child: DS.image.searchLg);
+    return TEonTap(
+        onTap: onTap,
+        child: DS.image.searchLg(
+            color: value.isEmpty()
+                ? DS.color.background700
+                : DS.color.primary600));
   }
 }
 

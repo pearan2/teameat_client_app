@@ -389,11 +389,11 @@ class DefaultImageSystem extends IImageSystem {
   }
 
   @override
-  SvgPicture get searchLg => SvgPicture.asset(
+  SvgPicture searchLg({Color? color}) => SvgPicture.asset(
         'assets/image/icon/search_sm.svg',
         height: 20,
         width: 20,
-        color: DS.color.background700,
+        color: color ?? DS.color.background700,
       );
 
   @override

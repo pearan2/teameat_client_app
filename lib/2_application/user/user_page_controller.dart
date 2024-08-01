@@ -66,6 +66,13 @@ class UserPageController extends PageController {
     react.toGiftReceive(giftId: giftId);
   }
 
+  void _afterLogOutCleaning() {
+    _itemLikeController.clean();
+    _storeLikeController.clean();
+    _curationLikeController.clean();
+    user.value = User.visitor();
+  }
+
   Future<void> onLogOut() async {
     if (!_authService.isLogined()) {
       return showError(DS.text.notLogined);
@@ -79,10 +86,7 @@ class UserPageController extends PageController {
       return;
     }
     _authService.logOut();
-    _itemLikeController.clean();
-    _storeLikeController.clean();
-    _curationLikeController.clean();
-    user.value = User.visitor();
+    _afterLogOutCleaning();
     showSuccess(DS.text.successLogOut);
   }
 
@@ -102,9 +106,9 @@ class UserPageController extends PageController {
     final ret = await _userRepo.deleteMe();
     return ret.fold((l) => showError(l.desc), (r) {
       if (r) {
-        showSuccess(DS.text.deleteUserSuccessSeeYouAgain);
         _authService.logOut();
-        user.value = User.visitor();
+        _afterLogOutCleaning();
+        showSuccess(DS.text.deleteUserSuccessSeeYouAgain);
       } else {
         showError(DS.text.apiFail);
       }

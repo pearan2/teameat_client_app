@@ -44,7 +44,8 @@ class CurationPage extends GetView<CurationPageController> {
             child: TERefreshIndicator(
               onRefresh: c.refreshPage,
               child: CustomScrollView(
-                physics: const ClampingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 slivers: [
                   SliverAppBar(
                     backgroundColor: DS.color.background000,

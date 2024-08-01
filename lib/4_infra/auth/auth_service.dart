@@ -45,6 +45,7 @@ class AuthService extends IAuthService {
   @override
   void logOut() {
     _userRepo.clearCache();
+
     return _conn.removeAuthentication();
   }
 

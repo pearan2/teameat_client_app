@@ -40,7 +40,7 @@ abstract class IImageSystem {
   Image get markerBackground;
 
   /// icon
-  SvgPicture get searchLg;
+  SvgPicture searchLg({Color? color});
   SvgPicture get searchSm;
   Image get iconLikeShadow;
   Image get iconLikeShadowClicked;

@@ -865,4 +865,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get recentSearchText => '최근 검색어';
+
+  @override
+  String get alreadyBlockedUser => '차단된 유저입니다';
+
+  @override
+  String get commercialization => '상품화';
+
+  @override
+  String get follower => '팔로워';
 }

@@ -206,6 +206,7 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
     String? searchText,
     Point? baseLocation,
     int? withInMeter,
+    int? curatorId,
     required Code order,
     required int pageSize,
     required int pageNumber,
@@ -231,6 +232,9 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
     }
     if (target.withInMeter != null) {
       ret['withInMeter'] = target.withInMeter.toString();
+    }
+    if (target.curatorId != null) {
+      ret['curatorId'] = target.curatorId.toString();
     }
     ret['order'] = target.order.code;
     ret['pageNumber'] = target.pageNumber.toString();

@@ -172,6 +172,12 @@ class React extends IReact {
   }
 
   @override
+  void toCuratorSummary(int curatorId) {
+    Get.toNamed('/curation/curator/summary',
+        arguments: {'curatorId': curatorId});
+  }
+
+  @override
   void toPermissionSetting() {
     Get.to(
       () => const UserPermissionPage(),

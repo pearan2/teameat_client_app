@@ -19,6 +19,8 @@ class Failure with _$Failure {
   const factory Failure.fetchVoucherFail(String desc) = _FetchVoucherFail;
   const factory Failure.useVoucherFail(String desc) = _UseVoucherFail;
   const factory Failure.fetchMeFail(String desc) = _FetchMeFail;
+  const factory Failure.fetchUerSummaryFail(String desc) =
+      _FetchUserSummaryFail;
   const factory Failure.updateMeFail(String desc) = _UpdateMeFail;
   const factory Failure.deleteMeFail(String desc) = _DeleteMeFail;
   const factory Failure.fetchLikeFail(String desc) = _FetchLikeFail;

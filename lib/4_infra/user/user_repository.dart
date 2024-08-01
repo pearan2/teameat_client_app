@@ -78,6 +78,21 @@ class UserRepository implements IUserRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, Summary>> getUserSummary(int targetUserId) async {
+    try {
+      final path = '/api/member/summary/$targetUserId';
+      final ret = await _conn.get(path, null);
+      return ret.fold((l) => left(l), (r) {
+        final user = Summary.fromJson(r as JsonMap);
+        return right(user);
+      });
+    } catch (e) {
+      return left(const Failure.fetchUerSummaryFail(
+          '해당 유저의 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
+
   Future<Either<Failure, List<int>>> _getMyLikes(String path) async {
     try {
       const path = 'api/member/me';

@@ -302,4 +302,8 @@ abstract class ITextSystem {
 
   String get recentSearchText;
   String get cleanSearchHistory;
+
+  String get alreadyBlockedUser;
+  String get commercialization;
+  String get follower;
 }

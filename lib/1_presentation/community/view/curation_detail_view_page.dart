@@ -389,7 +389,6 @@ class BlockReportTools extends StatelessWidget {
       candidates: [DS.text.blockThisCuration, DS.text.reportThisCuration],
       getDefaultColor: (s) =>
           s == DS.text.reportThisCuration ? DS.color.point500 : null,
-      closeAfterSelect: false,
       isLoginRequested: true,
       onSelected: (s) async {
         if (s == DS.text.blockThisCuration) {
@@ -398,14 +397,10 @@ class BlockReportTools extends StatelessWidget {
             leftButtonText: DS.text.no,
             rightButtonText: DS.text.yesIWillBlockThis,
           );
-          controller.react.back();
           if (!ret) return;
           controller.onBlock();
         } else if (s == DS.text.reportThisCuration) {
           await showReport(controller.onReport);
-          controller.react.back();
-        } else {
-          controller.react.back();
         }
       },
       icon: DS.image.more(iconColor),
@@ -427,19 +422,16 @@ class EditDeleteTools extends StatelessWidget {
       candidates: [DS.text.editMyCuration, DS.text.deleteMyCuration],
       getDefaultColor: (s) =>
           s == DS.text.deleteMyCuration ? DS.color.point500 : null,
-      closeAfterSelect: false,
       isLoginRequested: true,
       onSelected: (s) async {
         if (s == DS.text.editMyCuration) {
           controller.onCurationEdit();
-          controller.react.back();
         } else if (s == DS.text.deleteMyCuration) {
           final ret = await showTEConfirmDialog(
             content: DS.text.areYouSureToDeleteYourCuration,
             leftButtonText: DS.text.no,
             rightButtonText: DS.text.yesIWillDeleteMyCuration,
           );
-          controller.react.back();
           if (!ret) return;
           controller.onCurationDelete();
         }

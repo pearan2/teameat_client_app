@@ -53,6 +53,8 @@ abstract class IRouter {
 
   void toCurationDetail(int curationId);
 
+  void toCuratorSummary(int curatorId);
+
   void toUserCurationDetail(int curationId);
 
   void toPermissionSetting();

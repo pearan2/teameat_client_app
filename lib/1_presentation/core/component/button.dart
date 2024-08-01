@@ -533,10 +533,10 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     final react = Get.find<IReact>();
     return TEonTap(
       onTap: () {
-        onSelected(value);
         if (closeAfterSelect) {
           react.back();
         }
+        onSelected(value);
       },
       child: SizedBox(
         height: DS.space.large,
@@ -1122,15 +1122,17 @@ class TETextCopyButton extends StatelessWidget {
 
 class Follow extends StatefulWidget {
   final int targetUserId;
-  const Follow(this.targetUserId, {super.key});
+  final double? width;
+  final double? height;
+  const Follow(this.targetUserId, {super.key, this.width, this.height});
 
   @override
   State<Follow> createState() => _FollowState();
 }
 
 class _FollowState extends State<Follow> {
-  final width = DS.space.large + DS.space.tiny;
-  final height = DS.space.base;
+  late final width = widget.width ?? (DS.space.large + DS.space.tiny);
+  late final height = widget.height ?? DS.space.base;
 
   final _userRepo = Get.find<IUserRepository>();
 

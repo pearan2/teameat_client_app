@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
-
 part 'user.g.dart';
 
 @freezed
@@ -56,4 +55,35 @@ class UserUpdate with _$UserUpdate {
 
   factory UserUpdate.fromJson(Map<String, Object?> json) =>
       _$UserUpdateFromJson(json);
+}
+
+@freezed
+class Summary with _$Summary {
+  const factory Summary({
+    required int id,
+    required String nickname,
+    required String profileImageUrl,
+    String? oneLineIntroduce,
+    required bool isMe,
+    required int numberOfFollowers,
+    required int numberOfCurations,
+    required int numberOfCommercializedCurations,
+  }) = _Summary;
+
+  factory Summary.fromJson(Map<String, Object?> json) =>
+      _$SummaryFromJson(json);
+
+  factory Summary.empty() {
+    return const Summary(
+      id: -1,
+      nickname: "",
+      profileImageUrl:
+          "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
+      oneLineIntroduce: "",
+      isMe: false,
+      numberOfFollowers: 0,
+      numberOfCurations: 0,
+      numberOfCommercializedCurations: 0,
+    );
+  }
 }

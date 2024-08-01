@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
+import 'package:teameat/1_presentation/community/view/curator_summary_view_page.dart';
+import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
 import 'package:teameat/1_presentation/user/curation/user_curation_page.dart';
 import 'package:teameat/1_presentation/user/curation/user_curation_page_binding.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page.dart';
@@ -69,6 +71,13 @@ List<GetPage> allPages() => [
         name: "/curation/create",
         binding: CurationCreatePageBinding(),
         page: () => const CurationCreatePage(),
+        transitionDuration: const Duration(milliseconds: 200),
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/curation/curator/summary",
+        binding: CuratorSummaryViewPageBinding(),
+        page: () => const CuratorSummaryViewPage(),
         transitionDuration: const Duration(milliseconds: 200),
         transition: Transition.rightToLeft,
       ),

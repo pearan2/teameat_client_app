@@ -22,7 +22,6 @@ import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/color.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
-import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -37,60 +36,65 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
   Widget build(BuildContext context) {
     return Obx(() => TEScaffold(
         loading: c.isLoading,
-        body: CustomScrollView(
+        body: NestedScrollView(
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            ColorAdjustAppBar(c),
-            Padding(
-              padding: EdgeInsets.all(DS.space.small),
-              child: c.curation.obx(
-                (curation) => CuratorInfoRow(curation.curator,
-                    withFollowButton: !curation.isMine),
-              ),
-            ).toSliver,
-            TEDivider.thin().toSliver,
-            DS.space.vBase.toSliver,
-            c.curation
-                .obx((curation) => _CurationDetailStatusAndToolsRow(
+          headerSliverBuilder: (context, innerBoxIsScrolled) =>
+              [ColorAdjustAppBar(c)],
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(DS.space.small),
+                  child: c.curation.obx(
+                    (curation) => CuratorInfoRow(curation.curator,
+                        withFollowButton: !curation.isMine),
+                  ),
+                ),
+                TEDivider.thin(),
+                DS.space.vBase,
+                c.curation.obx((curation) => _CurationDetailStatusAndToolsRow(
                       curation,
                       onShare: c.onShare,
-                    ))
-                .toSliver,
-            DS.space.vBase.toSliver,
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppWidget.horizontalPadding),
-              child: c.curation.obx((curation) => Text(
-                    curation.oneLineIntroduce,
-                    style: DS.textStyle.paragraph1.bold.b800.h14,
-                  )),
-            ).toSliver,
-            DS.space.vXSmall.toSliver,
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppWidget.horizontalPadding),
-              child: c.curation.obx((curation) => Text(
-                    curation.introduce,
-                    style: DS.textStyle.paragraph3.b500.h14,
-                  )),
-            ).toSliver,
-            DS.space.vSmall.toSliver,
-            DS.space.vMedium.toSliver,
-            Padding(
-              padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-              child: c.curation.obx((curation) => ItemNameAndPrice(curation)),
-            ).toSliver,
-            DS.space.vMedium.toSliver,
-            Padding(
-              padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-              child:
-                  c.curation.obx((curation) => StoreNameAndCategory(curation)),
-            ).toSliver,
-            c.curation.obx((curation) => StoreMap(curation)).toSliver,
-            DS.space.vLarge.toSliver,
-            DS.space.vLarge.toSliver,
-          ],
+                    )),
+                DS.space.vBase,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppWidget.horizontalPadding),
+                  child: c.curation.obx((curation) => Text(
+                        curation.oneLineIntroduce,
+                        style: DS.textStyle.paragraph1.bold.b800.h14,
+                      )),
+                ),
+                DS.space.vXSmall,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppWidget.horizontalPadding),
+                  child: c.curation.obx((curation) => Text(
+                        curation.introduce,
+                        style: DS.textStyle.paragraph3.b500.h14,
+                      )),
+                ),
+                DS.space.vSmall,
+                DS.space.vMedium,
+                Padding(
+                  padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+                  child:
+                      c.curation.obx((curation) => ItemNameAndPrice(curation)),
+                ),
+                DS.space.vMedium,
+                Padding(
+                  padding: const EdgeInsets.all(AppWidget.horizontalPadding),
+                  child: c.curation
+                      .obx((curation) => StoreNameAndCategory(curation)),
+                ),
+                c.curation.obx((curation) => StoreMap(curation)),
+                DS.space.vLarge,
+                DS.space.vLarge,
+              ],
+            ),
+          ),
         )));
   }
 }

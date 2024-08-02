@@ -22,6 +22,7 @@ class CuratorInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final react = Get.find<IReact>();
     return TEonTap(
+      isLoginRequired: true,
       onTap: () => react.toCuratorSummary(curator.id),
       child: Row(
         children: [

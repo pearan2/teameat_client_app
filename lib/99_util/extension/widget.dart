@@ -7,4 +7,6 @@ extension TEWidgetExtension on Widget {
             const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
         child: this,
       );
+
+  SliverToBoxAdapter get toSliver => SliverToBoxAdapter(child: this);
 }

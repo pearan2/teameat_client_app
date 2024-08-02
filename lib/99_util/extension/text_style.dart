@@ -24,6 +24,8 @@ extension TETextStyleExtension on TextStyle {
 
   TextStyle get p600 => copyWith(color: DS.color.primary600);
 
+  TextStyle get p700 => copyWith(color: DS.color.primary700);
+
   TextStyle get s500 => copyWith(color: DS.color.secondary500);
 
   TextStyle get s700 => copyWith(color: DS.color.secondary700);

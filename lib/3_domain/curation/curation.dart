@@ -356,6 +356,7 @@ class CurationListSimple with _$CurationListSimple {
     required bool isInSale,
     required bool isSaleFinished,
     required DateTime createdAt,
+    required int originalPrice,
   }) = _CurationListSimple;
 
   factory CurationListSimple.fromJson(Map<String, Object?> json) =>
@@ -374,6 +375,7 @@ class CurationListSimple with _$CurationListSimple {
         isInSale: detail.isInSale,
         isSaleFinished: detail.isSaleFinished,
         createdAt: detail.createdAt,
+        originalPrice: 0,
       );
 }
 
@@ -393,6 +395,7 @@ class CurationListDetail with _$CurationListDetail {
     required bool isInSale,
     required bool isSaleFinished,
     required DateTime createdAt,
+    required int originalPrice,
     required String introduce,
     required List<String> itemImageUrls,
     required List<String> storeImageUrls,
@@ -415,6 +418,7 @@ class CurationListDetail with _$CurationListDetail {
       isInSale: false,
       isSaleFinished: false,
       createdAt: DateTime.now(),
+      originalPrice: 0,
       oneLineIntroduce: "",
       introducePreview: "",
       introduce: "",

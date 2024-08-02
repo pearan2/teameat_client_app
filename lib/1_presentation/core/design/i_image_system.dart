@@ -67,6 +67,7 @@ abstract class IImageSystem {
   SvgPicture get mapActivated;
   SvgPicture get mapLg;
   SvgPicture more(Color color);
+  SvgPicture get forkAndKnife;
 
   SvgPicture get sort;
   SvgPicture get share;

@@ -13,6 +13,8 @@ import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -20,33 +22,34 @@ class StoreItemOriginalPriceText extends StatelessWidget {
   final int originalPrice;
   final int price;
   final MainAxisAlignment? mainAxisAlignment;
-  final TextStyle? style;
-  const StoreItemOriginalPriceText(
-      {super.key,
-      required this.originalPrice,
-      required this.price,
-      this.style,
-      this.mainAxisAlignment});
+  final bool isTitle;
+  final bool withDiscountText;
+  const StoreItemOriginalPriceText({
+    super.key,
+    required this.originalPrice,
+    required this.price,
+    this.isTitle = false,
+    this.withDiscountText = true,
+    this.mainAxisAlignment,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ?? DS.textStyle.caption1;
+    final style =
+        isTitle ? DS.textStyle.paragraph2.h14 : DS.textStyle.paragraph3.h14;
 
     return Row(
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
-        Text(
-          DS.text.discountPrice,
-          style: style.copyWith(
-              color: DS.color.point500, fontWeight: FontWeight.w600),
-        ),
-        DS.space.hXTiny,
+        Text(DS.text.discountPrice, style: style.point.semiBold)
+            .orEmpty(withDiscountText),
+        DS.space.hXTiny.orEmpty(withDiscountText),
         Text(
           originalPrice.format(DS.text.priceFormat),
           style: style.copyWith(
-            color: DS.color.background400,
+            color: DS.color.background500,
             decoration: TextDecoration.lineThrough,
-            decorationColor: DS.color.background400,
+            decorationColor: DS.color.background500,
           ),
         ),
       ],
@@ -57,12 +60,12 @@ class StoreItemOriginalPriceText extends StatelessWidget {
 class StoreItemPriceDiscountRateText extends StatelessWidget {
   final int originalPrice;
   final int price;
-  final TextStyle? style;
+  final bool isTitle;
 
   const StoreItemPriceDiscountRateText({
     super.key,
     required this.originalPrice,
-    this.style,
+    this.isTitle = false,
     required this.price,
   });
 
@@ -73,14 +76,8 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ?? DS.textStyle.paragraph3;
-    return Text(
-      calcDiscountRateString(),
-      style: style.copyWith(
-        color: DS.color.point500,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+    final style = DS.textStyle.paragraph2.point.semiBold.h14;
+    return Text(calcDiscountRateString(), style: style);
   }
 }
 
@@ -89,12 +86,14 @@ class StoreItemPrice extends StatelessWidget {
   final int price;
   final bool isTitle;
   final bool alignRight;
+  final bool withDiscountText;
 
   const StoreItemPrice({
     super.key,
     required this.originalPrice,
     required this.price,
     this.isTitle = false,
+    this.withDiscountText = true,
     this.alignRight = false,
   });
 
@@ -109,34 +108,23 @@ class StoreItemPrice extends StatelessWidget {
           alignRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        isDiscount()
-            ? StoreItemOriginalPriceText(
-                style: isTitle
-                    ? DS.textStyle.paragraph2
-                        .copyWith(fontWeight: FontWeight.w600)
-                    : null,
-                originalPrice: originalPrice,
-                price: price,
-                mainAxisAlignment: alignRight
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-              )
-            : const SizedBox(),
-        isDiscount() ? DS.space.vXTiny : const SizedBox(),
+        StoreItemOriginalPriceText(
+          isTitle: isTitle,
+          withDiscountText: withDiscountText,
+          originalPrice: originalPrice,
+          price: price,
+          mainAxisAlignment:
+              alignRight ? MainAxisAlignment.end : MainAxisAlignment.start,
+        ).orEmpty(isDiscount()),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            isDiscount()
-                ? StoreItemPriceDiscountRateText(
-                    style: isTitle
-                        ? DS.textStyle.paragraph2
-                            .copyWith(fontWeight: FontWeight.w600)
-                        : null,
-                    originalPrice: originalPrice,
-                    price: price,
-                  )
-                : const SizedBox(),
-            isDiscount() ? DS.space.hXTiny : const SizedBox(),
+            StoreItemPriceDiscountRateText(
+              isTitle: isTitle,
+              originalPrice: originalPrice,
+              price: price,
+            ).orEmpty(isDiscount()),
+            DS.space.hTiny.orEmpty(isDiscount()),
             StoreItemPriceText(price: price, isTitle: isTitle)
           ],
         )
@@ -388,9 +376,8 @@ class StoreItemPriceText extends StatelessWidget {
     return Text(
       price.format(DS.text.priceFormat),
       style: isTitle
-          ? DS.textStyle.title1
-          : DS.textStyle.paragraph3.copyWith(
-              color: DS.color.background800, fontWeight: FontWeight.bold),
+          ? DS.textStyle.title1.h14
+          : DS.textStyle.paragraph2.b800.semiBold.h14,
     );
   }
 }

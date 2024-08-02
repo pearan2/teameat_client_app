@@ -9,4 +9,12 @@ extension TEWidgetExtension on Widget {
       );
 
   SliverToBoxAdapter get toSliver => SliverToBoxAdapter(child: this);
+
+  Widget orEmpty(bool condition) {
+    if (condition) {
+      return this;
+    } else {
+      return const SizedBox();
+    }
+  }
 }

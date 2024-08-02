@@ -409,4 +409,11 @@ class DefaultImageSystem extends IImageSystem {
         height: 13,
         width: 13,
       );
+
+  @override
+  SvgPicture get forkAndKnife => SvgPicture.asset(
+        'assets/image/icon/fork_and_knife.svg',
+        height: 20,
+        width: 20,
+      );
 }

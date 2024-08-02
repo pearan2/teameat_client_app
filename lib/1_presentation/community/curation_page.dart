@@ -267,16 +267,11 @@ class CurationImageOverlay extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(AppWidget.horizontalPadding),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Expanded(child: _buildNameText()),
-              DS.space.hSmall,
-              CurationStatusText(curation, color: DS.color.background000)
-            ],
-          ),
+          _buildNameText(),
           DS.space.vSmall,
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -318,9 +313,15 @@ class LikeRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: AppWidget.horizontalPadding,
       ),
-      child: Like<ICurationRepository>.small(
-        curation.id,
-        numberOfLikes: curation.numberOfLikes,
+      child: Row(
+        children: [
+          Like<ICurationRepository>.small(
+            curation.id,
+            numberOfLikes: curation.numberOfLikes,
+          ),
+          DS.space.hXSmall,
+          CurationStatusText(curation, withIcon: true),
+        ],
       ),
     );
   }

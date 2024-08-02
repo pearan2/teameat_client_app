@@ -234,9 +234,9 @@ class ItemNameAndPrice extends StatelessWidget {
 
   Widget _buildItemName() {
     return TEonTap(
-      onTap: curation.item == null
-          ? () {}
-          : () => Get.find<IReact>().toStoreItemDetail(curation.item!.id),
+      onTap: curation.isInSale
+          ? () => Get.find<IReact>().toStoreItemDetail(curation.item!.id)
+          : () {},
       child: Row(
         children: [
           Container(
@@ -253,10 +253,8 @@ class ItemNameAndPrice extends StatelessWidget {
                   curation.name,
                   style: DS.textStyle.caption1.semiBold.b800.h14,
                 ),
-                curation.item != null ? DS.space.hXXTiny : const SizedBox(),
-                curation.item != null
-                    ? DS.image.rightArrowInBox
-                    : const SizedBox(),
+                curation.isInSale ? DS.space.hXXTiny : const SizedBox(),
+                curation.isInSale ? DS.image.rightArrowInBox : const SizedBox(),
               ],
             ),
           ),
@@ -268,16 +266,22 @@ class ItemNameAndPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildItemName(),
-        curation.item != null ? DS.space.vSmall : const SizedBox(),
-        curation.item != null
+        DS.space.vSmall,
+        curation.isInSale
             ? StoreItemPrice(
+                withDiscountText: false,
                 originalPrice: curation.item!.originalPrice,
                 price: curation.item!.price,
               )
-            : const SizedBox(),
+            : StoreItemPrice(
+                withDiscountText: false,
+                originalPrice: curation.originalPrice,
+                price: curation.originalPrice,
+              ),
       ],
     );
   }

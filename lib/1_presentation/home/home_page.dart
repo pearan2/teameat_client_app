@@ -77,7 +77,7 @@ class HomePage extends GetView<HomePageController> {
                       childAspectRatio: imageWidth /
                           (imageWidth * (4 / 3) +
                               DS.space.large * 2 +
-                              DS.space.base * 2), // Todo 비율 조정
+                              DS.space.xBase * 3), // Todo 비율 조정
                       crossAxisSpacing: DS.space.small,
                       mainAxisSpacing: DS.space.base,
                       crossAxisCount: 2,

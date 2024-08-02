@@ -45,7 +45,7 @@ class CuratorSummaryViewPage extends GetView<CuratorSummaryViewPageController> {
               c.summary.obx((s) => s.oneLineIntroduce.isEmpty()
                   ? const SizedBox()
                   : Text(s.oneLineIntroduce!,
-                      style: DS.textStyle.caption1.b500.h14)),
+                      style: DS.textStyle.caption2.b500.h14)),
               DS.space.vLarge,
               DS.space.vXSmall,
               const Expanded(child: CuratorCurationGrid()),
@@ -139,8 +139,8 @@ class CuratorSummaryNumberRow
   const CuratorSummaryNumberRow({super.key});
 
   Widget _buildTextAndCount(String text, num count) {
-    final textStyle = DS.textStyle.caption1.b500;
-    final countStyle = DS.textStyle.caption1.b700;
+    final textStyle = DS.textStyle.caption2.b500;
+    final countStyle = DS.textStyle.caption2.b700;
     return Row(
       children: [
         Text(text, style: textStyle),

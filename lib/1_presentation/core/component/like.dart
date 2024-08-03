@@ -64,6 +64,11 @@ class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
   }
 
   Widget _buildLikeWithCount(int notIncludeMyLikeCount) {
+    /// 왜인지는 모르지만 표기되는 Like 수가 -1 까지 줄어드는 현상 디펜스
+    if (notIncludeMyLikeCount < 0) {
+      notIncludeMyLikeCount = 0;
+    }
+
     if (isRowShape) {
       return Row(
         mainAxisSize: MainAxisSize.min,

@@ -91,18 +91,3 @@ class NoGlowBehavior extends ScrollBehavior {
     return child;
   }
 }
-
-// Widget oliBuilder(BuildContext ctx, Widget? child) {
-//   return MediaQuery(
-//     data: MediaQuery.of(ctx).copyWith(textScaleFactor: 1.0),
-//     child: Stack(
-//       children: [
-//         ScrollConfiguration(
-//           behavior: NoGlowBehavior(),
-//           child: child!,
-//         ),
-//         const OliGlobalOverlay(),
-//       ],
-//     ),
-//   );
-// }

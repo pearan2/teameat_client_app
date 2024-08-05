@@ -113,17 +113,12 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
   bool needToBeWhite = true;
   bool isCollapsed = false;
 
-  Future<void> onImageChanged(String imageUrl, Size imageSize) async {
+  Future<void> onImageChanged(String imageUrl) async {
     if (isCollapsed) return;
     if (CurationListDetail.empty().itemImageUrls.contains(imageUrl)) {
       return;
     }
-    final backgroundColorComputeResult =
-        await calcBackgroundImage(MakePaletteParam(
-      imageUrl: imageUrl,
-      region: Rect.fromLTRB(0, 0, imageSize.width - 1, DS.space.large * 1.75),
-      size: imageSize,
-    ));
+    final backgroundColorComputeResult = await calcBackgroundImage(imageUrl);
     if (backgroundColorComputeResult == null) return;
     if (!mounted || isCollapsed) return;
     Future.delayed(Duration.zero, () {
@@ -144,7 +139,6 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
   Widget build(BuildContext context) {
     const ratio = 3 / 4;
     final width = MediaQuery.of(context).size.width;
-    final height = width / ratio;
     final toolbarHeight = DS.space.large;
 
     final iconColor = isCollapsed
@@ -183,8 +177,7 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
               width: width,
               imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
               overlayAdditionalHorizontalPadding: 0.0,
-              onNetworkImageChanged: (imageUrl) =>
-                  onImageChanged(imageUrl, Size(width, height)),
+              onNetworkImageChanged: (imageUrl) => onImageChanged(imageUrl),
             ),
           ),
         );

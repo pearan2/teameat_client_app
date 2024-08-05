@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -161,6 +162,20 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
   void initState() {
     super.initState();
     tryInvokeImageChangeCallback(null);
+  }
+
+  @override
+  void didUpdateWidget(covariant TEImageCarousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    preloadImages();
+  }
+
+  void preloadImages() {
+    for (final imageSrc in widget.imageSrcs) {
+      if (imageSrc is String) {
+        precacheImage(ExtendedNetworkImageProvider(imageSrc), context);
+      }
+    }
   }
 
   void tryInvokeImageChangeCallback(int? newIdx) {

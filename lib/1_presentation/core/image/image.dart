@@ -154,8 +154,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
   // Todo... 이미지 분석 (compute) 로 callback 호출해주는 것
   // 어떻게든 Compute 로 풀어야한다 그래야 넘길때 멈추지 않는다
   // pre cache loading // when -> (src is String)
-  // 넘길때 애니메이션이 있는게 더 이상한거 같다. 차라리 이어지는 애니메이션이 맞는거 같다.
-  // (뒷배경이 변경되면서 뚝뚝끊기는 느낌이 든다.)
+
   int nowImageIdx = 0;
 
   @override
@@ -183,17 +182,14 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CarouselSlider(
-            items: widget.imageSrcs
-                .map(
-                  (e) => TECacheImage(
-                    key: ObjectKey(e),
-                    src: e,
-                    width: widget.width,
-                    ratio: widget.ratio,
-                  ),
-                )
-                .toList(),
+          CarouselSlider.builder(
+            itemCount: widget.imageSrcs.length,
+            itemBuilder: (_, idx, __) => TECacheImage(
+              key: ObjectKey(widget.imageSrcs[idx]),
+              src: widget.imageSrcs[idx],
+              width: widget.width,
+              ratio: widget.ratio,
+            ),
             options: CarouselOptions(
               enlargeFactor: 0.0,
               autoPlay: false,

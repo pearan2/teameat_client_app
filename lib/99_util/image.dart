@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+// ignore: depend_on_referenced_packages
 import 'package:image/image.dart' as img;
 
 class ImageComputeResult {

@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:ui';
+
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 
@@ -26,7 +30,7 @@ bool isNeedToBeWhiteText(Color backgroundColor) {
 }
 
 Future<PaletteGenerator> _makePaletteGenerator(MakePaletteParam param) async {
-  final image = NetworkImage(param.imageUrl);
+  final image = ExtendedNetworkImageProvider(param.imageUrl);
   final gen = await PaletteGenerator.fromImageProvider(image,
       size: param.size, region: param.region);
   return gen;

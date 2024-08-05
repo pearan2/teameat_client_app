@@ -48,6 +48,8 @@ import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page_binding.dart';
 
+const transitionDuration = Duration(milliseconds: 200);
+
 List<GetPage> allPages() => [
       GetPage(
         name: "/",
@@ -71,14 +73,14 @@ List<GetPage> allPages() => [
         name: "/curation/create",
         binding: CurationCreatePageBinding(),
         page: () => const CurationCreatePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/curation/curator/summary",
         binding: CuratorSummaryViewPageBinding(),
         page: () => const CuratorSummaryViewPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
@@ -91,28 +93,28 @@ List<GetPage> allPages() => [
         name: "/user/curation",
         binding: UserCurationPageBinding(),
         page: () => const UserCurationPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/user/curation/view",
         binding: MyCurationDetailViewPageBinding(),
         page: () => const MyCurationDetailViewPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/gift",
         binding: GiftPageBinding(),
         page: () => const GiftPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/user/detail",
         binding: UserDetailPageBinding(),
         page: () => const UserDetailPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
@@ -125,7 +127,7 @@ List<GetPage> allPages() => [
         name: "/voucher/detail",
         binding: VoucherDetailPageBinding(),
         page: () => const VoucherDetailPage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
@@ -138,7 +140,7 @@ List<GetPage> allPages() => [
         name: "/voucher/gift",
         binding: GiftCreatePageBinding(),
         page: () => const GiftCreatePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
@@ -151,35 +153,35 @@ List<GetPage> allPages() => [
         name: "/voucher/gift/receive",
         binding: GiftReceivePageBinding(),
         page: () => const GiftReceivePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/store",
         binding: StorePageBinding(),
         page: () => const StorePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/store/item/purchase",
         binding: PurchasePageBinding(),
         page: () => const PurchasePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/store/like",
         binding: StoreLikePageBinding(),
         page: () => const StoreLikePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/store/item/like",
         binding: StoreItemLikePageBinding(),
         page: () => const StoreItemLikePage(),
-        transitionDuration: const Duration(milliseconds: 200),
+        transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
       GetPage(

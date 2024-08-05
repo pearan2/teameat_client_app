@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
@@ -36,7 +37,7 @@ class React extends IReact {
       arguments: {'itemId': itemId},
       preventDuplicates: false,
       binding: StoreItemPageBinding(),
-      duration: const Duration(milliseconds: 200),
+      duration: transitionDuration,
       transition: Transition.rightToLeft,
     );
   }
@@ -166,7 +167,7 @@ class React extends IReact {
       arguments: {'curationId': curationId},
       preventDuplicates: false,
       binding: CurationDetailViewPageBinding(),
-      duration: const Duration(milliseconds: 200),
+      duration: transitionDuration,
       transition: Transition.rightToLeft,
     );
   }
@@ -181,7 +182,7 @@ class React extends IReact {
   void toPermissionSetting() {
     Get.to(
       () => const UserPermissionPage(),
-      duration: const Duration(milliseconds: 200),
+      duration: transitionDuration,
       transition: Transition.rightToLeft,
     );
   }

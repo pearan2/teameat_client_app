@@ -195,6 +195,7 @@ class _TEImageCarouselState extends State<TEImageCarousel> {
                 )
                 .toList(),
             options: CarouselOptions(
+              enlargeFactor: 0.0,
               autoPlay: false,
               enlargeCenterPage: true,
               onPageChanged: (index, reason) => changeIdx(index),

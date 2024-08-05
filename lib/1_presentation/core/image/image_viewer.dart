@@ -198,68 +198,68 @@ class _ImageMultiViewPageState extends State<ImageMultiViewPage>
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, moveScroll);
-    return Container(
-      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-      color: Colors.black,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.close, color: DS.color.background000),
-          ),
-          centerTitle: true,
-          title: Text(
-            '${nowIdx + 1}/${imageSrcs.length}',
-            style: DS.textStyle.title3.copyWith(color: DS.color.background000),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                dragStartBehavior: DragStartBehavior.down,
-                children: imageSrcs
-                    .map((e) => ImageMultiViewPageBody(imageSrc: e))
-                    .toList(),
+    const iconSize = 24.0;
+
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.transparent),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () => Get.back(),
+                iconSize: iconSize,
+                icon: Icon(Icons.close, color: DS.color.background000),
               ),
+              Text(
+                '${nowIdx + 1}/${imageSrcs.length}',
+                style:
+                    DS.textStyle.title3.copyWith(color: DS.color.background000),
+              ),
+              const SizedBox(width: iconSize),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              dragStartBehavior: DragStartBehavior.down,
+              children: imageSrcs
+                  .map((e) => ImageMultiViewPageBody(imageSrc: e))
+                  .toList(),
             ),
-            LimitedBox(
-              maxHeight: imageHeight,
-              maxWidth: Get.mediaQuery.size.width,
-              child: widget.onRemove == null
-                  ? ListView.builder(
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: DS.space.xSmall),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
-                      itemCount: imageSrcs.length,
-                    )
-                  : ReorderableListView.builder(
-                      scrollController: scrollController,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: DS.space.xSmall),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
-                      itemCount: imageSrcs.length,
-                      onReorder: onReorder,
-                    ),
-            ),
-            DS.space.vMedium,
-          ],
-        ),
-        backgroundColor: Colors.black,
+          ),
+          LimitedBox(
+            maxHeight: imageHeight,
+            maxWidth: Get.mediaQuery.size.width,
+            child: widget.onRemove == null
+                ? ListView.builder(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: DS.space.xSmall),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
+                    itemCount: imageSrcs.length,
+                  )
+                : ReorderableListView.builder(
+                    scrollController: scrollController,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: DS.space.xSmall),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, idx) => _buildItem(imageSrcs[idx], idx),
+                    itemCount: imageSrcs.length,
+                    onReorder: onReorder,
+                  ),
+          ),
+          DS.space.vMedium,
+        ],
       ),
+      backgroundColor: Colors.black,
     );
   }
 

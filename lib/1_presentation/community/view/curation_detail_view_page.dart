@@ -35,7 +35,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => TEScaffold(
+    return TEScaffold(
         loading: c.isLoading,
         body: NestedScrollView(
           physics: const BouncingScrollPhysics(
@@ -96,7 +96,8 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
               ],
             ),
           ),
-        )));
+        ));
+    // return Obx(() => );
   }
 }
 

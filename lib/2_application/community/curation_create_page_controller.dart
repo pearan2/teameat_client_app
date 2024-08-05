@@ -127,6 +127,9 @@ class CurationCreatePageController extends PageController {
     if (local == null) {
       return;
     }
+    if (!checkInputValidIfNotShowError()) {
+      return;
+    }
     _isLoading.value = true;
     final imageUrlLists = await Future.wait(
         [_uploadImage(menuImages), _uploadImage(storeImages)]);

@@ -570,8 +570,7 @@ class StoreLocation extends StatelessWidget {
           ),
         ),
         DS.space.vTiny,
-        TEMapToolbar(
-            store: store, name: item.store.name, address: item.store.address),
+        TETextCopyButton(textData: item.store.address),
       ],
     ).withBasePadding;
   }

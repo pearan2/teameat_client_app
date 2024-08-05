@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -177,27 +176,40 @@ class _TEStoreMapState extends State<TEStoreMap> {
 
     return SizedBox(
       height: height,
-      child: NaverMap(
-        onCameraChange: (reason, animated) => _onCameraChanged(),
-        onCameraIdle: _onCameraIdle,
-        forceGesture: widget.gestureEnabled,
-        options: NaverMapViewOptions(
-          initialCameraPosition: NCameraPosition(
-            target: widget.defaultCameraCenter.toNLatLng(),
-            zoom: widget.defaultZoomLevel,
+      child: Stack(
+        children: [
+          NaverMap(
+            onCameraChange: (reason, animated) => _onCameraChanged(),
+            onCameraIdle: _onCameraIdle,
+            forceGesture: widget.gestureEnabled,
+            options: NaverMapViewOptions(
+              initialCameraPosition: NCameraPosition(
+                target: widget.defaultCameraCenter.toNLatLng(),
+                zoom: widget.defaultZoomLevel,
+              ),
+              minZoom: 12,
+              maxZoom: 18,
+              zoomGesturesFriction: 0.1,
+              zoomGesturesEnable: widget.gestureEnabled,
+              stopGesturesEnable: widget.gestureEnabled,
+              tiltGesturesEnable: widget.gestureEnabled,
+              scrollGesturesEnable: widget.gestureEnabled,
+              rotationGesturesEnable: widget.gestureEnabled,
+            ),
+            onMapReady: (nController) {
+              _init(nController);
+            },
           ),
-          minZoom: 12,
-          maxZoom: 18,
-          zoomGesturesFriction: 0.1,
-          zoomGesturesEnable: widget.gestureEnabled,
-          stopGesturesEnable: widget.gestureEnabled,
-          tiltGesturesEnable: widget.gestureEnabled,
-          scrollGesturesEnable: widget.gestureEnabled,
-          rotationGesturesEnable: widget.gestureEnabled,
-        ),
-        onMapReady: (nController) {
-          _init(nController);
-        },
+          Visibility(
+            visible: widget.stores.length == 1,
+            child: Positioned(
+                top: DS.space.tiny,
+                right: DS.space.tiny,
+                child: GoToMap(
+                  store: widget.stores.first,
+                )),
+          ),
+        ],
       ),
     );
   }
@@ -205,14 +217,13 @@ class _TEStoreMapState extends State<TEStoreMap> {
 
 class GoToMap extends StatelessWidget {
   final StorePoint store;
-  final String name;
-  const GoToMap({super.key, required this.store, required this.name});
+  const GoToMap({super.key, required this.store});
 
   Future<void> goToMap() async {
     late final bool isLaunched;
     if (store.naverMapPlaceId == null || store.naverMapPlaceId!.isEmpty) {
       isLaunched = await launchUrlString(
-          'nmap://place?lat=${store.location.latitude}&lng=${store.location.longitude}&name=$name');
+          'nmap://place?lat=${store.location.latitude}&lng=${store.location.longitude}&name=${store.name}');
     } else {
       isLaunched =
           await launchUrlString('nmap://place?id=${store.naverMapPlaceId}');
@@ -229,41 +240,20 @@ class GoToMap extends StatelessWidget {
       onTap: goToMap,
       child: Container(
         padding: EdgeInsets.symmetric(
-            vertical: DS.space.xxTiny, horizontal: DS.space.xBase),
+            vertical: DS.space.xxTiny, horizontal: DS.space.xTiny),
         decoration: BoxDecoration(
-            border: Border.all(color: DS.color.background300),
-            borderRadius: BorderRadius.circular(DS.space.xSmall)),
+            color: DS.color.background000.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(DS.space.xTiny)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             DS.image.naverMap,
             DS.space.hXTiny,
-            Text(DS.text.goToMapApp, style: DS.textStyle.caption2.b800),
+            Text(DS.text.goToMapApp,
+                style: DS.textStyle.caption2.semiBold.b800),
           ],
         ),
       ),
-    );
-  }
-}
-
-class TEMapToolbar extends StatelessWidget {
-  final StorePoint store;
-  final String name;
-  final String address;
-  const TEMapToolbar(
-      {super.key,
-      required this.store,
-      required this.name,
-      required this.address});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: TETextCopyButton(textData: address)),
-        DS.space.hTiny,
-        GoToMap(store: store, name: name),
-      ],
     );
   }
 }

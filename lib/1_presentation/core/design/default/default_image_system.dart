@@ -367,15 +367,23 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get copy => SvgPicture.asset(
         'assets/image/icon/copy.svg',
-        height: 8,
-        width: 8,
+        height: 16,
+        width: 16,
       );
 
   @override
-  Image get naverMap => Image.asset(
-        'assets/image/icon/naver_map.png',
+  Widget get naverMap => Container(
         width: 20,
         height: 20,
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(300), boxShadow: [
+          BoxShadow(
+              color: DS.color.background800.withOpacity(0.1),
+              blurRadius: DS.space.xxTiny)
+        ]),
+        child: Image.asset(
+          'assets/image/icon/naver_map.png',
+        ),
       );
 
   @override

@@ -43,5 +43,7 @@ abstract class IColorSystem {
 
   /// 0xFFEDEDED
   Color get background100;
+
+  /// 0xFFFFFFFF
   Color get background000;
 }

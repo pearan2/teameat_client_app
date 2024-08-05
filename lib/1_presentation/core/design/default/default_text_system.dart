@@ -752,7 +752,7 @@ class DefaultTextSystem extends ITextSystem {
   String get copyAddress => '주소 복사';
 
   @override
-  String get goToMapApp => '매장 길찾기';
+  String get goToMapApp => '네이버 지도로 이동';
 
   @override
   String get mapAppNotLaunched => '네이버 지도 앱이 설치되어 있지 않아요';

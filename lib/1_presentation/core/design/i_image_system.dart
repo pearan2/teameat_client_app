@@ -50,7 +50,7 @@ abstract class IImageSystem {
   SvgPicture get closeSm;
 
   SvgPicture get copy;
-  Image get naverMap;
+  Widget get naverMap;
 
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;

@@ -42,6 +42,7 @@ class StorePoint with _$StorePoint {
     required String profileImageUrl,
     String? naverMapPlaceId,
     required Point location,
+    required String name,
   }) = _StorePoint;
 
   factory StorePoint.fromJson(Map<String, Object?> json) =>
@@ -57,6 +58,7 @@ class StorePoint with _$StorePoint {
       profileImageUrl: store.profileImageUrl,
       naverMapPlaceId: store.naverMapPlaceId,
       location: store.location,
+      name: store.name,
     );
   }
 
@@ -66,6 +68,7 @@ class StorePoint with _$StorePoint {
       profileImageUrl: store.profileImageUrl,
       naverMapPlaceId: store.naverMapPlaceId,
       location: store.location,
+      name: store.name,
     );
   }
 }

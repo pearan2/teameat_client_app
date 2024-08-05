@@ -1101,6 +1101,8 @@ class TETextCopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const underLineOffsetY = 1.5;
+
     return TEonTap(
       onTap: () => TEClipboard.setText(textData),
       child: Row(
@@ -1108,11 +1110,24 @@ class TETextCopyButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Flexible(
-            child: Text(
-              text ?? textData,
-              style: style ?? DS.textStyle.caption1.b700.h14,
+            child: Transform.translate(
+              offset: const Offset(0, underLineOffsetY),
+              child: Text(
+                (text ?? textData),
+                style: style ??
+                    DS.textStyle.caption1.b700.h14.copyWith(
+                      color: Colors.transparent,
+                      decoration: TextDecoration.underline,
+                      shadows: [
+                        Shadow(
+                            color: DS.color.background700,
+                            offset: const Offset(0, -underLineOffsetY))
+                      ],
+                    ),
+              ),
             ),
           ),
+          DS.space.hXXTiny,
           DS.image.copy,
         ],
       ),

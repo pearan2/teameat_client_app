@@ -22,6 +22,7 @@ import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/color.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -343,11 +344,14 @@ class StoreMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storePoint = StorePoint(
-        id: curation.store.id,
-        profileImageUrl: curation.storeAdditional.profileImageUrl,
-        location: curation.store.location,
-        naverMapPlaceId: curation.storeAdditional.naverMapPlaceId);
+      id: curation.store.id,
+      profileImageUrl: curation.storeAdditional.profileImageUrl,
+      location: curation.store.location,
+      naverMapPlaceId: curation.storeAdditional.naverMapPlaceId,
+      name: curation.store.name,
+    );
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TEStoreMap.single(
           height: DS.space.large * 4,
@@ -355,11 +359,7 @@ class StoreMap extends StatelessWidget {
           isLoading: curation == CurationListDetail.empty(),
         ),
         DS.space.vTiny,
-        TEMapToolbar(
-          store: storePoint,
-          name: curation.store.name,
-          address: curation.store.address,
-        ).paddingSymmetric(horizontal: AppWidget.horizontalPadding)
+        TETextCopyButton(textData: curation.store.address).withBasePadding,
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
 abstract class IRouter {
@@ -48,6 +49,8 @@ abstract class IRouter {
   void toCurationOffAll();
 
   void toUserCuration();
+
+  void toBlockPage(BlockTargetType targetType);
 
   Future<bool> toCurationCreate(MyCurationDetail? curation);
 

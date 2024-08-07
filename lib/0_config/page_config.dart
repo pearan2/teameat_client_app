@@ -3,8 +3,8 @@ import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
-import 'package:teameat/1_presentation/user/curation/user_curation_page.dart';
-import 'package:teameat/1_presentation/user/curation/user_curation_page_binding.dart';
+import 'package:teameat/1_presentation/user/block/block_page.dart';
+import 'package:teameat/1_presentation/user/block/block_page_binding.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/my_curation_detail_view_page.dart';
@@ -90,9 +90,9 @@ List<GetPage> allPages() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/user/curation",
-        binding: UserCurationPageBinding(),
-        page: () => const UserCurationPage(),
+        name: "/user/block",
+        binding: UserBlockPageBinding(),
+        page: () => const UserBlockPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),
@@ -207,5 +207,6 @@ List<GetPage> allPages() => [
         binding: CustomerServicePageBinding(),
         page: () => const CustomerServicePage(),
         transition: Transition.noTransition,
+        transitionDuration: Duration.zero,
       ),
     ];

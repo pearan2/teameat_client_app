@@ -306,4 +306,6 @@ abstract class ITextSystem {
   String get alreadyBlockedUser;
   String get commercialization;
   String get follower;
+
+  String get unBlock;
 }

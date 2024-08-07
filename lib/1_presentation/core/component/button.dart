@@ -1135,6 +1135,64 @@ class TETextCopyButton extends StatelessWidget {
   }
 }
 
+class TELoadingButton extends StatefulWidget {
+  final String text;
+  final double width;
+  final double height;
+  final Future<void> Function() onTap;
+
+  const TELoadingButton({
+    super.key,
+    required this.text,
+    this.width = 68.0,
+    this.height = 24.0,
+    required this.onTap,
+  });
+
+  @override
+  State<TELoadingButton> createState() => _TELoadingButtonState();
+}
+
+class _TELoadingButtonState extends State<TELoadingButton> {
+  bool isLoading = false;
+
+  void changeLoadingState(bool isLoading) {
+    if (!mounted) return;
+    setState(() => this.isLoading = isLoading);
+  }
+
+  Future<void> onTap() async {
+    changeLoadingState(true);
+    await widget.onTap();
+    changeLoadingState(false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: DS.color.primary600),
+          borderRadius: BorderRadius.circular(DS.space.xTiny),
+        ),
+        alignment: Alignment.center,
+        width: widget.width,
+        height: widget.height,
+        child: const TELoading(),
+      );
+    }
+
+    return TEPrimaryButton(
+      borderRadius: DS.space.xTiny,
+      text: widget.text,
+      width: widget.width,
+      height: widget.height,
+      textStyle: DS.textStyle.caption2,
+      onTap: onTap,
+    );
+  }
+}
+
 class Follow extends StatefulWidget {
   final int targetUserId;
   final double? width;

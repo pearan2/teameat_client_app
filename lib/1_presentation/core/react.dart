@@ -13,6 +13,7 @@ import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
 class React extends IReact {
@@ -231,5 +232,10 @@ class React extends IReact {
         return false;
       }
     }
+  }
+
+  @override
+  void toBlockPage(BlockTargetType targetType) {
+    Get.toNamed('/user/block', arguments: {'blockTargetType': targetType});
   }
 }

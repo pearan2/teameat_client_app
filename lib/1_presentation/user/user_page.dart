@@ -11,6 +11,7 @@ import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
+import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 
@@ -82,6 +83,17 @@ class UserPage extends GetView<UserPageController> {
                 TERowButton(
                   onTap: c.react.toPermissionSetting,
                   text: DS.text.permissionSetting,
+                ),
+                const UserPageDivider(),
+                TERowButton(
+                  onTap: () => c.react.toBlockPage(BlockTargetType.user),
+                  isLoginRequired: true,
+                  text: BlockTargetType.user.title,
+                ),
+                TERowButton(
+                  onTap: () => c.react.toBlockPage(BlockTargetType.curation),
+                  isLoginRequired: true,
+                  text: BlockTargetType.curation.title,
                 ),
                 const UserPageDivider(),
                 TERowButton(

@@ -874,4 +874,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get follower => '팔로워';
+
+  @override
+  String get unBlock => '차단해제';
 }

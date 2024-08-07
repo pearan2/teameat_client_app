@@ -97,7 +97,6 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
             ),
           ),
         ));
-    // return Obx(() => );
   }
 }
 
@@ -121,9 +120,9 @@ class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
     }
     final backgroundColorComputeResult = await calcBackgroundImage(imageUrl);
     if (backgroundColorComputeResult == null) return;
-    if (!mounted || isCollapsed) return;
     Future.delayed(Duration.zero, () {
       setState(() {
+        if (!mounted || isCollapsed) return;
         primaryColor = backgroundColorComputeResult.backgroundColor;
         needToBeWhite = backgroundColorComputeResult.isNeedToBeWhiteText;
       });

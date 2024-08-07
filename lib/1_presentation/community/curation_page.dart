@@ -221,13 +221,13 @@ class CurationCard extends StatelessWidget {
               Positioned.fill(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      begin: const Alignment(0, 0),
-                      end: const Alignment(0, 1),
+                      begin: Alignment(0, 0),
+                      end: Alignment(0, 1),
                       colors: [
-                        Colors.black.withOpacity(0),
-                        Colors.black.withOpacity(0.4)
+                        Color.fromRGBO(0, 0, 0, 0),
+                        Color.fromRGBO(0, 0, 0, 0.4),
                       ],
                     ),
                   ),

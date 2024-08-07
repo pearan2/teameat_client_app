@@ -11,58 +11,63 @@ import 'package:teameat/99_util/extension/string.dart';
 
 class CuratorInfoRow extends StatelessWidget {
   final bool withFollowButton;
+  final bool isButton;
   final CurationListCuratorInfo curator;
   const CuratorInfoRow(
     this.curator, {
     super.key,
     this.withFollowButton = false,
+    this.isButton = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final react = Get.find<IReact>();
-    return TEonTap(
-      isLoginRequired: true,
-      onTap: () => react.toCuratorSummary(curator.id),
-      child: Row(
-        children: [
-          TECacheImage(
-            src: curator.profileImageUrl,
-            borderRadius: 300,
-            width: DS.space.medium,
-          ),
-          DS.space.hTiny,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  curator.nickname,
-                  style: DS.textStyle.caption1.bold.b800.h14,
-                ),
-                curator.oneLineIntroduce.isNotEmpty()
-                    ? Text(
-                        curator.oneLineIntroduce!,
-                        style: DS.textStyle.caption2.b600.h14,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : const SizedBox(),
-              ],
+    return AbsorbPointer(
+      absorbing: !isButton,
+      child: TEonTap(
+        isLoginRequired: true,
+        onTap: () => react.toCuratorSummary(curator.id),
+        child: Row(
+          children: [
+            TECacheImage(
+              src: curator.profileImageUrl,
+              borderRadius: 300,
+              width: DS.space.medium,
             ),
-          ),
-          withFollowButton ? DS.space.hTiny : const SizedBox(),
-          withFollowButton
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Follow(curator.id),
-                  ],
-                )
-              : const SizedBox(),
-        ],
+            DS.space.hTiny,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    curator.nickname,
+                    style: DS.textStyle.caption1.bold.b800.h14,
+                  ),
+                  curator.oneLineIntroduce.isNotEmpty()
+                      ? Text(
+                          curator.oneLineIntroduce!,
+                          style: DS.textStyle.caption2.b600.h14,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
+            withFollowButton ? DS.space.hTiny : const SizedBox(),
+            withFollowButton
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Follow(curator.id),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }

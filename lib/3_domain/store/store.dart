@@ -95,7 +95,7 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
       baseLocation: null,
       withInMeter: null,
       pageNumber: 0,
-      pageSize: 5,
+      pageSize: 10,
     );
   }
   factory SearchStoreSimpleList.fromJson(Map<String, Object?> json) =>

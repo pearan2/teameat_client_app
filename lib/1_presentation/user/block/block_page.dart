@@ -5,6 +5,7 @@ import 'package:teameat/1_presentation/community/curation/curator_info_row.dart'
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_block_page_controller.dart';
@@ -113,6 +114,47 @@ class BlockCurationInfo extends GetView<UserBlockPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SizedBox(
+      height: DS.space.big,
+      child: Row(
+        children: [
+          TECacheImage(
+            src: info.imageUrl,
+            width: DS.space.big,
+            ratio: 1 / 1,
+            borderRadius: DS.space.xTiny,
+          ),
+          DS.space.hTiny,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  info.title,
+                  style: DS.textStyle.caption1.bold.b800.h14,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                DS.space.vTiny,
+                Text(
+                  info.description!,
+                  style: DS.textStyle.caption2.bold.b500.h14,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ).paddingSymmetric(vertical: DS.space.xxTiny),
+          ),
+          DS.space.hXBase,
+          TELoadingButton(
+            text: DS.text.unBlock,
+            onTap: () => c.unBlock(info.id),
+          ),
+        ],
+      ),
+    ).paddingSymmetric(
+      horizontal: AppWidget.horizontalPadding,
+      vertical: DS.space.xSmall,
+    );
   }
 }

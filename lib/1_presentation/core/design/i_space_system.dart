@@ -28,6 +28,9 @@ abstract class ISpaceSystem {
   /// 48
   double get large;
 
+  /// 60
+  double get big;
+
   /// 2
   SizedBox get hXXTiny;
 
@@ -55,6 +58,9 @@ abstract class ISpaceSystem {
   /// 48
   SizedBox get hLarge;
 
+  /// 60
+  SizedBox get hBig;
+
   /// 2
   SizedBox get vXXTiny;
 
@@ -81,4 +87,7 @@ abstract class ISpaceSystem {
 
   /// 48
   SizedBox get vLarge;
+
+  /// 60
+  SizedBox get vBig;
 }

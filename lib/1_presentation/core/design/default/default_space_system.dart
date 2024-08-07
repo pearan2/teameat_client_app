@@ -34,6 +34,9 @@ class DefaultSpaceSystem extends ISpaceSystem {
   @override
   double get large => 48;
 
+  @override
+  double get big => 60;
+
   /// hSizedBox
   /// 2
   @override
@@ -66,6 +69,9 @@ class DefaultSpaceSystem extends ISpaceSystem {
   @override
   SizedBox get hLarge => const SizedBox(width: 48);
 
+  @override
+  SizedBox get hBig => const SizedBox(width: 60);
+
   /// vSizedBox
   /// 2
   @override
@@ -97,4 +103,7 @@ class DefaultSpaceSystem extends ISpaceSystem {
 
   @override
   SizedBox get vLarge => const SizedBox(height: 48);
+
+  @override
+  SizedBox get vBig => const SizedBox(height: 60);
 }

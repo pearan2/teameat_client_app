@@ -27,7 +27,6 @@ class StorePageController extends PageController {
 
   @override
   Future<bool> initialLoad() async {
-    await _loadStore();
     return true;
   }
 }

@@ -73,7 +73,6 @@ class StoreItemPageController extends PageController {
       await Future.delayed(const Duration(milliseconds: 500));
       return right(itemDetail!);
     }
-
     final ret = await _storeItemRepo.findById(itemId);
     ret.fold((l) {
       react.back(closeOverlays: true);

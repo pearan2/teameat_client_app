@@ -142,31 +142,24 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get address => SvgPicture.asset(
+  SvgPicture address({double? size}) => SvgPicture.asset(
         'assets/image/icon/address_icon.svg',
-        width: 24,
-        height: 24,
+        width: size,
+        height: size,
       );
 
   @override
-  SvgPicture get clock => SvgPicture.asset(
+  SvgPicture clock({double? size}) => SvgPicture.asset(
         'assets/image/icon/clock_icon.svg',
-        width: 24,
-        height: 24,
+        width: size,
+        height: size,
       );
 
   @override
-  SvgPicture get phone => SvgPicture.asset(
+  SvgPicture phone({double? size}) => SvgPicture.asset(
         'assets/image/icon/phone_icon.svg',
-        width: 24,
-        height: 24,
-      );
-
-  @override
-  SvgPicture get up => SvgPicture.asset(
-        'assets/image/icon/up.svg',
-        width: 24,
-        height: 24,
+        width: size,
+        height: size,
       );
 
   @override
@@ -246,6 +239,18 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 24,
       );
+  @override
+  SvgPicture get upArrow => SvgPicture.asset(
+        'assets/image/icon/up_arrow.svg',
+        height: 16,
+        width: 16,
+      );
+  @override
+  SvgPicture get downArrow => SvgPicture.asset(
+        'assets/image/icon/down_arrow.svg',
+        height: 16,
+        width: 16,
+      );
 
   @override
   Image get dangolPick => Image.asset(
@@ -294,6 +299,14 @@ class DefaultImageSystem extends IImageSystem {
         'assets/image/icon/location.svg',
         height: 20,
         width: 20,
+      );
+
+  @override
+  SvgPicture get locationSm => SvgPicture.asset(
+        'assets/image/icon/location.svg',
+        height: 16,
+        width: 16,
+        color: DS.color.background700,
       );
 
   @override
@@ -419,9 +432,11 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get forkAndKnife => SvgPicture.asset(
+  SvgPicture forkAndKnife({double? size = 20, Color? color}) =>
+      SvgPicture.asset(
         'assets/image/icon/fork_and_knife.svg',
-        height: 20,
-        width: 20,
+        height: size,
+        width: size,
+        color: color,
       );
 }

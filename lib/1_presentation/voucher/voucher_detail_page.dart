@@ -99,7 +99,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.image.clock,
+                      icon: DS.image.clock(size: DS.space.base),
                       title: DS.text.expiredDuration,
                       content: controller.voucher.willBeExpiredAt
                           .format(DS.text.voucherExpiredAtFormat),
@@ -107,14 +107,14 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.image.address,
+                      icon: DS.image.address(size: DS.space.base),
                       title: DS.text.address,
                       content: controller.voucher.storeAddress,
                     ))),
                 DS.space.vTiny,
                 Obx(() => PageLoadingWrapper(
                         child: InfoRow(
-                      icon: DS.image.clock,
+                      icon: DS.image.clock(size: DS.space.base),
                       title: DS.text.operationTime,
                       content: controller.voucher.storeOperationTime,
                     ))),

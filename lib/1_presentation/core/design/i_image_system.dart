@@ -29,11 +29,10 @@ abstract class IImageSystem {
   SvgPicture get bottomIconUserClicked;
 
   /// store 관련 아이콘들
-  SvgPicture get address;
-  SvgPicture get clock;
+  SvgPicture address({double? size});
+  SvgPicture clock({double? size});
   SvgPicture get store;
-  SvgPicture get phone;
-  SvgPicture get up;
+  SvgPicture phone({double? size});
 
   ///
   Image get customerService;
@@ -57,9 +56,12 @@ abstract class IImageSystem {
   SvgPicture leftArrowInBox({Color? color});
   SvgPicture get rightArrow;
   SvgPicture get rightArrowInBox;
+  SvgPicture get upArrow;
+  SvgPicture get downArrow;
   Image get dangolPick;
   SvgPicture get addImage;
 
+  SvgPicture get locationSm;
   SvgPicture get location;
   SvgPicture get locationActivated;
   SvgPicture get locationLg;
@@ -67,7 +69,7 @@ abstract class IImageSystem {
   SvgPicture get mapActivated;
   SvgPicture get mapLg;
   SvgPicture more(Color color);
-  SvgPicture get forkAndKnife;
+  SvgPicture forkAndKnife({Color? color, double? size});
 
   SvgPicture get sort;
   SvgPicture get share;

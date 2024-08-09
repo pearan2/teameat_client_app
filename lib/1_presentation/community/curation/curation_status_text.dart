@@ -28,7 +28,7 @@ class CurationStatusText extends StatelessWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          DS.image.forkAndKnife,
+          DS.image.forkAndKnife(),
           DS.space.hXTiny,
           Text(
             statusText,

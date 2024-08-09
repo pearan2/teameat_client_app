@@ -2,17 +2,53 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 extension _TEPointExtension on Point {
   NLatLng toNLatLng() {
     return NLatLng(latitude, longitude);
+  }
+}
+
+class TESingleStoreMap extends StatelessWidget {
+  final double? height;
+  final StorePoint store;
+  final bool isLoading;
+  final String address;
+  final double defaultZoomLevel;
+
+  const TESingleStoreMap({
+    super.key,
+    this.height,
+    required this.store,
+    required this.address,
+    required this.isLoading,
+    this.defaultZoomLevel = 15,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TEStoreMap.single(
+          height: height ?? (DS.space.large * 4),
+          store: store,
+          isLoading: isLoading,
+          defaultZoomLevel: defaultZoomLevel,
+        ),
+        DS.space.vTiny,
+        TETextCopyButton(textData: address).withBasePadding,
+      ],
+    );
   }
 }
 

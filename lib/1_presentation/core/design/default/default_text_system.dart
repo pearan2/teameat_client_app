@@ -416,7 +416,7 @@ class DefaultTextSystem extends ITextSystem {
   String get distance => '거리';
 
   @override
-  String get distanceFormat => '###.# KM';
+  String get distanceFormat => '###.#KM';
 
   @override
   String get accessToLocationPleaseWait => '위치 정보를 가져오고 있습니다\n잠시만 기다려주세요';
@@ -877,4 +877,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get unBlock => '차단해제';
+
+  @override
+  String get storeItemInSale => '판매 중인 메뉴';
+
+  @override
+  String get curationOfThisStore => '이 가게의 푸드로그';
+
+  @override
+  String get storeLocation => '매장 위치';
 }

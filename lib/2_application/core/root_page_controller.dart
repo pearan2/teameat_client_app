@@ -60,6 +60,12 @@ class RootPageController extends PageController {
           react.toCurationOffAll();
           loginWrapper(() => react.toCurationDetail(int.parse(params['id']!)));
         });
+      } else if (uri.authority.contains('store') &&
+          params['id'] != null &&
+          int.tryParse(params['id']!) is int) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          react.toStoreDetail(int.parse(params['id']!));
+        });
       }
     });
   }

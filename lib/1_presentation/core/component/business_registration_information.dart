@@ -30,32 +30,32 @@ class BusinessRegistrationInformation extends StatelessWidget {
           title: DS.text.businessName,
           content: '파이어니어스',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         PaddingInfoRow(
           title: DS.text.businessMailOrderSalesRegistrationNumber,
           content: '309-30-01543',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         PaddingInfoRow(
           title: DS.text.businessMailOrderSalesRegistrationNumber,
           content: '2023-대구수성구-0883',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         PaddingInfoRow(
           title: DS.text.businessCEO,
           content: '이세웅',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         PaddingInfoRow(
           title: DS.text.businessCOCEO,
           content: '황재용',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         PaddingInfoRow(
           title: DS.text.businessEmail,
           content: 'sadol7797@teameat.kr',
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         TEonTap(
           onTap: () => TEClipboard.setText('대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)'),
           child: PaddingInfoRow(
@@ -63,7 +63,7 @@ class BusinessRegistrationInformation extends StatelessWidget {
             content: '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
           ),
         ),
-        const TEDivider(),
+        TEDivider.normal(),
         TEonTap(
           onTap: () => launchUrlString('tel:010-2995-2797'),
           child: PaddingInfoRow(

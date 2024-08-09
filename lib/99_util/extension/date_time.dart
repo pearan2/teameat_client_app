@@ -14,4 +14,9 @@ extension TEDateTimeExtension on DateTime {
     if (dayLeft == 0) return 'D-Day';
     return 'D-$dayLeft';
   }
+
+  String dayOfWeekKor() {
+    final korDayOfWeeks = ['월', '화', '수', '목', '금', '토', '일'];
+    return korDayOfWeeks[weekday - 1];
+  }
 }

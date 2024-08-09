@@ -10,8 +10,9 @@ import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
-import 'package:teameat/1_presentation/core/image/image.dart';
+import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_detail_view_page_controller.dart';
@@ -19,10 +20,8 @@ import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
-import 'package:teameat/99_util/color.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
-import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -35,13 +34,20 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
+    return Obx(() => TEScaffold(
         loading: c.isLoading,
         body: NestedScrollView(
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
-          headerSliverBuilder: (context, innerBoxIsScrolled) =>
-              [ColorAdjustAppBar(c)],
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            c.curation.obx(
+              (curation) => ColorAdjustImageCarouselAppBar(
+                actionBuilder: (color) => CurationTools(c, iconColor: color),
+                imageUrls: curation.itemImageUrls + curation.storeImageUrls,
+              ),
+              loadingBuilder: (_) => ColorAdjustImageCarouselAppBar.loading(),
+            ),
+          ],
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,93 +102,7 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
               ],
             ),
           ),
-        ));
-  }
-}
-
-class ColorAdjustAppBar extends StatefulWidget {
-  final CurationDetailViewPageController controller;
-  const ColorAdjustAppBar(this.controller, {super.key});
-
-  @override
-  State<ColorAdjustAppBar> createState() => _ColorAdjustAppBarState();
-}
-
-class _ColorAdjustAppBarState extends State<ColorAdjustAppBar> {
-  Color primaryColor = DS.color.background000;
-  bool needToBeWhite = true;
-  bool isCollapsed = false;
-
-  Future<void> onImageChanged(String imageUrl) async {
-    if (isCollapsed) return;
-    if (CurationListDetail.empty().itemImageUrls.contains(imageUrl)) {
-      return;
-    }
-    final backgroundColorComputeResult = await calcBackgroundImage(imageUrl);
-    if (backgroundColorComputeResult == null) return;
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        if (!mounted || isCollapsed) return;
-        primaryColor = backgroundColorComputeResult.backgroundColor;
-        needToBeWhite = backgroundColorComputeResult.isNeedToBeWhiteText;
-      });
-    });
-  }
-
-  void changeIsCollapsed(bool isCollapsed) {
-    Future.delayed(Duration.zero, () {
-      setState(() => this.isCollapsed = isCollapsed);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const ratio = 3 / 4;
-    final width = MediaQuery.of(context).size.width;
-    final toolbarHeight = DS.space.large;
-
-    final iconColor = isCollapsed
-        ? DS.color.background700
-        : (needToBeWhite ? DS.color.background000 : DS.color.background700);
-    final c = widget.controller;
-    return SliverAppBar(
-      backgroundColor: isCollapsed ? DS.color.background000 : primaryColor,
-      surfaceTintColor: isCollapsed ? DS.color.background000 : primaryColor,
-      leading: IconButton(
-        onPressed: c.react.back,
-        icon: DS.image.leftArrowInBox(color: iconColor),
-      ),
-      pinned: true,
-      actions: [
-        CurationTools(c, iconColor: iconColor),
-        DS.space.hXSmall,
-      ],
-      toolbarHeight: toolbarHeight,
-      expandedHeight: (width / ratio) - DS.space.large,
-      flexibleSpace: LayoutBuilder(builder: (context, constraints) {
-        final settings = context
-            .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
-        if (settings != null &&
-            constraints.biggest.height < settings.minExtent * 1.5) {
-          changeIsCollapsed(true);
-        } else {
-          changeIsCollapsed(false);
-        }
-
-        return FlexibleSpaceBar(
-          collapseMode: CollapseMode.parallax,
-          background: c.curation.obx(
-            (curation) => TEImageCarousel(
-              ratio: ratio,
-              width: width,
-              imageSrcs: curation.itemImageUrls + curation.storeImageUrls,
-              overlayAdditionalHorizontalPadding: 0.0,
-              onNetworkImageChanged: (imageUrl) => onImageChanged(imageUrl),
-            ),
-          ),
-        );
-      }),
-    );
+        )));
   }
 }
 
@@ -320,10 +240,10 @@ class StoreNameAndCategory extends StatelessWidget {
             ],
           ),
           DS.space.vXTiny,
-          Text(
-            "${getCategory()} | ${curation.storeAdditional.numberOfCurations.format(DS.text.numberOfCurationFormat)}",
-            style: DS.textStyle.caption2.b500.h14,
-          )
+          TELeftRightText(
+              getCategory(),
+              curation.storeAdditional.numberOfCurations
+                  .format(DS.text.numberOfCurationFormat)),
         ],
       ),
     );
@@ -343,17 +263,11 @@ class StoreMap extends StatelessWidget {
       naverMapPlaceId: curation.storeAdditional.naverMapPlaceId,
       name: curation.store.name,
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TEStoreMap.single(
-          height: DS.space.large * 4,
-          store: storePoint,
-          isLoading: curation == CurationListDetail.empty(),
-        ),
-        DS.space.vTiny,
-        TETextCopyButton(textData: curation.store.address).withBasePadding,
-      ],
+
+    return TESingleStoreMap(
+      store: storePoint,
+      address: curation.store.address,
+      isLoading: curation == CurationListDetail.empty(),
     );
   }
 }

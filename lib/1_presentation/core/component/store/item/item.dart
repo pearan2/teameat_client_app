@@ -36,7 +36,7 @@ class StoreItemOriginalPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style =
-        isTitle ? DS.textStyle.paragraph2.h14 : DS.textStyle.paragraph3.h14;
+        isTitle ? DS.textStyle.paragraph3.h14 : DS.textStyle.caption2.h14;
 
     return Row(
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
@@ -76,7 +76,9 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = DS.textStyle.paragraph2.point.semiBold.h14;
+    final style = isTitle
+        ? DS.textStyle.paragraph2.point.semiBold.h14
+        : DS.textStyle.paragraph3.point.semiBold.h14;
     return Text(calcDiscountRateString(), style: style);
   }
 }
@@ -124,7 +126,9 @@ class StoreItemPrice extends StatelessWidget {
               originalPrice: originalPrice,
               price: price,
             ).orEmpty(isDiscount()),
-            DS.space.hTiny.orEmpty(isDiscount()),
+            isTitle
+                ? DS.space.hTiny.orEmpty(isDiscount())
+                : DS.space.hXTiny.orEmpty(isDiscount()),
             StoreItemPriceText(price: price, isTitle: isTitle)
           ],
         )
@@ -376,8 +380,8 @@ class StoreItemPriceText extends StatelessWidget {
     return Text(
       price.format(DS.text.priceFormat),
       style: isTitle
-          ? DS.textStyle.title1.h14
-          : DS.textStyle.paragraph2.b800.semiBold.h14,
+          ? DS.textStyle.paragraph2.b800.semiBold.h14
+          : DS.textStyle.paragraph3.b800.semiBold.h14,
     );
   }
 }

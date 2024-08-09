@@ -207,6 +207,7 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
     Point? baseLocation,
     int? withInMeter,
     int? curatorId,
+    int? storeId,
     required Code order,
     required int pageSize,
     required int pageNumber,

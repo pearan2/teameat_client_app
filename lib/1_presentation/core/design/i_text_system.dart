@@ -308,4 +308,8 @@ abstract class ITextSystem {
   String get follower;
 
   String get unBlock;
+
+  String get storeItemInSale;
+  String get curationOfThisStore;
+  String get storeLocation;
 }

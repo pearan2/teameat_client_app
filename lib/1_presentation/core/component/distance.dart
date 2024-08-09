@@ -4,6 +4,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
 
 class DistanceWithIcon extends GetView<LocationController> {
@@ -57,14 +58,14 @@ class DistanceWithIcon extends GetView<LocationController> {
 class DistanceText extends GetView<LocationController> {
   final Point point;
   final TextStyle? style;
+  final EdgeInsetsGeometry? padding;
 
-  const DistanceText({super.key, required this.point, this.style});
+  const DistanceText(
+      {super.key, required this.point, this.style, this.padding});
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ??
-        DS.textStyle.caption1.copyWith(
-            color: DS.color.background700, fontWeight: FontWeight.w600);
+    final style = this.style ?? DS.textStyle.caption1.b700.semiBold.h14;
 
     return Obx(() {
       final basePoint = c.data?.toPoint();
@@ -73,9 +74,12 @@ class DistanceText extends GetView<LocationController> {
       }
       final kilo = basePoint.distanceKilo(point);
 
-      return Text(
-        kilo.format(DS.text.distanceFormat),
-        style: style,
+      return Padding(
+        padding: padding ?? const EdgeInsets.all(0.0),
+        child: Text(
+          kilo.format(DS.text.distanceFormat),
+          style: style,
+        ),
       );
     });
   }

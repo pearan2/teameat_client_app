@@ -237,6 +237,9 @@ class SearchCurationSimpleList with _$SearchCurationSimpleList {
     if (target.curatorId != null) {
       ret['curatorId'] = target.curatorId.toString();
     }
+    if (target.storeId != null) {
+      ret['storeId'] = target.storeId.toString();
+    }
     ret['order'] = target.order.code;
     ret['pageNumber'] = target.pageNumber.toString();
     ret['pageSize'] = target.pageSize.toString();

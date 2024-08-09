@@ -19,9 +19,8 @@ class StorePageController extends PageController {
   // states
   final _isLoading = false.obs;
   final int storeId;
-  late final _searchOption = SearchCurationSimpleList.empty()
-      .copyWith(storeId: storeId, pageSize: 5)
-      .obs;
+  late final _searchOption =
+      SearchCurationSimpleList.empty().copyWith(storeId: storeId).obs;
   late final PagingController<int, CurationListSimple> pagingController =
       PagingController(firstPageKey: 0);
 

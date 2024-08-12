@@ -90,7 +90,7 @@ class _StoreInfoColumn extends GetView<StorePageController> {
         DS.space.vXBase,
         Row(
           children: [
-            DS.image.phone(size: DS.space.small),
+            DS.image.phone(size: DS.space.small, color: DS.color.background700),
             DS.space.hTiny,
             c.store.obx((s) => TEonTap(
                   onTap: () => launchUrlString('tel:${s.phone}'),
@@ -132,32 +132,13 @@ class _StoreInfoColumn extends GetView<StorePageController> {
 class _StoreItemSaleStatusAndToolsRow extends GetView<StorePageController> {
   const _StoreItemSaleStatusAndToolsRow();
 
-  Widget _buildInSale() {
-    return Container(
-      width: DS.space.large,
-      height: DS.space.small,
-      decoration: BoxDecoration(
-        color: DS.color.primary500,
-        borderRadius: BorderRadius.circular(DS.space.xxTiny),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DS.image.forkAndKnife(color: DS.color.primary700, size: 10.0),
-          DS.space.hXXTiny,
-          Text(DS.text.inSale, style: DS.textStyle.caption2.p700.semiBold),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return c.store.obx((store) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildInSale().orEmpty(store.simpleItems.isNotEmpty),
+          (const StoreItemInSaleIcon()).orEmpty(store.simpleItems.isNotEmpty),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [

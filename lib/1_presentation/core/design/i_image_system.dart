@@ -32,7 +32,7 @@ abstract class IImageSystem {
   SvgPicture address({double? size});
   SvgPicture clock({double? size});
   SvgPicture get store;
-  SvgPicture phone({double? size});
+  SvgPicture phone({double? size, Color? color});
 
   ///
   Image get customerService;

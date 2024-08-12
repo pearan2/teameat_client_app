@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
 import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
+import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
@@ -21,6 +21,7 @@ import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -320,7 +321,7 @@ class LikeRow extends StatelessWidget {
             numberOfLikes: curation.numberOfLikes,
           ),
           DS.space.hXSmall,
-          CurationStatusText(curation, withIcon: true),
+          (const StoreItemInSaleIcon()).orEmpty(curation.isInSale),
         ],
       ),
     );

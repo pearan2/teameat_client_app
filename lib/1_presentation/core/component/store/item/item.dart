@@ -736,3 +736,27 @@ class StoreItemList extends GetView<IReact> {
     );
   }
 }
+
+class StoreItemInSaleIcon extends StatelessWidget {
+  const StoreItemInSaleIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: DS.space.large,
+      height: DS.space.small,
+      decoration: BoxDecoration(
+        color: DS.color.primary500,
+        borderRadius: BorderRadius.circular(DS.space.xxTiny),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          DS.image.forkAndKnife(color: DS.color.primary700, size: 10.0),
+          DS.space.hXXTiny,
+          Text(DS.text.inSale, style: DS.textStyle.caption2.p700.semiBold),
+        ],
+      ),
+    );
+  }
+}

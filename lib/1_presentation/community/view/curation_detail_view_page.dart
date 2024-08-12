@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/core/report.dart';
-import 'package:teameat/1_presentation/community/curation/curation_status_text.dart';
 import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
@@ -22,6 +21,7 @@ import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -122,7 +122,7 @@ class _CurationDetailStatusAndToolsRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CurationStatusText.fromDetail(curation),
+          (const StoreItemInSaleIcon()).orEmpty(curation.isInSale),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

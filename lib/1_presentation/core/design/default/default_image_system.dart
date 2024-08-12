@@ -156,10 +156,11 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture phone({double? size}) => SvgPicture.asset(
+  SvgPicture phone({double? size, Color? color}) => SvgPicture.asset(
         'assets/image/icon/phone_icon.svg',
         width: size,
         height: size,
+        color: color,
       );
 
   @override

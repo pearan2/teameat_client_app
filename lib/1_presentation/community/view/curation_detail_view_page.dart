@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/core/report.dart';
 import 'package:teameat/1_presentation/community/curation/curator_info_row.dart';

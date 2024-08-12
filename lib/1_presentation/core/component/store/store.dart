@@ -182,7 +182,8 @@ class StoreTimeInfoExpandable extends StatelessWidget {
           ],
         ),
         content: ListView.separated(
-          padding: EdgeInsets.only(top: DS.space.tiny, left: DS.space.base),
+          padding: EdgeInsets.only(
+              top: DS.space.tiny, left: (DS.space.base + DS.space.xxTiny)),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, idx) => _buildItem(timeInfo[idx], idx == 0),

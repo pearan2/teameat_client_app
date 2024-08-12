@@ -660,7 +660,7 @@ class DefaultTextSystem extends ITextSystem {
   String get memberOneLineIntroduceError => '한줄 소개는 2자 이상, 30자 이하여야 해요';
 
   @override
-  String get cameraInfoDesc => '바로 찍은 사진으로 프로필 사진을 변경하고 싶으실 때 사용돼요';
+  String get cameraInfoDesc => '구매하신 이용권을 QR코드 스캔으로 사용할 때 사용돼요';
 
   @override
   String get cameraInfoTitle => '카메라';

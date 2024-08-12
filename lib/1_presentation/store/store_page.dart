@@ -165,10 +165,10 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
           TECacheImage(
             src: item.imageUrl,
             width: 110,
-            ratio: 1 / 1,
+            ratio: 3 / 4,
             borderRadius: DS.space.xTiny,
           ),
-          DS.space.hTiny,
+          DS.space.hXSmall,
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -190,7 +190,8 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
                   withDiscountText: false,
                   originalPrice: item.originalPrice,
                   price: item.price,
-                )
+                ),
+                DS.space.vTiny,
               ],
             ),
           )

@@ -954,12 +954,12 @@ class _TEMultiImageSelectorState extends State<TEMultiImageSelector> {
   }
 }
 
-class TEOnOffButton extends StatelessWidget {
+class TEOnOffTextButton extends StatelessWidget {
   final bool value;
   final bool isLoading;
   final void Function(bool) onChange;
 
-  const TEOnOffButton(
+  const TEOnOffTextButton(
       {super.key,
       required this.value,
       required this.onChange,
@@ -998,6 +998,49 @@ class TEOnOffButton extends StatelessWidget {
   }
 }
 
+class TEOnOffButton extends StatelessWidget {
+  final bool value;
+  final bool isLoading;
+  final void Function(bool) onChange;
+
+  const TEOnOffButton({
+    super.key,
+    required this.value,
+    required this.isLoading,
+    required this.onChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedToggleSwitch<bool>.dual(
+      loading: isLoading,
+      indicatorTransition: const ForegroundIndicatorTransition.fading(),
+      styleBuilder: (on) => ToggleStyle(
+        indicatorColor: on ? DS.color.primary700 : DS.color.background300,
+        backgroundColor: on ? DS.color.primary700 : DS.color.background300,
+        borderColor: on ? DS.color.primary700 : DS.color.background300,
+      ),
+      animationDuration: const Duration(milliseconds: 300),
+      iconBuilder: (on) => Container(
+        width: DS.space.small,
+        height: DS.space.small,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(300),
+          color: DS.color.background000,
+        ),
+      ),
+      borderWidth: 0.0,
+      indicatorSize: Size.fromWidth(DS.space.xBase),
+      spacing: 0.0,
+      height: DS.space.xBase,
+      current: value,
+      first: false,
+      second: true,
+      onChanged: onChange,
+    );
+  }
+}
+
 class TEPermissionButton extends StatefulWidget {
   final Permission permission;
   final void Function()? onPermitted;
@@ -1013,8 +1056,6 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
   bool isLoading = true;
   bool isPermitted = false;
   bool isRequested = false;
-
-  /// 기본 false 값으로 시작
 
   void changeState(void Function() stateChanger) {
     if (!mounted) {
@@ -1080,9 +1121,7 @@ class _TEPermissionButtonState extends State<TEPermissionButton>
     return TEOnOffButton(
       isLoading: isLoading,
       value: isPermitted,
-      onChange: (_) {
-        openAppSettings();
-      },
+      onChange: (_) => openAppSettings(),
     );
   }
 }

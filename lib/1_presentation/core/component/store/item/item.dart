@@ -743,18 +743,21 @@ class StoreItemInSaleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: DS.space.large,
-      height: DS.space.small,
       decoration: BoxDecoration(
         color: DS.color.primary500,
         borderRadius: BorderRadius.circular(DS.space.xxTiny),
       ),
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xxTiny,
+        horizontal: DS.space.xTiny,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          DS.image.forkAndKnife(color: DS.color.primary700, size: 10.0),
+          DS.image
+              .forkAndKnife(color: DS.color.primary700, size: DS.space.xSmall),
           DS.space.hXXTiny,
-          Text(DS.text.inSale, style: DS.textStyle.caption2.p700.semiBold),
+          Text(DS.text.inSale, style: DS.textStyle.caption2.h14.p700.semiBold),
         ],
       ),
     );

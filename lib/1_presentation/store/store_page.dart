@@ -197,7 +197,10 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
           )
         ],
       ),
-    ).paddingAll(AppWidget.horizontalPadding);
+    ).paddingSymmetric(
+      vertical: DS.space.tiny,
+      horizontal: AppWidget.horizontalPadding,
+    );
   }
 
   @override
@@ -209,8 +212,7 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
         Text(DS.text.storeItemInSale,
                 style: DS.textStyle.paragraph2.bold.b800.h14)
             .withBasePadding,
-        DS.space.vSmall,
-        TEDivider.thin(),
+        DS.space.vBase,
         c.store.obx((s) => ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

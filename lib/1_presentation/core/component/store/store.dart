@@ -113,8 +113,8 @@ class StoreTimeInfoExpandable extends StatelessWidget {
   Text _buildText(String text,
       {required bool isOperation, required bool isFirst}) {
     TextStyle style = isOperation
-        ? DS.textStyle.caption1.b700.h14.semiBold
-        : DS.textStyle.caption2.b600.h14.semiBold;
+        ? DS.textStyle.paragraph3.b700.h14.semiBold
+        : DS.textStyle.caption1.b600.h14.semiBold;
     if (!isFirst) {
       style = style.copyWith(fontWeight: FontWeight.normal);
     }
@@ -175,10 +175,11 @@ class StoreTimeInfoExpandable extends StatelessWidget {
           children: [
             DS.image.clock(size: DS.space.small),
             DS.space.hTiny,
-            Text(DS.text.operationTime, style: DS.textStyle.caption1.b800.h14),
+            Text(DS.text.operationTime,
+                style: DS.textStyle.paragraph3.b800.h14),
             DS.space.hXTiny,
             Text(timeInfo.first.operationTime,
-                style: DS.textStyle.caption1.b800.h14),
+                style: DS.textStyle.paragraph3.b800.h14),
           ],
         ),
         content: ListView.separated(

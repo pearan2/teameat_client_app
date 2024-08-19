@@ -74,16 +74,19 @@ class _StoreInfoColumn extends GetView<StorePageController> {
       children: [
         const _StoreItemSaleStatusAndToolsRow(),
         DS.space.vXSmall,
-        c.store.obx(
-            (s) => Text(s.name, style: DS.textStyle.paragraph1.b800.bold.h14)),
-        c.store.obx((s) => TELeftRightText(s.cleanCategory,
-            s.numberOfCurations.format(DS.text.numberOfCurationFormat))),
+        c.store
+            .obx((s) => Text(s.name, style: DS.textStyle.title1.b800.bold.h14)),
+        c.store.obx((s) => TELeftRightText(
+              s.cleanCategory,
+              s.numberOfCurations.format(DS.text.numberOfCurationFormat),
+              style: DS.textStyle.caption1.b500.h14,
+            )),
         DS.space.vSmall,
         c.store.obx(
           (s) => TEExpandable(
-            header:
-                Text(s.oneLineIntroduce, style: DS.textStyle.caption1.b800.h14),
-            content: Text(s.introduce, style: DS.textStyle.caption1.b800.h14)
+            header: Text(s.oneLineIntroduce,
+                style: DS.textStyle.paragraph3.b800.h14),
+            content: Text(s.introduce, style: DS.textStyle.paragraph3.b800.h14)
                 .paddingOnly(top: DS.space.xTiny),
           ),
         ),
@@ -96,7 +99,7 @@ class _StoreInfoColumn extends GetView<StorePageController> {
                   onTap: () => launchUrlString('tel:${s.phone}'),
                   child: TEUnderlineText(
                     s.phone,
-                    style: DS.textStyle.caption1.b800.h14,
+                    style: DS.textStyle.paragraph3.b800.h14,
                     underlineColor: DS.color.background800,
                   ),
                 )),
@@ -110,10 +113,11 @@ class _StoreInfoColumn extends GetView<StorePageController> {
             c.store.obx((s) => DistanceText(
                   point: s.location,
                   padding: EdgeInsets.only(right: DS.space.tiny),
+                  style: DS.textStyle.paragraph3.b700.semiBold,
                 )),
             Expanded(
               child: c.store.obx(
-                  (s) => Text(s.address, style: DS.textStyle.caption1.b800)),
+                  (s) => Text(s.address, style: DS.textStyle.paragraph3.b800)),
             ),
           ],
         ),
@@ -183,15 +187,15 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
                   item.introducePreview,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.caption2.b500.h14,
+                  style: DS.textStyle.paragraph3.b600.h14,
                 ),
-                DS.space.vXBase,
+                DS.space.vMedium,
                 StoreItemPrice(
-                  withDiscountText: false,
                   originalPrice: item.originalPrice,
                   price: item.price,
+                  originalPriceStyle: DS.textStyle.caption1.b500.h14,
+                  priceStyle: DS.textStyle.paragraph2.b800.semiBold.h14,
                 ),
-                DS.space.vTiny,
               ],
             ),
           )
@@ -209,8 +213,7 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(DS.text.storeItemInSale,
-                style: DS.textStyle.paragraph2.bold.b800.h14)
+        Text(DS.text.storeItemInSale, style: DS.textStyle.title3.bold.b800.h14)
             .withBasePadding,
         DS.space.vBase,
         c.store.obx((s) => ListView.separated(
@@ -279,9 +282,9 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
         children: [
           DS.space.vMedium,
           Text(DS.text.curationOfThisStore,
-                  style: DS.textStyle.paragraph2.bold.b800.h14)
+                  style: DS.textStyle.title3.bold.b800.h14)
               .withBasePadding,
-          DS.space.vXSmall,
+          DS.space.vBase,
           SizedBox(
             height: listHeight,
             child: PagedListView.separated(
@@ -318,9 +321,9 @@ class _StoreLocationColumn extends GetView<StorePageController> {
         DS.space.vMedium,
         Text(
           DS.text.storeLocation,
-          style: DS.textStyle.paragraph2.bold.b800.h14,
+          style: DS.textStyle.title3.bold.b800.h14,
         ).paddingSymmetric(horizontal: AppWidget.horizontalPadding),
-        DS.space.vXSmall,
+        DS.space.vBase,
         c.store.obx(
           (s) => TESingleStoreMap(
             height: mapHeight,

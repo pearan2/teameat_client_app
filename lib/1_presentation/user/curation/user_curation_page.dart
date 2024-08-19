@@ -236,7 +236,7 @@ class CurationItemInfoColumn extends StatelessWidget {
                 style: DS.textStyle.paragraph3.copyWith(
                     fontWeight: FontWeight.bold, color: DS.color.background800),
               )
-            : StoreItemPrice(
+            : StoreItemPriceOld(
                 originalPrice: curation.item!.originalPrice,
                 price: curation.item!.price,
               )

@@ -86,11 +86,65 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
 class StoreItemPrice extends StatelessWidget {
   final int originalPrice;
   final int price;
+  final TextStyle originalPriceStyle;
+  final TextStyle priceStyle;
+
+  const StoreItemPrice({
+    super.key,
+    required this.originalPrice,
+    required this.price,
+    required this.originalPriceStyle,
+    required this.priceStyle,
+  });
+
+  bool isDiscount() {
+    return price < originalPrice;
+  }
+
+  String priceToString(int price) {
+    return price.format(DS.text.priceFormat);
+  }
+
+  String calcDiscountRateString() {
+    final temp = (1 - (price / originalPrice)) * 100;
+    return '${temp.ceil()}%';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isDiscount()) {
+      return Text(priceToString(price), style: priceStyle);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(priceToString(originalPrice), style: originalPriceStyle),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              calcDiscountRateString(),
+              style: priceStyle.copyWith(color: DS.color.point500),
+            ),
+            DS.space.hXTiny,
+            Text(priceToString(price), style: priceStyle),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class StoreItemPriceOld extends StatelessWidget {
+  final int originalPrice;
+  final int price;
   final bool isTitle;
   final bool alignRight;
   final bool withDiscountText;
 
-  const StoreItemPrice({
+  const StoreItemPriceOld({
     super.key,
     required this.originalPrice,
     required this.price,
@@ -619,7 +673,7 @@ class StoreItemColumnCard extends StatelessWidget {
             DS.space.vXTiny,
             StoreItemNameText(name: item.name),
             DS.space.vTiny,
-            StoreItemPrice(
+            StoreItemPriceOld(
                 originalPrice: item.originalPrice, price: item.price),
           ],
         ),
@@ -683,7 +737,7 @@ class StoreItemRowCard extends StatelessWidget {
                         isColumnShape: true,
                       ),
                       DS.space.vTiny,
-                      StoreItemPrice(
+                      StoreItemPriceOld(
                         alignRight: true,
                         originalPrice: item.originalPrice,
                         price: item.price,

@@ -185,12 +185,12 @@ class ItemNameAndPrice extends StatelessWidget {
         _buildItemName(),
         DS.space.vSmall,
         curation.isInSale
-            ? StoreItemPrice(
+            ? StoreItemPriceOld(
                 withDiscountText: false,
                 originalPrice: curation.item!.originalPrice,
                 price: curation.item!.price,
               )
-            : StoreItemPrice(
+            : StoreItemPriceOld(
                 withDiscountText: false,
                 originalPrice: curation.originalPrice,
                 price: curation.originalPrice,

@@ -390,7 +390,7 @@ class ItemPriceAndShareRow extends GetView<StoreItemPageController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        c.item.obx((item) => StoreItemPrice(
+        c.item.obx((item) => StoreItemPriceOld(
               originalPrice: item.originalPrice,
               price: item.price,
               isTitle: true,

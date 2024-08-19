@@ -39,14 +39,13 @@ class StoreItemPage extends GetView<StoreItemPageController> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final imageWidth = width - AppWidget.horizontalPadding * 2;
     const imageRatio = 3 / 4;
 
     return Obx(() => TEScaffold(
           loading: c.isLoading,
           appBar: TEAppBar(
             leadingIconOnPressed: controller.react.back,
-            homeOnPressed: c.absorbing ? null : controller.react.toHomeOffAll,
+            homeOnPressed: controller.react.toHomeOffAll,
             titleWidget: c.item.obx(
               (item) => Container(
                 alignment: Alignment.center,
@@ -54,59 +53,53 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                 child: Text(
                   item.name,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.paragraph2
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: DS.textStyle.paragraph2.semiBold.b800,
                 ),
               ),
             ),
           ),
-          bottomFloatingButton: c.onApplyCuration != null
-              ? StoreItemCurationButton(tag: tag)
-              : StoreItemBuyButton(tag: tag),
+          bottomFloatingButton: StoreItemBuyButton(tag: tag),
           body: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ItemImageCarousel(
-                    imageWidth: imageWidth, imageRatio: imageRatio, tag: tag),
-                AbsorbPointer(
-                  absorbing: c.absorbing,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppWidget.horizontalPadding),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DS.space.vTiny,
-                        c.item.obx((item) => StoreItemSellType(
-                              rowShapeAlignment: MainAxisAlignment.spaceEvenly,
-                              textStyle: DS.textStyle.paragraph3
-                                  .copyWith(fontWeight: FontWeight.w600),
-                              sellType: item.sellType,
-                              salesWillBeEndedAt: item.salesWillBeEndedAt,
-                              quantity: item.quantity,
-                            )),
-                        c.groupBuyings
-                            .obx((groupBuyings) => OpenedGroupBuyingList(
-                                  groupBuyings: groupBuyings,
-                                  onGroupBuyingClick: c.onEnterGroupBuying,
-                                )),
-                        DS.space.vSmall,
-                        c.item.obx((item) => StoreSimpleInfoRow(
-                              location: item.store.location,
-                              storeId: item.store.id,
-                              profileImageUrl: item.store.profileImageUrl,
-                              name: item.store.name,
-                              subInfo: item.store.address,
-                            )),
-                        DS.space.vXBase,
-                        ItemSimpleInfoAndLikeRow(tag: tag),
-                        DS.space.vXBase,
-                        ItemPriceAndShareRow(tag: tag),
-                      ],
-                    ),
+                    imageWidth: width, imageRatio: imageRatio, tag: tag),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppWidget.horizontalPadding),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DS.space.vTiny,
+                      c.item.obx((item) => StoreItemSellType(
+                            rowShapeAlignment: MainAxisAlignment.spaceEvenly,
+                            textStyle: DS.textStyle.paragraph3
+                                .copyWith(fontWeight: FontWeight.w600),
+                            sellType: item.sellType,
+                            salesWillBeEndedAt: item.salesWillBeEndedAt,
+                            quantity: item.quantity,
+                          )),
+                      c.groupBuyings
+                          .obx((groupBuyings) => OpenedGroupBuyingList(
+                                groupBuyings: groupBuyings,
+                                onGroupBuyingClick: c.onEnterGroupBuying,
+                              )),
+                      DS.space.vSmall,
+                      c.item.obx((item) => StoreSimpleInfoRow(
+                            location: item.store.location,
+                            storeId: item.store.id,
+                            profileImageUrl: item.store.profileImageUrl,
+                            name: item.store.name,
+                            subInfo: item.store.address,
+                          )),
+                      DS.space.vXBase,
+                      ItemSimpleInfoAndLikeRow(tag: tag),
+                      DS.space.vXBase,
+                      ItemPriceAndShareRow(tag: tag),
+                    ],
                   ),
                 ),
                 DS.space.vMedium,
@@ -115,10 +108,7 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                     ? const SizedBox()
                     : (CurationInfo(i.curation!))),
                 c.item.obx((i) => StoreItemUsageInfo(item: i)),
-                c.item.obx((i) => AbsorbPointer(
-                      absorbing: c.absorbing,
-                      child: StoreLocation(i),
-                    )),
+                c.item.obx((i) => StoreLocation(i)),
                 DS.space.vBase,
                 // Todo 이 사이에 상품고시정보, 취소/환불 안내 들어가야함
                 TEDivider.thin(),
@@ -468,14 +458,9 @@ class ItemImageCarousel extends GetView<StoreItemPageController> {
   Widget build(BuildContext context) {
     return c.item.obx((item) => TEImageCarousel(
           width: imageWidth,
+          overlayAdditionalHorizontalPadding: DS.space.tiny,
           imageSrcs: item.imageUrls,
           ratio: 3 / 4,
-          bottomLeft: Padding(
-            padding:
-                EdgeInsets.only(left: DS.space.xSmall, bottom: DS.space.tiny),
-            child:
-                item.curation == null ? const SizedBox() : DS.image.dangolPick,
-          ),
         ));
   }
 }
@@ -663,25 +648,6 @@ class StoreItemBuyButton extends GetView<StoreItemPageController> {
               },
               text: DS.text.buy,
             )),
-    );
-  }
-}
-
-class StoreItemCurationButton extends GetView<StoreItemPageController> {
-  @override
-  // ignore: overridden_fields
-  final String tag;
-  const StoreItemCurationButton({super.key, required this.tag});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-      child: TEPrimaryButton(
-        listenEventLoading: false,
-        onTap: c.onApplyCuration,
-        text: DS.text.menuApplication,
-      ),
     );
   }
 }

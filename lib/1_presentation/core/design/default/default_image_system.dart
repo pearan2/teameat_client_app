@@ -440,4 +440,12 @@ class DefaultImageSystem extends IImageSystem {
         width: size,
         color: color,
       );
+
+  @override
+  Image get kakaopayLogo =>
+      Image.asset("assets/image/icon/kakaopay_logo.png", width: 40, height: 16);
+
+  @override
+  Image get tosspayLogo =>
+      Image.asset("assets/image/icon/tosspay_logo.png", width: 40, height: 16);
 }

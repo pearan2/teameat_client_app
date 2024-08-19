@@ -20,6 +20,7 @@ class ItemSimple with _$ItemSimple {
     required int orderReference,
     DateTime? currentGroupBuyingWillBeEndedAt,
     String? curatorProfileImageUrl,
+    String? curatorNickname,
     required int storeId,
     required String storeName,
     required Point storeLocation,
@@ -43,6 +44,7 @@ class ItemSimple with _$ItemSimple {
       currentGroupBuyingWillBeEndedAt: DateTime.now(),
       curatorProfileImageUrl:
           "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
+      curatorNickname: "honlee",
       storeId: -1,
       storeName: "팀잇",
       storeLocation: Point.empty(),

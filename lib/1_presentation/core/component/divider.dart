@@ -6,9 +6,9 @@ class TEDivider extends StatelessWidget {
 
   const TEDivider({super.key, required this.height});
 
-  factory TEDivider.normal() => const TEDivider(height: 3);
+  factory TEDivider.normal() => const TEDivider(height: 4);
 
-  factory TEDivider.thick() => TEDivider(height: DS.space.tiny);
+  factory TEDivider.thick() => const TEDivider(height: 8);
 
   factory TEDivider.thin() => const TEDivider(height: 1);
 

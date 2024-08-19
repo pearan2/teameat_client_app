@@ -46,7 +46,8 @@ class StorePage extends GetView<StorePageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const _StoreInfoColumn(),
-                TEDivider.normal().paddingVertical(DS.space.medium),
+                TEDivider.normal()
+                    .paddingOnly(top: DS.space.xBase, bottom: DS.space.medium),
                 const _StoreItemSimpleList(),
                 TEDivider.normal().paddingVertical(DS.space.medium),
                 const _StoreCurationSimpleList(),
@@ -182,15 +183,17 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: DS.textStyle.paragraph2.semiBold.b800.h14),
+                Text(
+                  item.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: DS.textStyle.paragraph2.semiBold.b800.h14,
+                ),
                 Text(
                   item.introducePreview,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: DS.textStyle.paragraph3.b600.h14,
+                  style: DS.textStyle.caption1.b600.h14,
                 ),
                 DS.space.vMedium,
                 StoreItemPrice(
@@ -222,7 +225,7 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
               padding: EdgeInsets.zero,
               itemBuilder: (_, idx) => _buildSimpleItemCard(s.simpleItems[idx]),
               separatorBuilder: (_, __) =>
-                  TEDivider.thin().paddingVertical(DS.space.tiny),
+                  TEDivider.thin().paddingVertical(DS.space.xSmall),
               itemCount: s.simpleItems.length,
             )),
       ],
@@ -255,7 +258,7 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
             DS.space.vTiny,
             Text(
               curation.oneLineIntroduce,
-              style: DS.textStyle.caption1.semiBold.b600.h14,
+              style: DS.textStyle.caption1.bold.b800.h14,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

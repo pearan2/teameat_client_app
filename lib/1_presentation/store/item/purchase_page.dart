@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -12,6 +13,7 @@ import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/store/item/purchase_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 
 class PurchasePage extends GetView<PurchasePageController> {
   const PurchasePage({super.key});
@@ -30,17 +32,10 @@ class PurchasePage extends GetView<PurchasePageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            DS.space.vTiny,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-              child: Text(DS.text.purchaseItemInfo,
-                  style: DS.textStyle.paragraph3
-                      .copyWith(fontWeight: FontWeight.bold)),
-            ),
-            DS.space.vSmall,
+            DS.space.vMedium,
             const PurchaseItemInfoList(),
-            DS.space.vBase,
-            const PurchaseDivider(),
+            DS.space.vXSmall,
+            TEDivider.normal(),
             DS.space.vBase,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
@@ -114,41 +109,39 @@ class PurchaseItemInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageWith = MediaQuery.of(context).size.width / 2.5;
+    const imageWith = 110.0;
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         TECacheImage(
           src: item.imageUrl,
           width: imageWith,
-          borderRadius: DS.space.small,
+          ratio: 3 / 4,
+          borderRadius: DS.space.xTiny,
         ),
-        DS.space.hSmall,
+        DS.space.hXSmall,
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              item.store.name,
-              style:
-                  DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
-            ),
-            DS.space.vXTiny,
-            Text(item.store.address,
-                style: DS.textStyle.caption1.copyWith(
-                  color: DS.color.background600,
-                )),
+            Text(item.store.name, style: DS.textStyle.caption1.b500.h14),
+            Text(item.name, style: DS.textStyle.paragraph2.semiBold.b800.h14),
             DS.space.vBase,
-            Text(item.name, style: DS.textStyle.paragraph2),
-            DS.space.vXTiny,
+            DS.space.vMedium,
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                StoreItemPriceText(price: item.price * quantity),
+                StoreItemPrice(
+                  originalPrice: item.originalPrice * quantity,
+                  price: item.price * quantity,
+                  originalPriceStyle: DS.textStyle.caption1.b500.h14,
+                  priceStyle: DS.textStyle.paragraph2.semiBold.b800.h14,
+                ),
                 DS.space.hXXTiny,
                 Text(
                   '/ ${quantity.format(DS.text.quantityFormat)}',
-                  style: DS.textStyle.caption1,
+                  style: DS.textStyle.caption1.semiBold.b800.h14,
                 )
               ],
             )
@@ -165,14 +158,15 @@ class PurchaseItemInfoList extends GetView<PurchasePageController> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (_, idx) => PurchaseItemInfoCard(
-            item: controller.items.keys.toList()[idx],
-            quantity: controller.items.values.toList()[idx]),
-        separatorBuilder: (_, __) => DS.space.vBase,
-        itemCount: controller.items.length);
+      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (_, idx) => PurchaseItemInfoCard(
+          item: controller.items.keys.toList()[idx],
+          quantity: controller.items.values.toList()[idx]),
+      separatorBuilder: (_, __) => DS.space.vBase,
+      itemCount: controller.items.length,
+    );
   }
 }
 

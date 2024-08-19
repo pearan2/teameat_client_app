@@ -120,7 +120,11 @@ class StoreItemPrice extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(priceToString(originalPrice), style: originalPriceStyle),
+        Text(priceToString(originalPrice),
+            style: originalPriceStyle.copyWith(
+              decoration: TextDecoration.lineThrough,
+              decorationColor: originalPriceStyle.color,
+            )),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [

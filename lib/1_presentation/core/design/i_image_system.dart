@@ -83,4 +83,8 @@ abstract class IImageSystem {
   Image get curationGuide;
 
   SvgPicture get selected;
+
+  // pay logo
+  Image get kakaopayLogo;
+  Image get tosspayLogo;
 }

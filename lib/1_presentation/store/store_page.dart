@@ -218,7 +218,7 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
       children: [
         Text(DS.text.storeItemInSale, style: DS.textStyle.title3.bold.b800.h14)
             .withBasePadding,
-        DS.space.vBase,
+        DS.space.vXSmall,
         c.store.obx((s) => ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -287,7 +287,7 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
           Text(DS.text.curationOfThisStore,
                   style: DS.textStyle.title3.bold.b800.h14)
               .withBasePadding,
-          DS.space.vBase,
+          DS.space.vXSmall,
           SizedBox(
             height: listHeight,
             child: PagedListView.separated(
@@ -323,7 +323,7 @@ class _StoreLocationColumn extends GetView<StorePageController> {
           DS.text.storeLocation,
           style: DS.textStyle.title3.bold.b800.h14,
         ).paddingSymmetric(horizontal: AppWidget.horizontalPadding),
-        DS.space.vBase,
+        DS.space.vXSmall,
         c.store.obx(
           (s) => TESingleStoreMap(
             height: mapHeight,

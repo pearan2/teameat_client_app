@@ -46,11 +46,13 @@ class StorePage extends GetView<StorePageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const _StoreInfoColumn(),
-                TEDivider.normal(),
+                TEDivider.normal().paddingVertical(DS.space.medium),
                 const _StoreItemSimpleList(),
-                TEDivider.normal(),
+                TEDivider.normal().paddingVertical(DS.space.medium),
                 const _StoreCurationSimpleList(),
-                TEDivider.normal(),
+                c.store.obx((s) => s.numberOfCurations < 1
+                    ? const SizedBox()
+                    : TEDivider.normal().paddingVertical(DS.space.medium)),
                 const _StoreLocationColumn(),
                 DS.space.vLarge,
                 DS.space.vLarge,
@@ -130,7 +132,6 @@ class _StoreInfoColumn extends GetView<StorePageController> {
       left: AppWidget.horizontalPadding,
       right: AppWidget.horizontalPadding,
       top: AppWidget.horizontalPadding,
-      bottom: DS.space.large,
     );
   }
 }
@@ -203,10 +204,7 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
           )
         ],
       ),
-    ).paddingSymmetric(
-      vertical: DS.space.tiny,
-      horizontal: AppWidget.horizontalPadding,
-    );
+    ).withBasePadding;
   }
 
   @override
@@ -223,11 +221,12 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemBuilder: (_, idx) => _buildSimpleItemCard(s.simpleItems[idx]),
-              separatorBuilder: (_, __) => TEDivider.thin(),
+              separatorBuilder: (_, __) =>
+                  TEDivider.thin().paddingVertical(DS.space.tiny),
               itemCount: s.simpleItems.length,
             )),
       ],
-    ).paddingOnly(top: DS.space.medium);
+    );
   }
 }
 
@@ -282,7 +281,6 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DS.space.vMedium,
           Text(DS.text.curationOfThisStore,
                   style: DS.textStyle.title3.bold.b800.h14)
               .withBasePadding,
@@ -301,8 +299,6 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
               separatorBuilder: (_, __) => DS.space.hXSmall,
             ),
           ),
-          DS.space.vBase,
-          TEDivider.normal(),
         ],
       );
     });
@@ -320,7 +316,6 @@ class _StoreLocationColumn extends GetView<StorePageController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        DS.space.vMedium,
         Text(
           DS.text.storeLocation,
           style: DS.textStyle.title3.bold.b800.h14,

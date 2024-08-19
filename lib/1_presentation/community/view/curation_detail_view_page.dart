@@ -234,7 +234,7 @@ class StoreNameAndCategory extends StatelessWidget {
                 style: DS.textStyle.paragraph2.semiBold.b800.h14,
               ),
               curation.storeAdditional.isEntered
-                  ? DS.image.rightArrow
+                  ? DS.image.rightArrow()
                   : const SizedBox(),
             ],
           ),

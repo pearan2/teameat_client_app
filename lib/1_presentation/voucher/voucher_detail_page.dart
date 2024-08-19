@@ -1,13 +1,11 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
-import 'package:teameat/1_presentation/core/component/info_row.dart';
+import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
-import 'package:teameat/1_presentation/core/component/store/store.dart';
 import 'package:teameat/1_presentation/core/component/voucher/voucher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -19,7 +17,11 @@ import 'package:teameat/2_application/voucher/voucher_detail_page_controller.dar
 import 'package:teameat/3_domain/voucher/voucher.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
+import 'package:teameat/main.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class VoucherDetailPage extends GetView<VoucherDetailPageController> {
   const VoucherDetailPage({super.key});
@@ -48,100 +50,87 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
         ),
         body: Container(
           margin: EdgeInsets.only(
-            left: DS.space.xBase,
-            right: DS.space.xBase,
-            top: DS.space.xBase,
-            bottom: DS.space.large + DS.space.xBase,
+            left: AppWidget.horizontalPadding,
+            right: AppWidget.horizontalPadding,
+            top: AppWidget.horizontalPadding,
+            bottom: DS.space.large + AppWidget.horizontalPadding,
           ),
-          padding: EdgeInsets.all(DS.space.small),
           decoration: BoxDecoration(
-            border: Border.all(color: DS.color.background700),
-            borderRadius: BorderRadius.circular(DS.space.medium),
-            color: DS.color.background000,
-            boxShadow: [
-              BoxShadow(
-                  color: DS.color.background800.withOpacity(0.25),
-                  blurRadius: DS.space.xTiny,
-                  offset: Offset(0, DS.space.xTiny))
-            ],
+            borderRadius: BorderRadius.circular(DS.space.xTiny),
+            color: DS.color.background100,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: DS.image.mainMediumIconNoBg),
                 DS.space.vSmall,
-                const DottedLine(),
+                Center(child: DS.image.mainIconSm),
                 DS.space.vSmall,
-                const VoucherShadowCard(),
-                DS.space.vSmall,
-                Obx(() => PageLoadingWrapper(
-                      child: StoreSimpleInfoRow(
-                        location: controller.voucher.storeLocation,
-                        profileImageUrl:
-                            controller.voucher.storeProfileImageUrl,
-                        name: controller.voucher.storeName,
-                        subInfo: controller.voucher.storeOneLineIntroduce,
-                        storeId: controller.voucher.storeId,
-                        isButton: true,
-                      ),
-                    )),
-                DS.space.vSmall,
-                Obx(() => PageLoadingWrapper(
-                      child: Text(
-                        controller.voucher.itemName,
-                        style: DS.textStyle.paragraph2
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    )),
-                DS.space.vSmall,
-                const DottedLine(),
-                DS.space.vSmall,
-                Obx(() => PageLoadingWrapper(
-                        child: InfoRow(
-                      icon: DS.image.clock(size: DS.space.base),
-                      title: DS.text.expiredDuration,
-                      content: controller.voucher.willBeExpiredAt
-                          .format(DS.text.voucherExpiredAtFormat),
-                    ))),
-                DS.space.vTiny,
-                Obx(() => PageLoadingWrapper(
-                        child: InfoRow(
-                      icon: DS.image.address(size: DS.space.base),
-                      title: DS.text.address,
-                      content: controller.voucher.storeAddress,
-                    ))),
-                DS.space.vTiny,
-                Obx(() => PageLoadingWrapper(
-                        child: InfoRow(
-                      icon: DS.image.clock(size: DS.space.base),
-                      title: DS.text.operationTime,
-                      content: controller.voucher.storeOperationTime,
-                    ))),
-                DS.space.vSmall,
-                const DottedLine(),
-                DS.space.vSmall,
-                Obx(() => PageLoadingWrapper(
-                        child: InfoRow(
-                      icon: const Icon(Icons.info_outline),
-                      title: DS.text.voucherUseLog,
-                      content: controller.voucher.useLogs.fold(
-                          '',
-                          (prev, e) =>
-                              '$prev${e.usedAt.format(DS.text.voucherUsedAtFormat)}\n${e.quantity.format(DS.text.voucherCountFormat)} ${e.reason}\n\n'),
-                    ))),
-                DS.space.vSmall,
-                const DottedLine(),
+                const VoucherShadowCard().withBasePadding,
                 DS.space.vSmall,
                 Obx(() => PageLoadingWrapper(
                         child: TEonTap(
-                      onTap: () => TEClipboard.setText(c.voucher.orderId),
-                      child: InfoRow(
-                        icon: const Icon(Icons.numbers),
-                        title: DS.text.orderId,
-                        content: c.voucher.orderId,
+                      onTap: () => controller.react
+                          .toStoreDetail(controller.voucher.storeId),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              controller.voucher.storeName,
+                              style: DS.textStyle.caption1.b500.h14,
+                            ),
+                            Text(
+                              controller.voucher.itemName,
+                              style: DS.textStyle.paragraph1.bold.b800.h14,
+                            ),
+                          ],
+                        ),
                       ),
                     ))),
+                DS.space.vBase,
+                const _DottedDividerWithHole(),
+                DS.space.vBase,
+                Obx(() => PageLoadingWrapper(
+                        child: VoucherUseInfoRow(
+                            title: DS.text.expiredAt,
+                            contents: [
+                          controller.voucher.willBeExpiredAt
+                              .format(DS.text.voucherExpiredAtFormat)
+                        ]))),
+                DS.space.vXTiny,
+                Obx(() => PageLoadingWrapper(
+                        child: TEonTap(
+                      onTap: () => launchUrlString(
+                          'tel:${controller.voucher.storePhone}'),
+                      child: VoucherUseInfoRow(
+                          title: DS.text.phone,
+                          contents: [controller.voucher.storePhone]),
+                    ))),
+                DS.space.vXTiny,
+                Obx(() => PageLoadingWrapper(
+                    child: VoucherUseInfoRow(
+                        title: DS.text.storeAddress,
+                        contents: [controller.voucher.storeAddress]))),
+                DS.space.vXTiny,
+                Obx(() => PageLoadingWrapper(
+                        child: VoucherUseInfoRow(
+                      title: DS.text.voucherUseLog,
+                      contents: controller.voucher.useLogs
+                          .map((log) =>
+                              '${log.usedAt.format(DS.text.voucherUsedAtFormat)}\t\t\t\t${log.quantity.format(DS.text.voucherCountFormat)} ${log.reason}')
+                          .toList(),
+                    ))),
+                DS.space.vXTiny,
+                Obx(() => PageLoadingWrapper(
+                        child: TEonTap(
+                      onTap: () => TEClipboard.setText(c.voucher.orderId),
+                      child: VoucherUseInfoRow(
+                        title: DS.text.orderId,
+                        contents: [c.voucher.orderId],
+                      ),
+                    ))),
+                DS.space.vBase,
               ],
             ),
           ),
@@ -149,37 +138,55 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
   }
 }
 
+class VoucherUseInfoRow extends StatelessWidget {
+  final String title;
+  final List<String> contents;
+  final TextStyle? style;
+  const VoucherUseInfoRow({
+    super.key,
+    required this.title,
+    required this.contents,
+    this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final contentStyle = style ?? DS.textStyle.caption1.b600.h14;
+    final titleStyle = contentStyle.semiBold;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: titleStyle,
+        ),
+        DS.space.hXTiny,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children:
+                contents.map((c) => Text(c, style: contentStyle)).toList(),
+          ),
+        )
+      ],
+    ).withBasePadding;
+  }
+}
+
 class VoucherShadowCard extends GetView<VoucherDetailPageController> {
   const VoucherShadowCard({super.key});
-  List<BoxShadow> _buildShadow() {
-    return [
-      BoxShadow(
-        color: DS.color.background800.withOpacity(0.40),
-        blurRadius: DS.space.xTiny,
-        spreadRadius: DS.space.xxTiny,
-        offset: Offset(
-          0,
-          DS.space.xTiny,
-        ),
-      )
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => PageLoadingWrapper(
-          child: Container(
-            decoration: BoxDecoration(
-                boxShadow: _buildShadow(),
-                color: DS.color.background000,
-                borderRadius: BorderRadius.circular(DS.space.medium)),
-            child: VoucherImage(
-              willBeExpiredAt: controller.voucher.willBeExpiredAt,
-              quantity: controller.voucher.quantity,
-              imageSrcs: controller.voucher.itemImageUrls,
-              stackVerticalOffset: DS.space.medium,
-              borderRadius: DS.space.medium,
-            ),
+          child: VoucherImage(
+            willBeExpiredAt: controller.voucher.willBeExpiredAt,
+            quantity: controller.voucher.quantity,
+            imageSrcs: controller.voucher.itemImageUrls,
+            stackVerticalOffset: DS.space.medium,
+            borderRadius: DS.space.xTiny,
           ),
         ));
   }
@@ -212,6 +219,41 @@ class VoucherUseDialogGridButton extends StatelessWidget {
         alignment: Alignment.center,
         child: _buildContentWidget(),
       ),
+    );
+  }
+}
+
+class _DottedDividerWithHole extends StatelessWidget {
+  const _DottedDividerWithHole();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        TEDivider.dot().paddingVertical(DS.space.tiny),
+        Positioned(
+          left: -DS.space.tiny,
+          child: Container(
+            width: DS.space.small,
+            height: DS.space.small,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(300),
+              color: DS.color.background000,
+            ),
+          ),
+        ),
+        Positioned(
+          right: -DS.space.tiny,
+          child: Container(
+            width: DS.space.small,
+            height: DS.space.small,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(300),
+              color: DS.color.background000,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

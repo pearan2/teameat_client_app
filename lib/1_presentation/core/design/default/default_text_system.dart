@@ -193,16 +193,13 @@ class DefaultTextSystem extends ITextSystem {
   String get voucherRemainQuantityFormat => '###개 남음';
 
   @override
-  String get expiredDuration => '만료기한';
-
-  @override
   String get use => '사용하기';
 
   @override
   String get voucher => '이용권';
 
   @override
-  String get voucherUseLog => '사용 기록';
+  String get voucherUseLog => '사용기록';
 
   @override
   String get voucherUsedAtFormat => 'yyyy.MM.dd aa h:mm';
@@ -886,4 +883,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get storeLocation => '매장 위치';
+
+  @override
+  String get storeAddress => '가게주소';
 }

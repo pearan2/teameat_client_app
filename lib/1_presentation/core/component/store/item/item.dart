@@ -618,7 +618,7 @@ class StoreItemStoreSimpleRow extends GetView<IReact> {
                   ),
                 ),
                 DS.space.hXXTiny,
-                DS.image.rightArrow,
+                DS.image.rightArrow(),
               ],
             ),
           ),

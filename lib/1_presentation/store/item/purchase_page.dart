@@ -127,7 +127,7 @@ class PurchaseItemInfoCard extends StatelessWidget {
           children: [
             Text(item.store.name, style: DS.textStyle.caption1.b500.h14),
             Text(item.name, style: DS.textStyle.paragraph2.semiBold.b800.h14),
-            DS.space.vBase,
+            DS.space.vXBase,
             DS.space.vMedium,
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,

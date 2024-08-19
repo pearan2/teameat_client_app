@@ -54,7 +54,7 @@ abstract class IImageSystem {
   SvgPicture get bookmark;
   SvgPicture get bookmarkClicked;
   SvgPicture leftArrowInBox({Color? color});
-  SvgPicture get rightArrow;
+  SvgPicture rightArrow({double? size, Color? color});
   SvgPicture get rightArrowInBox;
   SvgPicture get upArrow;
   SvgPicture get downArrow;

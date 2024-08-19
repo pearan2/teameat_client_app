@@ -228,13 +228,6 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  SvgPicture get rightArrow => SvgPicture.asset(
-        'assets/image/icon/right_arrow.svg',
-        height: 24,
-        width: 24,
-      );
-
-  @override
   SvgPicture get rightArrowInBox => SvgPicture.asset(
         'assets/image/icon/right_arrow_in_box.svg',
         height: 24,
@@ -448,4 +441,12 @@ class DefaultImageSystem extends IImageSystem {
   @override
   Image get tosspayLogo =>
       Image.asset("assets/image/icon/tosspay_logo.png", width: 40, height: 16);
+
+  @override
+  SvgPicture rightArrow({double? size, Color? color}) => SvgPicture.asset(
+        'assets/image/icon/right_arrow.svg',
+        height: size ?? 24,
+        width: size ?? 24,
+        color: color,
+      );
 }

@@ -64,7 +64,6 @@ abstract class ITextSystem {
   String get voucherRemainQuantityFormat;
   String get voucher;
   String get use;
-  String get expiredDuration;
   String get voucherUseLog;
   String get voucherUsedAtFormat;
   String get voucherCountFormat;
@@ -312,4 +311,6 @@ abstract class ITextSystem {
   String get storeItemInSale;
   String get curationOfThisStore;
   String get storeLocation;
+
+  String get storeAddress;
 }

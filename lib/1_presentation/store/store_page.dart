@@ -81,7 +81,7 @@ class _StoreInfoColumn extends GetView<StorePageController> {
               s.numberOfCurations.format(DS.text.numberOfCurationFormat),
               style: DS.textStyle.caption1.b500.h14,
             )),
-        DS.space.vSmall,
+        DS.space.vXSmall,
         c.store.obx(
           (s) => TEExpandable(
             header: Text(s.oneLineIntroduce,
@@ -90,7 +90,9 @@ class _StoreInfoColumn extends GetView<StorePageController> {
                 .paddingOnly(top: DS.space.xTiny),
           ),
         ),
-        DS.space.vXBase,
+        DS.space.vXSmall,
+        TEDivider.thin(),
+        DS.space.vXSmall,
         Row(
           children: [
             DS.image.phone(size: DS.space.small, color: DS.color.background700),

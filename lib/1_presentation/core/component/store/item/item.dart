@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
 import 'package:teameat/1_presentation/core/component/like.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -11,11 +12,9 @@ import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
-import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
-import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
 class StoreItemOriginalPriceText extends StatelessWidget {
@@ -300,120 +299,31 @@ class _ItemSaleRemainDurationTextState
   }
 }
 
-class StoreItemSellType extends StatelessWidget {
+class StoreItemSellTypeBadge extends StatelessWidget {
   final String sellType;
-  final int quantity;
-  final DateTime salesWillBeEndedAt;
-  final MainAxisAlignment? rowShapeAlignment;
-  final bool isColumnShape;
-  final bool useDDay;
   final TextStyle? textStyle;
 
-  const StoreItemSellType({
+  const StoreItemSellTypeBadge({
     super.key,
     required this.sellType,
-    required this.quantity,
-    required this.salesWillBeEndedAt,
-    this.rowShapeAlignment,
     this.textStyle,
-    this.isColumnShape = false,
-    this.useDDay = false,
   });
 
-  Widget _buildContainer(Widget child) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: DS.color.background400),
-        borderRadius: BorderRadius.circular(
-          DS.space.xxTiny,
-        ),
-      ),
-      padding: EdgeInsets.all(
-        DS.space.tiny,
-      ),
-      child: child,
-    );
+  Widget _buildText(String text) {
+    final style = textStyle ?? DS.textStyle.caption1.semiBold.h14.s900;
+    return Text(text, style: style);
   }
 
-  Widget _buildText(String text, Color color) {
-    final style = textStyle ?? DS.textStyle.caption1;
-    return Text(
-      text,
-      style: style.copyWith(color: color),
-    );
-  }
-
-  Widget _buildSellTypeTextAndIcon(String sellType) {
+  Widget _getSellTypeImage(String sellType) {
+    final style = textStyle ?? DS.textStyle.caption1.semiBold.h14.s900;
     if (sellType == DS.text.sellTypeTimeLimit) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildText(sellType, DS.color.primary600),
-          DS.space.hTiny,
-          DS.image.timeLimit
-        ],
-      );
+      return DS.image.timeLimit(size: style.fontSize, color: style.color);
     } else if (sellType == DS.text.sellTypeQuantityLimit) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildText(sellType, DS.color.primary600),
-          DS.space.hTiny,
-          DS.image.quantityLimit
-        ],
-      );
+      return DS.image.quantityLimit(size: style.fontSize, color: style.color);
     } else if (sellType == DS.text.groupBuying) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildText(sellType, DS.color.primary600),
-          DS.space.hTiny,
-          DS.image.mainIconXsm
-        ],
-      );
+      return DS.image.groupBuying(size: style.fontSize, color: style.color);
     } else {
       return const SizedBox();
-    }
-  }
-
-  Widget _buildSellTypeContent(String sellType) {
-    if (sellType == DS.text.sellTypeTimeLimit) {
-      return ItemSaleRemainDurationText(
-        salesWillBeEndedAt: salesWillBeEndedAt,
-        useDDay: useDDay,
-        textStyle: textStyle,
-      );
-    } else if (sellType == DS.text.sellTypeQuantityLimit) {
-      return _buildText(
-          quantity.format(DS.text.voucherCountFormat), DS.color.background600);
-    } else if (sellType == DS.text.groupBuying) {
-      if (quantity <= 0 || salesWillBeEndedAt.isBefore(DateTime.now())) {
-        return _buildText(DS.text.saleEnd, DS.color.background600);
-      }
-      return _buildText(DS.text.ing, DS.color.background600);
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  Widget _buildShapeContainer() {
-    if (isColumnShape) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          _buildSellTypeTextAndIcon(sellType),
-          DS.space.vXTiny,
-          _buildSellTypeContent(sellType)
-        ],
-      );
-    } else {
-      return Row(
-          mainAxisAlignment:
-              rowShapeAlignment ?? MainAxisAlignment.spaceBetween,
-          children: [
-            _buildSellTypeTextAndIcon(sellType),
-            _buildSellTypeContent(sellType)
-          ]);
     }
   }
 
@@ -422,7 +332,24 @@ class StoreItemSellType extends StatelessWidget {
     if (sellType == DS.text.sellTypeVoucher) {
       return const SizedBox();
     }
-    return _buildContainer(_buildShapeContainer());
+    return Container(
+      decoration: BoxDecoration(
+        color: DS.color.background100,
+        borderRadius: BorderRadius.circular(DS.space.xxTiny),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xxTiny,
+        horizontal: DS.space.xTiny,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _getSellTypeImage(sellType),
+          DS.space.hXXTiny,
+          _buildText(sellType),
+        ],
+      ),
+    );
   }
 }
 
@@ -517,17 +444,85 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   final int itemId;
   final double borderRadius;
   final double ratio;
+  final String sellType;
   final String? curatorProfileImageUrl;
+  final String? curatorNickname;
 
-  const StoreItemImage({
-    super.key,
+  const StoreItemImage._({
     required this.imageUrl,
     required this.width,
     required this.itemId,
     required this.borderRadius,
+    required this.sellType,
     this.curatorProfileImageUrl,
+    this.curatorNickname,
     this.ratio = 3 / 4,
   });
+
+  factory StoreItemImage.fromItemSimple(ItemSimple item,
+      {required double width,
+      double ratio = 3 / 4,
+      required double borderRadius}) {
+    return StoreItemImage._(
+      imageUrl: item.imageUrl,
+      width: width,
+      itemId: item.id,
+      borderRadius: borderRadius,
+      sellType: item.sellType,
+      curatorProfileImageUrl: item.curatorProfileImageUrl,
+      curatorNickname: item.curatorNickname,
+      ratio: ratio,
+    );
+  }
+
+  Widget _buildDangolPickOverlay() {
+    if (curatorNickname == null || curatorProfileImageUrl == null) {
+      return const SizedBox();
+    }
+
+    return Container(
+      alignment: Alignment.centerLeft,
+      height: DS.space.medium,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
+        gradient: const LinearGradient(
+          begin: Alignment(0, -1),
+          end: Alignment(0, 1),
+          colors: [
+            Color.fromRGBO(0, 0, 0, 0.4),
+            Color.fromRGBO(0, 0, 0, 0.0),
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            children: [
+              TECacheImage(
+                src: curatorProfileImageUrl!,
+                width: DS.space.base,
+                ratio: 1 / 1,
+                borderRadius: 300,
+              ),
+              Positioned.fill(
+                  child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: DS.color.background000),
+                  borderRadius: BorderRadius.circular(300),
+                ),
+              )),
+            ],
+          ),
+          DS.space.hXTiny,
+          Text(curatorNickname! + DS.text.dangolPickCuratorNicknameFormat,
+              style: DS.textStyle.caption3.semiBold.b000),
+          DS.space.hXXTiny,
+          DS.image.dangolPick,
+        ],
+      ).paddingHorizontal(DS.space.tiny),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -540,26 +535,19 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
           borderRadius: borderRadius,
         ),
         Positioned(
-          top: DS.space.tiny,
-          left: DS.space.tiny,
+          top: 0,
+          left: 0,
+          right: 0,
           child: Visibility(
-            visible: curatorProfileImageUrl != null,
-            child: DS.image.dangolPick,
+            visible:
+                (curatorProfileImageUrl != null) && (curatorNickname != null),
+            child: _buildDangolPickOverlay(),
           ),
         ),
         Positioned(
-          bottom: 0,
-          right: 0,
-          child: TEonTap(
-            onTap: () => controller.toggleLike(itemId),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: DS.space.xSmall,
-                vertical: DS.space.xTiny,
-              ),
-              child: Like<IStoreItemRepository>.whiteWithShadow(itemId),
-            ),
-          ),
+          left: DS.space.tiny,
+          bottom: DS.space.xTiny,
+          child: StoreItemSellTypeBadge(sellType: sellType),
         ),
       ],
     );
@@ -584,69 +572,34 @@ class StoreItemNameText extends StatelessWidget {
   }
 }
 
-class StoreItemStoreSimpleRow extends GetView<IReact> {
-  final String name;
-  final int id;
-  final Point location;
-
-  const StoreItemStoreSimpleRow({
-    super.key,
-    required this.name,
-    required this.id,
-    required this.location,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TEonTap(
-      onTap: () => c.toStoreDetail(id),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: DS.textStyle.caption1.copyWith(
-                      color: DS.color.background500,
-                    ),
-                  ),
-                ),
-                DS.space.hXXTiny,
-                DS.image.rightArrow(),
-              ],
-            ),
-          ),
-          DistanceText(point: location),
-        ],
-      ),
-    );
-  }
-}
-
 class StoreItemColumnCard extends StatelessWidget {
   final ItemSimple item;
   final void Function(int itemId) onTap;
   final double borderRadius;
+  final double? imageWidth;
+
+  static const infoBoxHeight = 93;
+  static const imageRatio = 3 / 4;
+
+  static double calcTotalHeight(double imageWidth) {
+    return (imageWidth / imageRatio) + infoBoxHeight;
+  }
 
   const StoreItemColumnCard(
       {super.key,
       required this.item,
       required this.onTap,
-      this.borderRadius = 0.0});
+      this.borderRadius = 0.0,
+      this.imageWidth});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = (screenWidth -
-            (AppWidget.horizontalPadding * 2) -
-            (AppWidget.itemHorizontalSpace)) /
-        2;
+    final imageWidth = this.imageWidth ??
+        (screenWidth -
+                (AppWidget.horizontalPadding * 2) -
+                (AppWidget.itemHorizontalSpace)) /
+            2;
 
     return TEonTap(
       onTap: () => onTap(item.id),
@@ -655,102 +608,50 @@ class StoreItemColumnCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            StoreItemImage(
-              curatorProfileImageUrl: item.curatorProfileImageUrl,
-              imageUrl: item.imageUrl,
+            StoreItemImage.fromItemSimple(
+              item,
               width: imageWidth,
-              itemId: item.id,
               borderRadius: borderRadius,
+              ratio: imageRatio,
             ),
-            DS.space.vXTiny,
-            StoreItemSellType(
-              sellType: item.sellType,
-              salesWillBeEndedAt: item.salesWillBeEndedAt,
-              quantity: item.quantity,
-            ),
-            DS.space.vXTiny,
-            StoreItemStoreSimpleRow(
-              id: item.storeId,
-              name: item.storeName,
-              location: item.storeLocation,
-            ),
-            DS.space.vXTiny,
-            StoreItemNameText(name: item.name),
             DS.space.vTiny,
-            StoreItemPriceOld(
-                originalPrice: item.originalPrice, price: item.price),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class StoreItemRowCard extends StatelessWidget {
-  final ItemSimple item;
-  final double borderRadius;
-  final void Function(int itemId) onTap;
-
-  const StoreItemRowCard(
-      {super.key,
-      required this.item,
-      required this.onTap,
-      this.borderRadius = 0.0});
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = (screenWidth -
-            (AppWidget.horizontalPadding * 2) -
-            (AppWidget.itemHorizontalSpace)) /
-        2;
-
-    return TEonTap(
-      onTap: () => onTap(item.id),
-      child: SizedBox(
-        height: imageWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            StoreItemImage(
-              imageUrl: item.imageUrl,
-              width: imageWidth,
-              itemId: item.id,
-              ratio: 1 / 1,
-              borderRadius: borderRadius,
-              curatorProfileImageUrl: item.curatorProfileImageUrl,
-            ),
-            DS.space.hBase,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  StoreItemNameText(
-                    name: item.name,
-                    textAlign: TextAlign.end,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      StoreItemSellType(
-                        sellType: item.sellType,
-                        salesWillBeEndedAt: item.salesWillBeEndedAt,
-                        quantity: item.quantity,
-                        isColumnShape: true,
+                      TELeftRightText(
+                        item.storeName,
+                        DistanceText(
+                          point: item.storeLocation,
+                          style: DS.textStyle.caption2.b500.h14,
+                          withDivider: true,
+                        ),
+                        useDefaultDivider: false,
                       ),
-                      DS.space.vTiny,
-                      StoreItemPriceOld(
-                        alignRight: true,
-                        originalPrice: item.originalPrice,
-                        price: item.price,
+                      Text(
+                        item.name,
+                        style: DS.textStyle.paragraph3.bold.b800.h14,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       )
                     ],
-                  )
-                ],
-              ),
-            ),
+                  ),
+                ),
+                DS.space.hTiny,
+                Like<IStoreItemRepository>.base(item.id),
+              ],
+            ).paddingHorizontal(DS.space.tiny),
+            DS.space.vXSmall,
+            StoreItemPrice(
+              originalPrice: item.originalPrice,
+              price: item.price,
+              originalPriceStyle: DS.textStyle.caption2.b500.h14,
+              priceStyle: DS.textStyle.caption1.semiBold.b800.h14,
+            ).paddingHorizontal(DS.space.tiny),
           ],
         ),
       ),

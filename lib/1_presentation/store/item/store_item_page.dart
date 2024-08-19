@@ -74,13 +74,8 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DS.space.vTiny,
-                      c.item.obx((item) => StoreItemSellType(
-                            rowShapeAlignment: MainAxisAlignment.spaceEvenly,
-                            textStyle: DS.textStyle.paragraph3
-                                .copyWith(fontWeight: FontWeight.w600),
+                      c.item.obx((item) => StoreItemSellTypeBadge(
                             sellType: item.sellType,
-                            salesWillBeEndedAt: item.salesWillBeEndedAt,
-                            quantity: item.quantity,
                           )),
                       c.groupBuyings
                           .obx((groupBuyings) => OpenedGroupBuyingList(

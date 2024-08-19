@@ -16,46 +16,44 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final imageWidth = (screenWidth - (AppWidget.itemHorizontalSpace / 2)) / 2;
 
     return TEScaffold(
         appBar: TEAppBar(
           leadingIconOnPressed: controller.react.back,
           title: DS.text.like,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(AppWidget.horizontalPadding),
-          child: TERefreshIndicator(
-            onRefresh: () async {
-              controller.pagingController.refresh();
-            },
-            child: CustomScrollView(
-              slivers: [
-                PagedSliverGrid(
-                  pagingController: controller.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
-                      noItemsFoundIndicatorBuilder: (_) => Center(
-                            child: SimpleNotFound(
-                              title: DS.text.likeStoreItemsNotFound,
-                              buttonText: DS.text.goToSeeStoreItems,
-                              onTap: controller.react.toHomeOffAll,
-                            ),
+        body: TERefreshIndicator(
+          onRefresh: () async {
+            controller.pagingController.refresh();
+          },
+          child: CustomScrollView(
+            slivers: [
+              PagedSliverGrid(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
+                    noItemsFoundIndicatorBuilder: (_) => Center(
+                          child: SimpleNotFound(
+                            title: DS.text.likeStoreItemsNotFound,
+                            buttonText: DS.text.goToSeeStoreItems,
+                            onTap: controller.react.toHomeOffAll,
                           ),
-                      itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                          borderRadius: DS.space.xTiny,
-                          item: item,
-                          onTap: controller.react.toStoreItemDetail)),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    /// 4/3 비율로 갈거라서 변경해줌
-                    childAspectRatio:
-                        width / (width * (4 / 3) + DS.space.large * 8),
-                    crossAxisSpacing: DS.space.small,
-                    mainAxisSpacing: DS.space.small,
-                    crossAxisCount: 2,
-                  ),
+                        ),
+                    itemBuilder: (_, item, idx) => StoreItemColumnCard(
+                        imageWidth: imageWidth,
+                        item: item,
+                        onTap: controller.react.toStoreItemDetail)),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: imageWidth /
+                      StoreItemColumnCard.calcTotalHeight(
+                          imageWidth), // Todo 비율 조정
+                  crossAxisSpacing: DS.space.tiny,
+                  mainAxisSpacing: DS.space.xBase,
+                  crossAxisCount: 2,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ));
   }

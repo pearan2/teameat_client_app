@@ -96,14 +96,18 @@ class TEUnderlineText extends StatelessWidget {
 
 class TELeftRightText extends StatelessWidget {
   final Widget? divider;
-  final String left;
-  final String right;
+  final dynamic left;
+  final dynamic right;
   final TextStyle? style;
+  final bool useDefaultDivider;
 
   const TELeftRightText(this.left, this.right,
-      {super.key, this.divider, this.style});
+      {super.key, this.divider, this.style, this.useDefaultDivider = true})
+      : assert((left is String || left is Widget) &&
+            (right is String || right is Widget));
 
   Widget _defaultDivider() {
+    if (!useDefaultDivider) return const SizedBox();
     return Container(
       width: 1,
       height: DS.space.tiny,
@@ -111,16 +115,28 @@ class TELeftRightText extends StatelessWidget {
     ).paddingSymmetric(horizontal: DS.space.xTiny);
   }
 
+  Widget _toWidget(dynamic src) {
+    if (src is Widget) {
+      return src;
+    } else if (src is String) {
+      final style = this.style ?? DS.textStyle.caption2.b500.h14;
+      return Text(src,
+          style: style, maxLines: 1, overflow: TextOverflow.ellipsis);
+    } else {
+      return const SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final divider = this.divider ?? _defaultDivider();
-    final style = this.style ?? DS.textStyle.caption2.b500.h14;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(left, style: style),
+        Flexible(child: _toWidget(left)),
         divider,
-        Text(right, style: style),
+        _toWidget(right),
       ],
     );
   }

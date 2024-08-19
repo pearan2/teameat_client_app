@@ -32,6 +32,7 @@ class CurationPage extends GetView<CurationPageController> {
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
     return Obx(() => TEScaffold(
+          onPop: (didPop) => controller.react.toHomeOffAll(),
           loading: c.isPageLoading,
           activated: BottomNavigatorType.community,
           floatingButtonIcon:
@@ -316,7 +317,7 @@ class LikeRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Like<ICurationRepository>.small(
+          Like<ICurationRepository>.baseRowShape(
             curation.id,
             numberOfLikes: curation.numberOfLikes,
           ),

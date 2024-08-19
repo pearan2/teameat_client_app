@@ -46,7 +46,7 @@ class Like<T extends ILikableRepository> extends GetView<LikeController<T>> {
     );
   }
 
-  factory Like.small(int targetId, {int? numberOfLikes}) {
+  factory Like.baseRowShape(int targetId, {int? numberOfLikes}) {
     return Like(
       targetId: targetId,
       liked: DS.image.iconLikeClicked,

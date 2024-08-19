@@ -886,4 +886,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get storeAddress => '가게주소';
+
+  @override
+  String get dangolPickCuratorNicknameFormat => '님의';
 }

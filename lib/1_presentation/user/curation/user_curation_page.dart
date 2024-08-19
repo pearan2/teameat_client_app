@@ -239,7 +239,15 @@ class CurationItemInfoColumn extends StatelessWidget {
             : StoreItemPriceOld(
                 originalPrice: curation.item!.originalPrice,
                 price: curation.item!.price,
-              )
+              ),
+        DS.space.vTiny,
+        curation.item == null
+            ? const SizedBox()
+            : CurationRewardRow(
+                item: curation.item!,
+                itemSellTotalAmount: curation.itemSellTotalAmount,
+                rewardRatio: curation.rewardRatio,
+              ),
       ],
     );
   }
@@ -260,44 +268,30 @@ class CurationRewardRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: CurationCard.imageSize,
-          child: StoreItemSellType(
-            sellType: item.sellType,
-            quantity: item.quantity,
-            salesWillBeEndedAt: item.salesWillBeEndedAt,
-            useDDay: true,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(300),
+          child: Container(
+            width: DS.space.tiny,
+            height: DS.space.tiny,
+            color: DS.color.secondary500,
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(300),
-              child: Container(
-                width: DS.space.tiny,
-                height: DS.space.tiny,
-                color: DS.color.secondary500,
-              ),
-            ),
-            DS.space.hTiny,
-            Text(
-              DS.text.reward,
-              style: DS.textStyle.paragraph3
-                  .copyWith(color: DS.color.background700),
-            ),
-            DS.space.hTiny,
-            Text(
-              (((itemSellTotalAmount ?? 0) * rewardRatio).round())
-                  .format(DS.text.priceFormat),
-              style: DS.textStyle.paragraph2.copyWith(
-                color: DS.color.background800,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          ],
+        DS.space.hTiny,
+        Text(
+          DS.text.reward,
+          style:
+              DS.textStyle.paragraph3.copyWith(color: DS.color.background700),
+        ),
+        DS.space.hTiny,
+        Text(
+          (((itemSellTotalAmount ?? 0) * rewardRatio).round())
+              .format(DS.text.priceFormat),
+          style: DS.textStyle.paragraph2.copyWith(
+            color: DS.color.background800,
+            fontWeight: FontWeight.bold,
+          ),
         )
       ],
     );
@@ -341,14 +335,6 @@ class CurationCard extends GetView<UserCurationPageController> {
                 Expanded(child: CurationItemInfoColumn(curation: curation)),
               ],
             ),
-            curation.item == null ? const SizedBox() : DS.space.vTiny,
-            curation.item == null
-                ? const SizedBox()
-                : CurationRewardRow(
-                    item: curation.item!,
-                    itemSellTotalAmount: curation.itemSellTotalAmount,
-                    rewardRatio: curation.rewardRatio,
-                  ),
           ],
         ),
       ),

@@ -75,8 +75,9 @@ abstract class IImageSystem {
   SvgPicture get share;
 
   /// sell type icon
-  SvgPicture get timeLimit;
-  SvgPicture get quantityLimit;
+  SvgPicture groupBuying({Color? color, double? size});
+  SvgPicture timeLimit({Color? color, double? size});
+  SvgPicture quantityLimit({Color? color, double? size});
 
   /// banner & guide
   Image get communityBanner1;

@@ -313,4 +313,6 @@ abstract class ITextSystem {
   String get storeLocation;
 
   String get storeAddress;
+
+  String get dangolPickCuratorNicknameFormat;
 }

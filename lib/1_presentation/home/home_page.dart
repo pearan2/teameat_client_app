@@ -22,10 +22,7 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
     final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = (screenWidth -
-            (AppWidget.horizontalPadding * 2) -
-            (AppWidget.itemHorizontalSpace)) /
-        2;
+    final imageWidth = (screenWidth - (AppWidget.itemHorizontalSpace / 2)) / 2;
 
     final scrollController = ScrollController();
 
@@ -45,8 +42,6 @@ class HomePage extends GetView<HomePageController> {
         body: Padding(
           padding: EdgeInsets.only(
             top: topAreaHeight,
-            left: AppWidget.horizontalPadding,
-            right: AppWidget.horizontalPadding,
           ),
           child: TERefreshIndicator(
             onRefresh: controller.refreshPage,
@@ -68,6 +63,7 @@ class HomePage extends GetView<HomePageController> {
                     pagingController: controller.pagingController,
                     builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
                       itemBuilder: (_, item, idx) => StoreItemColumnCard(
+                          imageWidth: imageWidth,
                           item: item,
                           onTap: (itemId) => c.react.toStoreItemDetail(itemId)),
                       noItemsFoundIndicatorBuilder: (_) =>
@@ -75,11 +71,10 @@ class HomePage extends GetView<HomePageController> {
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: imageWidth /
-                          (imageWidth * (4 / 3) +
-                              DS.space.large * 2 +
-                              DS.space.xBase * 3), // Todo 비율 조정
-                      crossAxisSpacing: DS.space.small,
-                      mainAxisSpacing: DS.space.base,
+                          StoreItemColumnCard.calcTotalHeight(
+                              imageWidth), // Todo 비율 조정
+                      crossAxisSpacing: DS.space.tiny,
+                      mainAxisSpacing: DS.space.xBase,
                       crossAxisCount: 2,
                     )),
                 SliverToBoxAdapter(child: DS.space.vSmall),
@@ -98,6 +93,8 @@ class HomePageSearcher extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: DS.color.background000,

@@ -249,8 +249,8 @@ class DefaultImageSystem extends IImageSystem {
   @override
   Image get dangolPick => Image.asset(
         'assets/image/icon/dangol_pick.png',
-        width: 44,
-        height: 44,
+        width: 25,
+        height: 14,
       );
   @override
   SvgPicture get addImage => SvgPicture.asset(
@@ -261,17 +261,27 @@ class DefaultImageSystem extends IImageSystem {
 
 // sell type icon
   @override
-  SvgPicture get quantityLimit => SvgPicture.asset(
-        'assets/image/icon/sell_type/quantity_limit.svg',
-        height: 16,
-        width: 16,
+  SvgPicture groupBuying({double? size, Color? color}) => SvgPicture.asset(
+        'assets/image/icon/sell_type/group_buying.svg',
+        height: size ?? 12,
+        width: size ?? 12,
+        color: color,
       );
 
   @override
-  SvgPicture get timeLimit => SvgPicture.asset(
+  SvgPicture quantityLimit({double? size, Color? color}) => SvgPicture.asset(
+        'assets/image/icon/sell_type/quantity_limit.svg',
+        height: size ?? 12,
+        width: size ?? 12,
+        color: color,
+      );
+
+  @override
+  SvgPicture timeLimit({double? size, Color? color}) => SvgPicture.asset(
         'assets/image/icon/sell_type/time_limit.svg',
-        height: 16,
-        width: 16,
+        height: size ?? 12,
+        width: size ?? 12,
+        color: color,
       );
 
   @override

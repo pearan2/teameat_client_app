@@ -654,7 +654,7 @@ class DefaultTextSystem extends ITextSystem {
   String get noTrimmed => '앞, 뒤 공백이 없어야 해요';
 
   @override
-  String get memberOneLineIntroduceError => '한줄 소개는 2자 이상, 30자 이하여야 해요';
+  String get userOneLineIntroduceError => '한줄 소개는 2자 이상, 30자 이하여야 해요';
 
   @override
   String get cameraInfoDesc => '구매하신 이용권을 QR코드 스캔으로 사용할 때 사용돼요';
@@ -889,4 +889,16 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get dangolPickCuratorNicknameFormat => '님의';
+
+  @override
+  String get userBirthYear => '출생년도 - (다른 유저에겐 공개되지 않아요)';
+
+  @override
+  String get userGender => '성별 - (다른 유저에겐 공개되지 않아요)';
+
+  @override
+  String get userBirthYearError => '1920 이상, 2020 이하 여야 해요';
+
+  @override
+  String get userBirthYearHelperText => '2001';
 }

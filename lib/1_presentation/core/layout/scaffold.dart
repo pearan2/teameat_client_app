@@ -80,7 +80,7 @@ class TEScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: onPop == null,
-      onPopInvoked: onPop,
+      onPopInvokedWithResult: (b, _) => onPop?.call(b),
       child: Stack(
         children: [
           _buildChild(),

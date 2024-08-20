@@ -612,7 +612,7 @@ class StoreItemGroupBuyButton extends GetView<StoreItemPageController> {
           text: DS.text.buy2Lonely,
           onTap: c.onGroupBuyingSelfClickHandler,
         )),
-        DS.space.hTiny,
+        DS.space.hXTiny,
         Expanded(
             child: TEPrimaryButton(
           isLoginRequired: true,
@@ -632,18 +632,17 @@ class StoreItemBuyButton extends GetView<StoreItemPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-      child: c.item.obx((item) => item.sellType == DS.text.groupBuying
-          ? StoreItemGroupBuyButton(tag: tag)
-          : TEPrimaryButton(
-              listenEventLoading: false,
-              onTap: () {
-                showTEBottomSheet(StoreItemBuyBottomButton(tag));
-              },
-              text: DS.text.buy,
-            )),
-    );
+    return c.item
+        .obx((item) => item.sellType == DS.text.groupBuying
+            ? StoreItemGroupBuyButton(tag: tag)
+            : TEPrimaryButton(
+                listenEventLoading: false,
+                onTap: () {
+                  showTEBottomSheet(StoreItemBuyBottomButton(tag));
+                },
+                text: DS.text.buy,
+              ))
+        .withBasePadding;
   }
 }
 

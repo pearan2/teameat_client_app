@@ -3,6 +3,29 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
+enum Gender {
+  female("female", "여성"),
+  male("male", "남성"),
+  other("other", "그외");
+
+  const Gender(this.code, this.title);
+
+  final String title;
+  final String code;
+
+  static Gender? fromCode(String? code) {
+    if (code == null) {
+      return null;
+    }
+    for (final gender in Gender.values) {
+      if (gender.code == code) {
+        return gender;
+      }
+    }
+    return null;
+  }
+}
+
 @freezed
 class BankAccount with _$BankAccount {
   const factory BankAccount({
@@ -26,6 +49,8 @@ class User with _$User {
     required String id,
     String? oneLineIntroduce,
     BankAccount? bankAccount,
+    String? birthYear,
+    String? gender,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
@@ -51,6 +76,8 @@ class UserUpdate with _$UserUpdate {
     required String nickname,
     String? oneLineIntroduce,
     BankAccount? bankAccount,
+    String? gender,
+    String? birthYear,
   }) = _UserUpdate;
 
   factory UserUpdate.fromJson(Map<String, Object?> json) =>

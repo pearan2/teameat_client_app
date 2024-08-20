@@ -124,6 +124,8 @@ abstract class ITextSystem {
   String get save;
   String get userMeInfo;
   String get userNickname;
+  String get userBirthYear;
+  String get userGender;
   String get userLoginType;
   String get userCreatedAt;
   String get userEmail;
@@ -214,7 +216,9 @@ abstract class ITextSystem {
   String get groupBuyingOpened;
   String get backToItemPage;
   String get noTrimmed;
-  String get memberOneLineIntroduceError;
+  String get userOneLineIntroduceError;
+  String get userBirthYearError;
+  String get userBirthYearHelperText;
   String get permissionSetting;
   String get locationInfoTitle;
   String get locationInfoDesc;

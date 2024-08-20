@@ -11,6 +11,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
+import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -48,6 +49,7 @@ class UserDetailPage extends GetView<UserPageController> {
               Padding(
                 padding: const EdgeInsets.all(AppWidget.horizontalPadding),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TECupertinoTextField(
@@ -84,14 +86,56 @@ class UserDetailPage extends GetView<UserPageController> {
                         return value.isEmpty ||
                             (value.length >= 2 && value.length <= 30);
                       },
+                      onEditingComplete: c.birthYearController.requestFocus,
+                      errorText: DS.text.userOneLineIntroduceError,
+                    ),
+                    DS.space.vSmall,
+                    Text(DS.text.userGender,
+                        style: DS.textStyle.paragraph3
+                            .copyWith(color: DS.color.background700)),
+                    DS.space.vTiny,
+                    Obx(() => TESelectorGrid<Gender>(
+                          selectedValues: c.gender == null ? [] : [c.gender!],
+                          candidates: Gender.values,
+                          numberOfRowChildren: Gender.values.length,
+                          onTap: (value) {
+                            if (c.gender == value) {
+                              c.gender = null;
+                            } else {
+                              c.gender = value;
+                            }
+                          },
+                          builder: (value, isSelected) => TEToggle(
+                            borderRadius: DS.space.tiny,
+                            text: value.title,
+                            isSelected: isSelected,
+                          ),
+                        )),
+                    DS.space.vBase,
+                    TECupertinoTextField(
+                      controller: c.birthYearController,
+                      autoFocus: false,
+                      hintText: DS.text.userBirthYearHelperText,
+                      helperText: DS.text.userBirthYear,
+                      keyboardType: TextInputType.number,
+                      validate: (value) {
+                        if (value.isEmpty) {
+                          return true;
+                        }
+                        final parsed = int.tryParse(value);
+                        if (parsed == null) {
+                          return false;
+                        }
+                        return parsed <= 2020 && parsed >= 1920;
+                      },
                       onEditingComplete: c.bankNameController.requestFocus,
-                      errorText: DS.text.memberOneLineIntroduceError,
+                      errorText: DS.text.userBirthYearError,
                     ),
                     DS.space.vMedium,
                     Text(DS.text.bankAccountInfo,
                         style: DS.textStyle.paragraph1
                             .copyWith(fontWeight: FontWeight.bold)),
-                    DS.space.vTiny,
+                    DS.space.vBase,
                     TECupertinoTextField(
                       controller: c.bankNameController,
                       autoFocus: false,

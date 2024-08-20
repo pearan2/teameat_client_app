@@ -54,6 +54,11 @@ class UserPageController extends PageController {
   final bankNameController = TECupertinoTextFieldController();
   final holderNameController = TECupertinoTextFieldController();
   final bankAccountNumberController = TECupertinoTextFieldController();
+  final birthYearController = TECupertinoTextFieldController();
+  final _gender = Rxn<Gender>();
+
+  Gender? get gender => _gender.value;
+  set gender(Gender? newValue) => _gender.value = newValue;
 
   void onReceiveGiftFromUrl() {
     final input = receiveGiftFromUrlController.text.trim();
@@ -137,6 +142,8 @@ class UserPageController extends PageController {
       bankAccountNumberController.text = r.bankAccount?.number ?? '';
       holderNameController.text = r.bankAccount?.holderName ?? '';
       bankNameController.text = r.bankAccount?.bankName ?? '';
+      gender = Gender.fromCode(r.gender);
+      birthYearController.text = r.birthYear ?? '';
       return right(r);
     });
   }
@@ -166,7 +173,8 @@ class UserPageController extends PageController {
         !oneLineIntroduceController.checkIsValid() ||
         !bankNameController.checkIsValid() ||
         !holderNameController.checkIsValid() ||
-        !bankAccountNumberController.checkIsValid()) {
+        !bankAccountNumberController.checkIsValid() ||
+        !birthYearController.checkIsValid()) {
       _isLoading.value = false;
       return;
     }
@@ -177,6 +185,7 @@ class UserPageController extends PageController {
     bankNameController.unFocus();
     holderNameController.unFocus();
     bankAccountNumberController.unFocus();
+    birthYearController.unFocus();
 
     late final BankAccount? bankAccount;
     if (bankNameController.text.isEmpty ||
@@ -206,6 +215,8 @@ class UserPageController extends PageController {
       nickname: nicknameController.text,
       oneLineIntroduce: oneLineIntroduceController.text,
       bankAccount: bankAccount,
+      birthYear: birthYearController.text,
+      gender: gender?.code,
     ));
     ret.fold((l) => showError(l.desc), (r) {
       react.back();
@@ -223,6 +234,7 @@ class UserPageController extends PageController {
     bankNameController.dispose();
     holderNameController.dispose();
     bankAccountNumberController.dispose();
+    birthYearController.dispose();
     super.onClose();
   }
 }

@@ -461,4 +461,32 @@ class DefaultImageSystem extends IImageSystem {
         width: size ?? 24,
         color: color,
       );
+
+  @override
+  SvgPicture get itemUsageGiftIcon => SvgPicture.asset(
+        'assets/image/icon/item_usage/gift.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get itemUsageInventoryIcon => SvgPicture.asset(
+        'assets/image/icon/item_usage/inventory.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get itemUsageMobileIcon => SvgPicture.asset(
+        'assets/image/icon/item_usage/mobile.svg',
+        height: 24,
+        width: 24,
+      );
+
+  @override
+  SvgPicture get itemUsageQrCodeIcon => SvgPicture.asset(
+        'assets/image/icon/item_usage/qr_code.svg',
+        height: 24,
+        width: 24,
+      );
 }

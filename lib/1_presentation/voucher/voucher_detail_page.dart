@@ -93,7 +93,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                 DS.space.vBase,
                 Obx(() => PageLoadingWrapper(
                         child: VoucherUseInfoRow(
-                            title: DS.text.expiredAt,
+                            title: DS.text.expiredDuration,
                             contents: [
                           controller.voucher.willBeExpiredAt
                               .format(DS.text.voucherExpiredAtFormat)

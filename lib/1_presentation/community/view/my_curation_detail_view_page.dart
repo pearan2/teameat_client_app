@@ -6,7 +6,6 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/2_application/community/my_curation_detail_view_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
@@ -42,7 +41,7 @@ class MyCurationDetailViewPage extends GetView<MyCurationDetailPageController> {
                     creatorOneLineIntroduce: me.oneLineIntroduce))),
             TEDivider.thin(),
             DS.space.vSmall,
-            InfoTitle(DS.text.storeItemPicture).withBasePadding,
+            InfoTitleText(DS.text.storeItemPicture).withBasePadding,
             DS.space.vSmall,
             c.curation
                 .obx(
@@ -57,7 +56,7 @@ class MyCurationDetailViewPage extends GetView<MyCurationDetailPageController> {
             DS.space.vSmall,
             TEDivider.thick(),
             DS.space.vSmall,
-            InfoTitle(DS.text.itemDescriptionByCurator).withBasePadding,
+            InfoTitleText(DS.text.itemDescriptionByCurator).withBasePadding,
             DS.space.vSmall,
             c.curation.obx((curation) => CurationInfo(curation)),
             DS.space.vSmall,

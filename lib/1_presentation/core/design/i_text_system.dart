@@ -3,7 +3,7 @@ abstract class ITextSystem {
   String get nearbyMe;
   String get itemUsageInfo;
   String get yyyyMMddBasicFormat;
-  String get expiredAt;
+  String get expiredDuration;
   String get phone;
   String get operationTime;
   String get breakTime;
@@ -319,4 +319,38 @@ abstract class ITextSystem {
   String get storeAddress;
 
   String get dangolPickCuratorNicknameFormat;
+
+  String get openedGroupBuyingNotFound;
+  String get day;
+
+  String get publisher;
+  String get voucherProvider;
+  String get voucherCanBeUsedAt;
+
+  String get voucherCanBeUsedOnlyEnteredStore;
+  String get storeItemNoticeInformation;
+  String get storeItemUsageInformation;
+
+  String get itemUsageVoucherInformation;
+  String get itemUsageQrCodeInformation;
+  String get itemUsageMobileInformation;
+  String get itemUsageGiftInformation;
+
+  String get itemRefundNotice;
+  String get itemRefundNoticeRefundMethodTitle;
+  String get itemRefundNoticeWithdrawalTitle;
+  String get itemRefundNoticeAfterExpiredTitle;
+  String get itemRefundNoticeRefundMethodContent;
+  String get itemRefundNoticeWithdrawalContent;
+  String get itemRefundNoticeAfterExpiredContent;
+
+  String get itemPurchaseWarning;
+  String get itemPurchaseWarningRefundAmountTitle;
+  String get itemPurchaseWarningPrivacyTitle;
+  String get itemPurchaseWarningUsageLimitationTitle;
+  String get itemPurchaseWarningLawInfoTitle;
+  String get itemPurchaseWarningRefundAmountContent;
+  String get itemPurchaseWarningPrivacyContent;
+  String get itemPurchaseWarningUsageLimitationContent;
+  String get itemPurchaseWarningLawInfoContent;
 }

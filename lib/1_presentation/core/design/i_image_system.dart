@@ -88,4 +88,10 @@ abstract class IImageSystem {
   // pay logo
   Image get kakaopayLogo;
   Image get tosspayLogo;
+
+  /// item usage
+  SvgPicture get itemUsageInventoryIcon;
+  SvgPicture get itemUsageQrCodeIcon;
+  SvgPicture get itemUsageMobileIcon;
+  SvgPicture get itemUsageGiftIcon;
 }

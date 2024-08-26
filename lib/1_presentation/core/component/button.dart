@@ -121,7 +121,7 @@ class TEMainButton extends GetView<LoadingProvider> {
         decoration: BoxDecoration(
           border: _buildBorder(),
           color: fillColor,
-          borderRadius: BorderRadius.circular(borderRadius ?? DS.space.tiny),
+          borderRadius: BorderRadius.circular(borderRadius ?? DS.space.xTiny),
           boxShadow: withShadow
               ? [
                   BoxShadow(

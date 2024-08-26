@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/distance.dart';
+import 'package:teameat/1_presentation/core/component/expandable.dart';
 import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/container.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
@@ -480,20 +482,9 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
       return const SizedBox();
     }
 
-    return Container(
-      alignment: Alignment.centerLeft,
+    return TEGradientContainer(
       height: DS.space.medium,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
-        gradient: const LinearGradient(
-          begin: Alignment(0, -1),
-          end: Alignment(0, 1),
-          colors: [
-            Color.fromRGBO(0, 0, 0, 0.4),
-            Color.fromRGBO(0, 0, 0, 0.0),
-          ],
-        ),
-      ),
+      borderRadius: borderRadius,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -718,6 +709,88 @@ class StoreItemInSaleIcon extends StatelessWidget {
           DS.space.hXXTiny,
           Text(DS.text.inSale, style: DS.textStyle.caption2.h14.p700.semiBold),
         ],
+      ),
+    );
+  }
+}
+
+class _NoticeText extends StatelessWidget {
+  final String title;
+  final String content;
+  const _NoticeText(this.title, this.content);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: DS.textStyle.caption1.b700.h14),
+        Text(content, style: DS.textStyle.caption1.b500.h14)
+      ],
+    );
+  }
+}
+
+class StoreItemNotice extends StatelessWidget {
+  final String title;
+  final List<String> titles;
+  final List<String> contents;
+
+  const StoreItemNotice(this.title,
+      {super.key, required this.titles, required this.contents})
+      : assert(titles.length == contents.length);
+
+  factory StoreItemNotice.refund() {
+    return StoreItemNotice(
+      DS.text.itemRefundNotice,
+      titles: [
+        DS.text.itemRefundNoticeRefundMethodTitle,
+        DS.text.itemRefundNoticeWithdrawalTitle,
+        DS.text.itemRefundNoticeAfterExpiredTitle
+      ],
+      contents: [
+        DS.text.itemRefundNoticeRefundMethodContent,
+        DS.text.itemRefundNoticeWithdrawalContent,
+        DS.text.itemRefundNoticeAfterExpiredContent
+      ],
+    );
+  }
+
+  factory StoreItemNotice.warning() {
+    return StoreItemNotice(
+      DS.text.itemPurchaseWarning,
+      titles: [
+        DS.text.itemPurchaseWarningRefundAmountTitle,
+        DS.text.itemPurchaseWarningPrivacyTitle,
+        DS.text.itemPurchaseWarningUsageLimitationTitle,
+        DS.text.itemPurchaseWarningLawInfoTitle,
+      ],
+      contents: [
+        DS.text.itemPurchaseWarningRefundAmountContent,
+        DS.text.itemPurchaseWarningPrivacyContent,
+        DS.text.itemPurchaseWarningUsageLimitationContent,
+        DS.text.itemPurchaseWarningLawInfoContent,
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TEExpandable(
+      header: Container(
+        height: DS.space.large,
+        alignment: Alignment.centerLeft,
+        child: Text(title, style: DS.textStyle.paragraph2.b800),
+      ),
+      spaceHeaderAndContent: 0.0,
+      content: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemBuilder: (_, idx) => _NoticeText(titles[idx], contents[idx]),
+        separatorBuilder: (_, __) => DS.space.vBase,
+        itemCount: titles.length,
       ),
     );
   }

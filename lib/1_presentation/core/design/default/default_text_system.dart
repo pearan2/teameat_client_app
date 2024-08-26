@@ -17,7 +17,7 @@ class DefaultTextSystem extends ITextSystem {
   String get breakTime => '브레이크타임';
 
   @override
-  String get expiredAt => '유효기간';
+  String get expiredDuration => '유효기간';
 
   @override
   String get lastOrderTime => '라스트오더';
@@ -901,4 +901,87 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get userBirthYearHelperText => '2001';
+
+  @override
+  String get openedGroupBuyingNotFound => '아직 열려있는 팀구매가 없어요';
+
+  @override
+  String get day => '일';
+
+  @override
+  String get publisher => '발행자';
+
+  @override
+  String get voucherCanBeUsedAt => '사용처';
+
+  @override
+  String get voucherProvider => '이용권 공급자';
+
+  @override
+  String get voucherCanBeUsedOnlyEnteredStore => '등록된 가맹점에서만 사용 가능';
+
+  @override
+  String get storeItemNoticeInformation => '상품고시정보';
+
+  @override
+  String get storeItemUsageInformation => '사용방법';
+
+  @override
+  String get itemUsageGiftInformation => '구매한 이용권은\n보관함에서 선물하기가 가능해요';
+
+  @override
+  String get itemUsageMobileInformation => '이용권 사용 스캔 후\n화면을 사장님께 보여주세요';
+
+  @override
+  String get itemUsageQrCodeInformation => '사용 매장에서\nQR코드를 스캔해서 사용할 수 있어요';
+
+  @override
+  String get itemUsageVoucherInformation => '구매한 이용권은\n보관함에서 사용할 수 있어요';
+
+  @override
+  String get itemRefundNoticeAfterExpiredContent =>
+      '유효기간 만료 후에는 환불이 불가능합니다.\n유효기간 만료 전까지 사용되지 않은 상품권에 대해 환불을 요청할 수 있으며, 이 경우 구매자는 실결제가의 90%를 환불받을 수 있습니다.';
+
+  @override
+  String get itemRefundNoticeAfterExpiredTitle => '유효기간 만료 후';
+
+  @override
+  String get itemRefundNoticeRefundMethodContent =>
+      "보관함-이용권-환불하기 버튼을 통한 환불 혹은 '프로필'고객문의를 통한 카카오 문의로 가능합니다.";
+
+  @override
+  String get itemRefundNoticeRefundMethodTitle => '환불방법';
+
+  @override
+  String get itemRefundNoticeWithdrawalContent =>
+      "구매 후 7일 이내에 구매자는 실결제가의 100%에 대해 환불 요청이 가능합니다. 유효기간 만료 전까지 수신자는 실결제가의 90%에 대해 환불을 요청 할 수 있습니다.\n환불 요청은 팀잇 앱 내의 '보관함'에서 처리할 수 있습니다.";
+
+  @override
+  String get itemRefundNoticeWithdrawalTitle => '구매자 취소 가능(청약철회)';
+
+  @override
+  String get itemRefundNotice => '환불안내';
+
+  @override
+  String get itemPurchaseWarning => '구매 시 주의사항';
+  @override
+  String get itemPurchaseWarningRefundAmountTitle => '환불 금액';
+  @override
+  String get itemPurchaseWarningPrivacyTitle => '개인 정보 확인';
+  @override
+  String get itemPurchaseWarningUsageLimitationTitle => '사용제한';
+  @override
+  String get itemPurchaseWarningLawInfoTitle => '법적 고지';
+  @override
+  String get itemPurchaseWarningRefundAmountContent =>
+      '환불은 실제 결제 금액을 기준으로 하며, 환불 시 실제 환불 금액과 차이가 발생할 수 있습니다.';
+  @override
+  String get itemPurchaseWarningPrivacyContent =>
+      '환불 신청 시 본인인증 및 본인계좌 확인이 필요할 수 있습니다.';
+  @override
+  String get itemPurchaseWarningUsageLimitationContent =>
+      '일부 가맹점에서는 사용이 제한될 수 있습니다. 사용 전에 미리 확인해 주세요.';
+  @override
+  String get itemPurchaseWarningLawInfoContent =>
+      '미성년자가 상품권을 구매할 경우, 법정대리인의 동의가 필요합니다. 법정대리인의 동의 없이 구매된 상품권은 취소가 가능합니다.';
 }

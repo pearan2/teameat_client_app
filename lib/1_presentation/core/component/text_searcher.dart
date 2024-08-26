@@ -17,6 +17,7 @@ class TextSearchButton<T extends ISearchHistoryRepository>
   final TextEditingController? controller;
   final String? value;
   final String? hintText;
+  final Widget? label;
 
   const TextSearchButton({
     super.key,
@@ -25,6 +26,7 @@ class TextSearchButton<T extends ISearchHistoryRepository>
     this.controller,
     this.value,
     this.hintText,
+    this.label,
   });
 
   void onTap() {
@@ -47,10 +49,12 @@ class TextSearchButton<T extends ISearchHistoryRepository>
   Widget build(BuildContext context) {
     return TEonTap(
         onTap: onTap,
-        child: DS.image.searchLg(
-            color: value.isEmpty()
-                ? DS.color.background700
-                : DS.color.primary600));
+        child: label != null
+            ? label!
+            : DS.image.searchLg(
+                color: value.isEmpty()
+                    ? DS.color.background700
+                    : defaultButtonActiveColor));
   }
 }
 
@@ -177,6 +181,7 @@ class TextSearcher extends StatefulWidget {
   final bool autoFocus;
   final bool isRightIcon;
   final void Function(String)? onChanged;
+  final bool enabled;
 
   const TextSearcher(
       {super.key,
@@ -187,6 +192,7 @@ class TextSearcher extends StatefulWidget {
       this.isRightIcon = false,
       this.hintText,
       this.controller,
+      this.enabled = true,
       this.value});
 
   @override
@@ -233,6 +239,7 @@ class _TextSearcherState extends State<TextSearcher> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      enabled: widget.enabled,
       controller: controller,
       focusNode: focusNode,
       onEditingComplete: () {

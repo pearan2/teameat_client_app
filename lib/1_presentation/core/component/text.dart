@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -138,6 +140,152 @@ class TELeftRightText extends StatelessWidget {
         divider,
         _toWidget(right),
       ],
+    );
+  }
+}
+
+class TEDDateText extends StatefulWidget {
+  final DateTime futurePoint;
+  final bool withMillis;
+  final TextStyle style;
+  final int countdownMillis;
+
+  const TEDDateText({
+    super.key,
+    required this.futurePoint,
+    required this.withMillis,
+    required this.style,
+    this.countdownMillis = 100,
+  });
+
+  @override
+  State<TEDDateText> createState() => _TEDDateTextState();
+}
+
+class _TEDDateTextState extends State<TEDDateText> {
+  int millis = 0;
+  Timer? timer;
+  late Duration diff;
+
+  void timerCallback() {
+    setState(() => millis += widget.countdownMillis);
+  }
+
+  void init() {
+    millis = 0;
+    timer?.cancel();
+    diff = widget.futurePoint.difference(DateTime.now());
+    timer = Timer.periodic(Duration(milliseconds: widget.countdownMillis),
+        (timer) => timerCallback());
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  String calcRemainSaleDuration() {
+    final remainMillis = diff.inMilliseconds - millis;
+
+    final remainSec = remainMillis ~/ 1000;
+    final intDay = remainSec ~/ (3600 * 24);
+    final intHour = remainSec % (3600 * 24) ~/ 3600;
+    final intMin = remainSec % 3600 ~/ 60;
+    final intSec = remainSec % 60;
+
+    String hourString = intHour.toString();
+    if (hourString.length == 1) {
+      hourString = '0$hourString';
+    }
+    String minString = intMin.toString();
+    if (minString.length == 1) {
+      minString = '0$minString';
+    }
+    String secString = intSec.toString();
+    if (secString.length == 1) {
+      secString = '0$secString';
+    }
+    String timeString = '$hourString:$minString:$secString';
+    if (widget.withMillis) {
+      timeString += '.${((remainMillis % 1000) / 100).floor()}';
+    }
+    if (intDay > 0) {
+      timeString = '$intDay${DS.text.day} $timeString';
+    }
+    return timeString;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(calcRemainSaleDuration(), style: widget.style);
+  }
+}
+
+class TETitleContentText extends StatelessWidget {
+  final List<String> titles;
+  final List<String> contents;
+
+  final TextStyle titleStyle;
+  final TextStyle contentStyle;
+
+  final double spaceBetweenTitleAndContent;
+  final double spaceBetweenRows;
+
+  const TETitleContentText({
+    super.key,
+    required this.titles,
+    required this.contents,
+    required this.titleStyle,
+    required this.contentStyle,
+    this.spaceBetweenTitleAndContent = 4.0,
+    this.spaceBetweenRows = 4.0,
+  }) : assert(titles.length == contents.length);
+
+  Widget _buildRow(String title, String content) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: titleStyle),
+        SizedBox(width: spaceBetweenTitleAndContent),
+        Flexible(child: Text(content, style: contentStyle)),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemBuilder: (_, idx) => _buildRow(titles[idx], contents[idx]),
+      separatorBuilder: (_, __) => SizedBox(height: spaceBetweenRows),
+      itemCount: titles.length,
+    );
+  }
+}
+
+class InfoTitleText extends StatelessWidget {
+  final String text;
+
+  const InfoTitleText(this.text, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: DS.textStyle.paragraph2.copyWith(
+        color: DS.color.background800,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

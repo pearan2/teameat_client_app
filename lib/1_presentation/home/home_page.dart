@@ -11,6 +11,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
@@ -47,7 +48,8 @@ class HomePage extends GetView<HomePageController> {
             onRefresh: controller.refreshPage,
             child: CustomScrollView(
               controller: scrollController,
-              physics: const ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               slivers: [
                 SliverAppBar(
                   backgroundColor: DS.color.background000,
@@ -98,15 +100,17 @@ class HomePageSearcher extends GetView<HomePageController> {
       children: [
         DS.image.mainIconSm,
         DS.space.hXSmall,
-        Obx(
-          () => Expanded(
-            child: TextSearcher(
-              onCompleted: controller.onSearchTextCompleted,
-              value: controller.searchOption.searchText,
-              isRightIcon: true,
-            ),
-          ),
-        ),
+        Expanded(
+            child: Obx(() => TextSearchButton<StoreItemSearchHistoryRepository>(
+                  onCompleted: c.onSearchTextCompleted,
+                  value: controller.searchOption.searchText,
+                  label: TextSearcher(
+                    value: controller.searchOption.searchText,
+                    onCompleted: (_) {},
+                    enabled: false,
+                    isRightIcon: true,
+                  ),
+                ))),
         DS.space.hTiny,
         Obx(() => TESelectorBottomSheet<int?>(
               candidates: const [500, 1000, 2000, null],

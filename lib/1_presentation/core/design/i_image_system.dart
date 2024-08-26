@@ -82,6 +82,7 @@ abstract class IImageSystem {
   /// banner & guide
   Image get communityBanner1;
   Image get curationGuide;
+  SvgPicture get reward;
 
   SvgPicture get selected;
 

@@ -92,7 +92,7 @@ class BannerSliver extends StatelessWidget {
       flexibleSpace: TEonTap(
         onTap: () {
           Get.to(
-            const CurationGuidePage(),
+            const CurationRewardGuidePage(),
             duration: const Duration(milliseconds: 200),
             transition: Transition.rightToLeft,
           );

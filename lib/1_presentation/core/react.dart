@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:teameat/0_config/page_config.dart';
+import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
@@ -237,5 +238,14 @@ class React extends IReact {
   @override
   void toBlockPage(BlockTargetType targetType) {
     Get.toNamed('/user/block', arguments: {'blockTargetType': targetType});
+  }
+
+  @override
+  void toCurationRewardGuide() {
+    Get.to(
+      const CurationRewardGuidePage(),
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
   }
 }

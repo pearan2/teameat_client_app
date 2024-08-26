@@ -50,6 +50,8 @@ abstract class IRouter {
 
   void toUserCuration();
 
+  void toCurationRewardGuide();
+
   void toBlockPage(BlockTargetType targetType);
 
   Future<bool> toCurationCreate(MyCurationDetail? curation);

@@ -489,4 +489,11 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 24,
       );
+
+  @override
+  SvgPicture get reward => SvgPicture.asset(
+        'assets/image/icon/reward.svg',
+        height: 24,
+        width: 24,
+      );
 }

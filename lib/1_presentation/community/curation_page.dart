@@ -86,13 +86,24 @@ class CurationPageToolbar extends GetView<CurationPageController> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [DS.space.hXBase, DS.space.hXSmall, DS.space.hXBase],
+                children: [
+                  DS.space.hBase,
+                  DS.space.hXSmall,
+                  DS.space.hXBase,
+                  DS.space.hXSmall,
+                  DS.space.hXBase
+                ],
               ),
               Text(DS.text.curation,
                   style: DS.textStyle.paragraph2.semiBold.b800),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  TEonTap(
+                    onTap: c.react.toCurationRewardGuide,
+                    child: DS.image.reward,
+                  ),
+                  DS.space.hXSmall,
                   Obx(() => TextSearchButton<CurationSearchHistoryRepository>(
                         onCompleted: c.onSearchTextCompleted,
                         value: controller.searchOption.searchText,

@@ -85,18 +85,20 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     int? withInMeter,
     required int pageNumber,
     required int pageSize,
+    int? randomSeed,
   }) = _SearchStoreSimpleList;
 
   factory SearchStoreSimpleList.empty() {
-    return const SearchStoreSimpleList(
+    return SearchStoreSimpleList(
       address: "",
       searchText: "",
-      hashTags: [],
-      categories: [],
+      hashTags: const [],
+      categories: const [],
       baseLocation: null,
       withInMeter: null,
       pageNumber: 0,
       pageSize: 10,
+      randomSeed: Random().nextInt(10000),
     );
   }
   factory SearchStoreSimpleList.fromJson(Map<String, Object?> json) =>
@@ -117,6 +119,10 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     }
     ret['pageNumber'] = target.pageNumber.toString();
     ret['pageSize'] = target.pageSize.toString();
+    if (target.randomSeed != null) {
+      ret['randomSeed'] = target.randomSeed.toString();
+    }
+
     return ret;
   }
 }

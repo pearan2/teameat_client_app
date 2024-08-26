@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -56,7 +58,8 @@ class HomePageController extends PageController {
   }
 
   Future<void> refreshPage() async {
-    _searchOption.value = searchOption.copyWith(pageNumber: 0);
+    _searchOption.value = searchOption.copyWith(
+        pageNumber: 0, randomSeed: Random().nextInt(10000));
     pagingController.error = '';
     pagingController.refresh();
     pagingController.error = null;

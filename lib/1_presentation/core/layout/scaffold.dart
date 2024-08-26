@@ -7,7 +7,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 
 class TEScaffold extends StatelessWidget {
-  static const iosBottomPadding = 24.0;
+  static const iosBottomPadding = 20.0;
   static const androidBottomPadding = 0.0;
 
   final Widget body;
@@ -164,7 +164,7 @@ class _InnerScaffoldState extends State<_InnerScaffold> {
           height: DS.space.large,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: DS.color.primary600,
+            color: DS.color.primary700,
             borderRadius: const BorderRadius.all(Radius.circular(300)),
           ),
           child: widget.floatingButtonIcon ??
@@ -275,7 +275,7 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
   }
 
   Text getTextClicked() {
-    return getText(color: DS.color.primary600);
+    return getText(color: DS.color.primary700);
   }
 
   Text getText({Color? color}) {

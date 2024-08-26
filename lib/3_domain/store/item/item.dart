@@ -73,6 +73,7 @@ class ItemDetail with _$ItemDetail {
     required String originInformation,
     required List<dynamic> imageUrls,
     MyCurationMain? curation,
+    required DateTime activatedAt,
   }) = _ItemDetail;
 
   factory ItemDetail.fromJson(Map<String, Object?> json) =>
@@ -95,6 +96,7 @@ class ItemDetail with _$ItemDetail {
       numberOfLikes: 824,
       willBeExpiredAt: DateTime.now(),
       originInformation: "원산지 정보",
+      activatedAt: DateTime.now(),
       imageUrls: List.generate(
           5,
           (_) =>

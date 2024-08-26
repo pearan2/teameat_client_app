@@ -630,19 +630,23 @@ class StoreItemBuyButton extends GetView<StoreItemPageController> {
   final String tag;
   const StoreItemBuyButton({super.key, required this.tag});
 
+  Widget _buildChild() {
+    return c.item.obx((item) => item.sellType == DS.text.groupBuying
+        ? StoreItemGroupBuyButton(tag: tag)
+        : TEPrimaryButton(
+            listenEventLoading: false,
+            onTap: () {
+              showTEBottomSheet(StoreItemBuyBottomButton(tag));
+            },
+            text: DS.text.buy,
+          ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return c.item
-        .obx((item) => item.sellType == DS.text.groupBuying
-            ? StoreItemGroupBuyButton(tag: tag)
-            : TEPrimaryButton(
-                listenEventLoading: false,
-                onTap: () {
-                  showTEBottomSheet(StoreItemBuyBottomButton(tag));
-                },
-                text: DS.text.buy,
-              ))
-        .withBasePadding;
+    return Container(
+      child: _buildChild(),
+    );
   }
 }
 

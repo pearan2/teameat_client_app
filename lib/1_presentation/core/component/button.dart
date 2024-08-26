@@ -22,6 +22,9 @@ import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+final defaultButtonActiveColor = DS.color.primary700;
+final defaultButtonToneDownActiveColor = DS.color.primary600;
+
 class TEMainButton extends GetView<LoadingProvider> {
   final void Function()? onTap;
   final bool isLoginRequired;
@@ -156,6 +159,7 @@ class TEPrimaryButton extends StatelessWidget {
   final bool fitContentWidth;
   final double? borderRadius;
   final bool withShadow;
+  final bool isToneDown;
 
   const TEPrimaryButton({
     super.key,
@@ -171,6 +175,7 @@ class TEPrimaryButton extends StatelessWidget {
     this.borderRadius,
     this.fitContentWidth = false,
     this.withShadow = false,
+    this.isToneDown = false,
   });
 
   @override
@@ -183,7 +188,9 @@ class TEPrimaryButton extends StatelessWidget {
       height: height,
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
-      fillColor: DS.color.primary600,
+      fillColor: isToneDown
+          ? defaultButtonToneDownActiveColor
+          : defaultButtonActiveColor,
       contentColor: DS.color.background000,
       contentHorizontalPadding: contentHorizontalPadding,
       contentVerticalPadding: contentVerticalPadding,
@@ -260,6 +267,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
   final bool fitContentWidth;
   final double? borderRadius;
   final bool withShadow;
+  final bool isToneDown;
 
   const TESecondaryButton({
     super.key,
@@ -275,6 +283,7 @@ class TESecondaryButton extends GetView<LoadingProvider> {
     this.borderRadius,
     this.fitContentWidth = false,
     this.withShadow = false,
+    this.isToneDown = false,
   });
 
   @override
@@ -288,8 +297,12 @@ class TESecondaryButton extends GetView<LoadingProvider> {
       isLoginRequired: isLoginRequired,
       listenEventLoading: listenEventLoading,
       fillColor: DS.color.background000,
-      contentColor: DS.color.primary600,
-      borderColor: DS.color.primary600,
+      contentColor: isToneDown
+          ? defaultButtonToneDownActiveColor
+          : defaultButtonActiveColor,
+      borderColor: isToneDown
+          ? defaultButtonToneDownActiveColor
+          : defaultButtonActiveColor,
       borderWidth: DS.space.xxTiny,
       contentHorizontalPadding: contentHorizontalPadding,
       contentVerticalPadding: contentVerticalPadding,
@@ -507,7 +520,8 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
         getDefaultColor?.call(value) ?? DS.color.background800;
 
     return DS.textStyle.paragraph2.copyWith(
-      color: isSelected(value) ? DS.color.primary600 : defaultColorFromCustom,
+      color:
+          isSelected(value) ? defaultButtonActiveColor : defaultColorFromCustom,
       fontWeight: isSelected(value) ? FontWeight.w600 : null,
     );
   }
@@ -583,7 +597,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(
-            color: selectedValue == null ? bColor : DS.color.primary600),
+            color: selectedValue == null ? bColor : defaultButtonActiveColor),
         color: bColor,
         borderRadius: BorderRadius.circular(borderRadius ?? 300.0),
       ),
@@ -975,7 +989,7 @@ class TEOnOffTextButton extends StatelessWidget {
       iconBuilder: (on) => Container(
         width: DS.space.xBase,
         height: DS.space.xBase,
-        color: on ? DS.color.primary600 : DS.color.background300,
+        color: on ? defaultButtonActiveColor : DS.color.background300,
       ),
       indicatorSize: Size.fromWidth(DS.space.xBase),
       spacing: DS.space.medium,
@@ -1006,9 +1020,9 @@ class TEOnOffButton extends StatelessWidget {
       loading: isLoading,
       indicatorTransition: const ForegroundIndicatorTransition.fading(),
       styleBuilder: (on) => ToggleStyle(
-        indicatorColor: on ? DS.color.primary700 : DS.color.background300,
-        backgroundColor: on ? DS.color.primary700 : DS.color.background300,
-        borderColor: on ? DS.color.primary700 : DS.color.background300,
+        indicatorColor: on ? defaultButtonActiveColor : DS.color.background300,
+        backgroundColor: on ? defaultButtonActiveColor : DS.color.background300,
+        borderColor: on ? defaultButtonActiveColor : DS.color.background300,
       ),
       animationDuration: const Duration(milliseconds: 300),
       iconBuilder: (on) => Container(
@@ -1188,7 +1202,7 @@ class _TELoadingButtonState extends State<TELoadingButton> {
     if (isLoading) {
       return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: DS.color.primary600),
+          border: Border.all(color: defaultButtonToneDownActiveColor),
           borderRadius: BorderRadius.circular(DS.space.xTiny),
         ),
         alignment: Alignment.center,
@@ -1204,6 +1218,7 @@ class _TELoadingButtonState extends State<TELoadingButton> {
       width: widget.width,
       height: widget.height,
       textStyle: DS.textStyle.caption2,
+      isToneDown: true,
       onTap: onTap,
     );
   }
@@ -1275,7 +1290,7 @@ class _FollowState extends State<Follow> {
   Widget _buildLoading() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: DS.color.primary600),
+        border: Border.all(color: defaultButtonToneDownActiveColor),
         borderRadius: BorderRadius.circular(DS.space.xTiny),
       ),
       alignment: Alignment.center,
@@ -1310,6 +1325,7 @@ class _FollowState extends State<Follow> {
         height: height,
         textStyle: DS.textStyle.caption2,
         onTap: follow,
+        isToneDown: true,
       );
     }
   }

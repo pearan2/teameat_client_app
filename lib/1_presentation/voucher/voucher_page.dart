@@ -77,7 +77,7 @@ class VoucherPage extends GetView<VoucherPageController> {
                               textUnSelected: DS.color.background000,
                               textSelected: DS.color.background000,
                               boxUnSelected: DS.color.background500,
-                              boxSelected: DS.color.primary600,
+                              boxSelected: DS.color.primary700,
                               borderRadius: 300,
                               text: value.title,
                               isSelected: isSelected,

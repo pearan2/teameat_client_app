@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/design/i_image_system.dart';
 
@@ -317,7 +318,7 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get locationActivated => SvgPicture.asset(
         'assets/image/icon/location.svg',
-        color: DS.color.primary600,
+        color: defaultButtonActiveColor,
         height: 20,
         width: 20,
       );
@@ -339,7 +340,7 @@ class DefaultImageSystem extends IImageSystem {
   @override
   SvgPicture get mapActivated => SvgPicture.asset(
         'assets/image/icon/map.svg',
-        color: DS.color.primary600,
+        color: defaultButtonActiveColor,
         height: 20,
         width: 20,
       );

@@ -175,6 +175,7 @@ class TextSearcher extends StatefulWidget {
   final String? value;
   final String? hintText;
   final bool autoFocus;
+  final bool isRightIcon;
   final void Function(String)? onChanged;
 
   const TextSearcher(
@@ -183,6 +184,7 @@ class TextSearcher extends StatefulWidget {
       this.onChanged,
       this.focusNode,
       this.autoFocus = false,
+      this.isRightIcon = false,
       this.hintText,
       this.controller,
       this.value});
@@ -239,16 +241,16 @@ class _TextSearcherState extends State<TextSearcher> {
       },
       onChanged: widget.onChanged,
       cursorColor: DS.color.primary600,
-      padding: EdgeInsets.symmetric(
-          horizontal: DS.space.xSmall, vertical: DS.space.tiny),
-      prefix: Padding(
-        padding: EdgeInsets.only(left: DS.space.xSmall),
-        child: DS.image.searchSm,
-      ),
-      placeholderStyle:
-          DS.textStyle.caption1.h13.copyWith(color: DS.color.background600),
+      padding: EdgeInsets.all(DS.space.tiny),
+      prefix: widget.isRightIcon
+          ? null
+          : DS.image.searchSm.paddingOnly(left: DS.space.tiny),
+      suffix: !widget.isRightIcon
+          ? null
+          : DS.image.searchSm.paddingOnly(right: DS.space.tiny),
+      placeholderStyle: DS.textStyle.caption1.b500,
       placeholder: widget.hintText ?? DS.text.textSearcherPlaceHolder,
-      style: DS.textStyle.caption1.h13,
+      style: DS.textStyle.caption1.b800,
       decoration: BoxDecoration(
         color: DS.color.background100,
         borderRadius: BorderRadius.circular(DS.space.xTiny),

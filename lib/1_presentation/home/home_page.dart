@@ -12,6 +12,7 @@ import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:teameat/main.dart';
 
@@ -26,7 +27,6 @@ class HomePage extends GetView<HomePageController> {
 
     final scrollController = ScrollController();
 
-    final toolbarHeight = DS.space.base;
     return Obx(
       () => TEScaffold(
         loadingText: DS.text.accessToLocationPleaseWait,
@@ -54,11 +54,13 @@ class HomePage extends GetView<HomePageController> {
                   surfaceTintColor: DS.color.background000,
                   snap: true,
                   floating: true,
-                  toolbarHeight: toolbarHeight,
+                  primary: false,
+                  toolbarHeight: DS.space.large,
                   expandedHeight:
                       GetPlatform.isAndroid ? DS.space.medium : null,
                   flexibleSpace: const HomePageSearcher(),
                 ),
+                DS.space.vXSmall.toSliver,
                 PagedSliverGrid(
                     pagingController: controller.pagingController,
                     builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
@@ -92,62 +94,57 @@ class HomePageSearcher extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: DS.color.background000,
-      ),
-      child: Row(
-        children: [
-          DS.image.mainIconSm,
-          DS.space.hTiny,
-          Obx(() => TESelectorBottomSheet<int?>(
-                borderRadius: DS.space.tiny,
-                candidates: const [500, 1000, 2000, null],
-                onSelected: c.onWithInMeterChanged,
-                isEqual: (lhs, rhs) => lhs == rhs,
-                toLabel: (v) {
-                  if (v == null) {
-                    return DS.text.noDistanceLimit;
-                  } else {
-                    return v.format(DS.text.withInMeterFormat);
-                  }
-                },
-                // icon: Icons.location_pin,
-                selectedValue: controller.withInMeter,
-                text: DS.text.distance,
-              )),
-          DS.space.hTiny,
-          Obx(() => TESelectorBottomSheet<SearchableAddress?>(
-                borderRadius: DS.space.tiny,
-                candidates: [...c.searchableAddresses, null],
-                onSelected: c.onSelectedAddressChanged,
-                isEqual: (lhs, rhs) => lhs == rhs,
-                toLabel: (v) {
-                  if (v == null) {
-                    return DS.text.noEupMyeonDongLimit;
-                  } else {
-                    return v.toFullAddress();
-                  }
-                },
-                selectedValue: c.selectedAddress,
-                title: c.searchableAddresses.length
-                    .format(DS.text.numberOfServicedEupMyeonDongFormat),
-                text: DS.text.searchEupMyeonDong,
-              )),
-          DS.space.hTiny,
-          Obx(
-            () => Expanded(
-              child: TextSearcher(
-                onCompleted: controller.onSearchTextCompleted,
-                value: controller.searchOption.searchText,
-              ),
+    return Row(
+      children: [
+        DS.image.mainIconSm,
+        DS.space.hXSmall,
+        Obx(
+          () => Expanded(
+            child: TextSearcher(
+              onCompleted: controller.onSearchTextCompleted,
+              value: controller.searchOption.searchText,
+              isRightIcon: true,
             ),
           ),
-        ],
-      ),
+        ),
+        DS.space.hTiny,
+        Obx(() => TESelectorBottomSheet<int?>(
+              candidates: const [500, 1000, 2000, null],
+              onSelected: c.onWithInMeterChanged,
+              isEqual: (lhs, rhs) => lhs == rhs,
+              toLabel: (v) {
+                if (v == null) {
+                  return DS.text.noDistanceLimit;
+                } else {
+                  return v.format(DS.text.withInMeterFormat);
+                }
+              },
+              selectedValue: controller.withInMeter,
+              icon: DS.image.location,
+              iconActivated: DS.image.locationActivated,
+            )),
+        DS.space.hXSmall,
+        Obx(() => TESelectorBottomSheet<SearchableAddress?>(
+              candidates: [...c.searchableAddresses, null],
+              onSelected: c.onSelectedAddressChanged,
+              isEqual: (lhs, rhs) => lhs == rhs,
+              toLabel: (v) {
+                if (v == null) {
+                  return DS.text.noEupMyeonDongLimit;
+                } else {
+                  return v.toFullAddress();
+                }
+              },
+              selectedValue: c.selectedAddress,
+              title: c.searchableAddresses.length
+                  .format(DS.text.numberOfServicedEupMyeonDongFormat),
+              icon: DS.image.map,
+              iconActivated: DS.image.mapActivated,
+            )),
+      ],
+    ).paddingSymmetric(
+      horizontal: AppWidget.horizontalPadding,
+      vertical: DS.space.tiny,
     );
   }
 }

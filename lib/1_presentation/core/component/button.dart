@@ -2,7 +2,6 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
@@ -517,16 +516,7 @@ class TESelectorBottomSheet<T> extends StatelessWidget {
     if (title == null) {
       return const SizedBox();
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(title!, style: DS.textStyle.caption1),
-        DS.space.vXTiny,
-        TEDivider.thin(),
-        DS.space.vSmall,
-      ],
-    );
+    return Text(title!, style: DS.textStyle.caption1.b500.h14);
   }
 
   Widget _buildItem(T value) {

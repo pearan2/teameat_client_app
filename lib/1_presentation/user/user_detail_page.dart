@@ -122,6 +122,9 @@ class UserDetailPage extends GetView<UserPageController> {
                         if (value.isEmpty) {
                           return true;
                         }
+                        if (value.length != 4) {
+                          return false;
+                        }
                         final parsed = int.tryParse(value);
                         if (parsed == null) {
                           return false;

@@ -91,7 +91,10 @@ class _TextSearchOverlayState extends State<TextSearchOverlay> {
   }
 
   void onCompleted(String searchText) {
-    widget.historyRepository.memorize(searchText);
+    // 비어있지 않을 경우 검색어 저장
+    if (searchText.isNotEmpty) {
+      widget.historyRepository.memorize(searchText);
+    }
     Get.back();
     widget.onCompleted(searchText);
   }

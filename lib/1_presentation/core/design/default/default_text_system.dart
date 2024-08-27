@@ -420,7 +420,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get accessToLocationTimeout =>
-      '위치 정보를 가지고 오는데 시간이 오래 걸리고 있어요. 다른 위치에서 다시 시도해주세요.';
+      '위치 정보를 가지고 오는데 시간이 오래 걸리고 있어요.\n실내에서 시간이 더 걸릴 수 있어요.\n잠시 후 다시 시도해주세요.';
 
   @override
   String get menuApplication => '신청하기';
@@ -508,7 +508,7 @@ class DefaultTextSystem extends ITextSystem {
   String get preview => '미리보기';
 
   @override
-  String get addEtcImage => '기타 사진 추가';
+  String get addEtcImage => '가게 사진 추가';
 
   @override
   String get addMenuImage => '메뉴 사진 추가';

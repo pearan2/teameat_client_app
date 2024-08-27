@@ -700,7 +700,8 @@ class StoreItemBuyBottomButton extends GetView<StoreItemPageController> {
           isLoginRequired: true,
           onTap: controller.onBuyClickHandler,
           text: DS.text.buy,
-        )
+        ),
+        DS.space.vXBase,
       ],
     );
   }

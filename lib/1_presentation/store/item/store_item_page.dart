@@ -575,7 +575,7 @@ class StoreItemUsageInfo extends StatelessWidget {
         itemCount: 4,
       ),
     ).withTitle(
-      DS.text.storeItemNoticeInformation,
+      DS.text.storeItemUsageInformation,
       spacing: DS.space.tiny,
       style: DS.textStyle.paragraph2.semiBold.b800.h14,
       withBasePadding: false,

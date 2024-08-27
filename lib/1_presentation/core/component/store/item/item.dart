@@ -787,7 +787,7 @@ class StoreItemNotice extends StatelessWidget {
       content: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.symmetric(vertical: DS.space.tiny),
         itemBuilder: (_, idx) => _NoticeText(titles[idx], contents[idx]),
         separatorBuilder: (_, __) => DS.space.vBase,
         itemCount: titles.length,

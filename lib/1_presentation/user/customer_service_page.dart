@@ -5,6 +5,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/customer_service_page_controller.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 
 class CustomerServicePage extends GetView<CustomerServicePageController> {
   const CustomerServicePage({super.key});
@@ -39,7 +40,7 @@ class CustomerServicePage extends GetView<CustomerServicePageController> {
                   DS.space.vBase,
                   Text(
                     DS.text.customerServiceContent,
-                    style: DS.textStyle.paragraph3,
+                    style: DS.textStyle.paragraph3.h14,
                   )
                 ],
               ),

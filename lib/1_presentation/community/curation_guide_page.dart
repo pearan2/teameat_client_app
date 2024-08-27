@@ -5,8 +5,6 @@ import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
-import 'package:teameat/99_util/extension/build_context.dart';
 
 class CurationRewardGuidePage extends StatelessWidget {
   const CurationRewardGuidePage({super.key});
@@ -18,7 +16,7 @@ class CurationRewardGuidePage extends StatelessWidget {
         leadingIconOnPressed: Get.back,
         title: DS.text.reward,
       ),
-      body: _TabView(),
+      body: const _TabView(),
     );
   }
 }

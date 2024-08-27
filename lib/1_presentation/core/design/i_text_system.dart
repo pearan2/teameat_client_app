@@ -353,4 +353,6 @@ abstract class ITextSystem {
   String get itemPurchaseWarningPrivacyContent;
   String get itemPurchaseWarningUsageLimitationContent;
   String get itemPurchaseWarningLawInfoContent;
+
+  String get goToRefundVoucher;
 }

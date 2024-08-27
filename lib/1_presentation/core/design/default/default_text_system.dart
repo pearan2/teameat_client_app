@@ -984,4 +984,7 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get itemPurchaseWarningLawInfoContent =>
       '미성년자가 상품권을 구매할 경우, 법정대리인의 동의가 필요합니다. 법정대리인의 동의 없이 구매된 상품권은 취소가 가능합니다.';
+
+  @override
+  String get goToRefundVoucher => '환불 요청하기';
 }

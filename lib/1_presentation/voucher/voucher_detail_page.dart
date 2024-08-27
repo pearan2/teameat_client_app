@@ -36,7 +36,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
               controller.react.back(result: controller.isUpdated),
           homeOnPressed: controller.react.toHomeOffAll,
         ),
-        bottomSheetBackgroundColor: DS.color.primary600,
+        bottomSheetBackgroundColor: DS.color.primary700,
         bottomSheet: Obx(
           () => TEPrimaryButton(
             onTap: isUsable(controller.voucher.willBeExpiredAt,
@@ -130,6 +130,26 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                         contents: [c.voucher.orderId],
                       ),
                     ))),
+                DS.space.vBase,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TEonTap(
+                      onTap: c.react.toCustomerService,
+                      child: Container(
+                          padding: EdgeInsets.all(DS.space.tiny),
+                          decoration: BoxDecoration(
+                              color: DS.color.secondary900,
+                              borderRadius:
+                                  BorderRadius.circular(DS.space.tiny)),
+                          child: Text(
+                            DS.text.goToRefundVoucher,
+                            style: DS.textStyle.caption1.b000.semiBold,
+                          )),
+                    ),
+                    DS.space.hBase
+                  ],
+                ),
                 DS.space.vBase,
               ],
             ),

@@ -123,52 +123,47 @@ class StoreItemInfoBox extends GetView<StoreItemPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DS.space.vTiny,
-          _buildSellTypeAndToolsRow(),
-          c.item
-              .obx((item) => Text(item.name, style: DS.textStyle.title1.b800)),
-          DS.space.vXTiny,
-          c.item.obx((item) => TELeftRightText(
-                item.store.name,
-                item.store.numberOfCurations
-                    .format(DS.text.numberOfCurationFormat),
-                style: DS.textStyle.caption1.b500.h14,
-              )),
-          DS.space.vXSmall,
-          c.item.obx((item) =>
-              Text(item.introduce, style: DS.textStyle.paragraph3.h14.b800)),
-          _SellTypeContentBox(tag),
-          c.item.obx((item) => StoreItemPrice(
-                originalPrice: item.originalPrice,
-                price: item.price,
-                originalPriceStyle: DS.textStyle.caption1.b500.h14,
-                priceStyle: DS.textStyle.paragraph2.semiBold.b800.h14,
-              ).paddingOnly(top: DS.space.xSmall)),
-          DS.space.vXSmall,
-          TEDivider.thin(),
-          DS.space.vXSmall,
-          c.item.obx((item) => TETitleContentText(
-                titles: [DS.text.originInformation, DS.text.weight],
-                contents: [
-                  item.originInformation,
-                  item.weight == null
-                      ? '-'
-                      : item.weight!.format(DS.text.weightGramFormat)
-                ],
-                titleStyle: DS.textStyle.caption1.semiBold.b500.h14,
-                contentStyle: DS.textStyle.caption1.b500.h14,
-              )),
-          DS.space.vXBase,
-        ],
-      ),
-    );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DS.space.vSmall,
+        _buildSellTypeAndToolsRow(),
+        c.item.obx((item) => Text(item.name, style: DS.textStyle.title1.b800)),
+        DS.space.vXTiny,
+        c.item.obx((item) => TELeftRightText(
+              item.store.name,
+              item.store.numberOfCurations
+                  .format(DS.text.numberOfCurationFormat),
+              style: DS.textStyle.caption1.b500.h14,
+            )),
+        DS.space.vXSmall,
+        c.item.obx((item) =>
+            Text(item.introduce, style: DS.textStyle.paragraph3.h14.b800)),
+        _SellTypeContentBox(tag),
+        c.item.obx((item) => StoreItemPrice(
+              originalPrice: item.originalPrice,
+              price: item.price,
+              originalPriceStyle: DS.textStyle.caption1.b500.h14,
+              priceStyle: DS.textStyle.paragraph2.semiBold.b800.h14,
+            ).paddingOnly(top: DS.space.xSmall)),
+        DS.space.vXSmall,
+        TEDivider.thin(),
+        DS.space.vXSmall,
+        c.item.obx((item) => TETitleContentText(
+              titles: [DS.text.originInformation, DS.text.weight],
+              contents: [
+                item.originInformation,
+                item.weight == null
+                    ? '-'
+                    : item.weight!.format(DS.text.weightGramFormat)
+              ],
+              titleStyle: DS.textStyle.caption1.semiBold.b500.h14,
+              contentStyle: DS.textStyle.caption1.b500.h14,
+            )),
+        DS.space.vXBase,
+      ],
+    ).withBasePadding;
   }
 }
 

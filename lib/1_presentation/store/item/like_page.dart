@@ -9,6 +9,7 @@ import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/like_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/main.dart';
 
 class StoreItemLikePage extends GetView<StoreItemLikePageController> {
@@ -53,6 +54,7 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
                   crossAxisCount: 2,
                 ),
               ),
+              DS.space.vBase.toSliver,
             ],
           ),
         ));

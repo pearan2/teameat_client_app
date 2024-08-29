@@ -398,7 +398,8 @@ class DefaultTextSystem extends ITextSystem {
   String get copyUserId => '아이디 복사하기';
 
   @override
-  String get locationPermissionDenied => '위치 권한이 거부되었어요';
+  String get locationPermissionDenied =>
+      '위치 권한이 거부되었어요\n[프로필] -> [권한 세팅]\n에서 위치 권한을 다시 활성화 하실 수 있어요 :)';
 
   @override
   String get locationServiceDisabled => '위치 정보 사용이 불가능해요';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 
 void _showSnackBar({
   required String title,
@@ -17,7 +18,7 @@ void _showSnackBar({
     '',
     titleText: Text(title,
         style: DS.textStyle.paragraph2.copyWith(fontWeight: FontWeight.bold)),
-    messageText: Text(message, style: DS.textStyle.paragraph3),
+    messageText: Text(message, style: DS.textStyle.paragraph3.h14),
     backgroundColor: DS.color.background300,
     duration: duration,
     snackPosition: position,

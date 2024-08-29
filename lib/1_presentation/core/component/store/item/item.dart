@@ -506,8 +506,14 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
             ],
           ),
           DS.space.hXTiny,
-          Text(curatorNickname! + DS.text.dangolPickCuratorNicknameFormat,
-              style: DS.textStyle.caption2.semiBold.b000),
+          Flexible(
+            child: Text(
+              curatorNickname! + DS.text.dangolPickCuratorNicknameFormat,
+              style: DS.textStyle.caption2.semiBold.b000,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           DS.space.hXXTiny,
           DS.image.dangolPick,
         ],

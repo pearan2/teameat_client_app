@@ -10,6 +10,12 @@ extension TEWidgetExtension on Widget {
         child: this,
       );
 
+  Widget paddingHorizontal(double horizontal) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontal), child: this);
+
+  Widget paddingVertical(double vertical) =>
+      Padding(padding: EdgeInsets.symmetric(vertical: vertical), child: this);
+
   SliverToBoxAdapter get toSliver => SliverToBoxAdapter(child: this);
 
   Widget orEmpty(bool condition) {

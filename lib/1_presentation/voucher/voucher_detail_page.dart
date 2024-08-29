@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
+import 'package:teameat/1_presentation/core/component/expandable.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -468,15 +469,21 @@ class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
                 ),
               ],
             ).orEmpty(!c.isCameraPermitted)),
-        TERowButton(
-          onTap: () {
-            c.react.back();
-            controller.react.closeBottomSheet();
-            controller.onVoucherUseReset();
-            showTEDialog(child: const VoucherUseByPasswordDialog());
-          },
-          text: DS.text.useVoucherByPassword,
-        ),
+        TEExpandable(
+            isHeaderExpand: true,
+            header: Text(DS.text.voucherQRCodeScanIfNotPossible,
+                style: DS.textStyle.caption1.b400),
+            content: TERowButton(
+              padding: EdgeInsets.only(top: DS.space.tiny),
+              onTap: () {
+                c.react.back();
+                controller.react.closeBottomSheet();
+                controller.onVoucherUseReset();
+                showTEDialog(child: const VoucherUseByPasswordDialog());
+              },
+              text: DS.text.useVoucherByPassword,
+            )).paddingHorizontal(DS.space.xBase),
+        DS.space.vTiny,
       ],
     );
   }

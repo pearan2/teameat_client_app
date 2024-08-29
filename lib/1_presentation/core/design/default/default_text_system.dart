@@ -991,5 +991,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get voucherQRCodeScanCameraPermissionDeniedNotice =>
-      '카메라 사용 권한을 거부하셨어요. 아래 버튼을 눌러 매장 비밀번호로 사용하기를 해주시거나, 카메라 권한을 허용해주세요';
+      '카메라 사용 권한을 거부하셨어요. 아래 권한 세팅 버튼을 눌러 카메라 권한을 허용해주세요';
+
+  @override
+  String get voucherQRCodeScanIfNotPossible => 'QR코드 인식이 잘 안 되시나요?';
 }

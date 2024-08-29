@@ -631,6 +631,7 @@ class TERowButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool isLoginRequired;
   final String text;
+
   final void Function() onTap;
 
   const TERowButton({
@@ -655,9 +656,8 @@ class TERowButton extends StatelessWidget {
           children: [
             Text(
               text,
-              style: DS.textStyle.paragraph3.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style:
+                  DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.w600),
             ),
             const Icon(Icons.keyboard_arrow_right),
           ],

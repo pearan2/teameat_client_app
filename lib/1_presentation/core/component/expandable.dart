@@ -7,12 +7,13 @@ class TEExpandable extends StatefulWidget {
 
   final Widget header;
   final Widget content;
-
+  final bool isHeaderExpand;
   final bool isExpanded;
 
   const TEExpandable({
     super.key,
     this.spaceHeaderAndContent = 8,
+    this.isHeaderExpand = false,
     this.isExpanded = false,
     required this.header,
     required this.content,
@@ -66,7 +67,9 @@ class _TEExpandableState extends State<TEExpandable> {
             ),
             header: Row(
               children: [
-                Flexible(child: widget.header),
+                widget.isHeaderExpand
+                    ? Expanded(child: widget.header)
+                    : Flexible(child: widget.header),
                 DS.space.hXXTiny,
                 isExpanded ? DS.image.upArrow : DS.image.downArrow,
               ],

@@ -24,6 +24,7 @@ class VoucherDetailPageController extends PageController {
 
   final _isLoading = false.obs;
   bool _isQRProcessing = false;
+  final _isCameraPermitted = true.obs;
 
   VoucherDetail get voucher => _voucher.value;
   int get useVoucherQuantity => _useQuantity.value;
@@ -32,6 +33,11 @@ class VoucherDetailPageController extends PageController {
   bool get isLoading => _isLoading.value;
   bool get isUpdated => _isUpdated;
   bool get isGifted => _voucher.value.isGifted ?? false;
+  bool get isCameraPermitted => _isCameraPermitted.value;
+
+  void onCameraPermissionChanged(bool isPermitted) {
+    _isCameraPermitted.value = isPermitted;
+  }
 
   void onUseQuantityChanged(int newQuantity) {
     if (newQuantity < 1 || newQuantity > 99) {

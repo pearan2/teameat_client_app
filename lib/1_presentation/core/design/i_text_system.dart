@@ -355,4 +355,6 @@ abstract class ITextSystem {
   String get itemPurchaseWarningLawInfoContent;
 
   String get goToRefundVoucher;
+
+  String get voucherQRCodeScanCameraPermissionDeniedNotice;
 }

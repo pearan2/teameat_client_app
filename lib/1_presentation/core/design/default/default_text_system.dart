@@ -988,4 +988,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get goToRefundVoucher => '환불 요청하기';
+
+  @override
+  String get voucherQRCodeScanCameraPermissionDeniedNotice =>
+      '카메라 사용 권한을 거부하셨어요. 아래 버튼을 눌러 매장 비밀번호로 사용하기를 해주시거나, 카메라 권한을 허용해주세요';
 }

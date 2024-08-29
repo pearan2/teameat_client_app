@@ -443,6 +443,8 @@ class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
             padding: EdgeInsets.all(DS.space.tiny),
             width: double.infinity,
             child: QRView(
+                onPermissionSet: (_, isPermitted) =>
+                    c.onCameraPermissionChanged(isPermitted),
                 overlay: QrScannerOverlayShape(
                   borderRadius: DS.space.tiny,
                   borderColor: DS.color.primary600,
@@ -453,6 +455,19 @@ class VoucherUseByQRScanDialog extends GetView<VoucherDetailPageController> {
                 }),
           ),
         ),
+        Obx(() => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  DS.text.voucherQRCodeScanCameraPermissionDeniedNotice,
+                  style: DS.textStyle.caption1.point.semiBold.h14,
+                ).paddingHorizontal(DS.space.xBase),
+                TERowButton(
+                  onTap: c.react.toPermissionSetting,
+                  text: DS.text.permissionSetting,
+                ),
+              ],
+            ).orEmpty(!c.isCameraPermitted)),
         TERowButton(
           onTap: () {
             c.react.back();

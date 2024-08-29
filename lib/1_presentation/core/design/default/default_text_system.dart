@@ -214,7 +214,7 @@ class DefaultTextSystem extends ITextSystem {
   String get useVoucherCountFormat => '###개 사용';
 
   @override
-  String get pleaseInputStoreVoucherPassword => '매장의 이용권 비밀번호를 입력해주세요';
+  String get pleaseInputStoreVoucherPassword => '사장님께 비밀번호를 요청해주세요';
 
   @override
   String get successUseVoucher => '이용권을 정상적으로 사용했어요 :)';
@@ -414,7 +414,10 @@ class DefaultTextSystem extends ITextSystem {
   String get distance => '거리';
 
   @override
-  String get distanceFormat => '###.#KM';
+  String get distanceKiloFormat => '###.#KM';
+
+  @override
+  String get distanceMeterFormat => '###M';
 
   @override
   String get accessToLocationPleaseWait => '위치 정보를 가져오고 있습니다\n잠시만 기다려주세요';
@@ -994,5 +997,5 @@ class DefaultTextSystem extends ITextSystem {
       '카메라 사용 권한을 거부하셨어요. 아래 권한 세팅 버튼을 눌러 카메라 권한을 허용해주세요';
 
   @override
-  String get voucherQRCodeScanIfNotPossible => 'QR코드 인식이 잘 안 되시나요?';
+  String get voucherQRCodeScanIfNotPossible => 'QR코드 인식이 되지 않는다면?';
 }

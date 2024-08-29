@@ -138,7 +138,8 @@ abstract class ITextSystem {
   String get withInMeterFormat;
   String get noDistanceLimit;
   String get distance;
-  String get distanceFormat;
+  String get distanceKiloFormat;
+  String get distanceMeterFormat;
   String get accessToLocationPleaseWait;
   String get accessToLocationTimeout;
   String get menuApplication;

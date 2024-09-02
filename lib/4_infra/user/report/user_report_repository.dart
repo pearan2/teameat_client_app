@@ -9,13 +9,18 @@ class UserReportRepository implements IReportRepository {
 
   Future<Either<Failure, Unit>> _report(
     int targetId,
-    String targetType,
+    String targetType, {
     String? report,
-  ) async {
+    int? score,
+  }) async {
     try {
       const path = '/api/member/report';
-      final ret = await _conn.post(path,
-          {'targetType': targetType, 'targetId': targetId, 'report': report});
+      final ret = await _conn.post(path, {
+        'targetType': targetType,
+        'targetId': targetId,
+        'report': report,
+        'score': score
+      });
       return ret.fold((l) => left(l), (r) => right(unit));
     } catch (e) {
       return left(const Failure.reportFail('신고에 실패했습니다. 잠시 후 다시 시도해주세요.'));
@@ -25,11 +30,20 @@ class UserReportRepository implements IReportRepository {
   @override
   Future<Either<Failure, Unit>> reportCuration(
       int curationId, String? report) async {
-    return _report(curationId, "CURATION", report);
+    return _report(curationId, "CURATION", report: report);
   }
 
   @override
   Future<Either<Failure, Unit>> reportUser(int userId, String? report) async {
-    return _report(userId, "MEMBER", report);
+    return _report(userId, "MEMBER", report: report);
+  }
+
+  @override
+  Future<Either<Failure, Unit>> review(
+      {String? report,
+      required int score,
+      required int targetId,
+      required String targetTypeCode}) {
+    return _report(targetId, targetTypeCode, report: report, score: score);
   }
 }

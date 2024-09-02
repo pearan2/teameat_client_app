@@ -6,6 +6,7 @@ import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/expandable.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/page_loading_wrapper.dart';
+import 'package:teameat/1_presentation/core/component/review/review.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/voucher/voucher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -132,25 +133,7 @@ class VoucherDetailPage extends GetView<VoucherDetailPageController> {
                       ),
                     ))),
                 DS.space.vBase,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TEonTap(
-                      onTap: c.react.toCustomerService,
-                      child: Container(
-                          padding: EdgeInsets.all(DS.space.tiny),
-                          decoration: BoxDecoration(
-                              color: DS.color.secondary900,
-                              borderRadius:
-                                  BorderRadius.circular(DS.space.tiny)),
-                          child: Text(
-                            DS.text.goToRefundVoucher,
-                            style: DS.textStyle.caption1.b000.semiBold,
-                          )),
-                    ),
-                    DS.space.hBase
-                  ],
-                ),
+                const VoucherAdditionalUserAction(),
                 DS.space.vBase,
               ],
             ),
@@ -560,5 +543,52 @@ class VoucherUseBottomSheet extends GetView<VoucherDetailPageController> {
         )
       ],
     );
+  }
+}
+
+class VoucherAdditionalUserAction extends GetView<VoucherDetailPageController> {
+  const VoucherAdditionalUserAction({super.key});
+
+  bool isUsableFromVoucher(VoucherDetail voucherDetail) {
+    return isUsable(voucherDetail.willBeExpiredAt, voucherDetail.quantity);
+  }
+
+  Widget _buildActionButton(String text, void Function() onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TEonTap(
+          onTap: onTap,
+          child: Container(
+              padding: EdgeInsets.all(DS.space.tiny),
+              decoration: BoxDecoration(
+                  color: DS.color.secondary900,
+                  borderRadius: BorderRadius.circular(DS.space.tiny)),
+              child: Text(text, style: DS.textStyle.caption1.b000.semiBold)),
+        ),
+        DS.space.hBase
+      ],
+    );
+  }
+
+  Widget _buildReviewActionButton() {
+    return _buildActionButton(DS.text.reviewFormTitle,
+        () => toReview(c.voucherId, ReviewTargetType.voucher));
+  }
+
+  Widget _buildRefundActionButton() {
+    return _buildActionButton(
+        DS.text.goToRefundVoucher, c.react.toCustomerService);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (isUsableFromVoucher(c.voucher)) {
+        return _buildRefundActionButton();
+      } else {
+        return _buildReviewActionButton();
+      }
+    });
   }
 }

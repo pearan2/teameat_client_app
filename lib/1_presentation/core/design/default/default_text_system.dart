@@ -998,4 +998,24 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get voucherQRCodeScanIfNotPossible => 'QR코드 인식이 되지 않는다면?';
+
+  @override
+  String get reviewScore => '만족도';
+
+  @override
+  String get reviewText => '내용';
+
+  @override
+  String get reviewFinishThankyou =>
+      '경험을 공유 해주셔서 감사합니다!\n앞으로 더 발전하는 모습으로 보답하겠습니다 :)';
+
+  @override
+  String get review => '제출하기';
+
+  @override
+  String get reviewPleaseInputReviewText =>
+      '고객님의 경험을 자유롭게 전달해주세요\n해당 만족도 조사는 오로지 팀잇의 더 나은 서비스를 위해서만 사용되어요 :)';
+
+  @override
+  String get reviewFormTitle => '만족도 피드백하기';
 }

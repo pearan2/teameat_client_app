@@ -359,4 +359,11 @@ abstract class ITextSystem {
 
   String get voucherQRCodeScanCameraPermissionDeniedNotice;
   String get voucherQRCodeScanIfNotPossible;
+
+  String get reviewFormTitle;
+  String get reviewScore;
+  String get reviewText;
+  String get reviewPleaseInputReviewText;
+  String get reviewFinishThankyou;
+  String get review;
 }

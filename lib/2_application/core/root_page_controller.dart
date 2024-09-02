@@ -1,5 +1,6 @@
 import 'package:app_links/app_links.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/review/review.dart';
 import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
@@ -32,7 +33,8 @@ class RootPageController extends PageController {
       if (route is! String) return true; // route 가 없거나 String 이 아닐 경우 날려준다.
       // login 에서 알람을 연결한 다음 home 으로 라우팅 다 되고 나서 다시 라우팅 하기 위함
       // route 의 케이스별
-      Future.delayed(Duration.zero, () => routeMessageCallback(route, type));
+      Future.delayed(
+          Duration.zero, () => routeMessageCallback(route, type, message.data));
       return true;
     };
     react.toHomeOffAll();
@@ -83,10 +85,20 @@ class RootPageController extends PageController {
     }
   }
 
-  void routeMessageCallback(String route, MessageHelperCallbackType type) {
+  void voucherUseFeedBackCallback(int voucherId) {
+    react.toVoucherOffAll();
+    react.toVoucherDetailPage(voucherId);
+    toReview(voucherId, ReviewTargetType.voucher);
+  }
+
+  void routeMessageCallback(
+      String route, MessageHelperCallbackType type, Map<String, dynamic> data) {
     // Todo... page 에 대한 라우트 메시지가 추가될 때마다 올려야 함.
     if (route == '/voucher') {
-      voucherMessageCallback(type);
+      return voucherMessageCallback(type);
+    } else if ((route.startsWith('/voucher/detail')) &&
+        (data['voucherId'] is int)) {
+      return voucherUseFeedBackCallback(data['voucherId']);
     }
   }
 

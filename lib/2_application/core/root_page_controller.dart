@@ -33,6 +33,7 @@ class RootPageController extends PageController {
       if (route is! String) return true; // route 가 없거나 String 이 아닐 경우 날려준다.
       // login 에서 알람을 연결한 다음 home 으로 라우팅 다 되고 나서 다시 라우팅 하기 위함
       // route 의 케이스별
+
       Future.delayed(
           Duration.zero, () => routeMessageCallback(route, type, message.data));
       return true;
@@ -85,10 +86,14 @@ class RootPageController extends PageController {
     }
   }
 
-  void voucherUseFeedBackCallback(int voucherId) {
-    react.toVoucherOffAll();
-    react.toVoucherDetailPage(voucherId);
-    toReview(voucherId, ReviewTargetType.voucher);
+  void voucherUseFeedBackCallback(
+      MessageHelperCallbackType type, int voucherId) {
+    // 앱이 열린것이라면
+    if (type == MessageHelperCallbackType.openApp) {
+      // 일단 voucherDetail page 를 열면 계속해서 여기서 voucher detail page binding 에서 argMap 이 null 이 되는에러가 발생한다.
+      // 우선은 이렇게 해둠
+      toReview(voucherId, ReviewTargetType.voucher);
+    }
   }
 
   void routeMessageCallback(
@@ -96,9 +101,10 @@ class RootPageController extends PageController {
     // Todo... page 에 대한 라우트 메시지가 추가될 때마다 올려야 함.
     if (route == '/voucher') {
       return voucherMessageCallback(type);
-    } else if ((route.startsWith('/voucher/detail')) &&
-        (data['voucherId'] is int)) {
-      return voucherUseFeedBackCallback(data['voucherId']);
+    } else if ((route == '/voucher-review-request') &&
+        (data['voucherId'] != null) &&
+        (int.tryParse(data['voucherId']!) is int)) {
+      return voucherUseFeedBackCallback(type, int.tryParse(data['voucherId'])!);
     }
   }
 

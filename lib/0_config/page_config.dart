@@ -133,7 +133,7 @@ List<GetPage> allPages() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/voucher/detail",
+        name: "/voucher/detail/:voucherId",
         binding: VoucherDetailPageBinding(),
         page: () => const VoucherDetailPage(),
         transitionDuration: transitionDuration,

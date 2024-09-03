@@ -1018,4 +1018,8 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get reviewFormTitle => '만족도 피드백하기';
+
+  @override
+  String get afterGroupBuyingPermissionRequest =>
+      '앗! 알람 권한이 없어요 :(\n알람 권한을 허가해주시면\n2인 팀 구매가 성공했을 때 알람을 드릴 수 있어요!';
 }

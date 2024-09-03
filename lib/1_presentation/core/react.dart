@@ -107,7 +107,7 @@ class React extends IReact {
 
   @override
   Future<T?> toVoucherDetailPage<T>(int voucherId) async {
-    return Get.toNamed('/voucher/detail', arguments: {'voucherId': voucherId});
+    return Get.toNamed('/voucher/detail/$voucherId');
   }
 
   @override

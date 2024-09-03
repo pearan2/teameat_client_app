@@ -4,8 +4,7 @@ import 'package:teameat/2_application/voucher/voucher_detail_page_controller.dar
 class VoucherDetailPageBinding implements Bindings {
   @override
   void dependencies() {
-    final argMap = Get.arguments as Map<String, dynamic>;
-    final voucherId = argMap['voucherId'] as int;
-    Get.put(VoucherDetailPageController(voucherId: voucherId));
+    final voucherIdString = Get.parameters["voucherId"]!;
+    Get.put(VoucherDetailPageController(voucherId: int.parse(voucherIdString)));
   }
 }

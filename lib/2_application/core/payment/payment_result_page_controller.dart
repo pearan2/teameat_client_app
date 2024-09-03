@@ -10,6 +10,7 @@ class PaymentResultPageController extends PageController {
   /// 웰컴페이먼츠 연동시에는 imp_uid, merchant_uid, error_code, error_msg만 제공됩니다.
   bool get isPaymentSuccess =>
       paymentResult['error_code'] == null ? true : false;
+  bool get isGroupBuying => itemId != null;
 
   PaymentResultPageController({required this.paymentResult, this.itemId});
 

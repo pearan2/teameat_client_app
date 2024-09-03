@@ -366,4 +366,6 @@ abstract class ITextSystem {
   String get reviewPleaseInputReviewText;
   String get reviewFinishThankyou;
   String get review;
+
+  String get afterGroupBuyingPermissionRequest;
 }

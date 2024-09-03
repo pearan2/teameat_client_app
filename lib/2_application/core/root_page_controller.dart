@@ -34,8 +34,8 @@ class RootPageController extends PageController {
       // login 에서 알람을 연결한 다음 home 으로 라우팅 다 되고 나서 다시 라우팅 하기 위함
       // route 의 케이스별
 
-      Future.delayed(
-          Duration.zero, () => routeMessageCallback(route, type, message.data));
+      Future.delayed(const Duration(milliseconds: 100),
+          () => routeMessageCallback(route, type, message.data));
       return true;
     };
     react.toHomeOffAll();
@@ -88,10 +88,11 @@ class RootPageController extends PageController {
 
   void voucherUseFeedBackCallback(
       MessageHelperCallbackType type, int voucherId) {
-    // 앱이 열린것이라면
+    /// voucherDetailPage 를 거처 가도록 Push 하면
+    /// toReview 호출 전 충분한 delay (1초정도) 를 주지않으면 voucherDetailPageController 가 remove 된다
+    /// GetX 의 바인딩 문제인것 같다
+    /// 해서 우선은 앱을 열었을 경우에만 넘어가도록 해둠
     if (type == MessageHelperCallbackType.openApp) {
-      // 일단 voucherDetail page 를 열면 계속해서 여기서 voucher detail page binding 에서 argMap 이 null 이 되는에러가 발생한다.
-      // 우선은 이렇게 해둠
       toReview(voucherId, ReviewTargetType.voucher);
     }
   }
@@ -101,6 +102,7 @@ class RootPageController extends PageController {
     // Todo... page 에 대한 라우트 메시지가 추가될 때마다 올려야 함.
     if (route == '/voucher') {
       return voucherMessageCallback(type);
+      // 또한 왜인진 모르겠지만 /voucher/detail 이런식으로 route 를 넣으면 동작을 안한다
     } else if ((route == '/voucher-review-request') &&
         (data['voucherId'] != null) &&
         (int.tryParse(data['voucherId']!) is int)) {

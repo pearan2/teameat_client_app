@@ -575,7 +575,7 @@ class StoreItemColumnCard extends StatelessWidget {
   final double borderRadius;
   final double? imageWidth;
 
-  static const infoBoxHeight = 93;
+  static const infoBoxHeight = 99;
   static const imageRatio = 3 / 4;
 
   static double calcTotalHeight(double imageWidth) {
@@ -646,8 +646,8 @@ class StoreItemColumnCard extends StatelessWidget {
             StoreItemPrice(
               originalPrice: item.originalPrice,
               price: item.price,
-              originalPriceStyle: DS.textStyle.caption2.b500.h14,
-              priceStyle: DS.textStyle.caption1.semiBold.b800.h14,
+              originalPriceStyle: DS.textStyle.caption1.b500.h14,
+              priceStyle: DS.textStyle.paragraph3.semiBold.b800.h14,
             ).paddingHorizontal(DS.space.tiny),
           ],
         ),

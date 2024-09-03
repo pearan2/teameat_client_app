@@ -221,10 +221,10 @@ class SearchNotFound extends GetView<HomePageController> {
                   padding: EdgeInsets.all(DS.space.tiny),
                   decoration: BoxDecoration(
                       border: Border.all(color: DS.color.background600),
-                      borderRadius: BorderRadius.circular(DS.space.xBase)),
+                      borderRadius: BorderRadius.circular(DS.space.tiny)),
                   child: StoreItemColumnCard(
                     item: controller.recommendedItem!,
-                    borderRadius: DS.space.xBase,
+                    borderRadius: DS.space.tiny,
                     onTap: controller.react.toStoreItemDetail,
                   ),
                 ),

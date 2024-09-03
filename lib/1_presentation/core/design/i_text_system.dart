@@ -368,4 +368,5 @@ abstract class ITextSystem {
   String get review;
 
   String get afterGroupBuyingPermissionRequest;
+  String get errorOccurredWhileCurationUpload;
 }

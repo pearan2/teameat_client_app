@@ -1022,4 +1022,8 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get afterGroupBuyingPermissionRequest =>
       '앗! 알람 권한이 없어요 :(\n알람 권한을 허가해주시면\n2인 팀 구매가 성공했을 때 알람을 드릴 수 있어요!';
+
+  @override
+  String get errorOccurredWhileCurationUpload =>
+      '푸드로그 업로드 중 에러가 발생했어요\n잠시 후 다시 시도해주시거나, 계속 되면 팀잇에 연락해주세요!';
 }

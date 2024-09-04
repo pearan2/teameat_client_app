@@ -132,41 +132,45 @@ class UserCard extends GetView<UserPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(DS.space.xBase),
-      child: Row(
-        children: [
-          c.user.obx((user) => TECacheImage(
-                src: user.profileImageUrl,
-                width: DS.space.large,
-                ratio: 1,
-                borderRadius: 300,
-              )),
-          DS.space.hTiny,
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TEonTap(
+          onTap: c.onSummaryClick,
+          child: Row(
             children: [
-              c.user.obx((user) => Text(
-                    user.nickname,
-                    style: DS.textStyle.paragraph3
-                        .copyWith(fontWeight: FontWeight.bold),
+              c.user.obx((user) => TECacheImage(
+                    src: user.profileImageUrl,
+                    width: DS.space.large,
+                    ratio: 1,
+                    borderRadius: 300,
                   )),
-              DS.space.vTiny,
-              c.user.obx((user) => Text(
-                    user.socialLoginType,
-                    style: DS.textStyle.caption1,
-                  )),
+              DS.space.hTiny,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  c.user.obx((user) => Text(
+                        user.nickname,
+                        style: DS.textStyle.paragraph3
+                            .copyWith(fontWeight: FontWeight.bold),
+                      )),
+                  DS.space.vTiny,
+                  c.user.obx((user) => Text(
+                        user.socialLoginType,
+                        style: DS.textStyle.caption1,
+                      )),
+                ],
+              ),
             ],
           ),
-          const Expanded(child: SizedBox()),
-          TEonTap(
-            onTap: onSettingClicked,
-            child: const Icon(Icons.settings),
-          ),
-        ],
-      ),
-    );
+        ),
+        TEonTap(
+          onTap: onSettingClicked,
+          child: const Icon(Icons.settings),
+        ),
+      ],
+    ).paddingAll(DS.space.xBase);
   }
 }
 

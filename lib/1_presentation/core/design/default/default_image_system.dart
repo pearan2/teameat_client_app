@@ -496,4 +496,11 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 24,
       );
+
+  @override
+  Image get pacman => Image.asset(
+        'assets/image/teameat_pacman.png',
+        width: 15,
+        height: 15,
+      );
 }

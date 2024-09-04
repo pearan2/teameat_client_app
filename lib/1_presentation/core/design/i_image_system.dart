@@ -95,4 +95,7 @@ abstract class IImageSystem {
   SvgPicture get itemUsageQrCodeIcon;
   SvgPicture get itemUsageMobileIcon;
   SvgPicture get itemUsageGiftIcon;
+
+  /// teameat pacman
+  Image get pacman;
 }

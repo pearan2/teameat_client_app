@@ -19,6 +19,8 @@ abstract class IUserRepository {
 
   Future<Either<Failure, Summary>> getUserSummary(int targetUserId);
 
+  Future<Either<Failure, Summary>> getMySummary();
+
   Future<Either<Failure, bool>> isLiked(int targetUserId);
 
   Future<Either<Failure, Unit>> like(int targetUserId);

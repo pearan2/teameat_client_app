@@ -78,10 +78,9 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, Summary>> getUserSummary(int targetUserId) async {
+  Future<Either<Failure, Summary>> _getTargetSummary(int? targetUserId) async {
     try {
-      final path = '/api/member/summary/$targetUserId';
+      final path = '/api/member/summary/${targetUserId ?? 'me'}';
       final ret = await _conn.get(path, null);
       return ret.fold((l) => left(l), (r) {
         final user = Summary.fromJson(r as JsonMap);
@@ -89,8 +88,18 @@ class UserRepository implements IUserRepository {
       });
     } catch (e) {
       return left(const Failure.fetchUerSummaryFail(
-          '해당 유저의 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+          '유저 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
+  }
+
+  @override
+  Future<Either<Failure, Summary>> getUserSummary(int targetUserId) async {
+    return _getTargetSummary(targetUserId);
+  }
+
+  @override
+  Future<Either<Failure, Summary>> getMySummary() async {
+    return _getTargetSummary(null);
   }
 
   Future<Either<Failure, List<int>>> _getMyLikes(String path) async {

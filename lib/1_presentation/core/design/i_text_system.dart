@@ -369,4 +369,7 @@ abstract class ITextSystem {
 
   String get afterGroupBuyingPermissionRequest;
   String get errorOccurredWhileCurationUpload;
+
+  String get afterVoucherUseNotice;
+  String get voucherUseFinishedAtFormat;
 }

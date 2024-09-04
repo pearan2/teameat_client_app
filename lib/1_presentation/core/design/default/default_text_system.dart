@@ -1026,4 +1026,10 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get errorOccurredWhileCurationUpload =>
       '푸드로그 업로드 중 에러가 발생했어요\n잠시 후 다시 시도해주시거나, 계속 되면 팀잇에 연락해주세요!';
+
+  @override
+  String get afterVoucherUseNotice => '사용완료 화면을 사장님께 보여주세요! 🔉';
+
+  @override
+  String get voucherUseFinishedAtFormat => '이용 시간 : yyyy년 MM월 dd일 hh시 mm분';
 }

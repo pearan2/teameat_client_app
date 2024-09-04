@@ -67,6 +67,7 @@ class HomePageController extends PageController {
 
   void clearSearchOption() {
     _searchOption.value = SearchStoreSimpleList.empty();
+    _selectedAddress.value = null;
     pagingController.refresh();
   }
 

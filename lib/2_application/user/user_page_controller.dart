@@ -60,6 +60,13 @@ class UserPageController extends PageController {
   Gender? get gender => _gender.value;
   set gender(Gender? newValue) => _gender.value = newValue;
 
+  void onSummaryClick() {
+    if (user.value == User.visitor()) {
+      return;
+    }
+    react.toCuratorSummary(user.value.identifier);
+  }
+
   void onReceiveGiftFromUrl() {
     final input = receiveGiftFromUrlController.text.trim();
     late final String giftId;

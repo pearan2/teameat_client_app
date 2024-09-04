@@ -47,6 +47,7 @@ class User with _$User {
     required String nickname,
     required String profileImageUrl,
     required String id,
+    required int identifier,
     String? oneLineIntroduce,
     BankAccount? bankAccount,
     String? birthYear,
@@ -64,6 +65,7 @@ class User with _$User {
       profileImageUrl:
           "https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/default_profile_image.png",
       id: 'visitor user Id',
+      identifier: -1,
     );
   }
 }

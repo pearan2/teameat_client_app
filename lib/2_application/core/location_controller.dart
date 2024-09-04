@@ -37,7 +37,7 @@ class LocationController {
     _tryAutoInit();
   }
 
-  Future<void> _loadLocalData() async {
+  Future<void> _loadLocalData({bool showTimeoutError = true}) async {
     _location.changeSettings(
         interval: locationUpdateIntervalSec * 5); // 5초에 한번 업데이트
     _location.onLocationChanged.listen(_locationDataListener);
@@ -46,7 +46,9 @@ class LocationController {
       Future.delayed(const Duration(seconds: 5), () => null)
     ]);
     if (ret == null) {
-      showError(DS.text.accessToLocationTimeout);
+      if (showTimeoutError) {
+        showError(DS.text.accessToLocationTimeout);
+      }
       return;
     } else {
       _data.value = ret;
@@ -59,7 +61,7 @@ class LocationController {
     if (!permissionGranted.isGranted()) {
       return;
     }
-    return _loadLocalData();
+    return _loadLocalData(showTimeoutError: false);
   }
 
   Future<void> init() async {

@@ -30,6 +30,8 @@ class VoucherPageController extends PageController {
 
   void refreshPage() {
     _searchOption.value = SearchVoucherSimpleList.empty();
+    // 남은 갯수도 refresh 해줘야 함
+    _loadNumberOfRemainVouchers();
     pagingController.refresh();
   }
 

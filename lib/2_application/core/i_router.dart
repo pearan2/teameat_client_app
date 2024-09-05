@@ -46,6 +46,8 @@ abstract class IRouter {
 
   void toUserDetail();
 
+  void toUserFollower();
+
   void toCurationOffAll();
 
   void toUserCuration();

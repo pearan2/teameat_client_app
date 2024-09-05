@@ -26,4 +26,7 @@ abstract class IUserRepository {
   Future<Either<Failure, Unit>> like(int targetUserId);
 
   Future<Either<Failure, Unit>> unLike(int targetUserId);
+
+  Future<Either<Failure, List<Follower>>> getMyFollowers(
+      {required int pageSize, required int pageNumber});
 }

@@ -47,6 +47,11 @@ class UserPage extends GetView<UserPageController> {
                 ),
                 TERowButton(
                   isLoginRequired: true,
+                  onTap: controller.react.toUserFollower,
+                  text: DS.text.follower,
+                ),
+                TERowButton(
+                  isLoginRequired: true,
                   onTap: controller.react.toUserCuration,
                   text: DS.text.toMyCuration,
                 ),

@@ -112,6 +112,7 @@ abstract class ITextSystem {
   String get numberWithoutUnitFormat;
   String get followStore;
   String get followStoreNotFound;
+  String get followerNotFound;
   String get goToSeeStore;
   String get copyToClipboard;
   String get logined;
@@ -372,4 +373,5 @@ abstract class ITextSystem {
 
   String get afterVoucherUseNotice;
   String get voucherUseFinishedAtFormat;
+  String get goToCreateCuration;
 }

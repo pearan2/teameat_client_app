@@ -1032,4 +1032,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get voucherUseFinishedAtFormat => '이용 시간 : yyyy년 MM월 dd일 hh시 mm분';
+
+  @override
+  String get followerNotFound => '아직 팔로워가 없어요\n푸드로그를 작성해 팔로워를 모아보세요!';
+
+  @override
+  String get goToCreateCuration => '푸드로그 쓰러 가기';
 }

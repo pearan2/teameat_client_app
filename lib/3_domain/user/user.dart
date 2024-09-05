@@ -39,6 +39,19 @@ class BankAccount with _$BankAccount {
 }
 
 @freezed
+class Follower with _$Follower {
+  const factory Follower({
+    required int id,
+    required String profileImageUrl,
+    required String nickname,
+    String? oneLineIntroduce,
+  }) = _Follower;
+
+  factory Follower.fromJson(Map<String, Object?> json) =>
+      _$FollowerFromJson(json);
+}
+
+@freezed
 class User with _$User {
   const factory User({
     required String email,

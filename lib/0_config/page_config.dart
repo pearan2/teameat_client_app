@@ -39,6 +39,8 @@ import 'package:teameat/1_presentation/user/curation/user_curation_page.dart';
 import 'package:teameat/1_presentation/user/curation/user_curation_page_binding.dart';
 import 'package:teameat/1_presentation/user/customer_service_page.dart';
 import 'package:teameat/1_presentation/user/customer_service_page_binding.dart';
+import 'package:teameat/1_presentation/user/follow/user_follower_page.dart';
+import 'package:teameat/1_presentation/user/follow/user_follower_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_detail_page.dart';
 import 'package:teameat/1_presentation/user/user_detail_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_page.dart';
@@ -95,6 +97,13 @@ List<GetPage> allPages() => [
         name: "/user/block",
         binding: UserBlockPageBinding(),
         page: () => const UserBlockPage(),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
+        name: "/user/follower",
+        binding: UserFollowerPageBinding(),
+        page: () => const UserFollowerPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
       ),

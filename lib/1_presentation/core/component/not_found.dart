@@ -26,8 +26,9 @@ class SimpleNotFound extends StatelessWidget {
             style: DS.textStyle.paragraph2.copyWith(
               fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
           ),
-          DS.space.vTiny,
+          DS.space.vSmall,
           TEPrimaryButton(
             onTap: onTap,
             text: buttonText,

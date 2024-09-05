@@ -147,6 +147,11 @@ class React extends IReact {
   }
 
   @override
+  void toUserFollower() {
+    Get.toNamed('/user/follower');
+  }
+
+  @override
   void toCurationOffAll() {
     if (Get.isRegistered<CurationPageController>()) {
       final controller = Get.find<CurationPageController>();

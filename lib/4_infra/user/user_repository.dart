@@ -169,4 +169,23 @@ class UserRepository implements IUserRepository {
           const Failure.fetchCurationFail('팔로우 해제에 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Follower>>> getMyFollowers(
+      {required int pageSize, required int pageNumber}) async {
+    try {
+      const path = '/api/member/my-followers';
+      final ret = await _conn.get(path, {
+        'pageSize': pageSize.toString(),
+        'pageNumber': pageNumber.toString()
+      });
+      return ret.fold(
+          (l) => left(l),
+          (r) => right(
+              (r as Iterable).map((json) => Follower.fromJson(json)).toList()));
+    } catch (e) {
+      return left(const Failure.fetchFollowerFail(
+          '팔로워 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
+    }
+  }
 }

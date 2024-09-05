@@ -55,16 +55,6 @@ class UserPage extends GetView<UserPageController> {
                   onTap: controller.react.toUserCuration,
                   text: DS.text.toMyCuration,
                 ),
-                TERowButton(
-                  isLoginRequired: true,
-                  onTap: controller.react.toGift,
-                  text: DS.text.toGiftPage,
-                ),
-                TERowButton(
-                  isLoginRequired: true,
-                  onTap: () => showTEDialog(child: const ReceiveGiftFromUrl()),
-                  text: DS.text.receiveGiftFromUrl,
-                ),
                 const UserPageDivider(),
                 DS.space.vSmall,
                 Row(
@@ -84,6 +74,17 @@ class UserPage extends GetView<UserPageController> {
                       borderRadius: DS.space.tiny,
                     )),
                 DS.space.vSmall,
+                const UserPageDivider(),
+                TERowButton(
+                  isLoginRequired: true,
+                  onTap: controller.react.toGift,
+                  text: DS.text.toGiftPage,
+                ),
+                TERowButton(
+                  isLoginRequired: true,
+                  onTap: () => showTEDialog(child: const ReceiveGiftFromUrl()),
+                  text: DS.text.receiveGiftFromUrl,
+                ),
                 const UserPageDivider(),
                 TERowButton(
                   onTap: c.react.toPermissionSetting,

@@ -172,6 +172,12 @@ class CuratorCurationGrid extends GetView<CuratorSummaryViewPageController> {
     return PagedGridView(
       pagingController: c.pagingController,
       builderDelegate: PagedChildBuilderDelegate<CurationListSimple>(
+          noItemsFoundIndicatorBuilder: (_) => Center(
+                child: Text(
+                  DS.text.thisUserNotCreateCurationYet,
+                  style: DS.textStyle.paragraph3.semiBold.b800,
+                ),
+              ),
           itemBuilder: (_, curation, __) => TEonTap(
               onTap: () => c.react.toCurationDetail(curation.id),
               child: TECacheImage(src: curation.imageUrl))),

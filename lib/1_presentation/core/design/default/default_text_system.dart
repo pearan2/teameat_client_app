@@ -1038,4 +1038,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get goToCreateCuration => '푸드로그 쓰러 가기';
+
+  @override
+  String get thisUserNotCreateCurationYet => '아직 이 유저는 푸드로그를 쓰지 않았어요';
 }

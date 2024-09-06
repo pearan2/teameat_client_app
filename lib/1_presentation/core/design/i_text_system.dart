@@ -374,4 +374,6 @@ abstract class ITextSystem {
   String get afterVoucherUseNotice;
   String get voucherUseFinishedAtFormat;
   String get goToCreateCuration;
+
+  String get thisUserNotCreateCurationYet;
 }

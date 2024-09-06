@@ -138,24 +138,20 @@ class _LocalSearchDialogState extends State<LocalSearchDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Text(
-                  local.title,
-                  style: DS.textStyle.paragraph3.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                DS.space.hTiny,
-                Expanded(
-                  child: Text(
-                    '(${local.category + local.category})',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: DS.textStyle.caption1,
-                  ),
-                ),
-              ],
+            Text(
+              local.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: DS.textStyle.paragraph3.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            DS.space.vXTiny,
+            Text(
+              '(${local.category + local.category})',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: DS.textStyle.caption1,
             ),
             DS.space.vXTiny,
             Text(local.address, style: DS.textStyle.caption1),

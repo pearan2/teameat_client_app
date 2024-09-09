@@ -78,7 +78,7 @@ class RootPageController extends PageController {
     if (type == MessageHelperCallbackType.inApp) {
       if (Get.currentRoute == '/voucher') {
         // inApp 이고 (foreground 에서 메시지가 온것) 이미 해당 페이지 라면
-        Get.find<VoucherPageController>().refreshData();
+        Get.find<VoucherPageController>().refreshPage();
       }
     } else if (type == MessageHelperCallbackType.openApp) {
       // 앱이 열린것이라면

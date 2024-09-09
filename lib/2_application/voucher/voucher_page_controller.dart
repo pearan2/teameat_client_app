@@ -32,7 +32,9 @@ class VoucherPageController extends PageController {
     _searchOption.value = SearchVoucherSimpleList.empty();
     // 남은 갯수도 refresh 해줘야 함
     _loadNumberOfRemainVouchers();
+    pagingController.error = '';
     pagingController.refresh();
+    pagingController.error = null;
   }
 
   void onFilterChanged(Code newFilter) {
@@ -97,13 +99,6 @@ class VoucherPageController extends PageController {
     pagingController.refresh();
     pagingController.error = null;
     super.onReady();
-  }
-
-  Future<void> refreshData() async {
-    _loadNumberOfRemainVouchers();
-    pagingController.error = '';
-    pagingController.refresh();
-    pagingController.error = null;
   }
 
   @override

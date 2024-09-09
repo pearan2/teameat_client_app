@@ -28,6 +28,10 @@ class RootPageController extends PageController {
   }
 
   Future<void> _init() async {
+    if (_widgetViewCount.isNeverViewed) {
+      return react.toOnboardingOffAll();
+    }
+
     MessageHelper.configMessage();
     _authService.startUpdateToken();
     MessageHelper.consumeCallback = (MessageWrapper wrappedMessage) {
@@ -42,7 +46,7 @@ class RootPageController extends PageController {
           () => routeMessageCallback(route, type, message.data));
       return true;
     };
-    toOnboardingIfNotNecessaryToHomeOffAll();
+    react.toHomeOffAll();
 
     final appLinks = AppLinks(); // AppLinks is singleton
 
@@ -75,14 +79,6 @@ class RootPageController extends PageController {
         });
       }
     });
-  }
-
-  void toOnboardingIfNotNecessaryToHomeOffAll() {
-    if (_widgetViewCount.isNeverViewed) {
-      react.toOnboardingOffAll();
-    } else {
-      react.toHomeOffAll();
-    }
   }
 
   // message callback setting

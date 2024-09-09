@@ -70,7 +70,7 @@ class _OnboardingPageState extends State<OnboardingPage>
       if (widget.enableBack) {
         return Get.back();
       } else {
-        return Get.find<IReact>().toHomeOffAll();
+        return Get.find<IReact>().toRoot();
       }
     }
     final nextIdx = tabController.index + 1;

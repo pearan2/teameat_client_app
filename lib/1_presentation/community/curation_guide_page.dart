@@ -73,36 +73,50 @@ class _TabViewState extends State<_TabView> with TickerProviderStateMixin {
     ).paddingOnly(bottom: 130);
   }
 
+  Widget _buildTab() {
+    return TabBarView(
+      controller: tabController,
+      children: [
+        Column(
+          children: [
+            DS.space.vMedium,
+            Expanded(
+              child: Image.asset(
+                  'assets/image/curation/curation_reward_onboarding_1.png'),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            DS.space.vMedium,
+            Expanded(
+              child: Image.asset(
+                  'assets/image/curation/curation_reward_onboarding_2.png'),
+            ),
+          ],
+        ),
+        Center(
+          child: Image.asset(
+                  'assets/image/curation/curation_reward_onboarding_3.png')
+              .paddingSymmetric(horizontal: DS.space.medium),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              Column(
-                children: [
-                  DS.space.vMedium,
-                  Image.asset(
-                      'assets/image/curation/curation_reward_onboarding_1.png'),
-                ],
-              ),
-              Column(
-                children: [
-                  DS.space.vMedium,
-                  Image.asset(
-                      'assets/image/curation/curation_reward_onboarding_2.png'),
-                ],
-              ),
-              Center(
-                child: Image.asset(
-                        'assets/image/curation/curation_reward_onboarding_3.png')
-                    .paddingSymmetric(horizontal: DS.space.medium),
-              ),
-            ],
+          child: LayoutBuilder(
+            builder: (context, constraints) => SizedBox(
+              height: constraints.maxHeight,
+              child: _buildTab(),
+            ),
           ),
         ),
+        DS.space.vMedium,
         _buildController(),
       ],
     );

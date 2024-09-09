@@ -35,7 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage>
     return Column(
       children: [
         SizedBox(height: topPadding),
-        Image.asset(path, fit: BoxFit.fitWidth),
+        Expanded(child: Image.asset(path, fit: BoxFit.fitHeight)),
       ],
     );
   }
@@ -89,17 +89,25 @@ class _OnboardingPageState extends State<OnboardingPage>
       body: Column(
         children: [
           Expanded(
-            child: TabBarView(
-                controller: tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _getGuideImage('assets/image/onboarding/app_onboarding_1.png',
-                      DS.space.base),
-                  _getGuideImage('assets/image/onboarding/app_onboarding_2.png',
-                      DS.space.xTiny),
-                  _getGuideImage('assets/image/onboarding/app_onboarding_3.png',
-                      DS.space.base),
-                ]),
+            child: LayoutBuilder(
+              builder: (context, constraints) => SizedBox(
+                height: constraints.maxHeight,
+                child: TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _getGuideImage(
+                          'assets/image/onboarding/app_onboarding_1.png',
+                          DS.space.base),
+                      _getGuideImage(
+                          'assets/image/onboarding/app_onboarding_2.png',
+                          DS.space.xTiny),
+                      _getGuideImage(
+                          'assets/image/onboarding/app_onboarding_3.png',
+                          DS.space.base),
+                    ]),
+              ),
+            ),
           ),
           DS.space.vMedium,
           TEPrimaryButton(

@@ -3,6 +3,8 @@ import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/onboarding_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_permission_page.dart';
@@ -251,6 +253,24 @@ class React extends IReact {
       const CurationRewardGuidePage(),
       duration: const Duration(milliseconds: 200),
       transition: Transition.rightToLeft,
+    );
+  }
+
+  @override
+  void toOnboarding() {
+    Get.to(
+      OnboardingPage(lastButtonText: DS.text.back, enableBack: true),
+      duration: const Duration(milliseconds: 200),
+      transition: Transition.rightToLeft,
+    );
+  }
+
+  @override
+  void toOnboardingOffAll() {
+    Get.offAll(
+      OnboardingPage(lastButtonText: DS.text.start),
+      duration: Duration.zero,
+      transition: Transition.noTransition,
     );
   }
 }

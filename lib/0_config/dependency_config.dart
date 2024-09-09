@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/onboarding_page.dart';
 import 'package:teameat/1_presentation/core/react.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -11,6 +12,7 @@ import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/i_local_repository.dart';
+import 'package:teameat/3_domain/core/i_widget_view_count_repository.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/message/i_message_repository.dart';
@@ -28,6 +30,7 @@ import 'package:teameat/4_infra/core/code/code_repository.dart';
 import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/4_infra/core/local_repository.dart';
 import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
+import 'package:teameat/4_infra/core/widget_view_count_repository.dart';
 import 'package:teameat/4_infra/curation/curation_repository.dart';
 import 'package:teameat/4_infra/file/file_service.dart';
 import 'package:teameat/4_infra/message/message_repository.dart';
@@ -79,4 +82,7 @@ Future<void> configDependency() async {
   Get.put<LikeController<ICurationRepository>>(
       LikeController<ICurationRepository>()..load());
   Get.put<LocationController>(LocationController());
+
+  Get.put<IWidgetViewCountRepository<OnboardingPage>>(
+      WidgetViewCountRepository<OnboardingPage>());
 }

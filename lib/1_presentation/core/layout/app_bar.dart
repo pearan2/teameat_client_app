@@ -19,6 +19,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? titleWidget;
   final Color? backgroundColor;
   final Color? leadingIconColor;
+  final bool withLeading;
 
   TEAppBar({
     super.key,
@@ -29,6 +30,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.action,
     this.backgroundColor,
     this.leadingIconColor,
+    this.withLeading = true,
     double? height,
   })  : assert(!(action != null && homeOnPressed != null)),
         assert(!(title != null && titleWidget != null)),
@@ -80,6 +82,7 @@ class TEAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: withLeading,
       backgroundColor: backgroundColor ?? DS.color.background000,
       surfaceTintColor: DS.color.background000,
       leading: _buildLeading(),

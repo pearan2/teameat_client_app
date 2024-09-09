@@ -21,6 +21,7 @@ class UserPage extends GetView<UserPageController> {
   @override
   Widget build(BuildContext context) {
     final topAreaHeight = MediaQuery.of(context).padding.top;
+
     return TEScaffold(
         onPop: (didPop) => controller.react.toHomeOffAll(),
         activated: BottomNavigatorType.profile,
@@ -105,6 +106,10 @@ class UserPage extends GetView<UserPageController> {
                 TERowButton(
                   onTap: controller.react.toCustomerService,
                   text: DS.text.customerQuestion,
+                ),
+                TERowButton(
+                  onTap: controller.react.toOnboarding,
+                  text: DS.text.goToOnboarding,
                 ),
                 const TEServicePolicyButton(),
                 const TEPrivacyPolicyButton(),

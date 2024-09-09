@@ -74,4 +74,8 @@ abstract class IRouter {
   void toGiftReceive({required String giftId});
 
   void toGift();
+
+  void toOnboarding();
+
+  void toOnboardingOffAll();
 }

@@ -1041,4 +1041,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get thisUserNotCreateCurationYet => '아직 이 유저는 푸드로그를 쓰지 않았어요';
+
+  @override
+  String get next => '다음';
+
+  @override
+  String get start => '시작하기';
+
+  @override
+  String get goToOnboarding => '앱 설명 다시 보기';
 }

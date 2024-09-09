@@ -376,4 +376,7 @@ abstract class ITextSystem {
   String get goToCreateCuration;
 
   String get thisUserNotCreateCurationYet;
+  String get next;
+  String get start;
+  String get goToOnboarding;
 }

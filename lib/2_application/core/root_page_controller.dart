@@ -1,17 +1,21 @@
 import 'package:app_links/app_links.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/review/review.dart';
+import 'package:teameat/1_presentation/core/onboarding_page.dart';
 import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
+import 'package:teameat/3_domain/core/i_widget_view_count_repository.dart';
 import 'package:teameat/99_util/firebase_cloud_message.dart';
 
 class RootPageController extends PageController {
   final _codeRepo = Get.find<ICodeRepository>();
   final _authService = Get.find<IAuthService>();
+  final _widgetViewCount =
+      Get.find<IWidgetViewCountRepository<OnboardingPage>>();
 
   Future<void> _loadCode() {
     return Future.wait([
@@ -38,7 +42,7 @@ class RootPageController extends PageController {
           () => routeMessageCallback(route, type, message.data));
       return true;
     };
-    react.toHomeOffAll();
+    toOnboardingIfNotNecessaryToHomeOffAll();
 
     final appLinks = AppLinks(); // AppLinks is singleton
 
@@ -71,6 +75,14 @@ class RootPageController extends PageController {
         });
       }
     });
+  }
+
+  void toOnboardingIfNotNecessaryToHomeOffAll() {
+    if (_widgetViewCount.isNeverViewed) {
+      react.toOnboardingOffAll();
+    } else {
+      react.toHomeOffAll();
+    }
   }
 
   // message callback setting

@@ -35,7 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage>
     return Column(
       children: [
         SizedBox(height: topPadding),
-        Expanded(child: Image.asset(path, fit: BoxFit.fitHeight)),
+        Expanded(child: Image.asset(path, fit: BoxFit.contain)),
       ],
     );
   }

@@ -235,17 +235,21 @@ class DefaultImageSystem extends IImageSystem {
         height: 24,
         width: 24,
       );
+
   @override
-  SvgPicture get upArrow => SvgPicture.asset(
+  SvgPicture upArrow({double? size, Color? color}) => SvgPicture.asset(
         'assets/image/icon/up_arrow.svg',
-        height: 16,
-        width: 16,
+        height: size ?? 20,
+        width: size ?? 20,
+        color: color,
       );
+
   @override
-  SvgPicture get downArrow => SvgPicture.asset(
+  SvgPicture downArrow({double? size, Color? color}) => SvgPicture.asset(
         'assets/image/icon/down_arrow.svg',
-        height: 16,
-        width: 16,
+        height: size,
+        width: size,
+        color: color,
       );
 
   @override

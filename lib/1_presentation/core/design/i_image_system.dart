@@ -56,8 +56,8 @@ abstract class IImageSystem {
   SvgPicture leftArrowInBox({Color? color});
   SvgPicture rightArrow({double? size, Color? color});
   SvgPicture get rightArrowInBox;
-  SvgPicture get upArrow;
-  SvgPicture get downArrow;
+  SvgPicture upArrow({double? size, Color? color});
+  SvgPicture downArrow({double? size, Color? color});
   Image get dangolPick;
   SvgPicture get addImage;
 

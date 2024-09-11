@@ -71,7 +71,9 @@ class _TEExpandableState extends State<TEExpandable> {
                     ? Expanded(child: widget.header)
                     : Flexible(child: widget.header),
                 DS.space.hXXTiny,
-                isExpanded ? DS.image.upArrow : DS.image.downArrow,
+                isExpanded
+                    ? DS.image.upArrow(size: DS.space.xBase)
+                    : DS.image.downArrow(size: DS.space.xBase),
               ],
             ),
             collapsed: const SizedBox(),

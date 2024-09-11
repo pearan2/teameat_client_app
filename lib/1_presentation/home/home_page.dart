@@ -58,8 +58,6 @@ class HomePage extends GetView<HomePageController> {
                   floating: true,
                   primary: false,
                   toolbarHeight: DS.space.large,
-                  expandedHeight:
-                      GetPlatform.isAndroid ? DS.space.medium : null,
                   flexibleSpace: const HomePageSearcher(),
                 ),
                 DS.space.vXSmall.toSliver,
@@ -96,59 +94,63 @@ class HomePageSearcher extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        DS.image.mainIconSm,
-        DS.space.hXSmall,
-        Expanded(
-            child: Obx(() => TextSearchButton<StoreItemSearchHistoryRepository>(
-                  onCompleted: c.onSearchTextCompleted,
-                  value: controller.searchOption.searchText,
-                  label: TextSearcher(
-                    value: controller.searchOption.searchText,
-                    onCompleted: (_) {},
-                    enabled: false,
-                    isRightIcon: true,
-                  ),
-                ))),
-        DS.space.hTiny,
-        Obx(() => TESelectorBottomSheet<int?>(
-              candidates: const [500, 1000, 2000, null],
-              onSelected: c.onWithInMeterChanged,
-              isEqual: (lhs, rhs) => lhs == rhs,
-              toLabel: (v) {
-                if (v == null) {
-                  return DS.text.noDistanceLimit;
-                } else {
-                  return v.format(DS.text.withInMeterFormat);
-                }
-              },
-              selectedValue: controller.withInMeter,
-              icon: DS.image.location,
-              iconActivated: DS.image.locationActivated,
-            )),
-        DS.space.hXSmall,
-        Obx(() => TESelectorBottomSheet<SearchableAddress?>(
-              candidates: [...c.searchableAddresses, null],
-              onSelected: c.onSelectedAddressChanged,
-              isEqual: (lhs, rhs) => lhs == rhs,
-              toLabel: (v) {
-                if (v == null) {
-                  return DS.text.noEupMyeonDongLimit;
-                } else {
-                  return v.toFullAddress();
-                }
-              },
-              selectedValue: c.selectedAddress,
-              title: c.searchableAddresses.length
-                  .format(DS.text.numberOfServicedEupMyeonDongFormat),
-              icon: DS.image.map,
-              iconActivated: DS.image.mapActivated,
-            )),
-      ],
-    ).paddingSymmetric(
-      horizontal: AppWidget.horizontalPadding,
-      vertical: DS.space.tiny,
+    return Container(
+      height: DS.space.large,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppWidget.horizontalPadding,
+        vertical: DS.space.tiny,
+      ),
+      child: Row(
+        children: [
+          Obx(() => TESelectorBottomSheet<SearchableAddress?>(
+                candidates: [...c.searchableAddresses, null],
+                onSelected: c.onSelectedAddressChanged,
+                isEqual: (lhs, rhs) => lhs == rhs,
+                toLabel: (v) {
+                  if (v == null) {
+                    return DS.text.noEupMyeonDongLimit;
+                  } else {
+                    return v.toFullAddress();
+                  }
+                },
+                selectedValue: c.selectedAddress,
+                title: c.searchableAddresses.length
+                    .format(DS.text.numberOfServicedEupMyeonDongFormat),
+                icon: TEAddressLabel(DS.text.all),
+                iconActivated:
+                    TEAddressLabel(c.selectedAddress?.eupMyeonDong ?? ''),
+              )),
+          DS.space.hXSmall,
+          Expanded(
+              child:
+                  Obx(() => TextSearchButton<StoreItemSearchHistoryRepository>(
+                        onCompleted: c.onSearchTextCompleted,
+                        value: controller.searchOption.searchText,
+                        label: TextSearcher(
+                          value: controller.searchOption.searchText,
+                          onCompleted: (_) {},
+                          enabled: false,
+                          isRightIcon: true,
+                        ),
+                      ))),
+          DS.space.hTiny,
+          Obx(() => TESelectorBottomSheet<int?>(
+                candidates: const [500, 1000, 2000, null],
+                onSelected: c.onWithInMeterChanged,
+                isEqual: (lhs, rhs) => lhs == rhs,
+                toLabel: (v) {
+                  if (v == null) {
+                    return DS.text.noDistanceLimit;
+                  } else {
+                    return v.format(DS.text.withInMeterFormat);
+                  }
+                },
+                selectedValue: controller.withInMeter,
+                icon: DS.image.location,
+                iconActivated: DS.image.locationActivated,
+              )),
+        ],
+      ),
     );
   }
 }

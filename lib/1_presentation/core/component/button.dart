@@ -1370,3 +1370,21 @@ class TEDeletableButton extends StatelessWidget {
     );
   }
 }
+
+class TEAddressLabel extends StatelessWidget {
+  final String label;
+
+  const TEAddressLabel(this.label, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(label, style: DS.textStyle.paragraph2.bold.b800.h14),
+        DS.space.hXTiny,
+        DS.image.downArrow(size: DS.space.xBase, color: DS.color.background700),
+      ],
+    );
+  }
+}

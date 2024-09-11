@@ -6,6 +6,7 @@ import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
@@ -20,6 +21,8 @@ class CurationPageController extends PageController {
   final _searchOption = SearchCurationSimpleList.empty().obs;
   bool _isLoading = false;
   final _isPageLoading = false.obs;
+  final _searchableAddresses = <SearchableAddress>[].obs;
+  final _selectedAddress = Rxn<SearchableAddress>();
 
   // controllers
   final locationController = Get.find<LocationController>();
@@ -31,6 +34,9 @@ class CurationPageController extends PageController {
   List<Code> get orders => _orderCodes;
   int? get withInMeter => _searchOption.value.withInMeter;
   bool get isPageLoading => _isPageLoading.value;
+  // ignore: invalid_use_of_protected_member
+  List<SearchableAddress> get searchableAddresses => _searchableAddresses.value;
+  SearchableAddress? get selectedAddress => _selectedAddress.value;
 
   Future<void> refreshPage() async {
     _searchOption.value = searchOption.copyWith(pageNumber: 0);
@@ -41,12 +47,20 @@ class CurationPageController extends PageController {
 
   void clearSearchOption() {
     _searchOption.value = SearchCurationSimpleList.empty();
+    _selectedAddress.value = null;
     pagingController.refresh();
   }
 
   void onSearchTextCompleted(String searchText) {
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);
+    pagingController.refresh();
+  }
+
+  Future<void> onSelectedAddressChanged(SearchableAddress? address) async {
+    _selectedAddress.value = address;
+    _searchOption.value =
+        searchOption.copyWith(address: address?.toFullAddress(), pageNumber: 0);
     pagingController.refresh();
   }
 
@@ -104,6 +118,12 @@ class CurationPageController extends PageController {
     });
   }
 
+  Future<void> _loadSearchableAddresses() async {
+    final ret = await _codeRepo.getSearchableAddress();
+    return ret.fold(
+        (l) => showError(l.desc), (r) => _searchableAddresses.value = r);
+  }
+
   @override
   void onReady() {
     pagingController.error = '';
@@ -114,6 +134,7 @@ class CurationPageController extends PageController {
 
   @override
   Future<bool> initialLoad() async {
+    _loadSearchableAddresses();
     pagingController.itemList = [];
     pagingController.addPageRequestListener(_loadCurations);
     await Future.wait([_loadCode()]);

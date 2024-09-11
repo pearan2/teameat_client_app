@@ -15,6 +15,7 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
 import 'package:teameat/2_application/core/login_checker.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
@@ -81,51 +82,70 @@ class CurationPageToolbar extends GetView<CurationPageController> {
               horizontal: AppWidget.horizontalPadding),
           alignment: Alignment.center,
           height: DS.space.large,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Stack(
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  DS.space.hBase,
-                  DS.space.hXSmall,
-                  DS.space.hXBase,
-                  DS.space.hXSmall,
-                  DS.space.hXBase
-                ],
+              Center(
+                child: Text(DS.text.curation,
+                    style: DS.textStyle.paragraph2.semiBold.b800),
               ),
-              Text(DS.text.curation,
-                  style: DS.textStyle.paragraph2.semiBold.b800),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TEonTap(
-                    onTap: c.react.toCurationRewardGuide,
-                    child: DS.image.reward,
-                  ),
-                  DS.space.hXSmall,
-                  Obx(() => TextSearchButton<CurationSearchHistoryRepository>(
-                        onCompleted: c.onSearchTextCompleted,
-                        value: controller.searchOption.searchText,
-                      )),
-                  DS.space.hXSmall,
-                  Obx(() => TESelectorBottomSheet<int?>(
-                        borderRadius: DS.space.tiny,
-                        candidates: const [500, 1000, 2000, null],
-                        onSelected: c.onWithInMeterChanged,
-                        isEqual: (lhs, rhs) => lhs == rhs,
-                        toLabel: (v) {
-                          if (v == null) {
-                            return DS.text.noDistanceLimit;
-                          } else {
-                            return v.format(DS.text.withInMeterFormat);
-                          }
-                        },
-                        selectedValue: controller.withInMeter,
-                        icon: DS.image.location,
-                        iconActivated: DS.image.locationActivated,
-                      )),
-                ],
+              Positioned(
+                top: 0,
+                bottom: 0,
+                left: 0,
+                child: Obx(() => TESelectorBottomSheet<SearchableAddress?>(
+                      candidates: [...c.searchableAddresses, null],
+                      onSelected: c.onSelectedAddressChanged,
+                      isEqual: (lhs, rhs) => lhs == rhs,
+                      toLabel: (v) {
+                        if (v == null) {
+                          return DS.text.noEupMyeonDongLimit;
+                        } else {
+                          return v.toFullAddress();
+                        }
+                      },
+                      selectedValue: c.selectedAddress,
+                      title: c.searchableAddresses.length
+                          .format(DS.text.numberOfServicedEupMyeonDongFormat),
+                      icon: TEAddressLabel(DS.text.all),
+                      iconActivated:
+                          TEAddressLabel(c.selectedAddress?.eupMyeonDong ?? ''),
+                    )),
+              ),
+              Positioned(
+                top: 0,
+                bottom: 0,
+                right: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TEonTap(
+                      onTap: c.react.toCurationRewardGuide,
+                      child: DS.image.reward,
+                    ),
+                    DS.space.hXSmall,
+                    Obx(() => TextSearchButton<CurationSearchHistoryRepository>(
+                          onCompleted: c.onSearchTextCompleted,
+                          value: controller.searchOption.searchText,
+                        )),
+                    // DS.space.hXSmall,
+                    // Obx(() => TESelectorBottomSheet<int?>(
+                    //       borderRadius: DS.space.tiny,
+                    //       candidates: const [500, 1000, 2000, null],
+                    //       onSelected: c.onWithInMeterChanged,
+                    //       isEqual: (lhs, rhs) => lhs == rhs,
+                    //       toLabel: (v) {
+                    //         if (v == null) {
+                    //           return DS.text.noDistanceLimit;
+                    //         } else {
+                    //           return v.format(DS.text.withInMeterFormat);
+                    //         }
+                    //       },
+                    //       selectedValue: controller.withInMeter,
+                    //       icon: DS.image.location,
+                    //       iconActivated: DS.image.locationActivated,
+                    //     )),
+                  ],
+                ),
               ),
             ],
           ),

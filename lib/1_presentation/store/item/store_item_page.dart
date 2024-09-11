@@ -61,30 +61,30 @@ class StoreItemPage extends GetView<StoreItemPageController> {
             ),
           ),
           bottomSheet: StoreItemBuyButton(tag: tag),
-          body: SingleChildScrollView(
+          body: CustomScrollView(
             physics: const ClampingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ItemImageCarousel(
-                    imageWidth: width, imageRatio: imageRatio, tag: tag),
-                StoreItemInfoBox(tag),
-                c.item.obx((i) => i.curation == null
-                    ? const SizedBox()
-                    : CurationInfo(i.curation!)
-                        .withTitle(DS.text.itemDescriptionByCurator,
-                            spacing: DS.space.xSmall)
-                        .withDivider(TEDivider.normal())),
-                c.item.obx((i) => StoreItemUsageInfo(item: i)),
-                TEDivider.normal(),
-                StoreItemNotice.refund().withBasePadding,
-                StoreItemNotice.warning().withBasePadding,
-                c.item.obx((i) => StoreLocation(i)),
-                DS.space.vBase,
-                DS.space.vLarge,
-                DS.space.vLarge,
-              ],
-            ),
+            slivers: [
+              ItemImageCarousel(
+                      imageWidth: width, imageRatio: imageRatio, tag: tag)
+                  .toSliver,
+              StoreItemInfoBox(tag).toSliver,
+              c.item
+                  .obx((i) => i.curation == null
+                      ? const SizedBox()
+                      : CurationInfo(i.curation!)
+                          .withTitle(DS.text.itemDescriptionByCurator,
+                              spacing: DS.space.xSmall)
+                          .withDivider(TEDivider.normal()))
+                  .toSliver,
+              c.item.obx((i) => StoreItemUsageInfo(item: i)).toSliver,
+              TEDivider.normal().toSliver,
+              StoreItemNotice.refund().withBasePadding.toSliver,
+              StoreItemNotice.warning().withBasePadding.toSliver,
+              c.item.obx((i) => StoreLocation(i)).toSliver,
+              DS.space.vBase.toSliver,
+              DS.space.vLarge.toSliver,
+              DS.space.vLarge.toSliver,
+            ],
           ),
         ));
   }

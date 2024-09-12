@@ -453,7 +453,7 @@ class CurationListDetail with _$CurationListDetail {
       introduce: simple.introducePreview,
       itemImageUrls: [simple.imageUrl],
       storeImageUrls: [simple.imageUrl],
-      isMine: false,
+      isMine: true,
     );
   }
 }

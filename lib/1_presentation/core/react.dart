@@ -35,10 +35,10 @@ class React extends IReact {
   }
 
   @override
-  void toStoreItemDetail(int itemId) {
+  void toStoreItemDetail(int itemId, {ItemSimple? item}) {
     Get.to(
       () => StoreItemPage(itemId.toString()),
-      arguments: {'itemId': itemId},
+      arguments: {'itemId': itemId, 'item': item},
       preventDuplicates: false,
       binding: StoreItemPageBinding(),
       duration: transitionDuration,

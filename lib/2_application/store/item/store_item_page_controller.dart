@@ -20,7 +20,10 @@ class StoreItemPageController extends PageController {
 
   final _isLoading = false.obs;
 
-  late final item = ItemDetail.empty().wrap(_loadStoreItemInfo);
+  late final RxWrapper<Failure, ItemDetail> item = (itemSimple == null
+          ? ItemDetail.empty()
+          : ItemDetail.fromSimple(itemSimple!))
+      .wrap(_loadStoreItemInfo, emptyValue: ItemDetail.empty());
   late final groupBuyings =
       <GroupBuying>[].wrap(_loadGroupBuyings, autoStartLoad: false);
 
@@ -31,7 +34,9 @@ class StoreItemPageController extends PageController {
   bool get isLoading => _isLoading.value;
 
   final int itemId;
-  StoreItemPageController({required this.itemId});
+  final ItemSimple? itemSimple;
+
+  StoreItemPageController({required this.itemId, this.itemSimple});
 
   void onBuyQuantityChanged(int newValue) {
     if (newValue < 1 || newValue > 99) {

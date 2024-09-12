@@ -65,9 +65,10 @@ class HomePage extends GetView<HomePageController> {
                     pagingController: controller.pagingController,
                     builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
                       itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                          imageWidth: imageWidth,
-                          item: item,
-                          onTap: (itemId) => c.react.toStoreItemDetail(itemId)),
+                        imageWidth: imageWidth,
+                        item: item,
+                        onTap: c.react.toStoreItemDetail,
+                      ),
                       noItemsFoundIndicatorBuilder: (_) =>
                           const SearchNotFound(),
                     ),

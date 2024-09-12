@@ -20,6 +20,11 @@ class PaymentResultPageController extends PageController {
         (paymentResult['error_msg'] as String));
   }
 
+  /// Todo
+  /// payment callback 호출 한 후, 실제로 결제된 게 맞다면 후 프로세스 처리(선물하기로 진입했을 경우)
+  ///
+  void fromGiftProcess() {}
+
   @override
   Future<bool> initialLoad() async {
     if (!isPaymentSuccess) {

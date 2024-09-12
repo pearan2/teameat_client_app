@@ -80,7 +80,9 @@ class StoreItemPage extends GetView<StoreItemPageController> {
               TEDivider.normal().toSliver,
               StoreItemNotice.refund().withBasePadding.toSliver,
               StoreItemNotice.warning().withBasePadding.toSliver,
-              c.item.obx((i) => StoreLocation(i)).toSliver,
+              c.item
+                  .obx((i) => StoreLocation(i, isLoading: c.item.isLoading))
+                  .toSliver,
               DS.space.vBase.toSliver,
               DS.space.vLarge.toSliver,
               DS.space.vLarge.toSliver,
@@ -607,8 +609,9 @@ class StoreItemUsageInfo extends StatelessWidget {
 
 class StoreLocation extends StatelessWidget {
   final ItemDetail item;
+  final bool isLoading;
 
-  const StoreLocation(this.item, {super.key});
+  const StoreLocation(this.item, {super.key, required this.isLoading});
 
   String getCategory() {
     final category = item.store.category;
@@ -652,7 +655,7 @@ class StoreLocation extends StatelessWidget {
         TEStoreMap.single(
           height: DS.space.large * 4,
           store: store,
-          isLoading: item == ItemDetail.empty(),
+          isLoading: isLoading,
         ),
         DS.space.vXSmall,
         TETextCopyButton(textData: item.store.address).withBasePadding,

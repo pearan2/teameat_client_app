@@ -10,7 +10,7 @@ abstract class IRouter {
 
   void toHomeOffAll();
 
-  void toStoreItemDetail(int itemId);
+  void toStoreItemDetail(int itemId, {ItemSimple? item});
 
   void back<T>({T? result, bool closeOverlays});
 

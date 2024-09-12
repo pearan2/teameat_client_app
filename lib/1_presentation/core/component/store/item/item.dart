@@ -571,7 +571,7 @@ class StoreItemNameText extends StatelessWidget {
 
 class StoreItemColumnCard extends StatelessWidget {
   final ItemSimple item;
-  final void Function(int itemId) onTap;
+  final void Function(int itemId, {ItemSimple? item}) onTap;
   final double borderRadius;
   final double? imageWidth;
 
@@ -599,7 +599,7 @@ class StoreItemColumnCard extends StatelessWidget {
             2;
 
     return TEonTap(
-      onTap: () => onTap(item.id),
+      onTap: () => onTap(item.id, item: item),
       child: SizedBox(
         width: imageWidth,
         child: Column(

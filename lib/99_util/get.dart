@@ -57,6 +57,8 @@ class RxWrapper<F, T> {
   F? failure;
   final Future<Either<F, T>> Function() loader;
 
+  bool get isLoading => _status.value == _ValueStatus.loading;
+
   T get value => _value;
   set value(T newValue) {
     _status.value = _ValueStatus.loading;
@@ -65,11 +67,12 @@ class RxWrapper<F, T> {
   }
 
   RxWrapper({
+    required T value,
     required T emptyValue,
     required this.loader,
     bool initLoad = true,
   })  : _emptyValue = emptyValue,
-        _value = emptyValue {
+        _value = value {
     if (initLoad) {
       load();
     } else {
@@ -99,9 +102,13 @@ class RxWrapper<F, T> {
       switch (_status.value) {
         case _ValueStatus.loading:
           {
-            final currentLoadingBuilder =
-                loadingBuilder ?? defaultLoadingBuilder;
-            return currentLoadingBuilder(builder(_emptyValue));
+            if (_value == _emptyValue) {
+              final currentLoadingBuilder =
+                  loadingBuilder ?? defaultLoadingBuilder;
+              return currentLoadingBuilder(builder(_emptyValue));
+            } else {
+              return builder(_value);
+            }
           }
         case _ValueStatus.failure:
           {
@@ -127,9 +134,11 @@ extension RxExtension<T> on T {
     bool autoStartLoad = true,
     Widget Function(Widget child)? loadingBuilder,
     Widget Function(String failureString, Widget child)? failureBuilder,
+    T? emptyValue,
   }) {
     return RxWrapper(
-      emptyValue: this,
+      value: this,
+      emptyValue: emptyValue ?? this,
       loader: loader,
       initLoad: autoStartLoad,
     );

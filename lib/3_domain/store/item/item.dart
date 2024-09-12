@@ -18,7 +18,6 @@ class ItemSimple with _$ItemSimple {
     required String sellType,
     required DateTime salesWillBeEndedAt,
     required int orderReference,
-    DateTime? currentGroupBuyingWillBeEndedAt,
     String? curatorProfileImageUrl,
     String? curatorNickname,
     required int storeId,
@@ -41,7 +40,6 @@ class ItemSimple with _$ItemSimple {
       sellType: '이용권',
       orderReference: 0,
       salesWillBeEndedAt: DateTime.now(),
-      currentGroupBuyingWillBeEndedAt: DateTime.now(),
       curatorProfileImageUrl:
           "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295",
       curatorNickname: "honlee",
@@ -63,7 +61,6 @@ class ItemDetail with _$ItemDetail {
     required int quantity,
     required String sellType,
     required DateTime salesWillBeEndedAt,
-    DateTime? currentGroupBuyingWillBeEndedAt,
     required StoreDetail store,
     required String introduce,
     required int numberOfLikes,
@@ -90,7 +87,6 @@ class ItemDetail with _$ItemDetail {
       quantity: 100,
       sellType: '이용권',
       salesWillBeEndedAt: DateTime.now(),
-      currentGroupBuyingWillBeEndedAt: DateTime.now(),
       store: StoreDetail.empty(),
       introduce: "사장님께서 입력하시는 메뉴 한줄 소개",
       numberOfLikes: 824,
@@ -101,6 +97,30 @@ class ItemDetail with _$ItemDetail {
           5,
           (_) =>
               "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"),
+    );
+  }
+
+  factory ItemDetail.fromSimple(ItemSimple simple) {
+    return ItemDetail(
+      id: simple.id,
+      name: simple.name,
+      imageUrl: simple.imageUrl,
+      originalPrice: simple.originalPrice,
+      price: simple.price,
+      quantity: simple.quantity,
+      sellType: simple.sellType,
+      salesWillBeEndedAt: simple.salesWillBeEndedAt,
+      store: StoreDetail.empty().copyWith(
+        id: simple.storeId,
+        name: simple.storeName,
+        location: simple.storeLocation,
+      ),
+      introduce: "",
+      numberOfLikes: 0,
+      willBeExpiredAt: simple.salesWillBeEndedAt,
+      originInformation: "",
+      activatedAt: DateTime.now(),
+      imageUrls: [simple.imageUrl],
     );
   }
 }

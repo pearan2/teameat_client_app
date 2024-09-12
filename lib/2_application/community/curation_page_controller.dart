@@ -93,8 +93,8 @@ class CurationPageController extends PageController {
     pagingController.refresh();
   }
 
-  void onCurationTapHandler(int curationId) {
-    react.toCurationDetail(curationId);
+  void onCurationTapHandler(int curationId, {CurationListSimple? simple}) {
+    react.toCurationDetail(curationId, simple: simple);
   }
 
   Future<void> _loadCode() async {

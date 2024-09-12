@@ -193,7 +193,7 @@ class CurationList extends GetView<CurationPageController> {
             const Center(child: CurationNotFound()),
         itemBuilder: (_, curation, idx) => CurationCard(curation,
             key: ValueKey(curation.id),
-            onTap: () => c.onCurationTapHandler(curation.id)),
+            onTap: () => c.onCurationTapHandler(curation.id, simple: curation)),
       ),
       separatorBuilder: (_, idx) => DS.space.vXSmall,
     );

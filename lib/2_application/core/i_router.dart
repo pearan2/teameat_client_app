@@ -58,7 +58,7 @@ abstract class IRouter {
 
   Future<bool> toCurationCreate(MyCurationDetail? curation);
 
-  void toCurationDetail(int curationId);
+  void toCurationDetail(int curationId, {CurationListSimple? simple});
 
   void toCuratorSummary(int curatorId);
 

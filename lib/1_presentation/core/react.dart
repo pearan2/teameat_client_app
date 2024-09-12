@@ -170,10 +170,10 @@ class React extends IReact {
   }
 
   @override
-  void toCurationDetail(int curationId) {
+  void toCurationDetail(int curationId, {CurationListSimple? simple}) {
     Get.to(
       () => CurationDetailViewPage(curationId.toString()),
-      arguments: {'curationId': curationId},
+      arguments: {'curationId': curationId, 'curation': simple},
       preventDuplicates: false,
       binding: CurationDetailViewPageBinding(),
       duration: transitionDuration,

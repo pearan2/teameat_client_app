@@ -433,4 +433,27 @@ class CurationListDetail with _$CurationListDetail {
       isMine: false,
     );
   }
+
+  factory CurationListDetail.fromSimple(CurationListSimple simple) {
+    return CurationListDetail(
+      id: simple.id,
+      name: simple.name,
+      oneLineIntroduce: simple.oneLineIntroduce,
+      introducePreview: simple.introducePreview,
+      store: simple.store,
+      item: CurationListStoreItemInfo.empty(),
+      storeAdditional: CurationListStoreAdditionalInfo.empty(),
+      curator: simple.curator,
+      imageUrl: simple.imageUrl,
+      numberOfLikes: simple.numberOfLikes,
+      isInSale: simple.isInSale,
+      isSaleFinished: simple.isSaleFinished,
+      createdAt: simple.createdAt,
+      originalPrice: simple.originalPrice,
+      introduce: simple.introducePreview,
+      itemImageUrls: [simple.imageUrl],
+      storeImageUrls: [simple.imageUrl],
+      isMine: false,
+    );
+  }
 }

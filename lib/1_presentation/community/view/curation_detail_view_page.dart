@@ -94,7 +94,10 @@ class CurationDetailViewPage extends GetView<CurationDetailViewPageController> {
                 child: c.curation
                     .obx((curation) => StoreNameAndCategory(curation)),
               ).toSliver,
-              c.curation.obx((curation) => StoreMap(curation)).toSliver,
+              c.curation
+                  .obx((curation) =>
+                      StoreMap(curation, isLoading: c.curation.isLoading))
+                  .toSliver,
               DS.space.vLarge.toSliver,
               DS.space.vLarge.toSliver,
             ],
@@ -249,7 +252,8 @@ class StoreNameAndCategory extends StatelessWidget {
 
 class StoreMap extends StatelessWidget {
   final CurationListDetail curation;
-  const StoreMap(this.curation, {super.key});
+  final bool isLoading;
+  const StoreMap(this.curation, {super.key, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -264,7 +268,7 @@ class StoreMap extends StatelessWidget {
     return TESingleStoreMap(
       store: storePoint,
       address: curation.store.address,
-      isLoading: curation == CurationListDetail.empty(),
+      isLoading: isLoading,
     );
   }
 }

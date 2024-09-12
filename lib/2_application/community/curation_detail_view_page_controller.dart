@@ -19,11 +19,18 @@ class CurationDetailViewPageController extends PageController {
   final _reportRepo = Get.find<IReportRepository>();
   final _blockRepo = Get.find<IUserBlockRepository>();
 
+  final _empty = CurationListDetail.empty();
+
   // states
-  late final curation = CurationListDetail.empty().wrap(_loadCuration);
+  late final curation =
+      (simple == null ? _empty : CurationListDetail.fromSimple(simple!))
+          .wrap(_loadCuration, emptyValue: _empty);
   final _isLoading = false.obs;
 
   final int curationId;
+  final CurationListSimple? simple;
+
+  CurationDetailViewPageController(this.curationId, {this.simple});
 
   // getter
   bool get isLoading => _isLoading.value;
@@ -105,6 +112,4 @@ class CurationDetailViewPageController extends PageController {
       showSuccess(DS.text.reportSuccess);
     });
   }
-
-  CurationDetailViewPageController(this.curationId);
 }

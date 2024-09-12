@@ -19,11 +19,11 @@ class StoreItemPageController extends PageController {
   final _orderRepo = Get.find<IOrderRepository>();
 
   final _isLoading = false.obs;
+  final _empty = ItemDetail.empty();
 
-  late final RxWrapper<Failure, ItemDetail> item = (itemSimple == null
-          ? ItemDetail.empty()
-          : ItemDetail.fromSimple(itemSimple!))
-      .wrap(_loadStoreItemInfo, emptyValue: ItemDetail.empty());
+  late final RxWrapper<Failure, ItemDetail> item =
+      (itemSimple == null ? _empty : ItemDetail.fromSimple(itemSimple!))
+          .wrap(_loadStoreItemInfo, emptyValue: _empty);
   late final groupBuyings =
       <GroupBuying>[].wrap(_loadGroupBuyings, autoStartLoad: false);
 

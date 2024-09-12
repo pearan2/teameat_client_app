@@ -37,4 +37,6 @@ class Failure with _$Failure {
       _RegisterCurationFail;
   const factory Failure.blockFail(String desc) = _BlockFail;
   const factory Failure.reportFail(String desc) = _ReportFail;
+  const factory Failure.paymentCheckPaidFail(String desc) =
+      _PaymentCheckPaidFail;
 }

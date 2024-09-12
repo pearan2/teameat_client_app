@@ -38,10 +38,8 @@ class VoucherRepository implements IVoucherRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, VoucherDetail>> findById(int id) async {
+  Future<Either<Failure, VoucherDetail>> _findBy(String path) async {
     try {
-      final path = 'api/voucher/$id';
       final ret = await _conn.get(path, null);
       return ret.fold(
           (l) => left(l), (r) => right(VoucherDetail.fromJson(r as JsonMap)));
@@ -49,6 +47,16 @@ class VoucherRepository implements IVoucherRepository {
       return left(const Failure.fetchVoucherFail(
           '이용권 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
+  }
+
+  @override
+  Future<Either<Failure, VoucherDetail>> findById(int id) async {
+    return _findBy('api/voucher/$id');
+  }
+
+  @override
+  Future<Either<Failure, VoucherDetail>> findByOrderId(String orderId) {
+    return _findBy('api/voucher/$orderId');
   }
 
   @override

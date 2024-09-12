@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/loading.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -17,47 +18,77 @@ class PaymentResultPage extends GetView<PaymentResultPageController> {
   Widget build(BuildContext context) {
     return TEScaffold(
         body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DS.image.mainIconWithText,
-          DS.space.vXSmall,
-          Text(
-            '${c.isGroupBuying ? DS.text.groupBuyingOpened : DS.text.paymentFinished}!',
-            style: DS.textStyle.paragraph1,
-          ),
-          DS.space.vTiny,
-          Text(
-            '${DS.text.thanks}!',
-            style: DS.textStyle.paragraph1,
-          ),
-          DS.space.vBase,
-          SizedBox(
-            width: DS.space.large * 4,
-            child: TESecondaryButton(
-                onTap: controller.react.toHomeOffAll,
-                text: DS.text.shoppingContinue),
-          ),
-          DS.space.vSmall,
-          SizedBox(
-            width: DS.space.large * 4,
-            child: TEPrimaryButton(
-              onTap: c.isGroupBuying
-                  ? () {
-                      c.react.toHomeOffAll();
-                      c.react.toStoreItemDetail(c.itemId!);
-                    }
-                  : controller.react.toVoucherOffAll,
-              text: c.isGroupBuying
-                  ? DS.text.backToItemPage
-                  : DS.text.toVoucherInventory,
-            ),
-          ),
-          DS.space.vSmall.orEmpty(c.isGroupBuying),
-          const _AlarmPermissionNotice().orEmpty(c.isGroupBuying)
-        ],
-      ),
+      child: Obx(() =>
+          c.isLoading ? const _PaidCheckLoading() : const _NextStepNotice()),
     ));
+  }
+}
+
+class _PaidCheckLoading extends StatelessWidget {
+  const _PaidCheckLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          DS.text.checkingPaymentResultPleaseWait,
+          style: DS.textStyle.paragraph1.b800.h14.semiBold,
+          textAlign: TextAlign.center,
+        ),
+        DS.space.vBase,
+        const TELoading(),
+      ],
+    );
+  }
+}
+
+class _NextStepNotice extends GetView<PaymentResultPageController> {
+  const _NextStepNotice();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        DS.image.mainIconWithText,
+        DS.space.vXSmall,
+        Text(
+          '${c.isGroupBuying ? DS.text.groupBuyingOpened : DS.text.paymentFinished}!',
+          style: DS.textStyle.paragraph1,
+        ),
+        DS.space.vTiny,
+        Text(
+          '${DS.text.thanks}!',
+          style: DS.textStyle.paragraph1,
+        ),
+        DS.space.vBase,
+        SizedBox(
+          width: DS.space.large * 4,
+          child: TESecondaryButton(
+              onTap: controller.react.toHomeOffAll,
+              text: DS.text.shoppingContinue),
+        ),
+        DS.space.vSmall,
+        SizedBox(
+          width: DS.space.large * 4,
+          child: TEPrimaryButton(
+            onTap: c.isGroupBuying
+                ? () {
+                    c.react.toHomeOffAll();
+                    c.react.toStoreItemDetail(c.itemId!);
+                  }
+                : controller.react.toVoucherOffAll,
+            text: c.isGroupBuying
+                ? DS.text.backToItemPage
+                : DS.text.toVoucherInventory,
+          ),
+        ),
+        DS.space.vSmall.orEmpty(c.isGroupBuying),
+        const _AlarmPermissionNotice().orEmpty(c.isGroupBuying)
+      ],
+    );
   }
 }
 

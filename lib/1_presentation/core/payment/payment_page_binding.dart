@@ -10,10 +10,12 @@ class PaymentPageBinding implements Bindings {
     final order = argMap['order'] as Order;
     final paymentMethod = argMap['paymentMethod'] as PaymentMethod;
     final itemId = argMap['itemId'] as int?;
+    final isForGift = argMap['isForGift'] as bool;
     Get.put(PaymentPageController(
       order: order,
       paymentMethod: paymentMethod,
       itemId: itemId,
+      isForGift: isForGift,
     ));
   }
 }

@@ -379,4 +379,7 @@ abstract class ITextSystem {
   String get next;
   String get start;
   String get goToOnboarding;
+
+  String get checkingPaymentResultPleaseWait;
+  String get paymentIsNotCorrect;
 }

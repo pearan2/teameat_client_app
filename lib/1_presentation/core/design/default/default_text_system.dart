@@ -1050,4 +1050,11 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get goToOnboarding => '앱 설명 다시 보기';
+
+  @override
+  String get checkingPaymentResultPleaseWait => '결제내역을 확인하는 중 입니다\n잠시만 기다려 주세요';
+
+  @override
+  String get paymentIsNotCorrect =>
+      '결제 정보가 올바르지 않습니다\n실제로 결제가 되었다면\n[프로필 -> 고객문의]로 문의하여 주세요';
 }

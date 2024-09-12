@@ -50,7 +50,8 @@ class PurchasePageController extends PageController {
           isGroupBuying: withOpenGroupBuying,
         ),
         (r) => react.toPaymentOff(r, purchaseMethod!,
-            withOpenGroupBuying ? items.keys.first.id : null));
+            withOpenGroupBuying ? items.keys.first.id : null,
+            isForGift: true));
   }
 
   PurchasePageController(

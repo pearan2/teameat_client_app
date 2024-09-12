@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -179,7 +180,7 @@ Future<void> toReview(
 ) async {
   Get.to(
     _ReviewFormPage(targetId: targetId, targetType: targetType),
-    duration: const Duration(milliseconds: 200),
+    duration: transitionDuration,
     transition: Transition.rightToLeft,
   );
 }

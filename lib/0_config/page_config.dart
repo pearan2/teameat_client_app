@@ -52,7 +52,7 @@ import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page_binding.dart';
 
-const transitionDuration = Duration(milliseconds: 200);
+const transitionDuration = Duration(milliseconds: 300);
 
 List<GetPage> allPages() => [
       GetPage(

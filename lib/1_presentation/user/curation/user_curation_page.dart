@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -93,7 +94,7 @@ class BannerSliver extends StatelessWidget {
         onTap: () {
           Get.to(
             const CurationRewardGuidePage(),
-            duration: const Duration(milliseconds: 200),
+            duration: transitionDuration,
             transition: Transition.rightToLeft,
           );
         },

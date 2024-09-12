@@ -257,7 +257,7 @@ class React extends IReact {
   void toCurationRewardGuide() {
     Get.to(
       const CurationRewardGuidePage(),
-      duration: const Duration(milliseconds: 200),
+      duration: transitionDuration,
       transition: Transition.rightToLeft,
     );
   }
@@ -266,7 +266,7 @@ class React extends IReact {
   void toOnboarding() {
     Get.to(
       OnboardingPage(lastButtonText: DS.text.back, enableBack: true),
-      duration: const Duration(milliseconds: 200),
+      duration: transitionDuration,
       transition: Transition.rightToLeft,
     );
   }

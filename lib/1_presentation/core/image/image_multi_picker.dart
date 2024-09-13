@@ -10,22 +10,6 @@ import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 
-class PhotoLoadingIndicator extends StatelessWidget {
-  final Color backgroundColor;
-  const PhotoLoadingIndicator({
-    super.key,
-    required this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: backgroundColor,
-      child: const Center(child: TELoading()),
-    );
-  }
-}
-
 class InstaAssetPickerTextDelegate extends AssetPickerTextDelegate {
   @override
   String get languageCode => 'ko_KR';

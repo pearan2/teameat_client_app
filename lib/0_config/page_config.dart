@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
+import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
+import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
@@ -74,6 +76,13 @@ List<GetPage> allPages() => [
         binding: CurationPageBinding(),
         page: () => const CurationPage(),
         transition: Transition.noTransition,
+      ),
+      GetPage(
+        name: "/curation/:curationId",
+        binding: CurationDetailViewPageBinding(),
+        page: () => CurationDetailViewPage(Get.parameters['curationId']!),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
       ),
       GetPage(
         name: "/curation/create",
@@ -184,6 +193,13 @@ List<GetPage> allPages() => [
         transition: Transition.rightToLeft,
       ),
       GetPage(
+        name: "/store/item/:itemId",
+        binding: StoreItemPageBinding(),
+        page: () => StoreItemPage(Get.parameters['itemId']!),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
+      ),
+      GetPage(
         name: "/store/item/purchase",
         binding: PurchasePageBinding(),
         page: () => const PurchasePage(),
@@ -228,15 +244,5 @@ List<GetPage> allPages() => [
         page: () => const CustomerServicePage(),
         transition: Transition.noTransition,
         transitionDuration: Duration.zero,
-      ),
-
-      /// test
-      /// 19번
-      GetPage(
-        name: "/store/item/:itemId",
-        binding: StoreItemPageBinding(),
-        page: () => StoreItemPage(Get.parameters['itemId']!),
-        transitionDuration: transitionDuration,
-        transition: Transition.rightToLeft,
       ),
     ];

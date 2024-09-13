@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
@@ -56,7 +57,8 @@ import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page_binding.dart';
 
-const transitionDuration = Duration(milliseconds: 250);
+const transitionDuration = Duration(milliseconds: 300);
+const transitionCurve = Curves.fastOutSlowIn;
 
 List<GetPage> allPages() => [
       GetPage(
@@ -64,18 +66,21 @@ List<GetPage> allPages() => [
         binding: RootPageBinding(),
         page: () => const RootPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/home",
         binding: HomePageBinding(),
         page: () => const HomePage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/curation",
         binding: CurationPageBinding(),
         page: () => const CurationPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/curation/detail/:curationId",
@@ -83,6 +88,7 @@ List<GetPage> allPages() => [
         page: () => CurationDetailViewPage(Get.parameters['curationId']!),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/curation/create",
@@ -197,6 +203,7 @@ List<GetPage> allPages() => [
         binding: StoreItemPageBinding(),
         page: () => StoreItemPage(Get.parameters['itemId']!),
         transitionDuration: transitionDuration,
+        curve: Curves.fastOutSlowIn,
         transition: Transition.rightToLeft,
       ),
       GetPage(

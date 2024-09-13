@@ -3,6 +3,8 @@ import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page.dart';
+import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/block/block_page.dart';
 import 'package:teameat/1_presentation/user/block/block_page_binding.dart';
 import 'package:teameat/1_presentation/community/create/curation_create_page.dart';
@@ -52,7 +54,7 @@ import 'package:teameat/1_presentation/voucher/voucher_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_used_page_binding.dart';
 
-const transitionDuration = Duration(milliseconds: 300);
+const transitionDuration = Duration(milliseconds: 250);
 
 List<GetPage> allPages() => [
       GetPage(
@@ -226,5 +228,15 @@ List<GetPage> allPages() => [
         page: () => const CustomerServicePage(),
         transition: Transition.noTransition,
         transitionDuration: Duration.zero,
+      ),
+
+      /// test
+      /// 19번
+      GetPage(
+        name: "/store/item/:itemId",
+        binding: StoreItemPageBinding(),
+        page: () => StoreItemPage(Get.parameters['itemId']!),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
       ),
     ];

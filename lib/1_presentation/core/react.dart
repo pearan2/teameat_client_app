@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
-import 'package:teameat/0_config/page_config.dart';
-import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/onboarding_page.dart';
-import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
@@ -185,11 +182,7 @@ class React extends IReact {
 
   @override
   void toPermissionSetting() {
-    Get.to(
-      () => const UserPermissionPage(),
-      duration: transitionDuration,
-      transition: Transition.rightToLeft,
-    );
+    Get.toNamed('/permission-setting');
   }
 
   @override
@@ -245,20 +238,12 @@ class React extends IReact {
 
   @override
   void toCurationRewardGuide() {
-    Get.to(
-      const CurationRewardGuidePage(),
-      duration: transitionDuration,
-      transition: Transition.rightToLeft,
-    );
+    Get.toNamed('/curation/reward-guide');
   }
 
   @override
   void toOnboarding() {
-    Get.to(
-      OnboardingPage(lastButtonText: DS.text.back, enableBack: true),
-      duration: transitionDuration,
-      transition: Transition.rightToLeft,
-    );
+    Get.toNamed('/onboarding');
   }
 
   @override

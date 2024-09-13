@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/community/curation_guide_page.dart';
 import 'package:teameat/1_presentation/community/curation_page.dart';
 import 'package:teameat/1_presentation/community/curation_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page.dart';
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/onboarding_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/block/block_page.dart';
@@ -50,6 +53,7 @@ import 'package:teameat/1_presentation/user/user_detail_page.dart';
 import 'package:teameat/1_presentation/user/user_detail_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_page.dart';
 import 'package:teameat/1_presentation/user/user_page_binding.dart';
+import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_detail_page.dart';
 import 'package:teameat/1_presentation/voucher/voucher_detail_page_binding.dart';
 import 'package:teameat/1_presentation/voucher/voucher_page.dart';
@@ -96,6 +100,7 @@ List<GetPage> allPages() => [
         page: () => const CurationCreatePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/curation/curator/summary",
@@ -103,12 +108,14 @@ List<GetPage> allPages() => [
         page: () => const CuratorSummaryViewPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user",
         binding: UserPageBinding(),
         page: () => const UserPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user/block",
@@ -116,6 +123,7 @@ List<GetPage> allPages() => [
         page: () => const UserBlockPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user/follower",
@@ -123,6 +131,7 @@ List<GetPage> allPages() => [
         page: () => const UserFollowerPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user/curation",
@@ -130,6 +139,7 @@ List<GetPage> allPages() => [
         page: () => const UserCurationPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user/curation/view",
@@ -137,6 +147,7 @@ List<GetPage> allPages() => [
         page: () => const MyCurationDetailViewPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/gift",
@@ -144,6 +155,7 @@ List<GetPage> allPages() => [
         page: () => const GiftPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/user/detail",
@@ -151,12 +163,14 @@ List<GetPage> allPages() => [
         page: () => const UserDetailPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher",
         binding: VoucherPageBinding(),
         page: () => const VoucherPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher/detail/:voucherId",
@@ -164,12 +178,14 @@ List<GetPage> allPages() => [
         page: () => const VoucherDetailPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher/used",
         binding: VoucherUsedPageBinding(),
         page: () => const VoucherUsedPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher/gift",
@@ -177,12 +193,14 @@ List<GetPage> allPages() => [
         page: () => const GiftCreatePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher/gift/success",
         binding: GiftSuccessPageBinding(),
         page: () => const GiftSuccessPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/voucher/gift/receive",
@@ -190,6 +208,7 @@ List<GetPage> allPages() => [
         page: () => const GiftReceivePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/store",
@@ -197,14 +216,15 @@ List<GetPage> allPages() => [
         page: () => const StorePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/store/item/detail/:itemId",
         binding: StoreItemPageBinding(),
         page: () => StoreItemPage(Get.parameters['itemId']!),
         transitionDuration: transitionDuration,
-        curve: Curves.fastOutSlowIn,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/store/item/purchase",
@@ -212,6 +232,7 @@ List<GetPage> allPages() => [
         page: () => const PurchasePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/store/like",
@@ -219,6 +240,7 @@ List<GetPage> allPages() => [
         page: () => const StoreLikePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/store/item/like",
@@ -226,24 +248,28 @@ List<GetPage> allPages() => [
         page: () => const StoreItemLikePage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/payment",
         binding: PaymentPageBinding(),
         page: () => const PaymentPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/payment/result",
         binding: PaymentResultPageBinding(),
         page: () => const PaymentResultPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/login",
         binding: LoginPageBinding(),
         page: () => const LoginPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
       ),
       GetPage(
         name: "/customer-service",
@@ -251,5 +277,28 @@ List<GetPage> allPages() => [
         page: () => const CustomerServicePage(),
         transition: Transition.noTransition,
         transitionDuration: Duration.zero,
+        curve: transitionCurve,
+      ),
+      GetPage(
+        name: "/permission-setting",
+        page: () => const UserPermissionPage(),
+        transition: Transition.rightToLeft,
+        transitionDuration: transitionDuration,
+        curve: transitionCurve,
+      ),
+      GetPage(
+        name: "/curation/reward-guide",
+        page: () => const CurationRewardGuidePage(),
+        transition: Transition.rightToLeft,
+        transitionDuration: transitionDuration,
+        curve: transitionCurve,
+      ),
+      GetPage(
+        name: "/onboarding",
+        page: () =>
+            OnboardingPage(lastButtonText: DS.text.back, enableBack: true),
+        transition: Transition.rightToLeft,
+        transitionDuration: transitionDuration,
+        curve: transitionCurve,
       ),
     ];

@@ -1,12 +1,8 @@
 import 'package:get/get.dart';
 import 'package:teameat/0_config/page_config.dart';
 import 'package:teameat/1_presentation/community/curation_guide_page.dart';
-import 'package:teameat/1_presentation/community/view/curation_detail_view_page.dart';
-import 'package:teameat/1_presentation/community/view/curation_detail_view_page_binding.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/onboarding_page.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page.dart';
-import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/user_permission_page.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
@@ -36,13 +32,10 @@ class React extends IReact {
 
   @override
   void toStoreItemDetail(int itemId, {ItemSimple? item}) {
-    Get.to(
-      () => StoreItemPage(itemId.toString()),
+    Get.toNamed(
+      '/store/item/detail/$itemId',
       arguments: {'itemId': itemId, 'item': item},
       preventDuplicates: false,
-      binding: StoreItemPageBinding(),
-      duration: transitionDuration,
-      transition: Transition.rightToLeft,
     );
   }
 
@@ -177,13 +170,10 @@ class React extends IReact {
 
   @override
   void toCurationDetail(int curationId, {CurationListSimple? simple}) {
-    Get.to(
-      () => CurationDetailViewPage(curationId.toString()),
+    Get.toNamed(
+      '/curation/detail/$curationId',
       arguments: {'curationId': curationId, 'curation': simple},
       preventDuplicates: false,
-      binding: CurationDetailViewPageBinding(),
-      duration: transitionDuration,
-      transition: Transition.rightToLeft,
     );
   }
 

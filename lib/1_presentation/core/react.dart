@@ -33,7 +33,7 @@ class React extends IReact {
   @override
   void toStoreItemDetail(int itemId, {ItemSimple? item}) {
     Get.toNamed(
-      '/store/item/$itemId',
+      '/store/item/detail/$itemId',
       arguments: {'itemId': itemId, 'item': item},
       preventDuplicates: false,
     );
@@ -171,7 +171,7 @@ class React extends IReact {
   @override
   void toCurationDetail(int curationId, {CurationListSimple? simple}) {
     Get.toNamed(
-      '/curation/$curationId',
+      '/curation/detail/$curationId',
       arguments: {'curationId': curationId, 'curation': simple},
       preventDuplicates: false,
     );

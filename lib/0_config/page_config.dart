@@ -78,7 +78,7 @@ List<GetPage> allPages() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: "/curation/:curationId",
+        name: "/curation/detail/:curationId",
         binding: CurationDetailViewPageBinding(),
         page: () => CurationDetailViewPage(Get.parameters['curationId']!),
         transitionDuration: transitionDuration,
@@ -193,7 +193,7 @@ List<GetPage> allPages() => [
         transition: Transition.rightToLeft,
       ),
       GetPage(
-        name: "/store/item/:itemId",
+        name: "/store/item/detail/:itemId",
         binding: StoreItemPageBinding(),
         page: () => StoreItemPage(Get.parameters['itemId']!),
         transitionDuration: transitionDuration,

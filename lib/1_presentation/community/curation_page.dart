@@ -127,23 +127,6 @@ class CurationPageToolbar extends GetView<CurationPageController> {
                           onCompleted: c.onSearchTextCompleted,
                           value: controller.searchOption.searchText,
                         )),
-                    // DS.space.hXSmall,
-                    // Obx(() => TESelectorBottomSheet<int?>(
-                    //       borderRadius: DS.space.tiny,
-                    //       candidates: const [500, 1000, 2000, null],
-                    //       onSelected: c.onWithInMeterChanged,
-                    //       isEqual: (lhs, rhs) => lhs == rhs,
-                    //       toLabel: (v) {
-                    //         if (v == null) {
-                    //           return DS.text.noDistanceLimit;
-                    //         } else {
-                    //           return v.format(DS.text.withInMeterFormat);
-                    //         }
-                    //       },
-                    //       selectedValue: controller.withInMeter,
-                    //       icon: DS.image.location,
-                    //       iconActivated: DS.image.locationActivated,
-                    //     )),
                   ],
                 ),
               ),

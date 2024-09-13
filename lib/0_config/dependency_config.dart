@@ -12,6 +12,7 @@ import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/i_local_repository.dart';
+import 'package:teameat/3_domain/core/i_need_action_repository.dart';
 import 'package:teameat/3_domain/core/i_widget_view_count_repository.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
@@ -30,6 +31,7 @@ import 'package:teameat/4_infra/connection/connection.dart';
 import 'package:teameat/4_infra/core/code/code_repository.dart';
 import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/4_infra/core/local_repository.dart';
+import 'package:teameat/4_infra/core/need_action_repository.dart';
 import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/4_infra/core/widget_view_count_repository.dart';
 import 'package:teameat/4_infra/curation/curation_repository.dart';
@@ -88,4 +90,5 @@ Future<void> configDependency() async {
 
   Get.put<IWidgetViewCountRepository<OnboardingPage>>(
       WidgetViewCountRepository<OnboardingPage>());
+  Get.put<INeedActionRepository>(NeedActionRepository());
 }

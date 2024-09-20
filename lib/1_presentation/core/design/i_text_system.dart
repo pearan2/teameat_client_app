@@ -382,4 +382,10 @@ abstract class ITextSystem {
 
   String get checkingPaymentResultPleaseWait;
   String get paymentIsNotCorrect;
+
+  String get couponPage;
+  String get noCouponFound;
+  String get registerCoupon;
+  String get registerCouponHelperText;
+  String get registerCouponHintText;
 }

@@ -25,6 +25,7 @@ class Order with _$Order {
     required final String memberEmail,
     required final String memberSocialId,
     required final int totalAmount,
+    required final int originalTotalAmount,
     required final String userCode,
     required final String pg,
   }) = _Order;
@@ -48,6 +49,7 @@ class RegisterOrderDto with _$RegisterOrderDto {
   const factory RegisterOrderDto({
     required final List<ItemIdAndQuantity> itemIdAndQuantities,
     int? groupBuyingId,
+    int? couponId,
   }) = _RegisterOrderDto;
 
   factory RegisterOrderDto.fromJson(Map<String, Object?> json) =>

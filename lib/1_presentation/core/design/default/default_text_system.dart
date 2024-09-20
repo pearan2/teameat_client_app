@@ -1057,4 +1057,19 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get paymentIsNotCorrect =>
       '결제 정보가 올바르지 않습니다\n실제로 결제가 되었다면\n[프로필 -> 고객문의]로 문의하여 주세요';
+
+  @override
+  String get couponPage => "쿠폰함";
+
+  @override
+  String get noCouponFound => "아직 등록된 쿠폰이 없어요";
+
+  @override
+  String get registerCoupon => "등록하기";
+
+  @override
+  String get registerCouponHelperText => '쿠폰 번호를 입력해주세요';
+
+  @override
+  String get registerCouponHintText => 'aaaabbbbccccdddd';
 }

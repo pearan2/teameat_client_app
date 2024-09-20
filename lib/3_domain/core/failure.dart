@@ -39,4 +39,8 @@ class Failure with _$Failure {
   const factory Failure.reportFail(String desc) = _ReportFail;
   const factory Failure.paymentCheckPaidFail(String desc) =
       _PaymentCheckPaidFail;
+
+  const factory Failure.couponRegisterFail(String desc) = _CouponRegisterFail;
+  const factory Failure.couponFail(String desc) = _CouponFail;
+  const factory Failure.fetchCouponFail(String desc) = _FetchCouponFail;
 }

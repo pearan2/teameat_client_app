@@ -9,6 +9,8 @@ import 'package:teameat/1_presentation/community/view/curator_summary_view_page.
 import 'package:teameat/1_presentation/community/view/curator_summary_view_page_binding.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/onboarding_page.dart';
+import 'package:teameat/1_presentation/event/coupon/coupon_page.dart';
+import 'package:teameat/1_presentation/event/coupon/coupon_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/block/block_page.dart';
@@ -115,6 +117,14 @@ List<GetPage> allPages() => [
         binding: UserPageBinding(),
         page: () => const UserPage(),
         transition: Transition.noTransition,
+        curve: transitionCurve,
+      ),
+      GetPage(
+        name: "/user/coupon",
+        binding: CouponPageBinding(),
+        page: () => const CouponPage(),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
         curve: transitionCurve,
       ),
       GetPage(

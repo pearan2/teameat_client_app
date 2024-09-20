@@ -29,6 +29,8 @@ abstract class IRouter {
 
   void toUserOffAll();
 
+  void toCoupon();
+
   void toStoreDetail(int storeId);
 
   void toCustomerService();

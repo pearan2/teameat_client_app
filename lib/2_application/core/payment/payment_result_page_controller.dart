@@ -23,7 +23,7 @@ class PaymentResultPageController extends PageController {
       {required this.paymentResult, this.itemId, this.isForGift = false});
 
   void _paymentFailCallback() {
-    react.back();
+    react.toHomeOffAll();
     showError(DS.text.paymentCancelledByUser +
         (paymentResult['error_msg'] as String));
   }
@@ -32,7 +32,7 @@ class PaymentResultPageController extends PageController {
     final orderId = paymentResult['merchant_uid'];
     final paymentId = paymentResult['imp_uid'];
     if (orderId == null || paymentId == null) {
-      react.back();
+      react.toHomeOffAll();
       showError(DS.text.paymentIsNotCorrect);
       return;
     }
@@ -41,12 +41,11 @@ class PaymentResultPageController extends PageController {
         await _paymentRepo.isPaid(orderId: orderId, paymentId: paymentId);
     return ret.fold(
       (l) {
-        react.back();
+        react.toHomeOffAll();
         showError(l.desc);
       },
       (r) {
         _isLoading.value = false;
-        print(isForGift);
       },
     );
   }

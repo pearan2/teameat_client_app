@@ -254,4 +254,9 @@ class React extends IReact {
       transition: Transition.noTransition,
     );
   }
+
+  @override
+  void toCoupon() {
+    Get.toNamed('/user/coupon');
+  }
 }

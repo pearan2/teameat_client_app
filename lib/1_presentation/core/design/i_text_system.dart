@@ -388,4 +388,10 @@ abstract class ITextSystem {
   String get registerCoupon;
   String get registerCouponHelperText;
   String get registerCouponHintText;
+  String get couponExpiredAtFormat;
+  String get couponUsedAtFormat;
+  String get couponDiscountAmountFormat;
+  String get couponDiscountRatioFormat;
+  String get myUsableCoupons;
+  String get priceAfterApplyCoupon;
 }

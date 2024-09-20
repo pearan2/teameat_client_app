@@ -72,6 +72,7 @@ class _RegisterCouponForm extends GetView<CouponPageController> {
             helperText: DS.text.registerCouponHelperText,
             hintText: DS.text.registerCouponHintText,
             maxLines: null,
+            keyboardType: TextInputType.text,
             controller: c.couponIdInputController,
             validate: (value) => value.isNotEmpty,
           ),

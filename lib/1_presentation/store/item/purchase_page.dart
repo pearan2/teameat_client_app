@@ -4,16 +4,19 @@ import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/event/coupon/component/coupon.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/store/item/purchase_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/get.dart';
 
 class PurchasePage extends GetView<PurchasePageController> {
   const PurchasePage({super.key});
@@ -37,18 +40,15 @@ class PurchasePage extends GetView<PurchasePageController> {
             DS.space.vXSmall,
             TEDivider.normal(),
             DS.space.vBase,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-              child: Text(DS.text.purchaseMethod,
-                  style: DS.textStyle.paragraph3
-                      .copyWith(fontWeight: FontWeight.bold)),
-            ),
+            Text(DS.text.purchaseMethod,
+                    style: DS.textStyle.paragraph3
+                        .copyWith(fontWeight: FontWeight.bold))
+                .paddingSymmetric(horizontal: DS.space.xBase),
             DS.space.vSmall,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-              child: const PurchaseMethodSelector(),
-            ),
+            const PurchaseMethodSelector()
+                .paddingSymmetric(horizontal: DS.space.xBase),
             DS.space.vBase,
+            const CouponList(),
             const PurchaseDivider(),
             DS.space.vBase,
             const TEServicePolicyButton(),
@@ -170,6 +170,48 @@ class PurchaseItemInfoList extends GetView<PurchasePageController> {
   }
 }
 
+class CouponList extends GetView<PurchasePageController> {
+  const CouponList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (c.usableCoupons.isEmpty) {
+        return const SizedBox();
+      }
+      return Container(
+        padding: EdgeInsets.all(DS.space.xBase),
+        constraints: const BoxConstraints(maxHeight: 230),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(DS.text.myUsableCoupons,
+                style: DS.textStyle.paragraph3
+                    .copyWith(fontWeight: FontWeight.bold)),
+            DS.space.vXBase,
+            Expanded(
+              child: ListView.separated(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemBuilder: (_, idx) => TEonTap(
+                    onTap: () => c.onSelectCoupon(c.usableCoupons[idx].id),
+                    child: Obx(() => CouponCard(
+                          c.usableCoupons[idx],
+                          isSelected:
+                              c.usableCoupons[idx].id == c.selectedCouponId,
+                        ))),
+                separatorBuilder: (_, __) => DS.space.vTiny,
+                itemCount: c.usableCoupons.length,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
 class PurchaseButton extends GetView<PurchasePageController> {
   const PurchaseButton({super.key});
 
@@ -177,12 +219,12 @@ class PurchaseButton extends GetView<PurchasePageController> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-      child: TEPrimaryButton(
-        listenEventLoading: true,
-        onTap: controller.onPurchaseClick,
-        text:
-            '${controller.totalPrice.format(DS.text.priceFormat)} ${DS.text.purchase}',
-      ),
+      child: Obx(() => TEPrimaryButton(
+            listenEventLoading: true,
+            onTap: c.onPurchaseClick,
+            text:
+                '${c.totalPrice.format(DS.text.priceFormat)} ${DS.text.purchase}',
+          )),
     );
   }
 }

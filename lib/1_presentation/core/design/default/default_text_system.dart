@@ -1062,7 +1062,7 @@ class DefaultTextSystem extends ITextSystem {
   String get couponPage => "쿠폰함";
 
   @override
-  String get noCouponFound => "아직 등록된 쿠폰이 없어요";
+  String get noCouponFound => "사용 가능한 쿠폰이 없어요";
 
   @override
   String get registerCoupon => "등록하기";
@@ -1072,4 +1072,22 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get registerCouponHintText => 'aaaabbbbccccdddd';
+
+  @override
+  String get couponExpiredAtFormat => 'yyyy.MM.dd hh:mm 까지 사용 가능';
+
+  @override
+  String get couponUsedAtFormat => 'yyyy.MM.dd hh:mm 사용 완료';
+
+  @override
+  String get couponDiscountAmountFormat => '####원 할인';
+
+  @override
+  String get couponDiscountRatioFormat => '####% 할인';
+
+  @override
+  String get myUsableCoupons => '사용 가능한 쿠폰';
+
+  @override
+  String get priceAfterApplyCoupon => '쿠폰 적용 후 결제 금액 : #########원';
 }

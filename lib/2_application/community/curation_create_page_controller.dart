@@ -124,14 +124,16 @@ class CurationCreatePageController extends PageController {
   }
 
   Future<void> onPrimaryButtonClick() async {
-    try {
-      _isLoading.value = true;
-      await _onSave();
-    } catch (e) {
-      showError(DS.text.errorOccurredWhileCurationUpload);
-    } finally {
-      _isLoading.value = false;
-    }
+    _isLoading.value = true;
+    Future.delayed(const Duration(milliseconds: 500), () async {
+      try {
+        await _onSave();
+      } catch (e) {
+        showError(DS.text.errorOccurredWhileCurationUpload);
+      } finally {
+        _isLoading.value = false;
+      }
+    });
   }
 
   Future<void> _onSave() async {

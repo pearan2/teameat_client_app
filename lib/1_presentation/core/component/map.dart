@@ -95,7 +95,7 @@ class TEStoreMap extends StatefulWidget {
 }
 
 class _TEStoreMapState extends State<TEStoreMap> {
-  late final NaverMapController controller;
+  late NaverMapController controller;
   bool isInit = false;
 
   late bool isLoading = widget.isLoading;

@@ -1090,4 +1090,25 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get priceAfterApplyCoupon => '쿠폰 적용 후 결제 금액 : #########원';
+
+  @override
+  String get groupBuyingSectionTitle => '🍱 2인 팀구매 진행중인 메뉴';
+
+  @override
+  String get groupBuyingSectionDescription => '친구랑 같이 먹는 즐거움!';
+
+  @override
+  String get groupBuyingSectionGoToFinishGroupBuyingFormat => '과 함께 할인받고 구매하기';
+
+  @override
+  String get groupBuyingSectionGoToOpenGroupBuyingFormat => '내가 먼저 팀구매 열고 기다리기';
+
+  @override
+  String get groupBuyingSectionRemainDurationFormat => '남은시간 ';
+
+  @override
+  String get seeAll => '전체보기';
+
+  @override
+  String get sir => '님';
 }

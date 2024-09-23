@@ -394,4 +394,13 @@ abstract class ITextSystem {
   String get couponDiscountRatioFormat;
   String get myUsableCoupons;
   String get priceAfterApplyCoupon;
+
+  String get groupBuyingSectionTitle;
+  String get groupBuyingSectionDescription;
+  String get groupBuyingSectionRemainDurationFormat;
+  String get groupBuyingSectionGoToFinishGroupBuyingFormat;
+  String get groupBuyingSectionGoToOpenGroupBuyingFormat;
+
+  String get seeAll;
+  String get sir;
 }

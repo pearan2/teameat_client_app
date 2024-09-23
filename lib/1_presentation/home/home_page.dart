@@ -8,6 +8,7 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/home/section/group_buying.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -57,9 +58,14 @@ class HomePage extends GetView<HomePageController> {
                   snap: true,
                   floating: true,
                   primary: false,
+                  pinned: true,
                   toolbarHeight: DS.space.large,
                   flexibleSpace: const HomePageSearcher(),
                 ),
+                Obx(() => GroupBuyingSection(
+                      selectedAddress: c.selectedAddress,
+                      refreshCount: c.sectionRefreshCount,
+                    )).toSliver,
                 DS.space.vXSmall.toSliver,
                 PagedSliverGrid(
                     pagingController: controller.pagingController,

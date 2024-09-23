@@ -34,6 +34,7 @@ class HomePageController extends PageController {
   final _isNearbyMe = false.obs;
   final _recommendedItems = <ItemSimple>[].obs;
   final _isLoading = false.obs;
+  final _sectionRefreshCount = 0.obs;
   bool _isPagingLoading = false;
 
   /// getter
@@ -46,6 +47,8 @@ class HomePageController extends PageController {
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
 
   int? get withInMeter => _searchOption.value.withInMeter;
+
+  int get sectionRefreshCount => _sectionRefreshCount.value;
 
   // ignore: invalid_use_of_protected_member
   List<SearchableAddress> get searchableAddresses => _searchableAddresses.value;
@@ -60,6 +63,7 @@ class HomePageController extends PageController {
   Future<void> refreshPage() async {
     _searchOption.value = searchOption.copyWith(
         pageNumber: 0, randomSeed: Random().nextInt(10000));
+    _sectionRefreshCount.value++;
     pagingController.error = '';
     pagingController.refresh();
     pagingController.error = null;

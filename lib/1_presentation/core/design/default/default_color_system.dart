@@ -18,12 +18,16 @@ class DefaultColorSystem extends IColorSystem {
   Color get secondary700 => const Color(0xFFFFA709);
   @override
   Color get secondary500 => const Color(0xFFFEC817);
+  @override
+  Color get secondary300 => const Color(0xFFFFF8F1);
 
   /// point
   @override
   Color get point500 => const Color(0xFFF96060);
 
   /// background
+  @override
+  Color get background900 => const Color(0xFF000000);
   @override
   Color get background800 => const Color(0xFF1C1C1E);
   @override

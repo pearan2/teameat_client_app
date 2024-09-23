@@ -28,6 +28,8 @@ extension TETextStyleExtension on TextStyle {
 
   TextStyle get p700 => copyWith(color: DS.color.primary700);
 
+  TextStyle get s300 => copyWith(color: DS.color.secondary300);
+
   TextStyle get s500 => copyWith(color: DS.color.secondary500);
 
   TextStyle get s700 => copyWith(color: DS.color.secondary700);
@@ -51,4 +53,6 @@ extension TETextStyleExtension on TextStyle {
   TextStyle get b700 => copyWith(color: DS.color.background700);
 
   TextStyle get b800 => copyWith(color: DS.color.background800);
+
+  TextStyle get b900 => copyWith(color: DS.color.background900);
 }

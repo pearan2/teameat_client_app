@@ -44,4 +44,20 @@ class CodeKey with _$CodeKey {
   factory CodeKey.voucherFilter() => const CodeKey(key: 'VOUCHER_FILTER');
   factory CodeKey.voucherOrder() => const CodeKey(key: 'VOUCHER_ORDER');
   factory CodeKey.curationOrder() => const CodeKey(key: 'CURATION_ORDER');
+  factory CodeKey.storeItemOrder() => const CodeKey(key: 'STORE_ITEM_ORDER');
+  factory CodeKey.storeItemSellType() =>
+      const CodeKey(key: 'STORE_ITEM_SELL_TYPE');
+
+  static List<CodeKey> findAll() {
+    return [
+      CodeKey.curationFilter(),
+      CodeKey.storeCategory(),
+      CodeKey.storeHashTag(),
+      CodeKey.voucherFilter(),
+      CodeKey.voucherOrder(),
+      CodeKey.curationOrder(),
+      CodeKey.storeItemOrder(),
+      CodeKey.storeItemSellType(),
+    ];
+  }
 }

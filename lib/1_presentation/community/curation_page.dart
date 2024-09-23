@@ -20,7 +20,6 @@ import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
 import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
-import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
@@ -100,15 +99,13 @@ class CurationPageToolbar extends GetView<CurationPageController> {
                         if (v == null) {
                           return DS.text.noEupMyeonDongLimit;
                         } else {
-                          return v.toFullAddress();
+                          return v.toLongLabel();
                         }
                       },
                       selectedValue: c.selectedAddress,
-                      title: c.searchableAddresses.length
-                          .format(DS.text.numberOfServicedEupMyeonDongFormat),
                       icon: TEAddressLabel(DS.text.all),
-                      iconActivated:
-                          TEAddressLabel(c.selectedAddress?.eupMyeonDong ?? ''),
+                      iconActivated: TEAddressLabel(
+                          c.selectedAddress?.toShortLabel() ?? ''),
                     )),
               ),
               Positioned(

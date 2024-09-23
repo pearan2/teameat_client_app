@@ -18,6 +18,7 @@ class TextSearchButton<T extends ISearchHistoryRepository>
   final String? value;
   final String? hintText;
   final Widget? label;
+  final double padding;
 
   const TextSearchButton({
     super.key,
@@ -27,6 +28,7 @@ class TextSearchButton<T extends ISearchHistoryRepository>
     this.value,
     this.hintText,
     this.label,
+    this.padding = 2.0,
   });
 
   void onTap() {
@@ -51,10 +53,12 @@ class TextSearchButton<T extends ISearchHistoryRepository>
         onTap: onTap,
         child: label != null
             ? label!
-            : DS.image.searchLg(
-                color: value.isEmpty()
-                    ? DS.color.background700
-                    : defaultButtonActiveColor));
+            : DS.image
+                .searchLg(
+                    color: value.isEmpty()
+                        ? DS.color.background700
+                        : defaultButtonActiveColor)
+                .paddingAll(padding));
   }
 }
 

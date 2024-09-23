@@ -14,6 +14,8 @@ extension TETextStyleExtension on TextStyle {
   TextStyle get h19 => copyWith(height: 1.9);
   TextStyle get h20 => copyWith(height: 2.0);
 
+  TextStyle get medium => copyWith(fontWeight: FontWeight.w500);
+
   TextStyle get semiBold => copyWith(fontWeight: FontWeight.w600);
 
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);

@@ -119,7 +119,7 @@ class CurationPageController extends PageController {
   }
 
   Future<void> _loadSearchableAddresses() async {
-    final ret = await _codeRepo.getSearchableAddress();
+    final ret = await _codeRepo.getCurationSearchableAddress();
     return ret.fold(
         (l) => showError(l.desc), (r) => _searchableAddresses.value = r);
   }

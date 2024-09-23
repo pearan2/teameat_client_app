@@ -11,6 +11,8 @@ class CodeRepository implements ICodeRepository {
 
   final _codeCache = <CodeKey, List<Code>>{};
   List<SearchableAddress> _searchableAddressCache = <SearchableAddress>[];
+  List<SearchableAddress> _searchableCurationAddressCache =
+      <SearchableAddress>[];
 
   @override
   Future<Either<Failure, List<Code>>> getCode(CodeKey codeKey) async {
@@ -45,6 +47,27 @@ class CodeRepository implements ICodeRepository {
             .map((json) => SearchableAddress.fromJson(json))
             .toList();
         _searchableAddressCache = addresses;
+        return right(addresses);
+      });
+    } catch (_) {
+      return left(const Failure.fetchCodeFail("필요한 코드를 가져오는데 실패하였습니다."));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SearchableAddress>>>
+      getCurationSearchableAddress() async {
+    try {
+      if (_searchableCurationAddressCache.isNotEmpty) {
+        return right(_searchableCurationAddressCache);
+      }
+      const path = '/api/common/curation-address-filter';
+      final ret = await _conn.get(path, null);
+      return ret.fold((l) => left(l), (r) {
+        final addresses = (r as Iterable)
+            .map((json) => SearchableAddress.fromJson(json))
+            .toList();
+        _searchableCurationAddressCache = addresses;
         return right(addresses);
       });
     } catch (_) {

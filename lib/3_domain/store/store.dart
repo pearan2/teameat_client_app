@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 
@@ -86,6 +87,8 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     required int pageNumber,
     required int pageSize,
     int? randomSeed,
+    String? sellType,
+    Code? order,
   }) = _SearchStoreSimpleList;
 
   factory SearchStoreSimpleList.empty() {
@@ -99,6 +102,8 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
       pageNumber: 0,
       pageSize: 10,
       randomSeed: Random().nextInt(10000),
+      sellType: null,
+      order: null,
     );
   }
   factory SearchStoreSimpleList.fromJson(Map<String, Object?> json) =>
@@ -122,7 +127,12 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     if (target.randomSeed != null) {
       ret['randomSeed'] = target.randomSeed.toString();
     }
-
+    if (target.sellType != null) {
+      ret['sellType'] = target.sellType!;
+    }
+    if (target.order != null) {
+      ret['order'] = target.order!.code;
+    }
     return ret;
   }
 }

@@ -111,7 +111,7 @@ class HomePageSearcher extends GetView<HomePageController> {
                   if (v == null) {
                     return DS.text.noEupMyeonDongLimit;
                   } else {
-                    return v.toFullAddress();
+                    return v.toLongLabel();
                   }
                 },
                 selectedValue: c.selectedAddress,
@@ -119,22 +119,14 @@ class HomePageSearcher extends GetView<HomePageController> {
                     .format(DS.text.numberOfServicedEupMyeonDongFormat),
                 icon: TEAddressLabel(DS.text.all),
                 iconActivated:
-                    TEAddressLabel(c.selectedAddress?.eupMyeonDong ?? ''),
+                    TEAddressLabel(c.selectedAddress?.toShortLabel() ?? ''),
+              )),
+          const Expanded(child: SizedBox()),
+          Obx(() => TextSearchButton<StoreItemSearchHistoryRepository>(
+                onCompleted: c.onSearchTextCompleted,
+                value: controller.searchOption.searchText,
               )),
           DS.space.hXSmall,
-          Expanded(
-              child:
-                  Obx(() => TextSearchButton<StoreItemSearchHistoryRepository>(
-                        onCompleted: c.onSearchTextCompleted,
-                        value: controller.searchOption.searchText,
-                        label: TextSearcher(
-                          value: controller.searchOption.searchText,
-                          onCompleted: (_) {},
-                          enabled: false,
-                          isRightIcon: true,
-                        ),
-                      ))),
-          DS.space.hTiny,
           Obx(() => TESelectorBottomSheet<int?>(
                 candidates: const [500, 1000, 2000, null],
                 onSelected: c.onWithInMeterChanged,
@@ -147,8 +139,9 @@ class HomePageSearcher extends GetView<HomePageController> {
                   }
                 },
                 selectedValue: controller.withInMeter,
-                icon: DS.image.location,
-                iconActivated: DS.image.locationActivated,
+                icon: DS.image.location.paddingAll(DS.space.xxTiny),
+                iconActivated:
+                    DS.image.locationActivated.paddingAll(DS.space.xxTiny),
               )),
         ],
       ),

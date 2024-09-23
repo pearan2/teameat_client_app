@@ -253,12 +253,6 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
-  Image get dangolPick => Image.asset(
-        'assets/image/icon/dangol_pick.png',
-        width: 25,
-        height: 14,
-      );
-  @override
   SvgPicture get addImage => SvgPicture.asset(
         'assets/image/icon/add_image_icon.svg',
         height: 24,

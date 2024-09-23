@@ -598,7 +598,7 @@ class DefaultTextSystem extends ITextSystem {
   String get reward => '리워드';
 
   @override
-  String get itemDescriptionByCurator => '상품 설명';
+  String get itemDescriptionByCurator => '푸드로그';
 
   @override
   String get dangolPick => '단골Pick';

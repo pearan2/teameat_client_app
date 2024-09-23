@@ -449,6 +449,8 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
   final String sellType;
   final String? curatorProfileImageUrl;
   final String? curatorNickname;
+  final bool withCuratorInfo;
+  final bool withSellTypeBadge;
 
   const StoreItemImage._({
     required this.imageUrl,
@@ -458,13 +460,19 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
     required this.sellType,
     this.curatorProfileImageUrl,
     this.curatorNickname,
+    this.withCuratorInfo = true,
+    this.withSellTypeBadge = true,
     this.ratio = 3 / 4,
   });
 
-  factory StoreItemImage.fromItemSimple(ItemSimple item,
-      {required double width,
-      double ratio = 3 / 4,
-      required double borderRadius}) {
+  factory StoreItemImage.fromItemSimple(
+    ItemSimple item, {
+    required double width,
+    double ratio = 3 / 4,
+    required double borderRadius,
+    bool withCuratorInfo = true,
+    bool withSellTypeBadge = true,
+  }) {
     return StoreItemImage._(
       imageUrl: item.imageUrl,
       width: width,
@@ -473,7 +481,30 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
       sellType: item.sellType,
       curatorProfileImageUrl: item.curatorProfileImageUrl,
       curatorNickname: item.curatorNickname,
+      withCuratorInfo: withCuratorInfo,
+      withSellTypeBadge: withSellTypeBadge,
       ratio: ratio,
+    );
+  }
+
+  Widget _buildCurationBadge() {
+    if (curatorNickname == null || curatorProfileImageUrl == null) {
+      return const SizedBox();
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xxTiny,
+        horizontal: DS.space.xTiny,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(DS.space.xxTiny),
+        color: DS.color.secondary900,
+      ),
+      child: Text(
+        DS.text.curation,
+        style: DS.textStyle.caption2.b000.h14.semiBold,
+      ),
     );
   }
 
@@ -508,14 +539,18 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
           DS.space.hXTiny,
           Flexible(
             child: Text(
-              curatorNickname! + DS.text.dangolPickCuratorNicknameFormat,
+              curatorNickname!,
               style: DS.textStyle.caption2.semiBold.b000,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          Text(
+            DS.text.dangolPickCuratorNicknameFormat,
+            style: DS.textStyle.caption2.semiBold.b000,
+          ),
           DS.space.hXXTiny,
-          DS.image.dangolPick,
+          _buildCurationBadge(),
         ],
       ).paddingHorizontal(DS.space.tiny),
     );
@@ -532,19 +567,24 @@ class StoreItemImage extends GetView<LikeController<IStoreItemRepository>> {
           borderRadius: borderRadius,
         ),
         Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
+          top: withCuratorInfo ? 0 : DS.space.xxTiny,
+          left: withCuratorInfo ? 0 : DS.space.xxTiny,
+          right: withCuratorInfo ? 0 : null,
           child: Visibility(
             visible:
                 (curatorProfileImageUrl != null) && (curatorNickname != null),
-            child: _buildDangolPickOverlay(),
+            child: withCuratorInfo
+                ? _buildDangolPickOverlay()
+                : _buildCurationBadge(),
           ),
         ),
         Positioned(
           left: DS.space.tiny,
           bottom: DS.space.xTiny,
-          child: StoreItemSellTypeBadge(sellType: sellType),
+          child: Visibility(
+            visible: withSellTypeBadge,
+            child: StoreItemSellTypeBadge(sellType: sellType),
+          ),
         ),
       ],
     );

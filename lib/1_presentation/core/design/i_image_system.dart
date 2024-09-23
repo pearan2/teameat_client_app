@@ -58,7 +58,6 @@ abstract class IImageSystem {
   SvgPicture get rightArrowInBox;
   SvgPicture upArrow({double? size, Color? color});
   SvgPicture downArrow({double? size, Color? color});
-  Image get dangolPick;
   SvgPicture get addImage;
 
   SvgPicture get locationSm;

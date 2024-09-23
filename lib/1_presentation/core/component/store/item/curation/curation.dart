@@ -49,7 +49,6 @@ class CurationCuratorInfo extends StatelessWidget {
                         style: DS.textStyle.caption1.semiBold.h13.b800
                             .copyWith(color: color)),
                     DS.space.hXXTiny,
-                    DS.image.dangolPick.paddingOnly(bottom: DS.space.xxTiny),
                   ],
                 ),
                 curation.curatorOneLineIntroduce == null

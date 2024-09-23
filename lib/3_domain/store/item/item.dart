@@ -1,10 +1,31 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/store/store.dart';
+import 'package:teameat/3_domain/user/user.dart';
 
 part 'item.freezed.dart';
 
 part 'item.g.dart';
+
+@freezed
+class GroupBuyingInfo with _$GroupBuyingInfo {
+  const factory GroupBuyingInfo({
+    required String openerNickname,
+    required String openerProfileImageUrl,
+    required DateTime willBeClosedAt,
+  }) = _GroupBuyingInfo;
+
+  factory GroupBuyingInfo.fromJson(Map<String, Object?> json) =>
+      _$GroupBuyingInfoFromJson(json);
+
+  factory GroupBuyingInfo.empty() {
+    return GroupBuyingInfo(
+      openerNickname: '',
+      openerProfileImageUrl: User.visitor().profileImageUrl,
+      willBeClosedAt: DateTime.now(),
+    );
+  }
+}
 
 @freezed
 class ItemSimple with _$ItemSimple {
@@ -18,6 +39,7 @@ class ItemSimple with _$ItemSimple {
     required String sellType,
     required DateTime salesWillBeEndedAt,
     required int orderReference,
+    GroupBuyingInfo? groupBuyingInfo,
     String? curatorProfileImageUrl,
     String? curatorNickname,
     required int storeId,

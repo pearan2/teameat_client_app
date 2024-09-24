@@ -200,7 +200,7 @@ class React extends IReact {
   @override
   void toCuratorSummary(int curatorId) {
     Get.toNamed(
-      '/curation/curator/:targetId/summary',
+      '/curation/curator/$curatorId/summary',
       arguments: {'curatorId': curatorId},
       preventDuplicates: false,
     );

@@ -154,15 +154,19 @@ class CuratorSummaryNumberRow
 
   const CuratorSummaryNumberRow(this.tag, {super.key});
 
-  Widget _buildTextAndCount(String text, num count) {
+  Widget _buildTextAndCount(String text, num count, void Function() onTap) {
     final textStyle = DS.textStyle.caption2.b500;
     final countStyle = DS.textStyle.caption2.b700;
-    return Row(
-      children: [
-        Text(text, style: textStyle),
-        DS.space.hXTiny,
-        Text(count.strClamp(max: 999), style: countStyle),
-      ],
+    return TEonTap(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(text, style: textStyle),
+          DS.space.vXTiny,
+          Text(count.strClamp(max: 9999), style: countStyle),
+        ],
+      ),
     );
   }
 
@@ -171,10 +175,11 @@ class CuratorSummaryNumberRow
     return c.summary.obx((s) => Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildTextAndCount(DS.text.follower, s.numberOfFollowers),
-            _buildTextAndCount(DS.text.curation, s.numberOfCurations),
-            _buildTextAndCount(
-                DS.text.commercialization, s.numberOfCommercializedCurations),
+            _buildTextAndCount(DS.text.follower, s.numberOfFollowers, () {}),
+            _buildTextAndCount(DS.text.following, s.numberOfFollowings, () {}),
+            _buildTextAndCount(DS.text.curation, s.numberOfCurations, () {}),
+            _buildTextAndCount(DS.text.commercialization,
+                s.numberOfCommercializedCurations, () {}),
           ],
         ));
   }

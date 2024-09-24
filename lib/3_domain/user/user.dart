@@ -108,6 +108,7 @@ class Summary with _$Summary {
     String? oneLineIntroduce,
     required bool isMe,
     required int numberOfFollowers,
+    required int numberOfFollowings,
     required int numberOfCurations,
     required int numberOfCommercializedCurations,
   }) = _Summary;
@@ -124,6 +125,7 @@ class Summary with _$Summary {
       oneLineIntroduce: "",
       isMe: false,
       numberOfFollowers: 0,
+      numberOfFollowings: 0,
       numberOfCurations: 0,
       numberOfCommercializedCurations: 0,
     );

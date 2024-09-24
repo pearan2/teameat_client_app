@@ -691,7 +691,7 @@ class DefaultTextSystem extends ITextSystem {
   String get searchEupMyeonDong => '동 선택';
 
   @override
-  String get noEupMyeonDongLimit => '읍면동 제한 없음';
+  String get noEupMyeonDongLimit => '지역 제한 없음';
 
   @override
   String get numberOfServicedEupMyeonDongFormat =>
@@ -1094,8 +1094,11 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get groupBuyingSectionTitle => '🍱 2인 팀구매 진행중인 메뉴';
 
+  // @override
+  // String get groupBuyingSectionDescription => '친구랑 같이 먹는 즐거움!';
+
   @override
-  String get groupBuyingSectionDescription => '친구랑 같이 먹는 즐거움!';
+  String get groupBuyingSectionDescription => '친구와 함께라서 더 싸다!';
 
   @override
   String get groupBuyingSectionGoToFinishGroupBuyingFormat => '과 함께 할인받고 구매하기';
@@ -1111,4 +1114,14 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get sir => '님';
+
+  @override
+  String get createCurationFromScratch => '다시 작성할래요';
+
+  @override
+  String get createCurationFromTempSave => '이어서 작성할래요';
+
+  @override
+  String get youHaveTempSavedCurationCreateTryLoad =>
+      '앗! 기존에 작성하던 푸드로그가 있어요\n이어서 작성 하시겠어요?';
 }

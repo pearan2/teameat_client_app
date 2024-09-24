@@ -4,7 +4,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
-import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
@@ -152,36 +151,6 @@ class HomePageSearcher extends GetView<HomePageController> {
         ],
       ),
     );
-  }
-}
-
-class NearbyMe extends GetView<HomePageController> {
-  const NearbyMe({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => TEonTap(
-          onTap: controller.onNearbyMeClickHandler,
-          child: Container(
-            decoration: BoxDecoration(
-                color: controller.isNearbyMe
-                    ? DS.color.primary600
-                    : DS.color.background500,
-                borderRadius: BorderRadius.circular(300)),
-            padding: EdgeInsets.symmetric(
-                vertical: DS.space.xTiny, horizontal: DS.space.xSmall),
-            child: Row(
-              children: [
-                Text(DS.text.nearbyMe,
-                    style: DS.textStyle.caption3.copyWith(
-                        color: DS.color.background000,
-                        fontWeight: FontWeight.bold)),
-                DS.space.hXTiny,
-                DS.image.nearbyMeIcon,
-              ],
-            ),
-          ),
-        ));
   }
 }
 

@@ -9,6 +9,7 @@ import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/local.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
+import 'package:teameat/3_domain/curation/i_curation_temp_save_service.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 
 import 'package:flutter/material.dart' as mt;
@@ -21,8 +22,10 @@ class CurationCreatePageController extends PageController {
 
   // service
   final _fileService = Get.find<IFileService>();
+  final _tempSaveService = Get.find<ICurationTempSaveService>();
 
   // state
+  bool _creationSuccess = false;
 
   final _local = Rxn<Local>();
 
@@ -40,19 +43,30 @@ class CurationCreatePageController extends PageController {
 
   // init
   final MyCurationDetail? curation;
-  CurationCreatePageController(this.curation);
+  final bool startWithTempSave;
+  CurationCreatePageController(this.curation, {this.startWithTempSave = false});
 
   void _initStates() {
-    if (curation == null) return;
-    _local.value = curation!.localInfo;
-
-    menuImages = curation!.itemImageUrls;
-    storeImages = curation!.storeImageUrls;
-
-    menuNameController.text = curation!.name;
-    menuPriceController.text = curation!.originalPrice.toString();
-    menuOneLineIntroduceController.text = curation!.oneLineIntroduce;
-    menuIntroduceController.text = curation!.introduce;
+    if (isEditMode) {
+      _local.value = curation!.localInfo;
+      menuImages = curation!.itemImageUrls;
+      storeImages = curation!.storeImageUrls;
+      menuNameController.text = curation!.name;
+      menuPriceController.text = curation!.originalPrice.toString();
+      menuOneLineIntroduceController.text = curation!.oneLineIntroduce;
+      menuIntroduceController.text = curation!.introduce;
+      return;
+    }
+    if (startWithTempSave) {
+      final tempSaved = _tempSaveService.findTempSave();
+      _local.value = tempSaved.local;
+      menuImages = tempSaved.menuImages;
+      storeImages = tempSaved.storeImages;
+      menuNameController.text = tempSaved.menuName;
+      menuPriceController.text = tempSaved.menuPrice;
+      menuOneLineIntroduceController.text = tempSaved.menuOneLineIntroduce;
+      menuIntroduceController.text = tempSaved.menuIntroduce;
+    }
   }
 
   // getter
@@ -180,6 +194,7 @@ class CurationCreatePageController extends PageController {
       ret.fold(
         (l) => showError(l.desc),
         (_) {
+          _creationSuccess = true;
           if (Get.isRegistered<UserCurationPage>()) {
             react.toUserOffAll();
             react.toUserCuration();
@@ -189,6 +204,28 @@ class CurationCreatePageController extends PageController {
           showSuccess(DS.text.registerCurationSuccess);
         },
       );
+    }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    if (isEditMode) {
+      return;
+    }
+    if (_creationSuccess) {
+      _tempSaveService.clear();
+      return;
+    } else {
+      _tempSaveService.tempSave(CurationCreate(
+        menuImages: menuImages.map((src) => src as File).toList(),
+        storeImages: storeImages.map((src) => src as File).toList(),
+        local: local,
+        menuName: menuNameController.text,
+        menuPrice: menuPriceController.text,
+        menuOneLineIntroduce: menuOneLineIntroduceController.text,
+        menuIntroduce: menuIntroduceController.text,
+      ));
     }
   }
 

@@ -403,4 +403,8 @@ abstract class ITextSystem {
 
   String get seeAll;
   String get sir;
+
+  String get youHaveTempSavedCurationCreateTryLoad;
+  String get createCurationFromScratch;
+  String get createCurationFromTempSave;
 }

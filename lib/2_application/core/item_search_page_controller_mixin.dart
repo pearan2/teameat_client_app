@@ -6,6 +6,7 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
+import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
@@ -13,7 +14,21 @@ import 'package:teameat/3_domain/store/item/i_item_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
-class HomePageController extends PageController {
+abstract class ItemSearchPageController extends PageController {
+  SearchableAddress? get initialSelectedAddress;
+  SearchStoreSimpleList get initialSearchOption;
+  PagingController<int, ItemSimple> get pagingController;
+
+  void onStoreItemCardClickHandler(int itemId);
+  Future<void> refreshPage();
+  void clearSearchOption();
+  void onSearchTextCompleted(String searchText);
+  Future<void> onSelectedAddressChanged(SearchableAddress? address);
+  Future<void> onWithInMeterChanged(int? value);
+  Future<void> onOrderChanged(Code order);
+}
+
+mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   /// 상수
   final numberOfRecommendRequestItems = 1;
 
@@ -23,19 +38,22 @@ class HomePageController extends PageController {
   final _codeRepo = Get.find<ICodeRepository>();
 
   /// controllers
+  @override
   final PagingController<int, ItemSimple> pagingController =
       PagingController(firstPageKey: 0);
   final locationController = Get.find<LocationController>();
 
   /// 상태
   final _searchableAddresses = <SearchableAddress>[].obs;
-  final _selectedAddress = Rxn<SearchableAddress>();
-  final _searchOption = SearchStoreSimpleList.empty().obs;
+  late final _selectedAddress = Rxn<SearchableAddress>(initialSelectedAddress);
+  late final _searchOption = initialSearchOption.obs;
+  final _orderCodes = RxList<Code>.empty();
+
   final _recommendedItems = <ItemSimple>[].obs;
   final _isLoading = false.obs;
-  final _sectionRefreshCount = 0.obs;
   bool _isPagingLoading = false;
 
+  /// getter
   SearchStoreSimpleList get searchOption => _searchOption.value;
 
   ItemSimple? get recommendedItem =>
@@ -44,39 +62,42 @@ class HomePageController extends PageController {
 
   int? get withInMeter => _searchOption.value.withInMeter;
 
-  int get sectionRefreshCount => _sectionRefreshCount.value;
-
   // ignore: invalid_use_of_protected_member
   List<SearchableAddress> get searchableAddresses => _searchableAddresses.value;
   SearchableAddress? get selectedAddress => _selectedAddress.value;
-
   bool get loading => _isLoading.value;
+  // ignore: invalid_use_of_protected_member
+  List<Code> get orders => _orderCodes.value;
 
+  @override
   void onStoreItemCardClickHandler(int itemId) {
     return react.toStoreItemDetail(itemId);
   }
 
+  @override
   Future<void> refreshPage() async {
     _searchOption.value = searchOption.copyWith(
         pageNumber: 0, randomSeed: Random().nextInt(10000));
-    _sectionRefreshCount.value++;
     pagingController.error = '';
     pagingController.refresh();
     pagingController.error = null;
   }
 
+  @override
   void clearSearchOption() {
-    _searchOption.value = SearchStoreSimpleList.empty();
+    _searchOption.value = initialSearchOption;
     _selectedAddress.value = null;
     pagingController.refresh();
   }
 
+  @override
   void onSearchTextCompleted(String searchText) {
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);
     pagingController.refresh();
   }
 
+  @override
   Future<void> onSelectedAddressChanged(SearchableAddress? address) async {
     _selectedAddress.value = address;
     _searchOption.value =
@@ -84,7 +105,13 @@ class HomePageController extends PageController {
     pagingController.refresh();
   }
 
-  /// 상태 변경 함수
+  @override
+  Future<void> onOrderChanged(Code order) async {
+    _searchOption.value = searchOption.copyWith(order: order, pageNumber: 0);
+    pagingController.refresh();
+  }
+
+  @override
   Future<void> onWithInMeterChanged(int? value) async {
     if (!locationController.isInitialized) {
       _isLoading.value = true;
@@ -109,13 +136,13 @@ class HomePageController extends PageController {
     pagingController.refresh();
   }
 
-  Future<void> loadRecommendedItem() async {
+  Future<void> _loadRecommendedItem() async {
     final ret =
         await _itemRepo.findRecommendedItems(numberOfRecommendRequestItems);
     ret.fold((l) => null, (r) => _recommendedItems.value = r);
   }
 
-  Future<void> loadStores(int currentPageNumber) async {
+  Future<void> _loadStores(int currentPageNumber) async {
     if (_isPagingLoading) return;
     _isPagingLoading = true;
     final ret = await _storeRepo.getStores(_searchOption.value);
@@ -131,9 +158,9 @@ class HomePageController extends PageController {
     });
   }
 
-  void pagingControllerStatusChangeListener(PagingStatus status) {
+  void _pagingControllerStatusChangeListener(PagingStatus status) {
     if (status == PagingStatus.noItemsFound) {
-      loadRecommendedItem();
+      _loadRecommendedItem();
     } else {
       _recommendedItems.value = [];
     }
@@ -143,6 +170,11 @@ class HomePageController extends PageController {
     final ret = await _codeRepo.getSearchableAddress();
     return ret.fold(
         (l) => showError(l.desc), (r) => _searchableAddresses.value = r);
+  }
+
+  Future<void> _loadCode() async {
+    return resolve(_codeRepo.getCode(CodeKey.storeItemOrder()),
+        (codes) => _orderCodes.value = codes);
   }
 
   @override
@@ -156,9 +188,10 @@ class HomePageController extends PageController {
   @override
   Future<bool> initialLoad() async {
     _loadSearchableAddresses();
+    _loadCode();
     pagingController.itemList = [];
-    pagingController.addPageRequestListener(loadStores);
-    pagingController.addStatusListener(pagingControllerStatusChangeListener);
+    pagingController.addPageRequestListener(_loadStores);
+    pagingController.addStatusListener(_pagingControllerStatusChangeListener);
     return true;
   }
 }

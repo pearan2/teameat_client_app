@@ -294,7 +294,8 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
               scrollDirection: Axis.horizontal,
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
-              padding: const EdgeInsets.only(left: AppWidget.horizontalPadding),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppWidget.horizontalPadding),
               pagingController: c.pagingController,
               builderDelegate: PagedChildBuilderDelegate<CurationListSimple>(
                   itemBuilder: (_, curationSimple, __) =>

@@ -7,6 +7,11 @@ class CurationCreatePageBinding implements Bindings {
   void dependencies() {
     final argMap = Get.arguments as Map<String, dynamic>;
     final curation = argMap['curation'] as MyCurationDetail?;
-    Get.put(CurationCreatePageController(curation));
+    final startWithTempSave = argMap['startWithTempSave'] as bool;
+
+    Get.put(CurationCreatePageController(
+      curation,
+      startWithTempSave: startWithTempSave,
+    ));
   }
 }

@@ -83,18 +83,22 @@ class _GroupBuyingSectionState extends State<GroupBuyingSection> {
                 DS.text.groupBuyingSectionTitle,
                 style: DS.textStyle.paragraph1.semiBold.h14.b900,
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    DS.text.seeAll,
-                    style: DS.textStyle.caption1.h14.s900,
-                  ),
-                  DS.image.rightArrow(
-                    size: DS.space.xBase,
-                    color: DS.color.secondary900,
-                  )
-                ],
+              TEonTap(
+                onTap: () => Get.find<IReact>().toGroupBuyingSearchPage(
+                    selectedAddress: widget.selectedAddress),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      DS.text.seeAll,
+                      style: DS.textStyle.caption1.h14.s900,
+                    ),
+                    DS.image.rightArrow(
+                      size: DS.space.xBase,
+                      color: DS.color.secondary900,
+                    )
+                  ],
+                ),
               )
             ],
           ).withBasePadding,
@@ -121,9 +125,14 @@ class GroupBuyingItemCard extends StatelessWidget {
 
   final ItemSimple item;
   final double boxWidth;
+  final EdgeInsetsGeometry? padding;
 
-  const GroupBuyingItemCard(this.item,
-      {super.key, this.boxWidth = defaultBoxWidth});
+  const GroupBuyingItemCard(
+    this.item, {
+    super.key,
+    this.boxWidth = defaultBoxWidth,
+    this.padding,
+  });
 
   bool get isBigCard => boxWidth == double.infinity;
 
@@ -215,7 +224,7 @@ class GroupBuyingItemCard extends StatelessWidget {
       child: Container(
         width: boxWidth,
         height: defaultBoxHeight,
-        padding: EdgeInsets.all(DS.space.tiny),
+        padding: padding ?? EdgeInsets.all(DS.space.tiny),
         color: DS.color.background000,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -255,7 +264,7 @@ class GroupBuyingItemCard extends StatelessWidget {
                               ? DS.textStyle.paragraph2.medium.b800.h14
                               : DS.textStyle.paragraph3.medium.b800.h14,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                          maxLines: 1,
                         ),
                         const Expanded(child: SizedBox()),
                         StoreItemPrice(
@@ -264,6 +273,7 @@ class GroupBuyingItemCard extends StatelessWidget {
                           originalPriceStyle: DS.textStyle.caption1.b500.h14,
                           priceStyle: DS.textStyle.paragraph2.bold.b800.h14,
                         ),
+                        DS.space.vXTiny,
                         _buildRemainCount(),
                       ],
                     ),

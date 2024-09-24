@@ -7,24 +7,28 @@ import 'package:teameat/2_application/core/i_react.dart';
 Future<T?> showTEDialog<T>(
     {double dialogWidth = 328.0,
     double dialogMinHeight = 162.0,
-    required Widget child}) async {
-  return Get.dialog<T>(Dialog(
-    insetPadding: EdgeInsets.zero,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(
-        DS.space.small,
+    required Widget child,
+    bool dismissible = true}) async {
+  return Get.dialog<T>(
+    Dialog(
+      insetPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          DS.space.small,
+        ),
+      ),
+      child: Container(
+        width: dialogWidth,
+        constraints: BoxConstraints(minHeight: dialogMinHeight),
+        decoration: BoxDecoration(
+            color: DS.color.background000,
+            borderRadius: BorderRadius.circular(DS.space.small)),
+        padding: EdgeInsets.all(DS.space.tiny),
+        child: child,
       ),
     ),
-    child: Container(
-      width: dialogWidth,
-      constraints: BoxConstraints(minHeight: dialogMinHeight),
-      decoration: BoxDecoration(
-          color: DS.color.background000,
-          borderRadius: BorderRadius.circular(DS.space.small)),
-      padding: EdgeInsets.all(DS.space.tiny),
-      child: child,
-    ),
-  ));
+    barrierDismissible: dismissible,
+  );
 }
 
 Future<bool> showTEConfirmDialog(
@@ -32,9 +36,11 @@ Future<bool> showTEConfirmDialog(
     required String leftButtonText,
     required String rightButtonText,
     double dialogWidth = 328.0,
-    double dialogMinHeight = 162.0}) async {
+    double dialogMinHeight = 162.0,
+    bool dismissible = true}) async {
   final react = Get.find<IReact>();
   final ret = await showTEDialog(
+      dismissible: dismissible,
       dialogMinHeight: dialogMinHeight,
       dialogWidth: dialogWidth,
       child: Column(

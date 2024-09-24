@@ -739,7 +739,7 @@ class TEMultiImageSelector extends StatefulWidget {
   final bool isFirstCover;
 
   final String addButtonTitle;
-  final List<String> initialImages;
+  final List<dynamic> initialImages;
   final Function(List<dynamic> images) onImageChanged;
   final Function(bool isLoading) onLoading;
 

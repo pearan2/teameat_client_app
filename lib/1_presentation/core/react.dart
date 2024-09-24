@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/onboarding_page.dart';
 import 'package:teameat/2_application/community/curation_page_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/core/payment/payment_method.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/2_application/voucher/voucher_page_controller.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/curation/i_curation_temp_save_service.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/user/block/block.dart';
@@ -25,6 +28,12 @@ class React extends IReact {
       controller.refreshPage();
     }
     Get.offAllNamed('/home');
+  }
+
+  @override
+  void toGroupBuyingSearchPage({SearchableAddress? selectedAddress}) {
+    Get.toNamed('/search/group-buying',
+        arguments: {'selectedAddress': selectedAddress});
   }
 
   @override
@@ -160,8 +169,22 @@ class React extends IReact {
 
   @override
   Future<bool> toCurationCreate(MyCurationDetail? curation) async {
-    final ret = await Get.toNamed('/curation/create',
-        arguments: {'curation': curation});
+    late final bool startWithTempSave;
+    if (curation == null &&
+        Get.find<ICurationTempSaveService>().isTempSaveExists()) {
+      startWithTempSave = await showTEConfirmDialog(
+        content: DS.text.youHaveTempSavedCurationCreateTryLoad,
+        leftButtonText: DS.text.createCurationFromScratch,
+        rightButtonText: DS.text.createCurationFromTempSave,
+        dismissible: false,
+      );
+    } else {
+      startWithTempSave = false;
+    }
+    final ret = await Get.toNamed('/curation/create', arguments: {
+      'curation': curation,
+      'startWithTempSave': startWithTempSave,
+    });
     return _parseToBool(ret);
   }
 

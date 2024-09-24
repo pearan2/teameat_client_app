@@ -117,7 +117,7 @@ abstract class ITextSystem {
   String get copyToClipboard;
   String get logined;
   String get home;
-  String get profile;
+  String get myPage;
   String get sellTypeVoucher;
   String get sellTypeTimeLimit;
   String get sellTypeQuantityLimit;

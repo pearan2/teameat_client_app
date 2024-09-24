@@ -18,7 +18,11 @@ import 'package:teameat/main.dart';
 import 'package:teameat/99_util/extension/string.dart';
 
 class CuratorSummaryViewPage extends GetView<CuratorSummaryViewPageController> {
-  const CuratorSummaryViewPage({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const CuratorSummaryViewPage(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +35,14 @@ class CuratorSummaryViewPage extends GetView<CuratorSummaryViewPageController> {
                 style: DS.textStyle.paragraph2
                     .copyWith(fontWeight: FontWeight.bold),
               )),
-          action: const CuratorTool(),
+          action: CuratorTool(tag),
         ),
         body: Padding(
           padding: const EdgeInsets.all(AppWidget.horizontalPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CuratorSummaryRow(),
+              CuratorSummaryRow(tag),
               c.summary.obx((s) => s.oneLineIntroduce.isEmpty()
                   ? const SizedBox()
                   : DS.space.vSmall),
@@ -48,7 +52,7 @@ class CuratorSummaryViewPage extends GetView<CuratorSummaryViewPageController> {
                       style: DS.textStyle.caption2.b500.h14)),
               DS.space.vLarge,
               DS.space.vXSmall,
-              const Expanded(child: CuratorCurationGrid()),
+              Expanded(child: CuratorCurationGrid(tag)),
               GetPlatform.isIOS ? DS.space.vXSmall : const SizedBox(),
             ],
           ),
@@ -57,7 +61,11 @@ class CuratorSummaryViewPage extends GetView<CuratorSummaryViewPageController> {
 }
 
 class CuratorTool extends GetView<CuratorSummaryViewPageController> {
-  const CuratorTool({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const CuratorTool(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +101,12 @@ class CuratorTool extends GetView<CuratorSummaryViewPageController> {
 }
 
 class CuratorSummaryRow extends GetView<CuratorSummaryViewPageController> {
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
   static const imageWidth = 76.0;
-  const CuratorSummaryRow({super.key});
+  const CuratorSummaryRow(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +124,12 @@ class CuratorSummaryRow extends GetView<CuratorSummaryViewPageController> {
             DS.space.hBase,
             Expanded(child: c.summary.obx((s) {
               if (s.isMe) {
-                return const CuratorSummaryNumberRow();
+                return CuratorSummaryNumberRow(tag);
               } else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const CuratorSummaryNumberRow(),
+                    CuratorSummaryNumberRow(tag),
                     Follow(
                       c.curatorId,
                       height: DS.space.base,
@@ -136,7 +148,11 @@ class CuratorSummaryRow extends GetView<CuratorSummaryViewPageController> {
 
 class CuratorSummaryNumberRow
     extends GetView<CuratorSummaryViewPageController> {
-  const CuratorSummaryNumberRow({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const CuratorSummaryNumberRow(this.tag, {super.key});
 
   Widget _buildTextAndCount(String text, num count) {
     final textStyle = DS.textStyle.caption2.b500;
@@ -165,7 +181,11 @@ class CuratorSummaryNumberRow
 }
 
 class CuratorCurationGrid extends GetView<CuratorSummaryViewPageController> {
-  const CuratorCurationGrid({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const CuratorCurationGrid(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {

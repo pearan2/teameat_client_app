@@ -300,7 +300,7 @@ extension BottomNavigatorTypeExtension on BottomNavigatorType {
         );
       case BottomNavigatorType.profile:
         return Text(
-          DS.text.profile,
+          DS.text.myPage,
           style: DS.textStyle.caption2
               .copyWith(color: color ?? DS.color.background500),
         );
@@ -321,7 +321,7 @@ class _BottomNavigatorToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: DS.space.xBase * 2,
+      width: DS.space.xBase * 2.5,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

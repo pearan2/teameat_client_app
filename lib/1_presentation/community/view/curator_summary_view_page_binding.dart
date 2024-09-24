@@ -7,6 +7,7 @@ class CuratorSummaryViewPageBinding implements Bindings {
     final argMap = Get.arguments as Map<String, dynamic>;
     final curatorId = argMap['curatorId'] as int;
 
-    Get.put(CuratorSummaryViewPageController(curatorId));
+    Get.put(CuratorSummaryViewPageController(curatorId),
+        tag: curatorId.toString());
   }
 }

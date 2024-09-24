@@ -115,9 +115,9 @@ List<GetPage> allPages() => [
         curve: transitionCurve,
       ),
       GetPage(
-        name: "/curation/curator/summary",
+        name: "/curation/curator/:targetId/summary",
         binding: CuratorSummaryViewPageBinding(),
-        page: () => const CuratorSummaryViewPage(),
+        page: () => CuratorSummaryViewPage(Get.parameters['targetId']!),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
         curve: transitionCurve,

@@ -353,7 +353,7 @@ class DefaultTextSystem extends ITextSystem {
   String get home => '홈';
 
   @override
-  String get profile => '프로필';
+  String get myPage => '마이페이지';
 
   @override
   String get sellTypeVoucher => '이용권';

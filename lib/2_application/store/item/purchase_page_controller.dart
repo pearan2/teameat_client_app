@@ -68,7 +68,8 @@ class PurchasePageController extends PageController {
 
   Future<void> _loadUsableCoupons() async {
     final ret = await _couponRepo.findMyAllCoupons(
-        searchOption: SearchMyCoupons.empty());
+        searchOption: SearchMyCoupons.empty().copyWith(
+            storeIds: items.keys.map((item) => item.store.id).toList()));
     ret.fold((l) => showError(l.desc), (r) => _usableCoupons.value = r);
   }
 

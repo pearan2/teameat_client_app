@@ -1124,4 +1124,7 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get youHaveTempSavedCurationCreateTryLoad =>
       '앗! 기존에 작성하던 푸드로그가 있어요\n이어서 작성 하시겠어요?';
+
+  @override
+  String get couponOnlyForStoreFormat => '전용';
 }

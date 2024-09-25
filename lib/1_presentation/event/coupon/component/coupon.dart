@@ -57,11 +57,21 @@ class CouponCard extends StatelessWidget {
           ),
           DS.space.vTiny,
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              coupon.event.storeName == null
+                  ? const SizedBox()
+                  : Expanded(
+                      child: Text(
+                        '${coupon.event.storeName!} ${DS.text.couponOnlyForStoreFormat}',
+                        style: DS.textStyle.paragraph3.p600.bold,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
               Text(
                 getProperDiscountText(),
-                style: DS.textStyle.paragraph2.point.bold,
+                style: DS.textStyle.paragraph3.point.bold,
               )
             ],
           ),

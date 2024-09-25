@@ -13,6 +13,8 @@ class CouponEvent with _$CouponEvent {
     double? discountRatio,
     int? discountAmount,
     required DateTime expiredAt,
+    int? storeId,
+    String? storeName,
   }) = _CouponEvent;
 
   factory CouponEvent.empty() {
@@ -51,12 +53,14 @@ class Coupon with _$Coupon {
 class SearchMyCoupons with _$SearchMyCoupons {
   const factory SearchMyCoupons({
     bool? isUsable,
+    List<int>? storeIds,
     required int pageSize,
     required int pageNumber,
   }) = _SearchMyCoupons;
 
   factory SearchMyCoupons.empty() {
     return const SearchMyCoupons(
+      storeIds: [],
       isUsable: true,
       pageSize: 20,
       pageNumber: 0,
@@ -70,9 +74,13 @@ class SearchMyCoupons with _$SearchMyCoupons {
 
     ret['pageSize'] = target.pageSize.toString();
     ret['pageNumber'] = target.pageNumber.toString();
+    if (target.storeIds != null) {
+      ret['storeIds'] = target.storeIds!.map((id) => id.toString()).toList();
+    }
     if (target.isUsable != null) {
       ret['isUsable'] = target.isUsable!.toString();
     }
+
     return ret;
   }
 }

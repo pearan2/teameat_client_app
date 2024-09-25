@@ -10,7 +10,11 @@ class CouponCard extends StatelessWidget {
   final Coupon coupon;
   final bool isSelected;
 
-  const CouponCard(this.coupon, {super.key, this.isSelected = false});
+  const CouponCard(
+    this.coupon, {
+    super.key,
+    this.isSelected = false,
+  });
 
   String getProperDiscountText() {
     if (coupon.event.discountAmount != null) {

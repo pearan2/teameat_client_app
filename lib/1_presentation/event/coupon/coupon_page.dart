@@ -48,7 +48,12 @@ class CouponPage extends GetView<CouponPageController> {
                     style: DS.textStyle.paragraph2.semiBold.b800,
                   ),
                 ),
-                itemBuilder: (_, coupon, __) => CouponCard(coupon),
+                itemBuilder: (_, coupon, __) => TEonTap(
+                    onTap: () {
+                      if (coupon.event.storeId == null) return;
+                      c.react.toStoreDetail(coupon.event.storeId!);
+                    },
+                    child: CouponCard(coupon)),
               ),
             ),
           ).paddingAll(AppWidget.horizontalPadding),

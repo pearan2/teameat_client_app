@@ -79,6 +79,28 @@ class CuratorSummaryViewPageController extends PageController {
     });
   }
 
+  Future<List<Follower>> _loadFollow(
+      Future<Either<Failure, List<Follower>>> Function(int targetUserId,
+              {required int pageSize, required int pageNumber})
+          loader,
+      int pageNumber,
+      int pageSize) async {
+    final ret =
+        await loader(curatorId, pageNumber: pageNumber, pageSize: pageSize);
+    return ret.fold((l) {
+      showError(l.desc);
+      return [];
+    }, (r) => r);
+  }
+
+  Future<List<Follower>> loadFollowers(int pageNumber, int pageSize) async {
+    return _loadFollow(_userRepo.getFollowers, pageNumber, pageSize);
+  }
+
+  Future<List<Follower>> loadFollowings(int pageNumber, int pageSize) async {
+    return _loadFollow(_userRepo.getFollowings, pageNumber, pageSize);
+  }
+
   @override
   void onReady() {
     pagingController.error = '';

@@ -7,10 +7,13 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
+import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/user/follow/follow_card.dart';
 import 'package:teameat/2_application/community/curator_summary_view_page_controller.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
+import 'package:teameat/3_domain/user/user.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/get.dart';
@@ -170,13 +173,32 @@ class CuratorSummaryNumberRow
     );
   }
 
+  void onTextAndCountTap(
+      final Future<List<Follower>> Function(int pageNumber, int pageSize)
+          getFollower) {
+    showTEBottomSheet(
+        _FollowerList(
+          getFollower: getFollower,
+          onFollowerCardTap: (follower) =>
+              c.react.toCuratorSummary(follower.id),
+        ),
+        withBar: true,
+        withClose: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return c.summary.obx((s) => Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildTextAndCount(DS.text.follower, s.numberOfFollowers, () {}),
-            _buildTextAndCount(DS.text.following, s.numberOfFollowings, () {}),
+            _buildTextAndCount(DS.text.follower, s.numberOfFollowers, () {
+              if (s.numberOfFollowers == 0) return;
+              onTextAndCountTap(c.loadFollowers);
+            }),
+            _buildTextAndCount(DS.text.following, s.numberOfFollowings, () {
+              if (s.numberOfFollowings == 0) return;
+              onTextAndCountTap(c.loadFollowings);
+            }),
             _buildTextAndCount(DS.text.curation, s.numberOfCurations, () {}),
             _buildTextAndCount(DS.text.commercialization,
                 s.numberOfCommercializedCurations, () {}),
@@ -217,15 +239,63 @@ class CuratorCurationGrid extends GetView<CuratorSummaryViewPageController> {
 }
 
 class _FollowerList extends StatefulWidget {
-  const _FollowerList();
+  final Future<List<Follower>> Function(int pageNumber, int pageSize)
+      getFollower;
+  final void Function(Follower) onFollowerCardTap;
+
+  const _FollowerList(
+      {required this.getFollower, required this.onFollowerCardTap});
 
   @override
   State<_FollowerList> createState() => __FollowerListState();
 }
 
 class __FollowerListState extends State<_FollowerList> {
+  final PagingController<int, Follower> pagingController =
+      PagingController(firstPageKey: 0);
+
+  static const pageSize = 20;
+
+  Future<void> loadFollowers(int pageNumber) async {
+    final ret = await widget.getFollower(pageNumber, pageSize);
+    if (ret.length < pageSize) {
+      pagingController.appendLastPage(ret);
+    } else {
+      pagingController.appendPage(ret, pageNumber + 1);
+    }
+  }
+
+  @override
+  void initState() {
+    pagingController.addPageRequestListener(loadFollowers);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pagingController.removePageRequestListener(loadFollowers);
+    pagingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      constraints:
+          BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2),
+      child: PagedListView.separated(
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        pagingController: pagingController,
+        builderDelegate: PagedChildBuilderDelegate<Follower>(
+          itemBuilder: (_, follower, __) => TEonTap(
+            onTap: () => widget.onFollowerCardTap(follower),
+            child: FollowerCard(follower),
+          ),
+        ),
+        separatorBuilder: (_, __) => DS.space.vTiny,
+      ),
+    );
   }
 }

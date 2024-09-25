@@ -215,3 +215,17 @@ class CuratorCurationGrid extends GetView<CuratorSummaryViewPageController> {
     );
   }
 }
+
+class _FollowerList extends StatefulWidget {
+  const _FollowerList();
+
+  @override
+  State<_FollowerList> createState() => __FollowerListState();
+}
+
+class __FollowerListState extends State<_FollowerList> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

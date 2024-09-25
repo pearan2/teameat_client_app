@@ -13,7 +13,7 @@ class UserFollowerPageController extends PageController {
   final PagingController<int, Follower> pagingController =
       PagingController(firstPageKey: 0);
 
-  Future<void> _loadStores(int pageNumber) async {
+  Future<void> _loadMyFollowers(int pageNumber) async {
     final ret = await _userRepo.getMyFollowers(
         pageSize: pageSize, pageNumber: pageNumber);
     return ret.fold((l) => showError(l.desc), (r) {
@@ -36,7 +36,7 @@ class UserFollowerPageController extends PageController {
   @override
   Future<bool> initialLoad() {
     pagingController.itemList = [];
-    pagingController.addPageRequestListener(_loadStores);
+    pagingController.addPageRequestListener(_loadMyFollowers);
     return super.initialLoad();
   }
 }

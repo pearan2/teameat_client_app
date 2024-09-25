@@ -170,11 +170,9 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, List<Follower>>> getMyFollowers(
+  Future<Either<Failure, List<Follower>>> _getFollowers(String path,
       {required int pageSize, required int pageNumber}) async {
     try {
-      const path = '/api/member/my-followers';
       final ret = await _conn.get(path, {
         'pageSize': pageSize.toString(),
         'pageNumber': pageNumber.toString()
@@ -187,5 +185,26 @@ class UserRepository implements IUserRepository {
       return left(const Failure.fetchFollowerFail(
           '팔로워 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도해주세요.'));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<Follower>>> getMyFollowers(
+      {required int pageSize, required int pageNumber}) async {
+    const path = '/api/member/my-followers';
+    return _getFollowers(path, pageSize: pageSize, pageNumber: pageNumber);
+  }
+
+  @override
+  Future<Either<Failure, List<Follower>>> getFollowers(int targetUserId,
+      {required int pageSize, required int pageNumber}) async {
+    final path = '/api/member/$targetUserId/followers';
+    return _getFollowers(path, pageSize: pageSize, pageNumber: pageNumber);
+  }
+
+  @override
+  Future<Either<Failure, List<Follower>>> getFollowings(int targetUserId,
+      {required int pageSize, required int pageNumber}) async {
+    final path = '/api/member/$targetUserId/followings';
+    return _getFollowers(path, pageSize: pageSize, pageNumber: pageNumber);
   }
 }

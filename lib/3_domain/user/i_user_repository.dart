@@ -29,4 +29,10 @@ abstract class IUserRepository {
 
   Future<Either<Failure, List<Follower>>> getMyFollowers(
       {required int pageSize, required int pageNumber});
+
+  Future<Either<Failure, List<Follower>>> getFollowers(int targetUserId,
+      {required int pageSize, required int pageNumber});
+
+  Future<Either<Failure, List<Follower>>> getFollowings(int targetUserId,
+      {required int pageSize, required int pageNumber});
 }

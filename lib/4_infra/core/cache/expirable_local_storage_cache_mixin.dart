@@ -18,9 +18,9 @@ mixin ExpirableLocalStorageCacheMixin<T> on IExpirableLocalStorageCache<T> {
   @override
   T? find() {
     try {
-      // 한번도 set 된 적이 없다는 뜻
       final lastCacheSetTime = _findLastSetTime();
 
+      // 한번도 set 된 적이 없다는 뜻
       if (lastCacheSetTime == null) {
         return null;
       }
@@ -32,7 +32,6 @@ mixin ExpirableLocalStorageCacheMixin<T> on IExpirableLocalStorageCache<T> {
       if (jsonString == null) {
         return null;
       }
-      print('cache hit!');
       return fromJson(jsonString);
     } catch (_) {
       return null;

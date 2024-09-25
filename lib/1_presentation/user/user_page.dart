@@ -10,9 +10,11 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/bottom_sheet.dart';
 import 'package:teameat/1_presentation/core/layout/dialog.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/home/section/group_buying.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/user/user.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 
 class UserPage extends GetView<UserPageController> {
@@ -32,9 +34,7 @@ class UserPage extends GetView<UserPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                UserCard(
-                  onSettingClicked: c.onUserSettingClicked,
-                ),
+                UserCard(onSettingClicked: c.onUserSettingClicked),
                 const UserPageDivider(),
                 TERowButton(
                   isLoginRequired: true,
@@ -51,11 +51,11 @@ class UserPage extends GetView<UserPageController> {
                   onTap: controller.react.toStoreLike,
                   text: DS.text.followStore,
                 ),
-                TERowButton(
-                  isLoginRequired: true,
-                  onTap: controller.react.toUserFollower,
-                  text: DS.text.follower,
-                ),
+                // TERowButton(
+                //   isLoginRequired: true,
+                //   onTap: controller.react.toUserFollower,
+                //   text: DS.text.follower,
+                // ),
                 TERowButton(
                   isLoginRequired: true,
                   onTap: controller.react.toUserCuration,
@@ -178,6 +178,11 @@ class UserCard extends GetView<UserPageController> {
                       )),
                 ],
               ),
+              DS.space.hTiny,
+              c.user.obx((user) => DS.image
+                  .rightArrow(
+                      size: DS.space.medium, color: DS.color.background900)
+                  .orEmpty(!user.isVisitor)),
             ],
           ),
         ),

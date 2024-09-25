@@ -70,35 +70,51 @@ class CuratorTool extends GetView<CuratorSummaryViewPageController> {
 
   const CuratorTool(this.tag, {super.key});
 
+  Widget _buildHomeButton() {
+    return TEonTap(
+        onTap: c.react.toCurationOffAll,
+        child: Center(child: DS.image.iconHome));
+  }
+
+  Widget _buildControlTool() {
+    return TESelectorBottomSheet<String>(
+      selectedValue: "",
+      candidates: [DS.text.blockThisUser, DS.text.reportThisUser],
+      getDefaultColor: (s) =>
+          s == DS.text.reportThisUser ? DS.color.point500 : null,
+      isLoginRequested: true,
+      onSelected: (s) async {
+        if (s == DS.text.blockThisUser) {
+          final ret = await showTEConfirmDialog(
+            content: DS.text.areYouSUreToBlockThisUser,
+            leftButtonText: DS.text.no,
+            rightButtonText: DS.text.yesIWillBlockThis,
+          );
+          if (!ret) return;
+          c.onBlock();
+        } else if (s == DS.text.reportThisUser) {
+          await showReport(c.onReport);
+        }
+      },
+      icon: DS.image.more(DS.color.background700),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return c.summary.obx((summary) {
       if (summary.isMe) {
-        return TEonTap(
-            onTap: c.react.toCurationOffAll,
-            child: Center(child: DS.image.iconHome));
+        return _buildHomeButton();
+      } else {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildHomeButton(),
+            DS.space.hXSmall,
+            _buildControlTool(),
+          ],
+        );
       }
-      return TESelectorBottomSheet<String>(
-        selectedValue: "",
-        candidates: [DS.text.blockThisUser, DS.text.reportThisUser],
-        getDefaultColor: (s) =>
-            s == DS.text.reportThisUser ? DS.color.point500 : null,
-        isLoginRequested: true,
-        onSelected: (s) async {
-          if (s == DS.text.blockThisUser) {
-            final ret = await showTEConfirmDialog(
-              content: DS.text.areYouSUreToBlockThisUser,
-              leftButtonText: DS.text.no,
-              rightButtonText: DS.text.yesIWillBlockThis,
-            );
-            if (!ret) return;
-            c.onBlock();
-          } else if (s == DS.text.reportThisUser) {
-            await showReport(c.onReport);
-          }
-        },
-        icon: DS.image.more(DS.color.background700),
-      );
     });
   }
 }
@@ -285,7 +301,7 @@ class __FollowerListState extends State<_FollowerList> {
           BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2),
       child: PagedListView.separated(
         physics: const ClampingScrollPhysics(),
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.symmetric(vertical: DS.space.tiny),
         shrinkWrap: true,
         pagingController: pagingController,
         builderDelegate: PagedChildBuilderDelegate<Follower>(
@@ -294,7 +310,7 @@ class __FollowerListState extends State<_FollowerList> {
             child: FollowerCard(follower),
           ),
         ),
-        separatorBuilder: (_, __) => DS.space.vTiny,
+        separatorBuilder: (_, __) => DS.space.vXSmall,
       ),
     );
   }

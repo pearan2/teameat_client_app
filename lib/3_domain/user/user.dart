@@ -51,6 +51,10 @@ class Follower with _$Follower {
       _$FollowerFromJson(json);
 }
 
+extension UserExtension on User {
+  bool get isVisitor => this == User.visitor();
+}
+
 @freezed
 class User with _$User {
   const factory User({

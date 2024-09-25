@@ -10,4 +10,6 @@ abstract class ICouponRepository {
 
   Future<Either<Failure, CouponApplyResult>> calcCouponAppliedAmount(
       {required int id, required int originalAmount});
+
+  Future<Either<Failure, MyCouponSummary>> findMyCouponSummary();
 }

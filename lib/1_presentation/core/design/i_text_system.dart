@@ -395,6 +395,7 @@ abstract class ITextSystem {
   String get myUsableCoupons;
   String get priceAfterApplyCoupon;
   String get couponOnlyForStoreFormat;
+  String get numberOfUsableCouponLeftFormat;
 
   String get groupBuyingSectionTitle;
   String get groupBuyingSectionDescription;

@@ -98,3 +98,17 @@ class CouponApplyResult with _$CouponApplyResult {
   factory CouponApplyResult.fromJson(Map<String, Object?> json) =>
       _$CouponApplyResultFromJson(json);
 }
+
+@freezed
+class MyCouponSummary with _$MyCouponSummary {
+  const factory MyCouponSummary({
+    required int numberOfUsableCoupons,
+  }) = _MyCouponSummary;
+
+  factory MyCouponSummary.empty() {
+    return const MyCouponSummary(numberOfUsableCoupons: 0);
+  }
+
+  factory MyCouponSummary.fromJson(Map<String, Object?> json) =>
+      _$MyCouponSummaryFromJson(json);
+}

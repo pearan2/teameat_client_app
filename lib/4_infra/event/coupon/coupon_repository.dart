@@ -48,7 +48,20 @@ class CouponRepository implements ICouponRepository {
           (r) => right(CouponApplyResult.fromJson(r as JsonMap)));
     } catch (_) {
       return left(
-          const Failure.couponRegisterFail("쿠폰 등록에 실패했습니다\n잘못된 쿠폰 번호 입니다"));
+          const Failure.couponFail("쿠폰을 적용하는데 실패 했습니다. 잠시 후 다시 시도해주세요."));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MyCouponSummary>> findMyCouponSummary() async {
+    try {
+      const path = '/api/event/coupon/summary';
+      final ret = await _conn.get(path, null);
+      return ret.fold(
+          (l) => left(l), (r) => right(MyCouponSummary.fromJson(r as JsonMap)));
+    } catch (_) {
+      return left(
+          const Failure.couponFail("쿠폰 요약 정보를 가져오는데 실패 했습니다. 잠시 후 다시 시도해주세요."));
     }
   }
 }

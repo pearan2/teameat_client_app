@@ -14,6 +14,8 @@ import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/curation/i_curation_repository.dart';
+import 'package:teameat/3_domain/event/coupon/coupon.dart';
+import 'package:teameat/3_domain/event/coupon/i_coupon_repository.dart';
 import 'package:teameat/3_domain/file/i_file_service.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/i_item_repository.dart';
@@ -24,11 +26,14 @@ import 'package:teameat/99_util/get.dart';
 
 class UserPageController extends PageController {
   final _userRepo = Get.find<IUserRepository>();
-  final _authService = Get.find<IAuthService>();
+  final _couponRepo = Get.find<ICouponRepository>();
   final _itemRepo = Get.find<IStoreItemRepository>();
+  final _authService = Get.find<IAuthService>();
   final _fileService = Get.find<IFileService>();
 
   late final user = User.visitor().wrap(_loadMe);
+  late final couponSummary = MyCouponSummary.empty().wrap(_loadCouponSummary);
+
   late final recentSeeItems = <ItemSimple>[
     ItemSimple.empty(),
     ItemSimple.empty()
@@ -82,6 +87,7 @@ class UserPageController extends PageController {
     _itemLikeController.clean();
     _storeLikeController.clean();
     _curationLikeController.clean();
+    couponSummary.value = MyCouponSummary.empty();
     user.value = User.visitor();
   }
 
@@ -143,6 +149,7 @@ class UserPageController extends PageController {
   Future<Either<Failure, User>> _loadMe() async {
     final ret = await _userRepo.getMe();
     return ret.fold((l) => right(User.visitor()), (r) {
+      couponSummary.load();
       emailController.text = r.email;
       nicknameController.text = r.nickname;
       oneLineIntroduceController.text = r.oneLineIntroduce ?? '';
@@ -153,6 +160,14 @@ class UserPageController extends PageController {
       birthYearController.text = r.birthYear ?? '';
       return right(r);
     });
+  }
+
+  Future<Either<Failure, MyCouponSummary>> _loadCouponSummary() async {
+    if (!_authService.isLogined()) {
+      return right(MyCouponSummary.empty());
+    }
+    final ret = await _couponRepo.findMyCouponSummary();
+    return ret.fold((l) => right(MyCouponSummary.empty()), (r) => right(r));
   }
 
   Future<void> onProfileImageClicked(mt.BuildContext context) async {

@@ -631,6 +631,7 @@ class TERowButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool isLoginRequired;
   final String text;
+  final Widget? additionalInfo;
 
   final void Function() onTap;
 
@@ -640,6 +641,7 @@ class TERowButton extends StatelessWidget {
     required this.text,
     this.padding,
     this.isLoginRequired = false,
+    this.additionalInfo,
   });
 
   @override
@@ -654,10 +656,16 @@ class TERowButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              text,
-              style:
-                  DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.w600),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  text,
+                  style: DS.textStyle.paragraph3
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                additionalInfo ?? const SizedBox(),
+              ],
             ),
             const Icon(Icons.keyboard_arrow_right),
           ],

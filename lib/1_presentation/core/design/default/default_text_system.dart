@@ -1127,4 +1127,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get couponOnlyForStoreFormat => '전용';
+
+  @override
+  String get numberOfUsableCouponLeftFormat => '사용할 수 있는 쿠폰이 ##개 남아있어요!';
 }

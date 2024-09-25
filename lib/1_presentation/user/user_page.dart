@@ -13,6 +13,8 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/user/user_page_controller.dart';
 import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/user/user.dart';
+import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 
@@ -35,10 +37,20 @@ class UserPage extends GetView<UserPageController> {
               children: [
                 UserCard(onSettingClicked: c.onUserSettingClicked),
                 const UserPageDivider(),
-                TERowButton(
-                  isLoginRequired: true,
-                  onTap: controller.react.toCoupon,
-                  text: DS.text.couponPage,
+                c.couponSummary.obx(
+                  (s) => TERowButton(
+                    isLoginRequired: true,
+                    additionalInfo: s.numberOfUsableCoupons == 0
+                        ? null
+                        : Text(
+                            s.numberOfUsableCoupons
+                                .format(DS.text.numberOfUsableCouponLeftFormat),
+                            style: DS.textStyle.caption1.point.semiBold,
+                          ).paddingOnly(left: DS.space.tiny),
+                    onTap: controller.react.toCoupon,
+                    text: DS.text.couponPage,
+                  ),
+                  loadingBuilder: (child) => child,
                 ),
                 TERowButton(
                   isLoginRequired: true,

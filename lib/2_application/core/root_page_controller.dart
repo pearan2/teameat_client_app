@@ -26,6 +26,7 @@ class RootPageController extends PageController {
       _codeRepo.getCode(CodeKey.storeItemSellType()),
       _codeRepo.getCode(CodeKey.storeItemOrder()),
       _codeRepo.getSearchableAddress(),
+      _codeRepo.getCurationSearchableAddress(),
     ]);
   }
 

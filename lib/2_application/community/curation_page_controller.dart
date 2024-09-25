@@ -39,6 +39,7 @@ class CurationPageController extends PageController {
   SearchableAddress? get selectedAddress => _selectedAddress.value;
 
   Future<void> refreshPage() async {
+    _loadSearchableAddresses();
     _searchOption.value = searchOption.copyWith(pageNumber: 0);
     pagingController.error = '';
     pagingController.refresh();

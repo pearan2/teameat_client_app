@@ -1,6 +1,8 @@
 abstract class IExpirableLocalStorageCache<T> {
   /// must unique
-  late final String key;
+  final String key;
+
+  IExpirableLocalStorageCache({required this.key});
 
   Duration get expireDuration;
   String Function(T value) get toJson;

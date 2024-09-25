@@ -13,8 +13,10 @@ import 'package:teameat/4_infra/core/cache/i_expirable_local_storage_cache.dart'
 class _SearchableAddressListCache
     extends IExpirableLocalStorageCache<List<SearchableAddress>>
     with ExpirableLocalStorageCacheMixin<List<SearchableAddress>> {
+  _SearchableAddressListCache({required super.key});
+
   @override
-  Duration get expireDuration => const Duration(hours: 1);
+  Duration get expireDuration => const Duration(hours: 2); // 2시간 유지
 
   @override
   List<SearchableAddress> Function(String jsonString) get fromJson =>
@@ -30,9 +32,10 @@ class CodeRepository implements ICodeRepository {
   final _conn = Get.find<IConnection>();
 
   final _codeCache = <CodeKey, List<Code>>{};
-  List<SearchableAddress> _searchableAddressCache = <SearchableAddress>[];
-  List<SearchableAddress> _searchableCurationAddressCache =
-      <SearchableAddress>[];
+  final _SearchableAddressListCache _searchableAddressCache =
+      _SearchableAddressListCache(key: 'searchableAddressCacheKey');
+  final _SearchableAddressListCache _searchableCurationAddressCache =
+      _SearchableAddressListCache(key: 'searchableCurationAddressCacheKey');
 
   @override
   Future<Either<Failure, List<Code>>> getCode(CodeKey codeKey) async {
@@ -57,8 +60,9 @@ class CodeRepository implements ICodeRepository {
   Future<Either<Failure, List<SearchableAddress>>>
       getSearchableAddress() async {
     try {
-      if (_searchableAddressCache.isNotEmpty) {
-        return right(_searchableAddressCache);
+      final fromCache = _searchableAddressCache.find();
+      if (fromCache != null) {
+        return right(fromCache);
       }
       const path = '/api/common/address-filter';
       final ret = await _conn.get(path, null);
@@ -66,7 +70,7 @@ class CodeRepository implements ICodeRepository {
         final addresses = (r as Iterable)
             .map((json) => SearchableAddress.fromJson(json))
             .toList();
-        _searchableAddressCache = addresses;
+        _searchableAddressCache.set(addresses);
         return right(addresses);
       });
     } catch (_) {
@@ -78,8 +82,9 @@ class CodeRepository implements ICodeRepository {
   Future<Either<Failure, List<SearchableAddress>>>
       getCurationSearchableAddress() async {
     try {
-      if (_searchableCurationAddressCache.isNotEmpty) {
-        return right(_searchableCurationAddressCache);
+      final fromCache = _searchableCurationAddressCache.find();
+      if (fromCache != null) {
+        return right(fromCache);
       }
       const path = '/api/common/curation-address-filter';
       final ret = await _conn.get(path, null);
@@ -87,7 +92,7 @@ class CodeRepository implements ICodeRepository {
         final addresses = (r as Iterable)
             .map((json) => SearchableAddress.fromJson(json))
             .toList();
-        _searchableCurationAddressCache = addresses;
+        _searchableCurationAddressCache.set(addresses);
         return right(addresses);
       });
     } catch (_) {

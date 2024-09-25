@@ -57,6 +57,7 @@ class HomePageController extends PageController {
   }
 
   Future<void> refreshPage() async {
+    _loadSearchableAddresses();
     _searchOption.value = searchOption.copyWith(
         pageNumber: 0, randomSeed: Random().nextInt(10000));
     _sectionRefreshCount.value++;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
@@ -5,6 +7,24 @@ import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
 import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
+import 'package:teameat/4_infra/core/cache/expirable_local_storage_cache_mixin.dart';
+import 'package:teameat/4_infra/core/cache/i_expirable_local_storage_cache.dart';
+
+class _SearchableAddressListCache
+    extends IExpirableLocalStorageCache<List<SearchableAddress>>
+    with ExpirableLocalStorageCacheMixin<List<SearchableAddress>> {
+  @override
+  Duration get expireDuration => const Duration(hours: 1);
+
+  @override
+  List<SearchableAddress> Function(String jsonString) get fromJson =>
+      (jsonString) => (jsonDecode(jsonString) as Iterable)
+          .map((json) => SearchableAddress.fromJson(json))
+          .toList();
+
+  @override
+  String Function(List<SearchableAddress> value) get toJson => jsonEncode;
+}
 
 class CodeRepository implements ICodeRepository {
   final _conn = Get.find<IConnection>();

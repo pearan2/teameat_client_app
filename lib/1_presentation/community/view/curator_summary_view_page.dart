@@ -86,10 +86,11 @@ class CuratorTool extends GetView<CuratorSummaryViewPageController> {
       onSelected: (s) async {
         if (s == DS.text.blockThisUser) {
           final ret = await showTEConfirmDialog(
-            content: DS.text.areYouSUreToBlockThisUser,
-            leftButtonText: DS.text.no,
-            rightButtonText: DS.text.yesIWillBlockThis,
-          );
+                content: DS.text.areYouSUreToBlockThisUser,
+                leftButtonText: DS.text.no,
+                rightButtonText: DS.text.yesIWillBlockThis,
+              ) ??
+              false;
           if (!ret) return;
           c.onBlock();
         } else if (s == DS.text.reportThisUser) {

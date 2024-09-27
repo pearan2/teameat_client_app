@@ -169,17 +169,19 @@ class React extends IReact {
 
   @override
   Future<bool> toCurationCreate(MyCurationDetail? curation) async {
-    late final bool startWithTempSave;
+    late final bool? startWithTempSave;
     if (curation == null &&
         Get.find<ICurationTempSaveService>().isTempSaveExists()) {
       startWithTempSave = await showTEConfirmDialog(
         content: DS.text.youHaveTempSavedCurationCreateTryLoad,
         leftButtonText: DS.text.createCurationFromScratch,
         rightButtonText: DS.text.createCurationFromTempSave,
-        dismissible: false,
       );
     } else {
       startWithTempSave = false;
+    }
+    if (startWithTempSave == null) {
+      return false;
     }
     final ret = await Get.toNamed('/curation/create', arguments: {
       'curation': curation,

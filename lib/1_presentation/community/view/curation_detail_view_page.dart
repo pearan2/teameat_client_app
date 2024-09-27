@@ -303,10 +303,11 @@ class BlockReportTools extends StatelessWidget {
       onSelected: (s) async {
         if (s == DS.text.blockThisCuration) {
           final ret = await showTEConfirmDialog(
-            content: DS.text.areYouSureToBlockThisCuration,
-            leftButtonText: DS.text.no,
-            rightButtonText: DS.text.yesIWillBlockThis,
-          );
+                content: DS.text.areYouSureToBlockThisCuration,
+                leftButtonText: DS.text.no,
+                rightButtonText: DS.text.yesIWillBlockThis,
+              ) ??
+              false;
           if (!ret) return;
           controller.onBlock();
         } else if (s == DS.text.reportThisCuration) {
@@ -338,10 +339,11 @@ class EditDeleteTools extends StatelessWidget {
           controller.onCurationEdit();
         } else if (s == DS.text.deleteMyCuration) {
           final ret = await showTEConfirmDialog(
-            content: DS.text.areYouSureToDeleteYourCuration,
-            leftButtonText: DS.text.no,
-            rightButtonText: DS.text.yesIWillDeleteMyCuration,
-          );
+                content: DS.text.areYouSureToDeleteYourCuration,
+                leftButtonText: DS.text.no,
+                rightButtonText: DS.text.yesIWillDeleteMyCuration,
+              ) ??
+              false;
           if (!ret) return;
           controller.onCurationDelete();
         }

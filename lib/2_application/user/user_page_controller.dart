@@ -96,10 +96,11 @@ class UserPageController extends PageController {
       return showError(DS.text.notLogined);
     }
     final isConfirmed = await showTEConfirmDialog(
-      content: DS.text.logOutConfirm,
-      leftButtonText: DS.text.back,
-      rightButtonText: DS.text.goLogOut,
-    );
+          content: DS.text.logOutConfirm,
+          leftButtonText: DS.text.back,
+          rightButtonText: DS.text.goLogOut,
+        ) ??
+        false;
     if (!isConfirmed) {
       return;
     }
@@ -113,10 +114,11 @@ class UserPageController extends PageController {
       return showError(DS.text.notLogined);
     }
     final isConfirmed = await showTEConfirmDialog(
-      content: DS.text.signOutConfirm,
-      leftButtonText: DS.text.back,
-      rightButtonText: DS.text.goSignOut,
-    );
+          content: DS.text.signOutConfirm,
+          leftButtonText: DS.text.back,
+          rightButtonText: DS.text.goSignOut,
+        ) ??
+        false;
     if (!isConfirmed) {
       return;
     }

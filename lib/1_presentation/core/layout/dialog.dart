@@ -31,7 +31,7 @@ Future<T?> showTEDialog<T>(
   );
 }
 
-Future<bool> showTEConfirmDialog(
+Future<bool?> showTEConfirmDialog(
     {required String content,
     required String leftButtonText,
     required String rightButtonText,
@@ -39,7 +39,7 @@ Future<bool> showTEConfirmDialog(
     double dialogMinHeight = 162.0,
     bool dismissible = true}) async {
   final react = Get.find<IReact>();
-  final ret = await showTEDialog(
+  final ret = await showTEDialog<bool>(
       dismissible: dismissible,
       dialogMinHeight: dialogMinHeight,
       dialogWidth: dialogWidth,
@@ -78,6 +78,5 @@ Future<bool> showTEConfirmDialog(
           )
         ],
       ));
-  if (ret == null) return false;
   return ret;
 }

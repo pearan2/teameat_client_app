@@ -39,7 +39,8 @@ class CodeKey with _$CodeKey {
   const factory CodeKey({required String key}) = _CodeKey;
 
   factory CodeKey.curationFilter() => const CodeKey(key: 'CURATION_FILTER');
-  factory CodeKey.storeCategory() => const CodeKey(key: 'STORE_CATEGORY');
+  factory CodeKey.storeSearchCategory() =>
+      const CodeKey(key: 'STORE_SEARCH_CATEGORY');
   factory CodeKey.storeHashTag() => const CodeKey(key: 'STORE_HASHTAG');
   factory CodeKey.voucherFilter() => const CodeKey(key: 'VOUCHER_FILTER');
   factory CodeKey.voucherOrder() => const CodeKey(key: 'VOUCHER_ORDER');
@@ -51,7 +52,7 @@ class CodeKey with _$CodeKey {
   static List<CodeKey> findAll() {
     return [
       CodeKey.curationFilter(),
-      CodeKey.storeCategory(),
+      CodeKey.storeSearchCategory(),
       CodeKey.storeHashTag(),
       CodeKey.voucherFilter(),
       CodeKey.voucherOrder(),

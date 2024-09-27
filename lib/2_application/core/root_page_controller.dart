@@ -23,6 +23,7 @@ class RootPageController extends PageController {
       _codeRepo.getCode(CodeKey.voucherOrder()),
       _codeRepo.getCode(CodeKey.curationFilter()),
       _codeRepo.getCode(CodeKey.curationOrder()),
+      _codeRepo.getCode(CodeKey.storeSearchCategory()),
       _codeRepo.getCode(CodeKey.storeItemSellType()),
       _codeRepo.getCode(CodeKey.storeItemOrder()),
       _codeRepo.getSearchableAddress(),

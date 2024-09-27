@@ -28,6 +28,22 @@ class _SearchableAddressListCache
   String Function(List<SearchableAddress> value) get toJson => jsonEncode;
 }
 
+class _LastSearchableAddressCache
+    extends IExpirableLocalStorageCache<SearchableAddress>
+    with ExpirableLocalStorageCacheMixin<SearchableAddress> {
+  _LastSearchableAddressCache({required super.key});
+
+  @override
+  Duration get expireDuration => const Duration(days: 365 * 100); // 100년간 유지
+
+  @override
+  SearchableAddress Function(String jsonString) get fromJson =>
+      (jsonString) => SearchableAddress.fromJson(jsonDecode(jsonString));
+
+  @override
+  String Function(SearchableAddress value) get toJson => jsonEncode;
+}
+
 class CodeRepository implements ICodeRepository {
   final _conn = Get.find<IConnection>();
 
@@ -36,6 +52,8 @@ class CodeRepository implements ICodeRepository {
       _SearchableAddressListCache(key: 'searchableAddressCacheKey');
   final _SearchableAddressListCache _searchableCurationAddressCache =
       _SearchableAddressListCache(key: 'searchableCurationAddressCacheKey');
+  final _LastSearchableAddressCache _lastSearchableAddressCache =
+      _LastSearchableAddressCache(key: 'lastSearchableAddressCacheKey');
 
   @override
   Future<Either<Failure, List<Code>>> getCode(CodeKey codeKey) async {
@@ -98,5 +116,19 @@ class CodeRepository implements ICodeRepository {
     } catch (_) {
       return left(const Failure.fetchCodeFail("필요한 코드를 가져오는데 실패하였습니다."));
     }
+  }
+
+  @override
+  SearchableAddress? lastSearchableAddressNyUser() {
+    return _lastSearchableAddressCache.find();
+  }
+
+  @override
+  Future<bool> setLastSearchableAddressByUser(
+      SearchableAddress? searchableAddress) async {
+    if (searchableAddress == null) {
+      return _lastSearchableAddressCache.clear();
+    }
+    return _lastSearchableAddressCache.set(searchableAddress);
   }
 }

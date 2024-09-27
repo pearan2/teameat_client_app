@@ -104,7 +104,8 @@ class React extends IReact {
 
   @override
   void toStoreDetail(int storeId) {
-    Get.toNamed('/store', arguments: {'storeId': storeId});
+    Get.toNamed('/store/$storeId',
+        arguments: {'storeId': storeId}, preventDuplicates: false);
   }
 
   @override

@@ -29,8 +29,11 @@ class HomePageController extends PageController {
 
   /// 상태
   final _searchableAddresses = <SearchableAddress>[].obs;
-  final _selectedAddress = Rxn<SearchableAddress>();
-  final _searchOption = SearchStoreSimpleList.empty().obs;
+  late final _selectedAddress =
+      Rxn<SearchableAddress>(_codeRepo.lastSearchableAddressNyUser());
+  late final _searchOption = SearchStoreSimpleList.empty()
+      .copyWith(address: _selectedAddress.value?.toFullAddress())
+      .obs;
   final _recommendedItems = <ItemSimple>[].obs;
   final _isLoading = false.obs;
   final _sectionRefreshCount = 0.obs;
@@ -79,6 +82,7 @@ class HomePageController extends PageController {
   }
 
   Future<void> onSelectedAddressChanged(SearchableAddress? address) async {
+    _codeRepo.setLastSearchableAddressByUser(address);
     _selectedAddress.value = address;
     _searchOption.value =
         searchOption.copyWith(address: address?.toFullAddress(), pageNumber: 0);

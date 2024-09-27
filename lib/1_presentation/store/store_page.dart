@@ -24,7 +24,11 @@ import 'package:teameat/main.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class StorePage extends GetView<StorePageController> {
-  const StorePage({super.key});
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const StorePage(this.tag, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +49,16 @@ class StorePage extends GetView<StorePageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _StoreInfoColumn(),
+                _StoreInfoColumn(tag),
                 TEDivider.normal()
                     .paddingOnly(top: DS.space.xBase, bottom: DS.space.medium),
-                const _StoreItemSimpleList(),
+                _StoreItemSimpleList(tag),
                 TEDivider.normal().paddingVertical(DS.space.medium),
-                const _StoreCurationSimpleList(),
+                _StoreCurationSimpleList(tag),
                 c.store.obx((s) => s.numberOfCurations < 1
                     ? const SizedBox()
                     : TEDivider.normal().paddingVertical(DS.space.medium)),
-                const _StoreLocationColumn(),
+                _StoreLocationColumn(tag),
                 DS.space.vLarge,
                 DS.space.vLarge,
               ],
@@ -67,7 +71,11 @@ class StorePage extends GetView<StorePageController> {
 }
 
 class _StoreInfoColumn extends GetView<StorePageController> {
-  const _StoreInfoColumn();
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const _StoreInfoColumn(this.tag);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +83,7 @@ class _StoreInfoColumn extends GetView<StorePageController> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _StoreItemSaleStatusAndToolsRow(),
+        _StoreItemSaleStatusAndToolsRow(tag),
         DS.space.vXSmall,
         c.store
             .obx((s) => Text(s.name, style: DS.textStyle.title1.b800.bold.h14)),
@@ -138,7 +146,11 @@ class _StoreInfoColumn extends GetView<StorePageController> {
 }
 
 class _StoreItemSaleStatusAndToolsRow extends GetView<StorePageController> {
-  const _StoreItemSaleStatusAndToolsRow();
+  @override
+  // ignore: overridden_fields
+  final String tag;
+
+  const _StoreItemSaleStatusAndToolsRow(this.tag);
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +174,10 @@ class _StoreItemSaleStatusAndToolsRow extends GetView<StorePageController> {
 }
 
 class _StoreItemSimpleList extends GetView<StorePageController> {
-  const _StoreItemSimpleList();
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const _StoreItemSimpleList(this.tag);
 
   Widget _buildSimpleItemCard(StoreDetailItemSimple item) {
     return TEonTap(
@@ -234,7 +249,10 @@ class _StoreItemSimpleList extends GetView<StorePageController> {
 }
 
 class _StoreCurationSimpleList extends GetView<StorePageController> {
-  const _StoreCurationSimpleList();
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const _StoreCurationSimpleList(this.tag);
 
   final listHeight = 211.0;
   final width = 170.0;
@@ -310,7 +328,10 @@ class _StoreCurationSimpleList extends GetView<StorePageController> {
 }
 
 class _StoreLocationColumn extends GetView<StorePageController> {
-  const _StoreLocationColumn();
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const _StoreLocationColumn(this.tag);
 
   final mapHeight = 170.0;
 

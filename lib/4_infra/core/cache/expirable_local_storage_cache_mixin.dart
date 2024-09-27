@@ -16,6 +16,13 @@ mixin ExpirableLocalStorageCacheMixin<T> on IExpirableLocalStorageCache<T> {
   }
 
   @override
+  Future<bool> clear() async {
+    final successes =
+        await Future.wait([_pref.remove(key), _pref.remove(_setTimeKey)]);
+    return successes.map((success) => !success).isEmpty;
+  }
+
+  @override
   T? find() {
     try {
       final lastCacheSetTime = _findLastSetTime();

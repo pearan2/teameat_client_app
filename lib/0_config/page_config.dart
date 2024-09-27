@@ -231,9 +231,9 @@ List<GetPage> allPages() => [
         curve: transitionCurve,
       ),
       GetPage(
-        name: "/store",
+        name: "/store/:storeId",
         binding: StorePageBinding(),
-        page: () => const StorePage(),
+        page: () => StorePage(Get.parameters['storeId']!),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
         curve: transitionCurve,

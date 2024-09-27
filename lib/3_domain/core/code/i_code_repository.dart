@@ -8,4 +8,7 @@ abstract class ICodeRepository {
   Future<Either<Failure, List<SearchableAddress>>> getSearchableAddress();
   Future<Either<Failure, List<SearchableAddress>>>
       getCurationSearchableAddress();
+  SearchableAddress? lastSearchableAddressNyUser();
+  Future<bool> setLastSearchableAddressByUser(
+      SearchableAddress? searchableAddress);
 }

@@ -9,4 +9,5 @@ abstract class IExpirableLocalStorageCache<T> {
   T Function(String) get fromJson;
   T? find();
   Future<bool> set(T value);
+  Future<bool> clear();
 }

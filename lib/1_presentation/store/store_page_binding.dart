@@ -7,6 +7,6 @@ class StorePageBinding implements Bindings {
     final argMap = Get.arguments as Map<String, dynamic>;
     final storeId = argMap['storeId'] as int;
 
-    Get.put(StorePageController(storeId: storeId));
+    Get.put(StorePageController(storeId: storeId), tag: storeId.toString());
   }
 }

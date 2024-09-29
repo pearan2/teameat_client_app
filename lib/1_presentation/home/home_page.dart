@@ -7,7 +7,7 @@ import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/1_presentation/home/section/group_buying.dart';
+import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
@@ -61,6 +61,12 @@ class HomePage extends GetView<HomePageController> {
                   toolbarHeight: DS.space.large,
                   flexibleSpace: const HomePageSearcher(),
                 ),
+                // Todo 배너 마무리 지어야함
+                // TEPrimaryButton(
+                //   text: 'Test',
+                //   onTap: () =>
+                //       c.react.toBanner('https://link.teameat.shop/banner/3'),
+                // ).toSliver,
                 Obx(() => GroupBuyingSection(
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,

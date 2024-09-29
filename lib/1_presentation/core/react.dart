@@ -288,4 +288,9 @@ class React extends IReact {
   void toCoupon() {
     Get.toNamed('/user/coupon');
   }
+
+  @override
+  void toBanner(String url) {
+    Get.toNamed('/home/banner', arguments: {'url': url});
+  }
 }

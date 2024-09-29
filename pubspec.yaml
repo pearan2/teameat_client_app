@@ -73,6 +73,7 @@ dependencies:
   expandable: ^5.0.1
   smooth_page_indicator: ^1.2.0+3
   super_tooltip: ^2.0.8
+  webview_flutter: ^4.9.0
 
 dev_dependencies:
   flutter_test:

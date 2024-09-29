@@ -11,6 +11,8 @@ abstract class IRouter {
 
   void toHomeOffAll();
 
+  void toBanner(String url);
+
   /// section
   void toGroupBuyingSearchPage({SearchableAddress? selectedAddress});
 

@@ -7,7 +7,7 @@ import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/1_presentation/home/section/group_buying.dart';
+import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
 import 'package:teameat/2_application/home/section/group_buying_search_page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/store/item/item.dart';

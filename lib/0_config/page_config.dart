@@ -265,7 +265,7 @@ List<GetPage> allPages() => [
         curve: transitionCurve,
       ),
       GetPage(
-        name: "/store/like",
+        name: "/like/store",
         binding: StoreLikePageBinding(),
         page: () => const StoreLikePage(),
         transitionDuration: transitionDuration,
@@ -273,7 +273,7 @@ List<GetPage> allPages() => [
         curve: transitionCurve,
       ),
       GetPage(
-        name: "/store/item/like",
+        name: "/like/store/item",
         binding: StoreItemLikePageBinding(),
         page: () => const StoreItemLikePage(),
         transitionDuration: transitionDuration,

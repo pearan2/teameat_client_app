@@ -75,6 +75,10 @@ class DefaultTextSystem extends ITextSystem {
   String get purchase => '결제하기';
 
   @override
+  String get purchaseHanaCardDisableNotice =>
+      '현재 하나카드로는 결제가 불가능합니다\n다른 결제 수단 이용 부탁드립니다 :)';
+
+  @override
   String get priceFormat => '###,###,###원';
 
   @override

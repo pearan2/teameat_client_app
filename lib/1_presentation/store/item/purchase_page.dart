@@ -44,6 +44,10 @@ class PurchasePage extends GetView<PurchasePageController> {
                     style: DS.textStyle.paragraph3
                         .copyWith(fontWeight: FontWeight.bold))
                 .paddingSymmetric(horizontal: DS.space.xBase),
+            DS.space.vTiny,
+            Text(DS.text.purchaseHanaCardDisableNotice,
+                    style: DS.textStyle.paragraph3.semiBold.point.h14)
+                .paddingSymmetric(horizontal: DS.space.xBase),
             DS.space.vSmall,
             const PurchaseMethodSelector()
                 .paddingSymmetric(horizontal: DS.space.xBase),

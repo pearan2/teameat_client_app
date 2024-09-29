@@ -23,6 +23,7 @@ abstract class ITextSystem {
   String get confirmToLogin;
   String get refuseToLogin;
   String get purchase;
+  String get purchaseHanaCardDisableNotice;
   String get purchaseItemInfo;
   String get quantityFormat;
   String get quantity;

@@ -37,10 +37,12 @@ class LoginPageController extends PageController {
           url: loginUrl, callbackUrlScheme: 'teameatwebauthcallback');
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
       if (accessToken == null) return;
-      _authService.login(accessToken);
-      _itemLikeController.load();
-      _storeLikeController.load();
-      _curationLikeController.load();
+      await _authService.login(accessToken);
+      await Future.wait([
+        _itemLikeController.load(),
+        _storeLikeController.load(),
+        _curationLikeController.load(),
+      ]);
       react.back(result: true);
     } catch (_) {}
   }

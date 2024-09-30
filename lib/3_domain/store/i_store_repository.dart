@@ -5,8 +5,11 @@ import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
 abstract class IStoreRepository<T> extends ILikableRepository<T> {
-  Future<Either<Failure, List<ItemSimple>>> getStores(
-      SearchStoreSimpleList searchOption);
+  Future<Either<Failure, List<StoreSimple>>> getStores(
+      SearchSimpleList searchOption);
+
+  Future<Either<Failure, List<ItemSimple>>> getStoreItems(
+      SearchSimpleList searchOption);
 
   Future<Either<Failure, StoreDetail>> getStoreDetail(int storeId);
   Future<Either<Failure, bool>> isStoreEntered(String storeId);

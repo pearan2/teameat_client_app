@@ -16,7 +16,7 @@ import 'package:teameat/3_domain/store/store.dart';
 
 abstract class ItemSearchPageController extends PageController {
   SearchableAddress? get initialSelectedAddress;
-  SearchStoreSimpleList get initialSearchOption;
+  SearchSimpleList get initialSearchOption;
   PagingController<int, ItemSimple> get pagingController;
 
   void onStoreItemCardClickHandler(int itemId);
@@ -54,7 +54,7 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   bool _isPagingLoading = false;
 
   /// getter
-  SearchStoreSimpleList get searchOption => _searchOption.value;
+  SearchSimpleList get searchOption => _searchOption.value;
 
   ItemSimple? get recommendedItem =>
       // ignore: invalid_use_of_protected_member
@@ -145,7 +145,7 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   Future<void> _loadStores(int currentPageNumber) async {
     if (_isPagingLoading) return;
     _isPagingLoading = true;
-    final ret = await _storeRepo.getStores(_searchOption.value);
+    final ret = await _storeRepo.getStoreItems(_searchOption.value);
     _isPagingLoading = false;
     ret.fold((l) => showError(l.desc), (r) {
       if (r.length < _searchOption.value.pageSize) {

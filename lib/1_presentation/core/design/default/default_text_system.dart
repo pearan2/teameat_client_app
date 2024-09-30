@@ -1098,11 +1098,8 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get groupBuyingSectionTitle => '🍱 2인 팀구매 진행중인 메뉴';
 
-  // @override
-  // String get groupBuyingSectionDescription => '친구랑 같이 먹는 즐거움!';
-
   @override
-  String get groupBuyingSectionDescription => '친구와 함께라서 더 싸다!';
+  String get groupBuyingSectionDescription => '함께라서 더 싸다!';
 
   @override
   String get groupBuyingSectionGoToFinishGroupBuyingFormat => '과 함께 할인받고 구매하기';
@@ -1134,4 +1131,26 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get numberOfUsableCouponLeftFormat => '사용할 수 있는 쿠폰이 ##개 남아있어요!';
+
+  @override
+  String get itemManyLikeSectionTitle => '🎊️ 유저가 가장 많이 찜한 메뉴는?';
+
+  @override
+  String get itemManyLikeSectionDescription => '가장 인기있는 메뉴만 모아보세요!';
+
+  @override
+  String get itemHighDiscountRatioSectionTitle => '🎉 사장님이 미쳤어요!';
+
+  @override
+  String get itemHighDiscountRatioSectionDescription => '우리동네 맛집, ';
+
+  @override
+  String get itemHighDiscountRatioSectionDescriptionFormat =>
+      '팀잇에서 최대 ###% 할인중!';
+
+  @override
+  String get storeRecentSectionTitle => '🏘️ 신규가게';
+
+  @override
+  String get storeRecentSectionDescription => '이번엔 어떤 가게가 입점되었을까요?';
 }

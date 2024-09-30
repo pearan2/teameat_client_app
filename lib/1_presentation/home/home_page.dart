@@ -8,9 +8,13 @@ import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
+import 'package:teameat/1_presentation/home/section/recent_store/RecentStoreSection.dart';
+import 'package:teameat/1_presentation/home/section/simple_list/SimpleItemListSection.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
+import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/widget.dart';
@@ -71,27 +75,61 @@ class HomePage extends GetView<HomePageController> {
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,
                     )).toSliver,
-                DS.space.vXSmall.toSliver,
-                PagedSliverGrid(
-                    pagingController: controller.pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
-                      itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                        imageWidth: imageWidth,
-                        item: item,
-                        onTap: c.react.toStoreItemDetail,
+                DS.space.vSmall.toSliver,
+                Obx(() => SimpleItemListSection(
+                      searchOption: SearchSimpleList.empty().copyWith(
+                        address: c.selectedAddress?.toFullAddress(),
+                        order: Code.itemOrderManyLike(),
+                        pageSize: 5,
                       ),
-                      noItemsFoundIndicatorBuilder: (_) =>
-                          const SearchNotFound(),
-                    ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: imageWidth /
-                          StoreItemColumnCard.calcTotalHeight(
-                              imageWidth), // Todo 비율 조정
-                      crossAxisSpacing: DS.space.tiny,
-                      mainAxisSpacing: DS.space.xBase,
-                      crossAxisCount: 2,
-                    )),
-                SliverToBoxAdapter(child: DS.space.vSmall),
+                      title: DS.text.itemManyLikeSectionTitle,
+                      descriptionBuilder: (_) =>
+                          DS.text.itemManyLikeSectionDescription,
+                    )).toSliver,
+                DS.space.vMedium.toSliver,
+                Obx(() => SimpleItemListSection(
+                      searchOption: SearchSimpleList.empty().copyWith(
+                        address: c.selectedAddress?.toFullAddress(),
+                        order: Code.itemHighDiscountRatio(),
+                        pageSize: 5,
+                      ),
+                      title: DS.text.itemHighDiscountRatioSectionTitle,
+                      descriptionBuilder: (items) => items.isNotEmpty
+                          ? DS.text.itemHighDiscountRatioSectionDescription +
+                              StoreItemPriceDiscountRateText.calcDiscountRatio(
+                                      items[0].price, items[0].originalPrice)
+                                  .format(DS.text
+                                      .itemHighDiscountRatioSectionDescriptionFormat)
+                          : '',
+                    )).toSliver,
+                DS.space.vMedium.toSliver,
+                Obx(() => RecentStoreSection(
+                      title: DS.text.storeRecentSectionTitle,
+                      description: DS.text.storeRecentSectionDescription,
+                      address: c.selectedAddress?.toFullAddress(),
+                    )).toSliver,
+                DS.space.vMedium.toSliver,
+
+                // PagedSliverGrid(
+                //     pagingController: controller.pagingController,
+                //     builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
+                //       itemBuilder: (_, item, idx) => StoreItemColumnCard(
+                //         imageWidth: imageWidth,
+                //         item: item,
+                //         onTap: c.react.toStoreItemDetail,
+                //       ),
+                //       noItemsFoundIndicatorBuilder: (_) =>
+                //           const SearchNotFound(),
+                //     ),
+                //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //       childAspectRatio: imageWidth /
+                //           StoreItemColumnCard.calcTotalHeight(
+                //               imageWidth), // Todo 비율 조정
+                //       crossAxisSpacing: DS.space.tiny,
+                //       mainAxisSpacing: DS.space.xBase,
+                //       crossAxisCount: 2,
+                //     )),
+                // SliverToBoxAdapter(child: DS.space.vSmall),
               ],
             ),
           ),

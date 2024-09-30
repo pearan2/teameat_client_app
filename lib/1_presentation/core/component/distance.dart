@@ -73,7 +73,7 @@ class DistanceText extends GetView<LocationController> {
     return Container(
       width: 1,
       height: DS.space.tiny,
-      color: DS.color.background500,
+      color: style?.color ?? DS.color.background500,
     ).paddingSymmetric(horizontal: DS.space.xTiny);
   }
 

@@ -8,13 +8,13 @@ import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
+import 'package:teameat/1_presentation/home/section/common.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
-import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/main.dart';
 
 class GroupBuyingSection extends StatefulWidget {
@@ -34,8 +34,8 @@ class _GroupBuyingSectionState extends State<GroupBuyingSection> {
 
   Future<void> _loadItems() async {
     setState(() => isLoading = true);
-    final ret = await _storeRepo.getStores(
-      SearchStoreSimpleList.empty().copyWith(
+    final ret = await _storeRepo.getStoreItems(
+      SearchSimpleList.empty().copyWith(
         address: widget.selectedAddress?.toFullAddress(),
         pageSize: 5,
         sellType: 'GROUP_BUYING',
@@ -76,35 +76,12 @@ class _GroupBuyingSectionState extends State<GroupBuyingSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                DS.text.groupBuyingSectionTitle,
-                style: DS.textStyle.paragraph1.semiBold.h14.b900,
-              ),
-              TEonTap(
-                onTap: () => Get.find<IReact>().toGroupBuyingSearchPage(
-                    selectedAddress: widget.selectedAddress),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      DS.text.seeAll,
-                      style: DS.textStyle.caption1.h14.s900,
-                    ),
-                    DS.image.rightArrow(
-                      size: DS.space.xBase,
-                      color: DS.color.secondary900,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ).withBasePadding,
-          Text(DS.text.groupBuyingSectionDescription,
-                  style: DS.textStyle.caption1.h14.b600)
-              .withBasePadding,
+          TitleAndSeeAll(
+            title: DS.text.groupBuyingSectionTitle,
+            description: DS.text.groupBuyingSectionDescription,
+            onTap: () => Get.find<IReact>().toGroupBuyingSearchPage(
+                selectedAddress: widget.selectedAddress),
+          ),
           DS.space.vTiny,
           isLoading
               ? const SizedBox(

@@ -12,12 +12,12 @@ class StoreRepository extends IStoreRepository<StoreSimple>
   final _conn = Get.find<IConnection>();
 
   @override
-  Future<Either<Failure, List<ItemSimple>>> getStores(
-      SearchStoreSimpleList searchOption) async {
+  Future<Either<Failure, List<ItemSimple>>> getStoreItems(
+      SearchSimpleList searchOption) async {
     try {
       const path = '/api/store/list';
-      final ret = await _conn.get(
-          path, SearchStoreSimpleList.toStringJson(searchOption));
+      final ret =
+          await _conn.get(path, SearchSimpleList.toStringJson(searchOption));
       return ret.fold(
           (l) => left(l),
           (r) => right((r as Iterable)
@@ -25,7 +25,7 @@ class StoreRepository extends IStoreRepository<StoreSimple>
               .toList()));
     } catch (_) {
       return left(const Failure.fetchStoreFail(
-          "상점 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));
+          "상품 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));
     }
   }
 
@@ -79,4 +79,22 @@ class StoreRepository extends IStoreRepository<StoreSimple>
 
   @override
   int get numberOfLikeDatasPerPage => 20;
+
+  @override
+  Future<Either<Failure, List<StoreSimple>>> getStores(
+      SearchSimpleList searchOption) async {
+    try {
+      const path = '/api/store/store-list';
+      final ret =
+          await _conn.get(path, SearchSimpleList.toStringJson(searchOption));
+      return ret.fold(
+          (l) => left(l),
+          (r) => right((r as Iterable)
+              .map((json) => StoreSimple.fromJson(json))
+              .toList()));
+    } catch (_) {
+      return left(const Failure.fetchStoreFail(
+          "상점 정보를 가져오는데 실패했습니다. 잠시 후 다시 시도 해주세요."));
+    }
+  }
 }

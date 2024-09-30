@@ -31,7 +31,7 @@ class HomePageController extends PageController {
   final _searchableAddresses = <SearchableAddress>[].obs;
   late final _selectedAddress =
       Rxn<SearchableAddress>(_codeRepo.lastSearchableAddressNyUser());
-  late final _searchOption = SearchStoreSimpleList.empty()
+  late final _searchOption = SearchSimpleList.empty()
       .copyWith(address: _selectedAddress.value?.toFullAddress())
       .obs;
   final _recommendedItems = <ItemSimple>[].obs;
@@ -39,7 +39,7 @@ class HomePageController extends PageController {
   final _sectionRefreshCount = 0.obs;
   bool _isPagingLoading = false;
 
-  SearchStoreSimpleList get searchOption => _searchOption.value;
+  SearchSimpleList get searchOption => _searchOption.value;
 
   ItemSimple? get recommendedItem =>
       // ignore: invalid_use_of_protected_member
@@ -70,7 +70,7 @@ class HomePageController extends PageController {
   }
 
   void clearSearchOption() {
-    _searchOption.value = SearchStoreSimpleList.empty();
+    _searchOption.value = SearchSimpleList.empty();
     _selectedAddress.value = null;
     pagingController.refresh();
   }
@@ -123,7 +123,7 @@ class HomePageController extends PageController {
   Future<void> loadStores(int currentPageNumber) async {
     if (_isPagingLoading) return;
     _isPagingLoading = true;
-    final ret = await _storeRepo.getStores(_searchOption.value);
+    final ret = await _storeRepo.getStoreItems(_searchOption.value);
     _isPagingLoading = false;
     ret.fold((l) => showError(l.desc), (r) {
       if (r.length < _searchOption.value.pageSize) {

@@ -32,6 +32,14 @@ class Code with _$Code {
   factory Code.orderEmpty() {
     return const Code(code: 'RECENT', title: '최신순');
   }
+
+  factory Code.itemOrderManyLike() {
+    return const Code(code: 'MANY_LIKE', title: '좋아요 많은 순');
+  }
+
+  factory Code.itemHighDiscountRatio() {
+    return const Code(code: 'HIGH_DISCOUNT_RATIO', title: '할인율 높은 순');
+  }
 }
 
 @freezed

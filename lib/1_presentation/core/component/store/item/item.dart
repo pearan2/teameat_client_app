@@ -70,6 +70,11 @@ class StoreItemPriceDiscountRateText extends StatelessWidget {
     required this.price,
   });
 
+  static double calcDiscountRatio(int price, int originalPrice) {
+    final temp = ((1 - (price / originalPrice)) * 100).ceil();
+    return temp / 100;
+  }
+
   String calcDiscountRateString() {
     final temp = (1 - (price / originalPrice)) * 100;
     return '${temp.ceil()}%';

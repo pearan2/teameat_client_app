@@ -76,12 +76,12 @@ class StorePoint with _$StorePoint {
 }
 
 @freezed
-class SearchStoreSimpleList with _$SearchStoreSimpleList {
-  const factory SearchStoreSimpleList({
+class SearchSimpleList with _$SearchSimpleList {
+  const factory SearchSimpleList({
     String? address,
     String? searchText,
     List<String>? hashTags,
-    List<String>? categories,
+    Code? category,
     Point? baseLocation,
     int? withInMeter,
     required int pageNumber,
@@ -89,14 +89,14 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
     int? randomSeed,
     String? sellType,
     Code? order,
-  }) = _SearchStoreSimpleList;
+  }) = _SearchSimpleList;
 
-  factory SearchStoreSimpleList.empty() {
-    return SearchStoreSimpleList(
+  factory SearchSimpleList.empty() {
+    return SearchSimpleList(
       address: "",
       searchText: "",
       hashTags: const [],
-      categories: const [],
+      category: null,
       baseLocation: null,
       withInMeter: null,
       pageNumber: 0,
@@ -106,15 +106,15 @@ class SearchStoreSimpleList with _$SearchStoreSimpleList {
       order: null,
     );
   }
-  factory SearchStoreSimpleList.fromJson(Map<String, Object?> json) =>
-      _$SearchStoreSimpleListFromJson(json);
+  factory SearchSimpleList.fromJson(Map<String, Object?> json) =>
+      _$SearchSimpleListFromJson(json);
 
-  static Map<String, dynamic> toStringJson(SearchStoreSimpleList target) {
+  static Map<String, dynamic> toStringJson(SearchSimpleList target) {
     final ret = <String, dynamic>{};
     if (target.address != null) ret['address'] = target.address;
     if (target.searchText != null) ret['searchText'] = target.searchText;
     if (target.hashTags != null) ret['hashTags'] = target.hashTags;
-    if (target.categories != null) ret['categories'] = target.categories;
+    if (target.category != null) ret['category'] = target.category!.code;
     if (target.baseLocation != null) {
       ret['baseLocation.longitude'] = target.baseLocation!.longitude.toString();
       ret['baseLocation.latitude'] = target.baseLocation!.latitude.toString();
@@ -145,6 +145,8 @@ class StoreSimple with _$StoreSimple {
     required String profileImageUrl,
     required String address,
     required Point location,
+    required String coverImageUrl,
+    required List<String> categoryNames,
     String? naverMapPlaceId,
   }) = _StoreSimple;
 

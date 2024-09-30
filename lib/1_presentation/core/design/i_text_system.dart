@@ -410,4 +410,14 @@ abstract class ITextSystem {
   String get youHaveTempSavedCurationCreateTryLoad;
   String get createCurationFromScratch;
   String get createCurationFromTempSave;
+
+  String get itemManyLikeSectionTitle;
+  String get itemManyLikeSectionDescription;
+
+  String get itemHighDiscountRatioSectionTitle;
+  String get itemHighDiscountRatioSectionDescription;
+  String get itemHighDiscountRatioSectionDescriptionFormat;
+
+  String get storeRecentSectionTitle;
+  String get storeRecentSectionDescription;
 }

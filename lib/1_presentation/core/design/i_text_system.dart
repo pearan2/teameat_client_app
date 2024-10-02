@@ -420,4 +420,10 @@ abstract class ITextSystem {
 
   String get storeRecentSectionTitle;
   String get storeRecentSectionDescription;
+
+  String get lastWeekBestSalesItemTitle;
+  String get lastWeekBestSalesItemDescription;
+
+  String get lastWeekBestRewardCurationTitle;
+  String get lastWeekBestRewardCurationDescription;
 }

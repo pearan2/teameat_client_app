@@ -24,8 +24,10 @@ abstract class IColorSystem {
 
   Color get point500;
 
+  /// 0xFF000000
   Color get background900;
 
+  /// 0xFF1C1C1E
   Color get background800;
 
   /// 0xFF292929

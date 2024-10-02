@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
@@ -8,12 +7,12 @@ import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
-import 'package:teameat/1_presentation/home/section/recent_store/RecentStoreSection.dart';
+import 'package:teameat/1_presentation/home/section/rank/rank_section.dart';
+import 'package:teameat/1_presentation/home/section/recent_store/recent_store_section.dart';
 import 'package:teameat/1_presentation/home/section/simple_list/SimpleItemListSection.dart';
 import 'package:teameat/2_application/home/home_page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
-import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/99_util/extension/num.dart';
@@ -31,6 +30,9 @@ class HomePage extends GetView<HomePageController> {
     final imageWidth = (screenWidth - (AppWidget.itemHorizontalSpace / 2)) / 2;
 
     final scrollController = ScrollController();
+
+    final sectionHalfSpacing = DS.space.base;
+    final sectionHalfSpacingWidget = SizedBox(height: sectionHalfSpacing);
 
     return Obx(
       () => TEScaffold(
@@ -75,7 +77,11 @@ class HomePage extends GetView<HomePageController> {
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,
                     )).toSliver,
-                DS.space.vSmall.toSliver,
+                Obx(() => ItemRankSection(
+                      address: c.selectedAddress?.toFullAddress(),
+                      verticalPadding: sectionHalfSpacing,
+                    )).toSliver,
+                sectionHalfSpacingWidget.toSliver,
                 Obx(() => SimpleItemListSection(
                       searchOption: SearchSimpleList.empty().copyWith(
                         address: c.selectedAddress?.toFullAddress(),
@@ -86,7 +92,8 @@ class HomePage extends GetView<HomePageController> {
                       descriptionBuilder: (_) =>
                           DS.text.itemManyLikeSectionDescription,
                     )).toSliver,
-                DS.space.vMedium.toSliver,
+                sectionHalfSpacingWidget.toSliver,
+                sectionHalfSpacingWidget.toSliver,
                 Obx(() => SimpleItemListSection(
                       searchOption: SearchSimpleList.empty().copyWith(
                         address: c.selectedAddress?.toFullAddress(),
@@ -102,13 +109,15 @@ class HomePage extends GetView<HomePageController> {
                                       .itemHighDiscountRatioSectionDescriptionFormat)
                           : '',
                     )).toSliver,
-                DS.space.vMedium.toSliver,
+                sectionHalfSpacingWidget.toSliver,
+                sectionHalfSpacingWidget.toSliver,
                 Obx(() => RecentStoreSection(
                       title: DS.text.storeRecentSectionTitle,
                       description: DS.text.storeRecentSectionDescription,
                       address: c.selectedAddress?.toFullAddress(),
                     )).toSliver,
-                DS.space.vMedium.toSliver,
+                sectionHalfSpacingWidget.toSliver,
+                sectionHalfSpacingWidget.toSliver,
 
                 // PagedSliverGrid(
                 //     pagingController: controller.pagingController,

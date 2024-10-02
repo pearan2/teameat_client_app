@@ -238,8 +238,8 @@ class GroupBuyingItemCard extends StatelessWidget {
                         Text(
                           item.name,
                           style: isBigCard
-                              ? DS.textStyle.paragraph2.medium.b800.h14
-                              : DS.textStyle.paragraph3.medium.b800.h14,
+                              ? DS.textStyle.paragraph2.light.b800.h14
+                              : DS.textStyle.paragraph3.light.b800.h14,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),

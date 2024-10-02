@@ -1153,4 +1153,17 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get storeRecentSectionDescription => '이번엔 어떤 가게가 입점되었을까요?';
+
+  @override
+  String get lastWeekBestRewardCurationDescription =>
+      throw UnimplementedError();
+
+  @override
+  String get lastWeekBestRewardCurationTitle => throw UnimplementedError();
+
+  @override
+  String get lastWeekBestSalesItemDescription => '다른 유저는 지난주, 어떤걸 먹었을까요?';
+
+  @override
+  String get lastWeekBestSalesItemTitle => '🥇 지난주 베스트';
 }

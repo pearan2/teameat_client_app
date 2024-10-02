@@ -619,20 +619,25 @@ class StoreItemColumnCard extends StatelessWidget {
   final void Function(int itemId, {ItemSimple? item}) onTap;
   final double borderRadius;
   final double? imageWidth;
+  final Widget? infoBoxPrefix;
+  final bool withLike;
 
-  static const infoBoxHeight = 99;
+  static const infoBoxHeight = 103;
   static const imageRatio = 3 / 4;
 
   static double calcTotalHeight(double imageWidth) {
     return (imageWidth / imageRatio) + infoBoxHeight;
   }
 
-  const StoreItemColumnCard(
-      {super.key,
-      required this.item,
-      required this.onTap,
-      this.borderRadius = 0.0,
-      this.imageWidth});
+  const StoreItemColumnCard({
+    super.key,
+    required this.item,
+    required this.onTap,
+    this.borderRadius = 0.0,
+    this.imageWidth,
+    this.infoBoxPrefix,
+    this.withLike = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -647,6 +652,7 @@ class StoreItemColumnCard extends StatelessWidget {
       onTap: () => onTap(item.id, item: item),
       child: SizedBox(
         width: imageWidth,
+        height: calcTotalHeight(imageWidth),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -657,43 +663,61 @@ class StoreItemColumnCard extends StatelessWidget {
               ratio: imageRatio,
             ),
             DS.space.vTiny,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TELeftRightText(
-                        item.storeName,
-                        DistanceText(
-                          point: item.storeLocation,
-                          style: DS.textStyle.caption2.b500.h14,
-                          withDivider: true,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  infoBoxPrefix ?? const SizedBox(),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TELeftRightText(
+                                    item.storeName,
+                                    DistanceText(
+                                      point: item.storeLocation,
+                                      style: DS.textStyle.caption2.b500.h14,
+                                      withDivider: true,
+                                    ),
+                                    useDefaultDivider: false,
+                                  ),
+                                  Text(
+                                    item.name,
+                                    style:
+                                        DS.textStyle.paragraph3.light.b800.h12,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                ],
+                              ),
+                            ),
+                            DS.space.hTiny.orEmpty(withLike),
+                            Like<IStoreItemRepository>.base(item.id)
+                                .orEmpty(withLike),
+                          ],
                         ),
-                        useDefaultDivider: false,
-                      ),
-                      Text(
-                        item.name,
-                        style: DS.textStyle.paragraph3.bold.b800.h14,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
+                        StoreItemPrice(
+                          originalPrice: item.originalPrice,
+                          price: item.price,
+                          originalPriceStyle:
+                              DS.textStyle.caption1.regular.b500.h14,
+                          priceStyle: DS.textStyle.paragraph2.bold.b800.h14,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                DS.space.hTiny,
-                Like<IStoreItemRepository>.base(item.id),
-              ],
-            ).paddingHorizontal(DS.space.tiny),
-            DS.space.vXSmall,
-            StoreItemPrice(
-              originalPrice: item.originalPrice,
-              price: item.price,
-              originalPriceStyle: DS.textStyle.caption1.b500.h14,
-              priceStyle: DS.textStyle.paragraph3.semiBold.b800.h14,
-            ).paddingHorizontal(DS.space.tiny),
+                ],
+              ),
+            ),
           ],
         ),
       ),

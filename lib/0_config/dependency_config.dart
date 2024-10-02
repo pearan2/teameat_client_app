@@ -11,6 +11,7 @@ import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
 import 'package:teameat/3_domain/connection/i_connection.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
+import 'package:teameat/3_domain/core/code/statistics/i_statistics_repository.dart';
 import 'package:teameat/3_domain/core/i_local_repository.dart';
 import 'package:teameat/3_domain/core/i_need_action_repository.dart';
 import 'package:teameat/3_domain/core/i_widget_view_count_repository.dart';
@@ -34,6 +35,7 @@ import 'package:teameat/4_infra/core/code/code_repository.dart';
 import 'package:teameat/4_infra/core/curation_search_history_repository.dart';
 import 'package:teameat/4_infra/core/local_repository.dart';
 import 'package:teameat/4_infra/core/need_action_repository.dart';
+import 'package:teameat/4_infra/core/statistics/statistics_repository.dart';
 import 'package:teameat/4_infra/core/store_item_search_history_repository.dart';
 import 'package:teameat/4_infra/core/widget_view_count_repository.dart';
 import 'package:teameat/4_infra/curation/curation_repository.dart';
@@ -75,6 +77,7 @@ Future<void> configDependency() async {
   Get.put<IUserBlockRepository>(UserBlockRepository());
   Get.put<IReportRepository>(UserReportRepository());
   Get.put<ICouponRepository>(CouponRepository());
+  Get.put<IStatisticsRepository>(StatisticsRepository());
   Get.put<CurationSearchHistoryRepository>(CurationSearchHistoryRepository());
   Get.put<StoreItemSearchHistoryRepository>(StoreItemSearchHistoryRepository());
 

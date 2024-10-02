@@ -19,4 +19,17 @@ extension TEDateTimeExtension on DateTime {
     final korDayOfWeeks = ['월', '화', '수', '목', '금', '토', '일'];
     return korDayOfWeeks[weekday - 1];
   }
+
+  DateTime firstDateOfTheWeek() {
+    return subtract(Duration(days: weekday - 1));
+  }
+
+  DateTime lastDayOfTheWeek() {
+    return add(Duration(days: DateTime.daysPerWeek - weekday));
+  }
+
+  String dateString({String formatString = "yyyy-MM-dd"}) {
+    final dateTimeFormat = DateFormat(formatString, 'ko_KR');
+    return dateTimeFormat.format(this);
+  }
 }

@@ -10,6 +10,7 @@ import 'package:teameat/1_presentation/core/layout/container.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/1_presentation/home/section/common.dart';
 import 'package:teameat/2_application/core/i_react.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
@@ -20,7 +21,7 @@ class RecentStoreSection extends StatefulWidget {
   final String description;
   final double horizontalPadding;
   final int refreshCount;
-  final String? address;
+  final SearchableAddress? address;
 
   final double imageWidth;
   final double imageHeight;
@@ -51,7 +52,7 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
     final ret = await _storeRepo.getStores(SearchSimpleList.empty().copyWith(
       address: widget.address,
       pageNumber: 0,
-      pageSize: 5,
+      pageSize: 10,
     ));
     ret.fold((l) => showError(l.desc), (r) {
       if (mounted) {
@@ -88,7 +89,6 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
           title: widget.title,
           description: widget.description,
           horizontalPadding: widget.horizontalPadding,
-          onTap: () {},
         ),
         DS.space.vTiny,
         SizedBox(

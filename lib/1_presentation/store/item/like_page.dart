@@ -10,15 +10,15 @@ import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/2_application/store/item/like_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/widget.dart';
-import 'package:teameat/main.dart';
 
 class StoreItemLikePage extends GetView<StoreItemLikePageController> {
   const StoreItemLikePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = (screenWidth - (AppWidget.itemHorizontalSpace / 2)) / 2;
+    final crossAxisSpacing = DS.space.tiny;
+    final imageWidth =
+        (MediaQuery.of(context).size.width - crossAxisSpacing) / 2;
 
     return TEScaffold(
         appBar: TEAppBar(
@@ -42,14 +42,16 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
                           ),
                         ),
                     itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                        imageWidth: imageWidth,
-                        item: item,
-                        onTap: controller.react.toStoreItemDetail)),
+                          imageWidth: imageWidth,
+                          item: item,
+                          infoBoxHorizontalPadding: DS.space.tiny,
+                          onTap: controller.react.toStoreItemDetail,
+                        )),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: imageWidth /
                       StoreItemColumnCard.calcTotalHeight(
                           imageWidth), // Todo 비율 조정
-                  crossAxisSpacing: DS.space.tiny,
+                  crossAxisSpacing: crossAxisSpacing,
                   mainAxisSpacing: DS.space.xBase,
                   crossAxisCount: 2,
                 ),

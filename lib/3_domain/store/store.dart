@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 
@@ -78,7 +79,7 @@ class StorePoint with _$StorePoint {
 @freezed
 class SearchSimpleList with _$SearchSimpleList {
   const factory SearchSimpleList({
-    String? address,
+    SearchableAddress? address,
     String? searchText,
     List<String>? hashTags,
     Code? category,
@@ -93,7 +94,7 @@ class SearchSimpleList with _$SearchSimpleList {
 
   factory SearchSimpleList.empty() {
     return SearchSimpleList(
-      address: "",
+      address: null,
       searchText: "",
       hashTags: const [],
       category: null,
@@ -111,7 +112,9 @@ class SearchSimpleList with _$SearchSimpleList {
 
   static Map<String, dynamic> toStringJson(SearchSimpleList target) {
     final ret = <String, dynamic>{};
-    if (target.address != null) ret['address'] = target.address;
+    if (target.address != null) {
+      ret['address'] = target.address!.toFullAddress();
+    }
     if (target.searchText != null) ret['searchText'] = target.searchText;
     if (target.hashTags != null) ret['hashTags'] = target.hashTags;
     if (target.category != null) ret['category'] = target.category!.code;
@@ -147,6 +150,7 @@ class StoreSimple with _$StoreSimple {
     required Point location,
     required String coverImageUrl,
     required List<String> categoryNames,
+    required bool isNeedAgeWarning,
     String? naverMapPlaceId,
   }) = _StoreSimple;
 
@@ -270,6 +274,8 @@ class StoreDetail with _$StoreDetail {
     required String operationTime,
     required String breakTime,
     required String lastOrderTime,
+    required List<String> categoryNames,
+    required bool isNeedAgeWarning,
   }) = _StoreDetail;
 
   factory StoreDetail.fromJsonWithItemSort(Map<String, Object?> json) {
@@ -311,6 +317,8 @@ class StoreDetail with _$StoreDetail {
           5,
           (_) =>
               "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"),
+      categoryNames: [],
+      isNeedAgeWarning: false,
     );
   }
 }

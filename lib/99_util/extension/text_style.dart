@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 
 extension TETextStyleExtension on TextStyle {
+  TextStyle get ls2 => copyWith(letterSpacing: -0.2);
+  TextStyle get ls5 => copyWith(letterSpacing: -0.5);
+
   TextStyle get h11 => copyWith(height: 1.1);
   TextStyle get h12 => copyWith(height: 1.2);
   TextStyle get h13 => copyWith(height: 1.3);
@@ -13,6 +16,10 @@ extension TETextStyleExtension on TextStyle {
   TextStyle get h18 => copyWith(height: 1.8);
   TextStyle get h19 => copyWith(height: 1.9);
   TextStyle get h20 => copyWith(height: 2.0);
+
+  TextStyle get light => copyWith(fontWeight: FontWeight.w300);
+
+  TextStyle get regular => copyWith(fontWeight: FontWeight.w400);
 
   TextStyle get medium => copyWith(fontWeight: FontWeight.w500);
 

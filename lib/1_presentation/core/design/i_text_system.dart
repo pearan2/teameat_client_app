@@ -420,4 +420,16 @@ abstract class ITextSystem {
 
   String get storeRecentSectionTitle;
   String get storeRecentSectionDescription;
+
+  String get lastWeekBestSalesItemTitle;
+  String get lastWeekBestSalesItemDescription;
+
+  String get lastWeekBestRewardCurationTitle;
+  String get lastWeekBestRewardCurationDescription;
+
+  String get curationTargetStoreIsEssential;
+
+  String get itemSearchPageTitle;
+  String get itemSearchPageSearchTextHint;
+  String get viewDistanceBetweenMeAndStore;
 }

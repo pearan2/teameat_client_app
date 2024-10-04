@@ -36,7 +36,7 @@ class _GroupBuyingSectionState extends State<GroupBuyingSection> {
     setState(() => isLoading = true);
     final ret = await _storeRepo.getStoreItems(
       SearchSimpleList.empty().copyWith(
-        address: widget.selectedAddress?.toFullAddress(),
+        address: widget.selectedAddress,
         pageSize: 5,
         sellType: 'GROUP_BUYING',
       ),
@@ -238,8 +238,8 @@ class GroupBuyingItemCard extends StatelessWidget {
                         Text(
                           item.name,
                           style: isBigCard
-                              ? DS.textStyle.paragraph2.medium.b800.h14
-                              : DS.textStyle.paragraph3.medium.b800.h14,
+                              ? DS.textStyle.paragraph2.b800.h14
+                              : DS.textStyle.paragraph3.b800.h14,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),

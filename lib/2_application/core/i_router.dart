@@ -3,6 +3,7 @@ import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
@@ -10,6 +11,8 @@ abstract class IRouter {
   void toRoot();
 
   void toHomeOffAll();
+
+  void toStoreItemSearch({required SearchSimpleList searchOption});
 
   void toBanner(String url);
 

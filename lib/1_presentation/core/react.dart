@@ -12,6 +12,7 @@ import 'package:teameat/3_domain/curation/curation.dart';
 import 'package:teameat/3_domain/curation/i_curation_temp_save_service.dart';
 import 'package:teameat/3_domain/order/order.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
+import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/3_domain/user/block/block.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 
@@ -28,6 +29,13 @@ class React extends IReact {
       controller.refreshPage();
     }
     Get.offAllNamed('/home');
+  }
+
+  @override
+  void toStoreItemSearch({required SearchSimpleList searchOption}) {
+    Get.toNamed('/search/item', arguments: {
+      'searchOption': searchOption,
+    });
   }
 
   @override

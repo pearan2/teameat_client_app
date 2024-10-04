@@ -6,14 +6,12 @@ import 'package:teameat/3_domain/store/store.dart';
 class GroupBuyingSearchPageController extends ItemSearchPageController
     with ItemSearchPageControllerMixin {
   @override
-  SearchSimpleList get initialSearchOption => SearchSimpleList.empty().copyWith(
-        address: initialSelectedAddress?.toFullAddress(),
-        sellType: 'GROUP_BUYING',
-        order: Code.orderEmpty(),
-      );
+  final SearchSimpleList initialSearchOption;
 
-  @override
-  final SearchableAddress? initialSelectedAddress;
-
-  GroupBuyingSearchPageController({this.initialSelectedAddress});
+  GroupBuyingSearchPageController({SearchableAddress? initialSelectedAddress})
+      : initialSearchOption = SearchSimpleList.empty().copyWith(
+          address: initialSelectedAddress,
+          sellType: 'GROUP_BUYING',
+          order: Code.orderEmpty(),
+        );
 }

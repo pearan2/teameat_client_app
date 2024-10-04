@@ -54,7 +54,8 @@ class GroupBuyingSearchPage extends GetView<GroupBuyingSearchPageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    c.initialSelectedAddress?.toShortLabel() ?? DS.text.all,
+                    c.initialSearchOption.address?.toShortLabel() ??
+                        DS.text.all,
                     style: DS.textStyle.caption1.semiBold.h14.b700,
                   ),
                   Obx(

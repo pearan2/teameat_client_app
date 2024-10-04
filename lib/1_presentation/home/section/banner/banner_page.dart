@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teameat/0_config/environment.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
-import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/2_application/home/section/banner_page_controller.dart';
 import 'package:teameat/99_util/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';

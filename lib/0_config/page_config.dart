@@ -15,6 +15,8 @@ import 'package:teameat/1_presentation/home/section/banner/banner_page.dart';
 import 'package:teameat/1_presentation/home/section/banner/banner_page_binding.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying_search_page.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying_search_page_binding.dart';
+import 'package:teameat/1_presentation/home/store_item_search_page.dart';
+import 'package:teameat/1_presentation/home/store_item_search_page_binding.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page.dart';
 import 'package:teameat/1_presentation/store/item/store_item_page_binding.dart';
 import 'package:teameat/1_presentation/user/block/block_page.dart';
@@ -89,6 +91,14 @@ List<GetPage> allPages() => [
         name: "/home/banner",
         binding: BannerPageBinding(),
         page: () => const BannerPage(),
+        transitionDuration: transitionDuration,
+        transition: Transition.rightToLeft,
+        curve: transitionCurve,
+      ),
+      GetPage(
+        name: "/search/item",
+        binding: StoreItemSearchPageBinding(),
+        page: () => const StoreItemSearchPage(),
         transitionDuration: transitionDuration,
         transition: Transition.rightToLeft,
         curve: transitionCurve,

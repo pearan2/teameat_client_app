@@ -108,10 +108,14 @@ flutter:
     - assets/image/icon/bottom/
     - assets/image/icon/sell_type/
     - assets/image/icon/item_usage/
-  
+  # 기준 : https://blog.naver.com/kosoodream/221090124248
   fonts:
     - family: Pretendard
       fonts:
+        - asset: assets/fonts/pretendard/Pretendard-light.otf
+          weight: 300    
+        - asset: assets/fonts/pretendard/Pretendard-Regular.otf
+          weight: 400
         - asset: assets/fonts/pretendard/Pretendard-Medium.otf
           weight: 500
         - asset: assets/fonts/pretendard/Pretendard-SemiBold.otf

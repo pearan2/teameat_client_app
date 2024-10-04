@@ -81,7 +81,8 @@ class DistanceText extends GetView<LocationController> {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ?? DS.textStyle.caption1.b700.semiBold.h14;
+    final style = this.style?.copyWith(color: DS.color.primary600) ??
+        DS.textStyle.caption1.p600.semiBold.h14;
 
     return Obx(() {
       final basePoint = c.data?.toPoint();

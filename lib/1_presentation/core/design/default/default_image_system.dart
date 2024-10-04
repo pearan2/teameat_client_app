@@ -314,6 +314,14 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  SvgPicture get locationSmWhite => SvgPicture.asset(
+        'assets/image/icon/location.svg',
+        height: 16,
+        width: 16,
+        color: DS.color.background000,
+      );
+
+  @override
   SvgPicture get locationActivated => SvgPicture.asset(
         'assets/image/icon/location.svg',
         color: defaultButtonActiveColor,

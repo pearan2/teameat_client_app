@@ -61,6 +61,7 @@ abstract class IImageSystem {
   SvgPicture get addImage;
 
   SvgPicture get locationSm;
+  SvgPicture get locationSmWhite;
   SvgPicture get location;
   SvgPicture get locationActivated;
   SvgPicture get locationLg;

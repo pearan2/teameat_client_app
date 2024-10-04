@@ -171,14 +171,30 @@ class HomePageSearcher extends GetView<HomePageController> {
                     TEAddressLabel(c.selectedAddress?.toShortLabel() ?? ''),
               )),
           const Expanded(child: SizedBox()),
-          Obx(() => TEPrimaryButton(
-                text: DS.text.viewDistanceBetweenMeAndStore,
-                contentHorizontalPadding: DS.space.xTiny,
-                textStyle: DS.textStyle.caption1.semiBold,
-                height: DS.space.base,
-                fitContentWidth: true,
+          Obx(() => TEonTap(
                 onTap: c.onDistanceViewOn,
-              ).orEmpty(!c.locationController.isPermitted)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(300),
+                    color: DS.color.primary600,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: DS.space.tiny,
+                    vertical: DS.space.xTiny,
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: [
+                      DS.image.locationSmWhite,
+                      DS.space.hXXTiny,
+                      Text(
+                        DS.text.viewDistanceBetweenMeAndStore,
+                        style: DS.textStyle.caption1.b000.semiBold,
+                      )
+                    ],
+                  ),
+                ).orEmpty(!c.locationController.isPermitted),
+              )),
         ],
       ),
     );

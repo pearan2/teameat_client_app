@@ -1166,4 +1166,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get lastWeekBestSalesItemTitle => '🥇 지난주 베스트';
+
+  @override
+  String get curationTargetStoreIsEssential => '푸드로그 대상 가게를 검색하여 입력해주세요';
 }

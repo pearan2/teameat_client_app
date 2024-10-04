@@ -152,6 +152,7 @@ class CurationCreatePageController extends PageController {
 
   Future<void> _onSave() async {
     if (local == null) {
+      showError(DS.text.curationTargetStoreIsEssential);
       return;
     }
     if (!checkInputValidIfNotShowError()) {

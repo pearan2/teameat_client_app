@@ -426,4 +426,6 @@ abstract class ITextSystem {
 
   String get lastWeekBestRewardCurationTitle;
   String get lastWeekBestRewardCurationDescription;
+
+  String get curationTargetStoreIsEssential;
 }

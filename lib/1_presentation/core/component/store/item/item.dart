@@ -692,8 +692,7 @@ class StoreItemColumnCard extends StatelessWidget {
                                   ),
                                   Text(
                                     item.name,
-                                    style:
-                                        DS.textStyle.paragraph3.light.b800.h12,
+                                    style: DS.textStyle.paragraph3.b800.h12,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   )

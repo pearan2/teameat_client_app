@@ -95,7 +95,9 @@ class HomePage extends GetView<HomePageController> {
                     )).toSliver,
                 sectionHalfSpacingWidget.toSliver,
                 Obx(() => SimpleItemListSection(
-                      searchOption: SearchSimpleList.empty().copyWith(
+                      searchOption:
+                          SearchSimpleList.empty(withRandomSeed: false)
+                              .copyWith(
                         address: c.selectedAddress,
                         order: Code.itemOrderManyLike(),
                         pageSize: 10,
@@ -107,7 +109,9 @@ class HomePage extends GetView<HomePageController> {
                 sectionHalfSpacingWidget.toSliver,
                 sectionHalfSpacingWidget.toSliver,
                 Obx(() => SimpleItemListSection(
-                      searchOption: SearchSimpleList.empty().copyWith(
+                      searchOption:
+                          SearchSimpleList.empty(withRandomSeed: false)
+                              .copyWith(
                         address: c.selectedAddress,
                         order: Code.itemHighDiscountRatio(),
                         pageSize: 10,

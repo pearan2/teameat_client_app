@@ -92,7 +92,10 @@ class SearchSimpleList with _$SearchSimpleList {
     Code? order,
   }) = _SearchSimpleList;
 
-  factory SearchSimpleList.empty() {
+  factory SearchSimpleList.empty({bool withRandomSeed = true}) {
+    /// 추후 random seed 부분 분기할것
+    /// empty 는 반드시 변함이 없어야 한다.
+    /// 왜냐하면 lifecycle 에 따라서 empty 가 다시 생성될수도 있기 때문이다
     return SearchSimpleList(
       address: null,
       searchText: "",
@@ -102,7 +105,7 @@ class SearchSimpleList with _$SearchSimpleList {
       withInMeter: null,
       pageNumber: 0,
       pageSize: 10,
-      randomSeed: Random().nextInt(10000),
+      randomSeed: withRandomSeed ? Random().nextInt(10000) : 0,
       sellType: null,
       order: Code.orderEmpty(),
     );

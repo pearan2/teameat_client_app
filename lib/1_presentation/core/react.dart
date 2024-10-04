@@ -291,7 +291,7 @@ class React extends IReact {
   @override
   void toOnboardingOffAll() {
     Get.offAll(
-      OnboardingPage(lastButtonText: DS.text.start),
+      () => OnboardingPage(lastButtonText: DS.text.start),
       duration: Duration.zero,
       transition: Transition.noTransition,
     );

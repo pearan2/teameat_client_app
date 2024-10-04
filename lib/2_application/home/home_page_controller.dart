@@ -26,7 +26,6 @@ class HomePageController extends PageController {
   SearchableAddress? get selectedAddress => _selectedAddress.value;
 
   bool get loading => _isLoading.value;
-  bool get isLocationPermitted => locationController.isPermitted;
 
   Future<void> refreshPage() async {
     _loadSearchableAddresses();

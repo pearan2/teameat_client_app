@@ -148,21 +148,14 @@ class HomePageSearcher extends GetView<HomePageController> {
                     TEAddressLabel(c.selectedAddress?.toShortLabel() ?? ''),
               )),
           const Expanded(child: SizedBox()),
-          Obx(
-            () {
-              if (c.isLocationPermitted) {
-                return const SizedBox();
-              }
-              return TEPrimaryButton(
+          Obx(() => TEPrimaryButton(
                 text: DS.text.viewDistanceBetweenMeAndStore,
                 contentHorizontalPadding: DS.space.xTiny,
                 textStyle: DS.textStyle.caption1.semiBold,
                 height: DS.space.base,
                 fitContentWidth: true,
                 onTap: c.onDistanceViewOn,
-              );
-            },
-          ),
+              ).orEmpty(!c.locationController.isPermitted)),
         ],
       ),
     );

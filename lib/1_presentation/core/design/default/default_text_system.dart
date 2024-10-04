@@ -403,7 +403,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get locationPermissionDenied =>
-      '위치 권한이 거부되었어요\n[프로필] -> [권한 세팅]\n에서 위치 권한을 다시 활성화 하실 수 있어요 :)';
+      '위치 권한이 거부되었어요\n[마이페이지] -> [권한 세팅]\n에서 위치 권한을 다시 활성화 하실 수 있어요 :)';
 
   @override
   String get locationServiceDisabled => '위치 정보 사용이 불가능해요';
@@ -834,7 +834,7 @@ class DefaultTextSystem extends ITextSystem {
   String get reportHintText => '광고에요, 허위사실 이에요 등등';
 
   @override
-  String get blockSuccess => '정상적으로 차단했어요\n프로필 -> 차단목록에서 다시 차단 해제 하실 수 있어요';
+  String get blockSuccess => '정상적으로 차단했어요\n마이페이지 -> 차단목록에서 다시 차단 해제 하실 수 있어요';
 
   @override
   String get reportSuccess => '정상적으로 신고했어요\n팀잇이 최대한 빠르게 처리해볼게요!';
@@ -955,7 +955,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get itemRefundNoticeRefundMethodContent =>
-      "보관함-이용권-환불하기 버튼을 통한 환불 혹은 '프로필'고객문의를 통한 카카오 문의로 가능합니다.";
+      "보관함-이용권-환불하기 버튼을 통한 환불 혹은 '마이페이지'고객문의를 통한 카카오 문의로 가능합니다.";
 
   @override
   String get itemRefundNoticeRefundMethodTitle => '환불방법';
@@ -1060,7 +1060,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get paymentIsNotCorrect =>
-      '결제 정보가 올바르지 않습니다\n실제로 결제가 되었다면\n[프로필 -> 고객문의]로 문의하여 주세요';
+      '결제 정보가 올바르지 않습니다\n실제로 결제가 되었다면\n[마이페이지 -> 고객문의]로 문의하여 주세요';
 
   @override
   String get couponPage => "쿠폰함";

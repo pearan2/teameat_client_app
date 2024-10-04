@@ -41,7 +41,7 @@ class LocationController {
   }
 
   Future<bool> isLocationPermitted() async {
-    PermissionStatus permissionGranted = await _location.hasPermission();
+    final permissionGranted = await _location.hasPermission();
     _isPermitted.value = permissionGranted.isGranted();
     return permissionGranted.isGranted();
   }
@@ -85,7 +85,8 @@ class LocationController {
 
     if (!isGranted) {
       final permissionGranted = await _location.requestPermission();
-      if (!permissionGranted.isGranted()) {
+      _isPermitted.value = permissionGranted.isGranted();
+      if (!isPermitted) {
         showError(DS.text.locationPermissionDenied);
         return;
       }

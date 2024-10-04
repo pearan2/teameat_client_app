@@ -150,6 +150,7 @@ class StoreSimple with _$StoreSimple {
     required Point location,
     required String coverImageUrl,
     required List<String> categoryNames,
+    required bool isNeedAgeWarning,
     String? naverMapPlaceId,
   }) = _StoreSimple;
 
@@ -273,6 +274,8 @@ class StoreDetail with _$StoreDetail {
     required String operationTime,
     required String breakTime,
     required String lastOrderTime,
+    required List<String> categoryNames,
+    required bool isNeedAgeWarning,
   }) = _StoreDetail;
 
   factory StoreDetail.fromJsonWithItemSort(Map<String, Object?> json) {
@@ -314,6 +317,8 @@ class StoreDetail with _$StoreDetail {
           5,
           (_) =>
               "https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"),
+      categoryNames: [],
+      isNeedAgeWarning: false,
     );
   }
 }

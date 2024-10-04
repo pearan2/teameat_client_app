@@ -7,6 +7,7 @@ import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/like.dart';
 import 'package:teameat/1_presentation/core/component/map.dart';
 import 'package:teameat/1_presentation/core/component/store/item/curation/curation.dart';
+import 'package:teameat/1_presentation/core/component/store/store.dart';
 import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
@@ -67,6 +68,19 @@ class StoreItemPage extends GetView<StoreItemPageController> {
               ItemImageCarousel(
                       imageWidth: width, imageRatio: imageRatio, tag: tag)
                   .toSliver,
+              c.item
+                  .obx((item) => StoreSimpleInfoRow(
+                        profileImageUrl: item.store.profileImageUrl,
+                        name: item.store.name,
+                        subInfo: item.store.address,
+                        storeId: item.store.id,
+                        location: item.store.location,
+                        backgroundColor: DS.color.background100,
+                        padding: EdgeInsets.all(DS.space.tiny),
+                      ))
+                  .toSliver,
+              TEDivider.normal().toSliver,
+              DS.space.vTiny.toSliver,
               StoreItemInfoBox(tag).toSliver,
               c.item
                   .obx((i) => i.curation == null
@@ -132,13 +146,6 @@ class StoreItemInfoBox extends GetView<StoreItemPageController> {
         DS.space.vSmall,
         _buildSellTypeAndToolsRow(),
         c.item.obx((item) => Text(item.name, style: DS.textStyle.title1.b800)),
-        DS.space.vXTiny,
-        c.item.obx((item) => TELeftRightText(
-              item.store.name,
-              item.store.numberOfCurations
-                  .format(DS.text.numberOfCurationFormat),
-              style: DS.textStyle.caption1.b500.h14,
-            )),
         DS.space.vXSmall,
         c.item.obx((item) =>
             Text(item.introduce, style: DS.textStyle.paragraph3.h14.b800)),

@@ -19,6 +19,8 @@ class StoreSimpleInfoRow extends GetView<IReact> {
   final String subInfo;
   final bool isButton;
   final Point location;
+  final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   const StoreSimpleInfoRow({
     super.key,
@@ -27,6 +29,8 @@ class StoreSimpleInfoRow extends GetView<IReact> {
     required this.subInfo,
     required this.storeId,
     required this.location,
+    this.backgroundColor,
+    this.padding,
     this.isButton = true,
   });
 
@@ -37,49 +41,53 @@ class StoreSimpleInfoRow extends GetView<IReact> {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(300),
-            child: TECacheImage(src: profileImageUrl, width: DS.space.medium),
-          ),
-          DS.space.hTiny,
-          Expanded(
-            child: TEonTap(
-              onTap: () {
-                if (isButton) {
-                  controller.toStoreDetail(storeId);
-                }
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    name,
-                    overflow: TextOverflow.ellipsis,
-                    style: DS.textStyle.paragraph3
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  DS.space.vXXTiny,
-                  Text(
-                    subInfo,
-                    overflow: TextOverflow.ellipsis,
-                    style: DS.textStyle.caption2,
-                  ),
-                ],
+    return Container(
+      color: backgroundColor,
+      padding: padding,
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(300),
+              child: TECacheImage(src: profileImageUrl, width: DS.space.medium),
+            ),
+            DS.space.hTiny,
+            Expanded(
+              child: TEonTap(
+                onTap: () {
+                  if (isButton) {
+                    controller.toStoreDetail(storeId);
+                  }
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      style: DS.textStyle.paragraph3
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    DS.space.vXXTiny,
+                    Text(
+                      subInfo,
+                      overflow: TextOverflow.ellipsis,
+                      style: DS.textStyle.caption2,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          _buildButton(),
-          DS.space.hTiny,
-          DistanceWithIcon(point: location),
-          DS.space.hTiny,
-          StoreLike(storeId: storeId),
-        ],
+            _buildButton(),
+            DS.space.hTiny,
+            DistanceWithIcon(point: location),
+            DS.space.hTiny,
+            StoreLike(storeId: storeId),
+          ],
+        ),
       ),
     );
   }

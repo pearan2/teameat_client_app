@@ -17,6 +17,7 @@ class PurchasePageController extends PageController {
   final Map<ItemDetail, int> items;
   final bool withOpenGroupBuying;
   final int? groupBuyingId;
+  final bool isForGift;
 
   // state
   final _selectedCouponId = Rxn<int>();
@@ -32,6 +33,8 @@ class PurchasePageController extends PageController {
   int? get selectedCouponId => _selectedCouponId.value;
   // ignore: invalid_use_of_protected_member
   List<Coupon> get usableCoupons => _usableCoupons.value;
+  bool get isNeedAdultWarning =>
+      items.keys.where((item) => item.store.isNeedAgeWarning).isNotEmpty;
 
   List<PaymentMethod> get purchaseMethods => [
         PaymentMethod.card(),
@@ -93,10 +96,12 @@ class PurchasePageController extends PageController {
     _selectedCouponId.value = newSelectedCouponId;
   }
 
-  PurchasePageController(
-      {required this.items,
-      required this.withOpenGroupBuying,
-      this.groupBuyingId});
+  PurchasePageController({
+    required this.items,
+    required this.withOpenGroupBuying,
+    this.groupBuyingId,
+    this.isForGift = false,
+  });
 
   @override
   Future<bool> initialLoad() async {

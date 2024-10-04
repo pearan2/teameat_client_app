@@ -79,7 +79,6 @@ class StoreItemPage extends GetView<StoreItemPageController> {
                         padding: EdgeInsets.all(DS.space.tiny),
                       ))
                   .toSliver,
-              TEDivider.normal().toSliver,
               DS.space.vTiny.toSliver,
               StoreItemInfoBox(tag).toSliver,
               c.item

@@ -64,13 +64,18 @@ class React extends IReact {
   }
 
   @override
-  Future<T?> toItemPurchase<T>(Map<ItemDetail, int> items,
-      {required bool withOpenGroupBuying, int? groupBuyingId}) async {
+  Future<T?> toItemPurchase<T>(
+    Map<ItemDetail, int> items, {
+    required bool withOpenGroupBuying,
+    int? groupBuyingId,
+    bool isForGift = false,
+  }) async {
     return Get.toNamed('/store/item/purchase',
         arguments: {
           'items': items,
           'groupBuyingId': groupBuyingId,
-          'withOpenGroupBuying': withOpenGroupBuying
+          'withOpenGroupBuying': withOpenGroupBuying,
+          'isForGift': isForGift,
         },
         preventDuplicates: false);
   }

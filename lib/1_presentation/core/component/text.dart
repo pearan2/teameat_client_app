@@ -289,3 +289,50 @@ class InfoTitleText extends StatelessWidget {
     );
   }
 }
+
+class EmphasisText extends StatelessWidget {
+  final TextStyle emphasisStyle;
+  final String text;
+  final TextStyle style;
+  final TextOverflow? overflow;
+
+  const EmphasisText(
+    this.text, {
+    super.key,
+    required this.emphasisStyle,
+    required this.style,
+    this.overflow,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildRichText();
+  }
+
+  Widget _buildRichText() {
+    List<TextSpan> buildText() {
+      final texts = text.split('');
+      const emphasisStartText = "{";
+      const emphasisEndText = "}";
+      TextStyle nowStyle = style;
+      return texts.map((t) {
+        if (t == emphasisStartText) {
+          nowStyle = emphasisStyle;
+          return TextSpan(text: '', style: nowStyle);
+        } else if (t == emphasisEndText) {
+          nowStyle = style;
+          return TextSpan(text: '', style: nowStyle);
+        } else {
+          return TextSpan(text: t, style: nowStyle);
+        }
+      }).toList();
+    }
+
+    return Text.rich(
+      TextSpan(
+        style: style,
+        children: buildText(),
+      ),
+    );
+  }
+}

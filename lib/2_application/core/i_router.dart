@@ -25,14 +25,25 @@ abstract class IRouter {
 
   Future<void> toLogin();
 
-  Future<T?> toItemPurchase<T>(Map<ItemDetail, int> items,
-      {required bool withOpenGroupBuying, int? groupBuyingId});
+  Future<T?> toItemPurchase<T>(
+    Map<ItemDetail, int> items, {
+    required bool withOpenGroupBuying,
+    int? groupBuyingId,
+    bool isForGift = false,
+  });
 
-  void toPaymentOff(Order order, PaymentMethod paymentMethod, int? itemId,
-      {bool isForGift = false});
+  void toPaymentOff(
+    Order order,
+    PaymentMethod paymentMethod,
+    int? itemId, {
+    bool isForGift = false,
+  });
 
-  void toPaymentResultOffAll(Map<String, String> result, int? itemId,
-      {bool isForGift = false});
+  void toPaymentResultOffAll(
+    Map<String, String> result,
+    int? itemId, {
+    bool isForGift = false,
+  });
 
   void toVoucherOffAll();
 

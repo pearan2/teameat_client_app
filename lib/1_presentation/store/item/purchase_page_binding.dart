@@ -9,10 +9,13 @@ class PurchasePageBinding implements Bindings {
     final items = argMap['items'] as Map<ItemDetail, int>;
     final withOpenGroupBuying = argMap['withOpenGroupBuying'] as bool;
     final groupBuyingId = argMap['groupBuyingId'] as int?;
+    final isForGift = argMap['isForGift'] as bool;
 
     Get.put(PurchasePageController(
-        items: items,
-        withOpenGroupBuying: withOpenGroupBuying,
-        groupBuyingId: groupBuyingId));
+      items: items,
+      withOpenGroupBuying: withOpenGroupBuying,
+      groupBuyingId: groupBuyingId,
+      isForGift: isForGift,
+    ));
   }
 }

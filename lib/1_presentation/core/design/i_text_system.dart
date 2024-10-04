@@ -432,4 +432,8 @@ abstract class ITextSystem {
   String get itemSearchPageTitle;
   String get itemSearchPageSearchTextHint;
   String get viewDistanceBetweenMeAndStore;
+
+  String get purchaseGroupBuyingOpenWarning;
+  String get purchaseForGiftWarning;
+  String get purchaseOnlyForAdultWarning;
 }

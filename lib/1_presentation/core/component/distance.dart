@@ -42,7 +42,9 @@ class DistanceWithIcon extends GetView<LocationController> {
                   ),
                   DS.space.hXXTiny,
                   Text(
-                    kilo.format(DS.text.distanceKiloFormat),
+                    kilo < 1
+                        ? (kilo * 1000).format(DS.text.distanceMeterFormat)
+                        : kilo.format(DS.text.distanceKiloFormat),
                     style: DS.textStyle.caption1.copyWith(
                       fontWeight: FontWeight.bold,
                       color: DS.color.background000,

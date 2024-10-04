@@ -1178,4 +1178,16 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get viewDistanceBetweenMeAndStore => '거리보기';
+
+  @override
+  String get purchaseForGiftWarning =>
+      '{선물하기}를 진행하고 있으시네요!\n{결제 이후} 곧 바로 선물하기로 이어져요!';
+
+  @override
+  String get purchaseGroupBuyingOpenWarning =>
+      '{2인 팀구매 열기}를 진행하고 있으시네요!\n[2인 팀구매 열기]는 결제 이후에 {즉시 이용권이 생기지는 않아요}\n고객님이 열어주신 [2인 팀 구매]를 {다른 유저가 참여}하면 그때 이용권이 생성돼요\n지인에게 팀 구매 참여를 부탁 해보세요!\n혹시, 24시간 이내에 [2인 팀 구매] 참여자가 없을 경우에는 {자동으로 100% 환불}해드려요 :)';
+
+  @override
+  String get purchaseOnlyForAdultWarning =>
+      '이 가게는 {주류를 위주로 취급하는 곳}이에요\n혹시, {성인이 아니시라면 이용권 사용에 제한}이 있을 수 있어요!';
 }

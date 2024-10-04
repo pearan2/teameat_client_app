@@ -5,6 +5,7 @@ import 'package:teameat/1_presentation/core/component/business_registration_info
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -16,6 +17,7 @@ import 'package:teameat/2_application/store/item/purchase_page_controller.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
 
 class PurchasePage extends GetView<PurchasePageController> {
@@ -35,7 +37,11 @@ class PurchasePage extends GetView<PurchasePageController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            DS.space.vMedium,
+            PurchaseWarning(DS.text.purchaseGroupBuyingOpenWarning)
+                .orEmpty(c.withOpenGroupBuying),
+            PurchaseWarning(DS.text.purchaseOnlyForAdultWarning)
+                .orEmpty(c.isNeedAdultWarning),
+            PurchaseWarning(DS.text.gift).orEmpty(c.isForGift),
             const PurchaseItemInfoList(),
             DS.space.vXSmall,
             TEDivider.normal(),
@@ -46,7 +52,7 @@ class PurchasePage extends GetView<PurchasePageController> {
                 .paddingSymmetric(horizontal: DS.space.xBase),
             DS.space.vTiny,
             Text(DS.text.purchaseHanaCardDisableNotice,
-                    style: DS.textStyle.paragraph3.semiBold.point.h14)
+                    style: DS.textStyle.caption1.semiBold.point.h14)
                 .paddingSymmetric(horizontal: DS.space.xBase),
             DS.space.vSmall,
             const PurchaseMethodSelector()
@@ -66,6 +72,30 @@ class PurchasePage extends GetView<PurchasePageController> {
         ),
       ),
     );
+  }
+}
+
+class PurchaseWarning extends StatelessWidget {
+  final String warning;
+
+  const PurchaseWarning(this.warning, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        vertical: DS.space.xSmall,
+        horizontal: DS.space.base,
+      ),
+      decoration: BoxDecoration(color: DS.color.secondary300),
+      child: EmphasisText(
+        warning,
+        style: DS.textStyle.caption1.b800.h14,
+        emphasisStyle: DS.textStyle.caption1.point.h14.bold,
+      ),
+    ).paddingOnly(
+        bottom: DS.space.small, left: DS.space.tiny, right: DS.space.tiny);
   }
 }
 

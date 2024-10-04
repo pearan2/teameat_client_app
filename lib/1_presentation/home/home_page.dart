@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
+import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
@@ -62,6 +64,24 @@ class HomePage extends GetView<HomePageController> {
                   toolbarHeight: DS.space.large,
                   flexibleSpace: const HomePageSearcher(),
                 ),
+                TEonTap(
+                  onTap: () => c.react.toStoreItemSearch(
+                      searchOption: SearchSimpleList.empty().copyWith(
+                    address: c.selectedAddress,
+                    order: Code.itemOrderManyLike(),
+                    pageSize: 10,
+                  )),
+                  child: TextSearcher(
+                    onCompleted: (_) {},
+                    padding: EdgeInsets.symmetric(
+                      vertical: DS.space.xSmall,
+                      horizontal: DS.space.tiny,
+                    ),
+                    prefixLeftPadding: DS.space.xSmall,
+                    enabled: false,
+                  ),
+                ).withBasePadding.toSliver,
+                sectionHalfSpacingWidget.toSliver,
                 Obx(() => GroupBuyingSection(
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,
@@ -75,7 +95,7 @@ class HomePage extends GetView<HomePageController> {
                       searchOption: SearchSimpleList.empty().copyWith(
                         address: c.selectedAddress,
                         order: Code.itemOrderManyLike(),
-                        pageSize: 5,
+                        pageSize: 10,
                       ),
                       title: DS.text.itemManyLikeSectionTitle,
                       descriptionBuilder: (_) =>
@@ -87,7 +107,7 @@ class HomePage extends GetView<HomePageController> {
                       searchOption: SearchSimpleList.empty().copyWith(
                         address: c.selectedAddress,
                         order: Code.itemHighDiscountRatio(),
-                        pageSize: 5,
+                        pageSize: 10,
                       ),
                       title: DS.text.itemHighDiscountRatioSectionTitle,
                       descriptionBuilder: (items) => items.isNotEmpty

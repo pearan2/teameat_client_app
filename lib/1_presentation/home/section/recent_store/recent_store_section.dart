@@ -52,7 +52,7 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
     final ret = await _storeRepo.getStores(SearchSimpleList.empty().copyWith(
       address: widget.address,
       pageNumber: 0,
-      pageSize: 5,
+      pageSize: 10,
     ));
     ret.fold((l) => showError(l.desc), (r) {
       if (mounted) {

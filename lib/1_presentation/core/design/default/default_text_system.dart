@@ -1169,4 +1169,13 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get curationTargetStoreIsEssential => '푸드로그 대상 가게를 검색하여 입력해주세요';
+
+  @override
+  String get itemSearchPageTitle => '메뉴 검색';
+
+  @override
+  String get itemSearchPageSearchTextHint => '2자 이상 검색어를 입력해주세요';
+
+  @override
+  String get viewDistanceBetweenMeAndStore => '거리보기';
 }

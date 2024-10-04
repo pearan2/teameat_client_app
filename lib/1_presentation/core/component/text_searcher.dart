@@ -186,7 +186,6 @@ class TextSearcher extends StatefulWidget {
   final String? value;
   final String? hintText;
   final bool autoFocus;
-  final bool isRightIcon;
   final void Function(String)? onChanged;
   final bool enabled;
 
@@ -196,7 +195,6 @@ class TextSearcher extends StatefulWidget {
       this.onChanged,
       this.focusNode,
       this.autoFocus = false,
-      this.isRightIcon = false,
       this.hintText,
       this.controller,
       this.enabled = true,
@@ -211,8 +209,15 @@ class _TextSearcherState extends State<TextSearcher> {
   late final controller =
       widget.controller ?? TextEditingController(text: widget.value);
 
+  late bool isShowResetButton = controller.text.isNotEmpty;
+
+  void controllerListener() {
+    setState(() => isShowResetButton = controller.text.isNotEmpty);
+  }
+
   void init() {
     controller.text = widget.value ?? '';
+    controller.addListener(controllerListener);
     if (widget.autoFocus) {
       focusNode.requestFocus();
     }
@@ -234,6 +239,7 @@ class _TextSearcherState extends State<TextSearcher> {
 
   @override
   void dispose() {
+    controller.removeListener(controllerListener);
     if (widget.focusNode == null) {
       focusNode.dispose();
     }
@@ -256,12 +262,15 @@ class _TextSearcherState extends State<TextSearcher> {
       onChanged: widget.onChanged,
       cursorColor: DS.color.primary600,
       padding: EdgeInsets.all(DS.space.tiny),
-      prefix: widget.isRightIcon
-          ? null
-          : DS.image.searchSm.paddingOnly(left: DS.space.tiny),
-      suffix: !widget.isRightIcon
-          ? null
-          : DS.image.searchSm.paddingOnly(right: DS.space.tiny),
+      prefix: DS.image.searchSm.paddingOnly(left: DS.space.tiny),
+      suffix: isShowResetButton
+          ? TEonTap(
+              onTap: () {
+                controller.text = '';
+                widget.onCompleted(controller.text.trim());
+              },
+              child: DS.image.closeLg.paddingOnly(right: DS.space.tiny))
+          : null,
       placeholderStyle: DS.textStyle.caption1.b500,
       placeholder: widget.hintText ?? DS.text.textSearcherPlaceHolder,
       style: DS.textStyle.caption1.b800,

@@ -36,7 +36,7 @@ class _GroupBuyingSectionState extends State<GroupBuyingSection> {
     setState(() => isLoading = true);
     final ret = await _storeRepo.getStoreItems(
       SearchSimpleList.empty().copyWith(
-        address: widget.selectedAddress?.toFullAddress(),
+        address: widget.selectedAddress,
         pageSize: 5,
         sellType: 'GROUP_BUYING',
       ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 
@@ -78,7 +79,7 @@ class StorePoint with _$StorePoint {
 @freezed
 class SearchSimpleList with _$SearchSimpleList {
   const factory SearchSimpleList({
-    String? address,
+    SearchableAddress? address,
     String? searchText,
     List<String>? hashTags,
     Code? category,
@@ -93,7 +94,7 @@ class SearchSimpleList with _$SearchSimpleList {
 
   factory SearchSimpleList.empty() {
     return SearchSimpleList(
-      address: "",
+      address: null,
       searchText: "",
       hashTags: const [],
       category: null,
@@ -111,7 +112,9 @@ class SearchSimpleList with _$SearchSimpleList {
 
   static Map<String, dynamic> toStringJson(SearchSimpleList target) {
     final ret = <String, dynamic>{};
-    if (target.address != null) ret['address'] = target.address;
+    if (target.address != null) {
+      ret['address'] = target.address!.toFullAddress();
+    }
     if (target.searchText != null) ret['searchText'] = target.searchText;
     if (target.hashTags != null) ret['hashTags'] = target.hashTags;
     if (target.category != null) ret['category'] = target.category!.code;

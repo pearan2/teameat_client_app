@@ -7,12 +7,13 @@ import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/core/code/statistics/i_statistics_repository.dart';
 import 'package:teameat/3_domain/core/code/statistics/statistics.dart';
+import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 
 class ItemRankSection extends StatefulWidget {
   final int refreshCount;
-  final String? address;
+  final SearchableAddress? address;
 
   final double verticalPadding;
   final double imageWidth;
@@ -42,7 +43,7 @@ class _ItemRankSectionState extends State<ItemRankSection> {
   Future<void> _loadStatistics() async {
     final ret = await _statisticsRepo.findItemStatistics(
         searchOption: SearchList.empty().copyWith(
-      address: widget.address,
+      address: widget.address?.toFullAddress(),
       limit: 10,
     ));
     ret.fold((l) => showError(l.desc), (r) {

@@ -620,6 +620,7 @@ class StoreItemColumnCard extends StatelessWidget {
   final double borderRadius;
   final double? imageWidth;
   final Widget? infoBoxPrefix;
+  final double infoBoxHorizontalPadding;
   final bool withLike;
 
   static const infoBoxHeight = 103;
@@ -636,6 +637,7 @@ class StoreItemColumnCard extends StatelessWidget {
     this.borderRadius = 0.0,
     this.imageWidth,
     this.infoBoxPrefix,
+    this.infoBoxHorizontalPadding = 0,
     this.withLike = true,
   });
 
@@ -662,8 +664,13 @@ class StoreItemColumnCard extends StatelessWidget {
               borderRadius: borderRadius,
               ratio: imageRatio,
             ),
-            DS.space.vTiny,
-            Expanded(
+            Container(
+              height: infoBoxHeight.toDouble(),
+              padding: EdgeInsets.only(
+                top: DS.space.tiny,
+                left: infoBoxHorizontalPadding,
+                right: infoBoxHorizontalPadding,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

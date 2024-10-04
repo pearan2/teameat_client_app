@@ -79,9 +79,8 @@ class _SimpleItemListSectionState extends State<SimpleItemListSection> {
           title: widget.title,
           description: widget.descriptionBuilder(items),
           horizontalPadding: widget.horizontalPadding,
-          onTap: () {},
-
-          /// Todo ....
+          onTap: () => Get.find<IReact>()
+              .toStoreItemSearch(searchOption: widget.searchOption),
         ),
         DS.space.vTiny,
         SizedBox(

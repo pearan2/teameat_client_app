@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/item_search_page_controller_mixin.dart';
-import 'package:teameat/3_domain/core/searchable_address.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
 class StoreItemSearchPageController extends ItemSearchPageController
@@ -7,11 +8,16 @@ class StoreItemSearchPageController extends ItemSearchPageController
   @override
   final SearchSimpleList initialSearchOption;
 
-  @override
-  final SearchableAddress? initialSelectedAddress;
+  StoreItemSearchPageController({required this.initialSearchOption});
 
-  StoreItemSearchPageController({
-    required this.initialSearchOption,
-    required this.initialSelectedAddress,
-  });
+  late final TextEditingController searchTextController =
+      TextEditingController(text: initialSearchOption.searchText);
+
+  String get title =>
+      initialSearchOption.category?.title ?? DS.text.itemSearchPageTitle;
+
+  @override
+  void beforeClearSearchOption() {
+    searchTextController.text = '';
+  }
 }

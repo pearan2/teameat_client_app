@@ -428,4 +428,8 @@ abstract class ITextSystem {
   String get lastWeekBestRewardCurationDescription;
 
   String get curationTargetStoreIsEssential;
+
+  String get itemSearchPageTitle;
+  String get itemSearchPageSearchTextHint;
+  String get viewDistanceBetweenMeAndStore;
 }

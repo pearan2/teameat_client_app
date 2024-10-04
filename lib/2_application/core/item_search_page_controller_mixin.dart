@@ -15,13 +15,13 @@ import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
 abstract class ItemSearchPageController extends PageController {
-  SearchableAddress? get initialSelectedAddress;
   SearchSimpleList get initialSearchOption;
   PagingController<int, ItemSimple> get pagingController;
 
   void onStoreItemCardClickHandler(int itemId);
   Future<void> refreshPage();
   void clearSearchOption();
+  void beforeClearSearchOption();
   void onSearchTextCompleted(String searchText);
   Future<void> onSelectedAddressChanged(SearchableAddress? address);
   Future<void> onWithInMeterChanged(int? value);
@@ -45,7 +45,6 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
 
   /// 상태
   final _searchableAddresses = <SearchableAddress>[].obs;
-  late final _selectedAddress = Rxn<SearchableAddress>(initialSelectedAddress);
   late final _searchOption = initialSearchOption.obs;
   final _orderCodes = RxList<Code>.empty();
 
@@ -64,7 +63,7 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
 
   // ignore: invalid_use_of_protected_member
   List<SearchableAddress> get searchableAddresses => _searchableAddresses.value;
-  SearchableAddress? get selectedAddress => _selectedAddress.value;
+  SearchableAddress? get selectedAddress => searchOption.address;
   bool get loading => _isLoading.value;
   // ignore: invalid_use_of_protected_member
   List<Code> get orders => _orderCodes.value;
@@ -85,10 +84,13 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
 
   @override
   void clearSearchOption() {
+    beforeClearSearchOption();
     _searchOption.value = initialSearchOption;
-    _selectedAddress.value = null;
     pagingController.refresh();
   }
+
+  @override
+  void beforeClearSearchOption() {}
 
   @override
   void onSearchTextCompleted(String searchText) {
@@ -99,9 +101,8 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
 
   @override
   Future<void> onSelectedAddressChanged(SearchableAddress? address) async {
-    _selectedAddress.value = address;
     _searchOption.value =
-        searchOption.copyWith(address: address?.toFullAddress(), pageNumber: 0);
+        searchOption.copyWith(address: address, pageNumber: 0);
     pagingController.refresh();
   }
 

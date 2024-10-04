@@ -12,9 +12,7 @@ abstract class IRouter {
 
   void toHomeOffAll();
 
-  void toStoreItemSearch(
-      {SearchableAddress? selectedAddress,
-      required SearchSimpleList searchOption});
+  void toStoreItemSearch({required SearchSimpleList searchOption});
 
   void toBanner(String url);
 

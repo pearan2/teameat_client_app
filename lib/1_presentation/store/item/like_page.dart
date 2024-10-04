@@ -44,6 +44,7 @@ class StoreItemLikePage extends GetView<StoreItemLikePageController> {
                     itemBuilder: (_, item, idx) => StoreItemColumnCard(
                           imageWidth: imageWidth,
                           item: item,
+                          infoBoxHorizontalPadding: DS.space.tiny,
                           onTap: controller.react.toStoreItemDetail,
                         )),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

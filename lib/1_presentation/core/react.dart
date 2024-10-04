@@ -32,11 +32,8 @@ class React extends IReact {
   }
 
   @override
-  void toStoreItemSearch(
-      {SearchableAddress? selectedAddress,
-      required SearchSimpleList searchOption}) {
+  void toStoreItemSearch({required SearchSimpleList searchOption}) {
     Get.toNamed('/search/item', arguments: {
-      'selectedAddress': selectedAddress,
       'searchOption': searchOption,
     });
   }

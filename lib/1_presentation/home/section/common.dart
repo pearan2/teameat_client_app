@@ -8,14 +8,14 @@ import 'package:teameat/main.dart';
 class TitleAndSeeAll extends StatelessWidget {
   final String title;
   final String description;
-  final void Function() onTap;
+  final void Function()? onTap;
   final double horizontalPadding;
 
   const TitleAndSeeAll(
       {super.key,
       required this.title,
       required this.description,
-      required this.onTap,
+      this.onTap,
       this.horizontalPadding = AppWidget.horizontalPadding});
 
   @override
@@ -32,7 +32,7 @@ class TitleAndSeeAll extends StatelessWidget {
               style: DS.textStyle.paragraph1.semiBold.h14.b900,
             ),
             TEonTap(
-              onTap: onTap,
+              onTap: onTap ?? () {},
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -46,7 +46,7 @@ class TitleAndSeeAll extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ).orEmpty(onTap != null),
           ],
         ),
         Text(description, style: DS.textStyle.caption1.h14.b600),

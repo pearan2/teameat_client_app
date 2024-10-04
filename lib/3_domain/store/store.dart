@@ -104,7 +104,7 @@ class SearchSimpleList with _$SearchSimpleList {
       pageSize: 10,
       randomSeed: Random().nextInt(10000),
       sellType: null,
-      order: null,
+      order: Code.orderEmpty(),
     );
   }
   factory SearchSimpleList.fromJson(Map<String, Object?> json) =>

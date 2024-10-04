@@ -77,7 +77,7 @@ class HttpClient extends IConnection<String, Failure> {
       return right(ret);
     } catch (e) {
       return left(
-          Failure.networkError("서버와 통신에 실패 하였습니다. 잠시 후 다시 시도해주세요.\n$e"));
+          const Failure.networkError("서버와 통신에 실패 하였습니다. 잠시 후 다시 시도해주세요."));
     }
   }
 

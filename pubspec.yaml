@@ -105,6 +105,7 @@ flutter:
     - assets/image/curation/
     - assets/image/onboarding/
     - assets/image/icon/
+    - assets/image/icon/category/
     - assets/image/icon/bottom/
     - assets/image/icon/sell_type/
     - assets/image/icon/item_usage/

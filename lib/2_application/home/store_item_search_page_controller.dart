@@ -14,7 +14,10 @@ class StoreItemSearchPageController extends ItemSearchPageController
       TextEditingController(text: initialSearchOption.searchText);
 
   String get title =>
-      initialSearchOption.category?.title ?? DS.text.itemSearchPageTitle;
+      initialSearchOption.category?.title
+          .replaceAll('\n', ' ')
+          .replaceAll(' ', ', ') ??
+      DS.text.itemSearchPageTitle;
 
   @override
   void beforeClearSearchOption() {

@@ -436,4 +436,7 @@ abstract class ITextSystem {
   String get purchaseGroupBuyingOpenWarning;
   String get purchaseForGiftWarning;
   String get purchaseOnlyForAdultWarning;
+
+  String get categorySectionTitle;
+  String get categorySectionDescription;
 }

@@ -1190,4 +1190,10 @@ class DefaultTextSystem extends ITextSystem {
   @override
   String get purchaseOnlyForAdultWarning =>
       '이 가게는 {주류를 위주로 취급하는 곳}이에요\n혹시, {성인이 아니시라면 이용권 사용에 제한}이 있을 수 있어요!';
+
+  @override
+  String get categorySectionDescription => '내가 먹고싶은 메뉴, 카테고리별로 보자';
+
+  @override
+  String get categorySectionTitle => '카테고리별로 보기';
 }

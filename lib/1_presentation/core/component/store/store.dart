@@ -8,6 +8,7 @@ import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/i_react.dart';
+import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/store/i_store_repository.dart';
 import 'package:teameat/3_domain/store/store.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
@@ -199,5 +200,36 @@ class StoreTimeInfoExpandable extends StatelessWidget {
           separatorBuilder: (_, __) => DS.space.vXTiny,
           itemCount: timeInfo.length,
         ));
+  }
+}
+
+class Category extends StatelessWidget {
+  final Code categoryCode;
+  final int idx;
+
+  const Category(this.categoryCode, {super.key, required this.idx});
+
+  static const size = 40.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: DS.space.large,
+      child: Column(
+        children: [
+          Image.asset(
+            categoryCode.localImageUrl(idx),
+            width: size,
+            height: size,
+          ),
+          DS.space.vTiny,
+          Text(
+            categoryCode.title,
+            style: DS.textStyle.caption1.h12.b600,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }

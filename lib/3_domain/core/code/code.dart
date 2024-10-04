@@ -4,6 +4,14 @@ part 'code.freezed.dart';
 
 part 'code.g.dart';
 
+extension CategoryCodeExtension on Code {
+  String localImageUrl(int idx) =>
+      'assets/image/icon/category/category_$idx.png';
+
+  String networkImageUrl(int idx) =>
+      'https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/category_$idx.png';
+}
+
 @freezed
 class CodeInner with _$CodeInner {
   const factory CodeInner({

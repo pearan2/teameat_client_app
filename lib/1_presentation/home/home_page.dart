@@ -4,9 +4,11 @@ import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
+import 'package:teameat/1_presentation/core/component/store/store.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/home/section/common.dart';
 import 'package:teameat/1_presentation/home/section/group_buying/group_buying.dart';
 import 'package:teameat/1_presentation/home/section/rank/rank_section.dart';
 import 'package:teameat/1_presentation/home/section/recent_store/recent_store_section.dart';
@@ -86,6 +88,7 @@ class HomePage extends GetView<HomePageController> {
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,
                     )).toSliver,
+                const _CategorySection().toSliver,
                 Obx(() => ItemRankSection(
                       address: c.selectedAddress,
                       verticalPadding: sectionHalfSpacing,
@@ -178,6 +181,50 @@ class HomePageSearcher extends GetView<HomePageController> {
               ).orEmpty(!c.locationController.isPermitted)),
         ],
       ),
+    );
+  }
+}
+
+class _CategorySection extends GetView<HomePageController> {
+  const _CategorySection();
+
+  List<Widget> _buildCategories(List<Code> categories) {
+    final ret = <Widget>[];
+    for (int i = 0; i < categories.length; i++) {
+      ret.add(
+        TEonTap(
+            onTap: () => c.react.toStoreItemSearch(
+                  searchOption: SearchSimpleList.empty().copyWith(
+                    address: c.selectedAddress,
+                    category: categories[i],
+                  ),
+                ),
+            child: Category(categories[i], idx: i)),
+      );
+    }
+    return ret;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TitleAndSeeAll(
+          title: DS.text.categorySectionTitle,
+          description: DS.text.categorySectionDescription,
+          horizontalPadding: 0.0,
+        ),
+        DS.space.vSmall,
+        Obx(() => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: _buildCategories(c.categories),
+            )),
+      ],
+    ).paddingSymmetric(
+      horizontal: AppWidget.horizontalPadding,
+      vertical: DS.space.small,
     );
   }
 }

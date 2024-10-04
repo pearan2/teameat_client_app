@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
@@ -49,7 +50,11 @@ class TitleAndSeeAll extends StatelessWidget {
             ).orEmpty(onTap != null),
           ],
         ),
-        Text(description, style: DS.textStyle.caption1.h14.b600),
+        EmphasisText(
+          description,
+          emphasisStyle: DS.textStyle.caption1.h14.point.semiBold,
+          style: DS.textStyle.caption1.h14.b600,
+        ),
       ],
     ).paddingHorizontal(horizontalPadding);
   }

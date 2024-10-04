@@ -1146,7 +1146,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get itemHighDiscountRatioSectionDescriptionFormat =>
-      '팀잇에서 최대 ###% 할인중!';
+      '팀잇에서 최대 {###%} 할인중!';
 
   @override
   String get storeRecentSectionTitle => '🏘️ 신규가게';

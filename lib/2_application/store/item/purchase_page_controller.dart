@@ -71,7 +71,7 @@ class PurchasePageController extends PageController {
         ),
         (r) => react.toPaymentOff(r, purchaseMethod!,
             withOpenGroupBuying ? items.keys.first.id : null,
-            giftQuantity: items.values.first));
+            giftQuantity: isForGift ? items.values.first : null));
   }
 
   Future<void> _loadUsableCoupons() async {

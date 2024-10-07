@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/component/voucher/voucher.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -12,6 +13,7 @@ import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/voucher/voucher.dart';
 import 'package:teameat/99_util/extension/date_time.dart';
 import 'package:teameat/99_util/extension/num.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
 
 class VoucherPage extends GetView<VoucherPageController> {
   const VoucherPage({super.key});
@@ -44,12 +46,12 @@ class VoucherPage extends GetView<VoucherPageController> {
                 toolbarHeight: DS.space.large,
                 flexibleSpace: Obx(
                   () => Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
+                    alignment: Alignment.bottomLeft,
+                    child: EmphasisText(
                       controller.numberOfRemainVoucher
                           .format(DS.text.numberOfRemainVoucherFormat),
-                      style: DS.textStyle.paragraph1
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: DS.textStyle.paragraph3.bold.h14,
+                      emphasisStyle: DS.textStyle.paragraph3.bold.h14.s900,
                     ),
                   ),
                 ),

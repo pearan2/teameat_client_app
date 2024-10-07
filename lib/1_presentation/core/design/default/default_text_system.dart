@@ -142,7 +142,8 @@ class DefaultTextSystem extends ITextSystem {
   String get inventory => '보관함';
 
   @override
-  String get numberOfRemainVoucherFormat => '이용 하실 수 있는\n이용권이 ###개 남아있어요.';
+  String get numberOfRemainVoucherFormat =>
+      '사용할 수 있는 이용권이 {###}개 남아있어요\n아래 이용권을 눌러 {선물}하거나 {사용}할 수 있어요';
 
   @override
   String get all => '전체';

@@ -49,6 +49,11 @@ class PurchasePageController extends PageController {
   }
 
   Future<void> onPurchaseClick() async {
+    if (isForGift && items.length != 1) {
+      showError(DS.text.giftAfterPurchaseOnlyOneItemNotice);
+      return;
+    }
+
     if (purchaseMethod == null) {
       showError(DS.text.pleaseSelectPaymentMethod);
       return;
@@ -66,7 +71,7 @@ class PurchasePageController extends PageController {
         ),
         (r) => react.toPaymentOff(r, purchaseMethod!,
             withOpenGroupBuying ? items.keys.first.id : null,
-            isForGift: true));
+            giftQuantity: items.values.first));
   }
 
   Future<void> _loadUsableCoupons() async {

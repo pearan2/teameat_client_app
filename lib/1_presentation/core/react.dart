@@ -89,22 +89,22 @@ class React extends IReact {
 
   @override
   void toPaymentOff(Order order, PaymentMethod paymentMethod, int? itemId,
-      {bool isForGift = false}) {
+      {int? giftQuantity}) {
     Get.offNamed('/payment', arguments: {
       'order': order,
       'paymentMethod': paymentMethod,
       'itemId': itemId,
-      'isForGift': isForGift,
+      'giftQuantity': giftQuantity,
     });
   }
 
   @override
   void toPaymentResultOffAll(Map<String, String> result, int? itemId,
-      {bool isForGift = false}) {
+      {int? giftQuantity}) {
     Get.offAllNamed('/payment/result', arguments: {
       'result': result,
       'itemId': itemId,
-      'isForGift': isForGift,
+      'giftQuantity': giftQuantity,
     });
   }
 

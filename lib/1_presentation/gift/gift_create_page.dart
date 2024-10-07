@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
 import 'package:teameat/1_presentation/core/component/input_text.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
@@ -76,33 +77,28 @@ class ItemInfoCard extends StatelessWidget {
         ),
         DS.space.hSmall,
         Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              voucher.storeName,
-              style:
-                  DS.textStyle.paragraph3.copyWith(fontWeight: FontWeight.bold),
-            ),
-            DS.space.vXTiny,
-            Text(voucher.storeAddress,
-                style: DS.textStyle.caption1.copyWith(
-                  color: DS.color.background600,
-                )),
-            DS.space.vBase,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(voucher.itemName, style: DS.textStyle.paragraph1.semiBold),
-                DS.space.hTiny,
-                Text(
-                  quantity.format(DS.text.voucherCountFormat),
-                  style: DS.textStyle.paragraph2.semiBold.s900,
-                )
-              ],
-            ),
-          ],
-        )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                voucher.storeName,
+                style: DS.textStyle.paragraph3
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              DS.space.vXTiny,
+              Text(voucher.storeAddress,
+                  style: DS.textStyle.caption1.copyWith(
+                    color: DS.color.background600,
+                  )),
+              DS.space.vBase,
+              EmphasisText(
+                "${voucher.itemName} {${quantity.format(DS.text.voucherCountFormat)}}",
+                style: DS.textStyle.paragraph1.semiBold,
+                emphasisStyle: DS.textStyle.paragraph2.semiBold.s900,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

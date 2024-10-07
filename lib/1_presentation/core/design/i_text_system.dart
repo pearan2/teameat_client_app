@@ -445,4 +445,7 @@ abstract class ITextSystem {
   String get curationRewardFormat;
 
   String get storeSearchPage;
+
+  String get giftAfterPurchase;
+  String get giftAfterPurchaseOnlyOneItemNotice;
 }

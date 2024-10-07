@@ -3,14 +3,16 @@ import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/payment/i_payment_repository.dart';
+import 'package:teameat/3_domain/voucher/i_voucher_repository.dart';
 
 class PaymentResultPageController extends PageController {
   final _paymentRepo = Get.find<IPaymentRepository>();
+  final _voucherRepo = Get.find<IVoucherRepository>();
   final _isLoading = true.obs;
 
   final Map<String, String> paymentResult;
   final int? itemId;
-  final bool isForGift;
+  final int? giftQuantity;
 
   /// 참조 :https://developers.portone.io/docs/ko/sdk/javascript-sdk/payrt?v=v1
   /// 웰컴페이먼츠 연동시에는 imp_uid, merchant_uid, error_code, error_msg만 제공됩니다.
@@ -18,9 +20,10 @@ class PaymentResultPageController extends PageController {
       paymentResult['error_code'] == null ? true : false;
   bool get isGroupBuying => itemId != null;
   bool get isLoading => _isLoading.value;
+  bool get isForGift => giftQuantity != null;
 
   PaymentResultPageController(
-      {required this.paymentResult, this.itemId, this.isForGift = false});
+      {required this.paymentResult, this.itemId, this.giftQuantity});
 
   void _paymentFailCallback() {
     react.toHomeOffAll();
@@ -44,7 +47,18 @@ class PaymentResultPageController extends PageController {
         react.toHomeOffAll();
         showError(l.desc);
       },
-      (r) {
+      (r) async {
+        if (isForGift) {
+          final voucherDetailRet = await _voucherRepo.findByOrderId(orderId);
+          return voucherDetailRet.fold((l) {
+            react.toHomeOffAll();
+            showError(l.desc);
+          }, (r) {
+            react.toVoucherOffAll();
+            // react.toVoucherDetailPage(r.id);
+            react.toGiftCreate(voucher: r, giftQuantity: giftQuantity!);
+          });
+        }
         _isLoading.value = false;
       },
     );

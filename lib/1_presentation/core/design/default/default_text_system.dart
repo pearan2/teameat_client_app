@@ -75,6 +75,9 @@ class DefaultTextSystem extends ITextSystem {
   String get purchase => '결제하기';
 
   @override
+  String get giftAfterPurchase => '결제 후 선물하기';
+
+  @override
   String get purchaseHanaCardDisableNotice =>
       '현재 하나카드로는 결제가 불가능합니다\n다른 결제 수단 이용 부탁드립니다 :)';
 
@@ -1214,4 +1217,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get storeSearchPage => '가게 검색';
+
+  @override
+  String get giftAfterPurchaseOnlyOneItemNotice => '한 가지의 상품만 선물 할 수 있습니다';
 }

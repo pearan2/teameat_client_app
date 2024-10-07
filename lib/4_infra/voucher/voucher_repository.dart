@@ -56,7 +56,7 @@ class VoucherRepository implements IVoucherRepository {
 
   @override
   Future<Either<Failure, VoucherDetail>> findByOrderId(String orderId) {
-    return _findBy('api/voucher/$orderId');
+    return _findBy('api/voucher/by-order/$orderId');
   }
 
   @override

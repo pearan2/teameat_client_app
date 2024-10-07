@@ -671,10 +671,16 @@ class StoreLocation extends StatelessWidget {
 }
 
 class StoreItemBuyBottomButton extends GetView<StoreItemPageController> {
+  final Widget Function() buttonBuilder;
+
   @override
   // ignore: overridden_fields
   final String tag;
-  const StoreItemBuyBottomButton(this.tag, {super.key});
+  const StoreItemBuyBottomButton(
+    this.tag, {
+    super.key,
+    required this.buttonBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -700,12 +706,54 @@ class StoreItemBuyBottomButton extends GetView<StoreItemPageController> {
           ),
         ),
         DS.space.vBase,
-        TEPrimaryButton(
-          isLoginRequired: true,
-          onTap: controller.onBuyClickHandler,
-          text: DS.text.buy,
-        ),
+        buttonBuilder(),
         DS.space.vXBase,
+      ],
+    );
+  }
+}
+
+class StoreItemBuyBottomSheetButton extends GetView<StoreItemPageController> {
+  @override
+  // ignore: overridden_fields
+  final String tag;
+  const StoreItemBuyBottomSheetButton({super.key, required this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: TESecondaryButton(
+          listenEventLoading: false,
+          text: DS.text.gift,
+          onTap: () {
+            showTEBottomSheet(StoreItemBuyBottomButton(
+              tag,
+              buttonBuilder: () => TESecondaryButton(
+                isLoginRequired: true,
+                onTap: controller.onGiftClickHandler,
+                text: DS.text.gift,
+              ),
+            ));
+          },
+        )),
+        DS.space.hXTiny,
+        Expanded(
+            child: TEPrimaryButton(
+          listenEventLoading: false,
+          onTap: () {
+            showTEBottomSheet(StoreItemBuyBottomButton(
+              tag,
+              buttonBuilder: () => TEPrimaryButton(
+                isLoginRequired: true,
+                onTap: controller.onBuyClickHandler,
+                text: DS.text.buy,
+              ),
+            ));
+          },
+          text: DS.text.buy,
+        ))
       ],
     );
   }
@@ -748,13 +796,7 @@ class StoreItemBuyButton extends GetView<StoreItemPageController> {
   Widget _buildChild() {
     return c.item.obx((item) => item.sellType == DS.text.groupBuying
         ? StoreItemGroupBuyButton(tag: tag)
-        : TEPrimaryButton(
-            listenEventLoading: false,
-            onTap: () {
-              showTEBottomSheet(StoreItemBuyBottomButton(tag));
-            },
-            text: DS.text.buy,
-          ));
+        : StoreItemBuyBottomSheetButton(tag: tag));
   }
 
   @override

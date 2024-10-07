@@ -41,7 +41,8 @@ class PurchasePage extends GetView<PurchasePageController> {
                 .orEmpty(c.withOpenGroupBuying),
             PurchaseWarning(DS.text.purchaseOnlyForAdultWarning)
                 .orEmpty(c.isNeedAdultWarning),
-            PurchaseWarning(DS.text.gift).orEmpty(c.isForGift),
+            PurchaseWarning(DS.text.purchaseForGiftWarning)
+                .orEmpty(c.isForGift),
             const PurchaseItemInfoList(),
             DS.space.vXSmall,
             TEDivider.normal(),
@@ -257,7 +258,7 @@ class PurchaseButton extends GetView<PurchasePageController> {
             listenEventLoading: true,
             onTap: c.onPurchaseClick,
             text:
-                '${c.totalPrice.format(DS.text.priceFormat)} ${DS.text.purchase}',
+                '${c.totalPrice.format(DS.text.priceFormat)} ${c.isForGift ? DS.text.giftAfterPurchase : DS.text.purchase}',
           )),
     );
   }

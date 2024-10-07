@@ -31,20 +31,20 @@ abstract class IRouter {
     Map<ItemDetail, int> items, {
     required bool withOpenGroupBuying,
     int? groupBuyingId,
-    bool isForGift = false,
+    bool isForGift,
   });
 
   void toPaymentOff(
     Order order,
     PaymentMethod paymentMethod,
     int? itemId, {
-    bool isForGift = false,
+    int? giftQuantity,
   });
 
   void toPaymentResultOffAll(
     Map<String, String> result,
     int? itemId, {
-    bool isForGift = false,
+    int? giftQuantity,
   });
 
   void toVoucherOffAll();

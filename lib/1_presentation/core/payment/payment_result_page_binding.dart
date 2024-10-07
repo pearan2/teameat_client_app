@@ -7,11 +7,12 @@ class PaymentResultPageBinding implements Bindings {
     final argMap = Get.arguments as Map<String, dynamic>;
     final result = argMap['result'] as Map<String, String>;
     final itemId = argMap['itemId'] as int?;
-    final isForGift = argMap['isForGift'] as bool;
+    final giftQuantity = argMap['giftQuantity'] as int?;
+
     Get.put(PaymentResultPageController(
       paymentResult: result,
       itemId: itemId,
-      isForGift: isForGift,
+      giftQuantity: giftQuantity,
     ));
   }
 }

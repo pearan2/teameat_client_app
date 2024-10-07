@@ -6,16 +6,16 @@ class PaymentPageController extends PageController {
   final Order order;
   final PaymentMethod paymentMethod;
   final int? itemId;
-  final bool isForGift;
+  final int? giftQuantity;
 
   PaymentPageController({
     required this.order,
     required this.paymentMethod,
     this.itemId,
-    this.isForGift = false,
+    this.giftQuantity,
   });
 
   void paymentResultCallback(Map<String, String> result) {
-    react.toPaymentResultOffAll(result, itemId, isForGift: isForGift);
+    react.toPaymentResultOffAll(result, itemId, giftQuantity: giftQuantity);
   }
 }

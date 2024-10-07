@@ -10,10 +10,10 @@
       "type": "dart",
       "flutterMode": "debug",
       "args": [
-        // "--dart-define",
-        // "IS_DEV=true",
-        // "--dart-define",
-        // "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
+        "--dart-define",
+        "IS_DEV=true",
+        "--dart-define",
+        "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
       ]
     },
     {
@@ -22,10 +22,10 @@
       "type": "dart",
       "flutterMode": "release",
       "args": [
-        // "--dart-define",
-        // "IS_DEV=false",
-        // "--dart-define",
-        // "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
+        "--dart-define",
+        "IS_DEV=false",
+        "--dart-define",
+        "API_ENDPOINT=javelin-relaxed-garfish.ngrok-free.app"
       ]
     }
   ]

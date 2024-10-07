@@ -49,6 +49,14 @@ class StoreItemPageController extends PageController {
     react.toItemPurchase({item.value: buyQuantity}, withOpenGroupBuying: false);
   }
 
+  void onGiftClickHandler() {
+    react.toItemPurchase(
+      {item.value: buyQuantity},
+      withOpenGroupBuying: false,
+      isForGift: true,
+    );
+  }
+
   void onOpenGroupBuyingClickHandler() {
     react.toItemPurchase({item.value: 1}, withOpenGroupBuying: true);
   }

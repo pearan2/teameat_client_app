@@ -40,11 +40,13 @@ abstract class IImageSystem {
 
   /// icon
   SvgPicture searchLg({Color? color});
+  SvgPicture search({double? size, Color? color});
   SvgPicture get searchSm;
   Image get iconLikeShadow;
   Image get iconLikeShadowClicked;
   SvgPicture get iconLike;
   SvgPicture get iconLikeClicked;
+  SvgPicture close({double? size, Color? color});
   SvgPicture get closeLg;
   SvgPicture get closeSm;
 

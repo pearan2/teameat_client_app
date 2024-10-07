@@ -1382,8 +1382,16 @@ class TEDeletableButton extends StatelessWidget {
 class TEAddressLabel extends StatelessWidget {
   final String label;
   final TextStyle? style;
+  final double? paddingBetweenLabelAndIcon;
+  final double? iconSize;
 
-  const TEAddressLabel(this.label, {super.key, this.style});
+  const TEAddressLabel(
+    this.label, {
+    super.key,
+    this.style,
+    this.paddingBetweenLabelAndIcon = 4.0,
+    this.iconSize = 20.0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1391,8 +1399,8 @@ class TEAddressLabel extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(label, style: style ?? DS.textStyle.paragraph2.bold.b800.h14),
-        DS.space.hXTiny,
-        DS.image.downArrow(size: DS.space.xBase, color: DS.color.background700),
+        SizedBox(width: paddingBetweenLabelAndIcon),
+        DS.image.downArrow(size: iconSize, color: DS.color.background700),
       ],
     );
   }

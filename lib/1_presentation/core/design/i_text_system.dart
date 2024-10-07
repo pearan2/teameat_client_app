@@ -439,4 +439,6 @@ abstract class ITextSystem {
 
   String get categorySectionTitle;
   String get categorySectionDescription;
+
+  String get searchButtonShortText;
 }

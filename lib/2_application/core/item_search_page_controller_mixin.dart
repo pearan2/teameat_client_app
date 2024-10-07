@@ -94,6 +94,10 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
 
   @override
   void onSearchTextCompleted(String searchText) {
+    if (searchText.length == 1) {
+      showError(DS.text.itemSearchPageSearchTextHint);
+      return;
+    }
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);
     pagingController.refresh();

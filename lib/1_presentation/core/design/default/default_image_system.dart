@@ -430,6 +430,22 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  SvgPicture search({double? size, Color? color}) => SvgPicture.asset(
+        'assets/image/icon/search_sm.svg',
+        height: size ?? 13,
+        width: size ?? 13,
+        color: color ?? DS.color.background600,
+      );
+
+  @override
+  SvgPicture close({double? size, Color? color}) => SvgPicture.asset(
+        'assets/image/icon/close_sm.svg',
+        height: size ?? 13,
+        width: size ?? 13,
+        color: color ?? DS.color.background600,
+      );
+
+  @override
   SvgPicture get closeLg => SvgPicture.asset(
         'assets/image/icon/close_lg.svg',
         height: 24,

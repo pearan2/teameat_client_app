@@ -187,6 +187,9 @@ class TextSearcher extends StatefulWidget {
   final String? hintText;
   final bool autoFocus;
   final void Function(String)? onChanged;
+  final Widget Function(String value, bool isActive, void Function() unFocus)?
+      actionButtonBuilder;
+  final bool Function(String value)? needToActiveBuildActionButton;
   final EdgeInsetsGeometry? padding;
   final double prefixLeftPadding;
   final double suffixRightPadding;
@@ -201,10 +204,16 @@ class TextSearcher extends StatefulWidget {
       this.hintText,
       this.controller,
       this.padding,
+      this.actionButtonBuilder,
+      this.needToActiveBuildActionButton,
       this.prefixLeftPadding = 8.0,
       this.suffixRightPadding = 8.0,
       this.enabled = true,
-      this.value});
+      this.value})
+      : assert((actionButtonBuilder == null &&
+                needToActiveBuildActionButton == null) ||
+            (actionButtonBuilder != null &&
+                needToActiveBuildActionButton != null));
 
   @override
   State<TextSearcher> createState() => _TextSearcherState();
@@ -216,9 +225,15 @@ class _TextSearcherState extends State<TextSearcher> {
       widget.controller ?? TextEditingController(text: widget.value);
 
   late bool isShowResetButton = controller.text.isNotEmpty;
+  late bool isNeedToBuildActionButtonActive =
+      widget.needToActiveBuildActionButton?.call(controller.text) ?? false;
 
   void controllerListener() {
-    setState(() => isShowResetButton = controller.text.isNotEmpty);
+    setState(() {
+      isShowResetButton = controller.text.isNotEmpty;
+      isNeedToBuildActionButtonActive =
+          widget.needToActiveBuildActionButton?.call(controller.text) ?? false;
+    });
   }
 
   void init() {
@@ -255,6 +270,49 @@ class _TextSearcherState extends State<TextSearcher> {
     super.dispose();
   }
 
+  Widget _buildResetButton() {
+    return TEonTap(
+      onTap: () {
+        controller.text = '';
+        focusNode.unfocus();
+        widget.onCompleted(controller.text.trim());
+      },
+      child: Container(
+        width: DS.space.small,
+        height: DS.space.small,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(300),
+          color: DS.color.background300,
+        ),
+        child: DS.image.close(
+          size: DS.space.tiny,
+          color: DS.color.background000,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton() {
+    if (widget.actionButtonBuilder == null) {
+      return const SizedBox();
+    }
+    return widget.actionButtonBuilder!(
+      controller.text,
+      isNeedToBuildActionButtonActive,
+      focusNode.unfocus,
+    );
+  }
+
+  Widget _buildSuffix() {
+    return Row(
+      children: [
+        _buildResetButton().orEmpty(isShowResetButton),
+        DS.space.hTiny.orEmpty(isShowResetButton),
+        _buildActionButton(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
@@ -268,19 +326,11 @@ class _TextSearcherState extends State<TextSearcher> {
       onChanged: widget.onChanged,
       cursorColor: DS.color.primary600,
       padding: widget.padding ?? EdgeInsets.all(DS.space.tiny),
-      prefix: DS.image.searchSm.paddingOnly(left: widget.prefixLeftPadding),
-      suffix: isShowResetButton
-          ? TEonTap(
-              onTap: () {
-                controller.text = '';
-                widget.onCompleted(controller.text.trim());
-              },
-              child: DS.image.closeLg
-                  .paddingOnly(right: widget.suffixRightPadding))
-          : null,
-      placeholderStyle: DS.textStyle.caption1.b500,
+      prefix: DS.image.search().paddingOnly(left: widget.prefixLeftPadding),
+      suffix: _buildSuffix().paddingOnly(right: widget.suffixRightPadding),
+      placeholderStyle: DS.textStyle.caption1.h12.b600,
       placeholder: widget.hintText ?? DS.text.textSearcherPlaceHolder,
-      style: DS.textStyle.caption1.b800,
+      style: DS.textStyle.caption1.h12.b800,
       decoration: BoxDecoration(
         color: DS.color.background100,
         borderRadius: BorderRadius.circular(DS.space.xTiny),

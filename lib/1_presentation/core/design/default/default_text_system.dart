@@ -1205,4 +1205,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get categorySectionTitle => '카테고리별로 보기';
+
+  @override
+  String get searchButtonShortText => '검색';
 }

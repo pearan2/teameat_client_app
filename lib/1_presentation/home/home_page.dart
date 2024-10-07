@@ -66,24 +66,7 @@ class HomePage extends GetView<HomePageController> {
                   toolbarHeight: DS.space.large,
                   flexibleSpace: const HomePageSearcher(),
                 ),
-                TEonTap(
-                  onTap: () => c.react.toStoreItemSearch(
-                      searchOption: SearchSimpleList.empty().copyWith(
-                    address: c.selectedAddress,
-                    order: Code.itemOrderManyLike(),
-                    pageSize: 10,
-                  )),
-                  child: TextSearcher(
-                    onCompleted: (_) {},
-                    padding: EdgeInsets.symmetric(
-                      vertical: DS.space.xSmall,
-                      horizontal: DS.space.tiny,
-                    ),
-                    prefixLeftPadding: DS.space.xSmall,
-                    enabled: false,
-                  ),
-                ).withBasePadding.toSliver,
-                sectionHalfSpacingWidget.toSliver,
+                const HomePageTextSearcher().withBasePadding.toSliver,
                 Obx(() => GroupBuyingSection(
                       selectedAddress: c.selectedAddress,
                       refreshCount: c.sectionRefreshCount,
@@ -200,6 +183,35 @@ class HomePageSearcher extends GetView<HomePageController> {
                 ).orEmpty(!c.locationController.isPermitted),
               )),
         ],
+      ),
+    );
+  }
+}
+
+class HomePageTextSearcher extends GetView<HomePageController> {
+  const HomePageTextSearcher({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () => c.react.toStoreItemSearch(
+          searchOption: SearchSimpleList.empty().copyWith(
+        address: c.selectedAddress,
+        order: Code.itemOrderManyLike(),
+        pageSize: 10,
+      )),
+      child: Container(
+        alignment: Alignment.center,
+        height: DS.space.large,
+        child: TextSearcher(
+          onCompleted: (_) {},
+          padding: EdgeInsets.symmetric(
+            vertical: DS.space.tiny,
+            horizontal: DS.space.tiny,
+          ),
+          prefixLeftPadding: DS.space.xSmall,
+          enabled: false,
+        ),
       ),
     );
   }

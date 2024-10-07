@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
@@ -16,7 +17,6 @@ import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
-import 'package:teameat/main.dart';
 
 class StoreItemSearchPage extends GetView<StoreItemSearchPageController> {
   const StoreItemSearchPage({super.key});
@@ -31,7 +31,10 @@ class StoreItemSearchPage extends GetView<StoreItemSearchPageController> {
     final scrollController = ScrollController();
 
     return TEScaffold(
-      appBar: TEAppBar(title: c.title),
+      appBar: TEAppBar(
+        title: c.title,
+        leadingIconOnPressed: c.react.back,
+      ),
       onFloatingButtonClick: () {
         if (scrollController.hasClients) {
           scrollController.animateTo(0,
@@ -88,97 +91,104 @@ class SearchTools extends GetView<StoreItemSearchPageController> {
 
   const SearchTools({super.key});
 
+  Widget _buildLabelIcon(String label) {
+    final locationTextStyle = DS.textStyle.caption1.semiBold.b700.h14;
+    return TEAddressLabel(
+      label,
+      paddingBetweenLabelAndIcon: 0,
+      style: locationTextStyle,
+      iconSize: DS.space.xSmall,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final locationTextStyle = DS.textStyle.paragraph3.semiBold.b800.h14;
-
-    return Container(
-      height: height,
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(
-        left: AppWidget.horizontalPadding,
-        right: AppWidget.horizontalPadding,
-        bottom: DS.space.xBase,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Obx(() => TESelectorBottomSheet<SearchableAddress?>(
-                      candidates: [...c.searchableAddresses, null],
-                      onSelected: c.onSelectedAddressChanged,
-                      isEqual: (lhs, rhs) => lhs == rhs,
-                      toLabel: (v) {
-                        if (v == null) {
-                          return DS.text.noEupMyeonDongLimit;
-                        } else {
-                          return v.toLongLabel();
-                        }
-                      },
-                      selectedValue: c.selectedAddress,
-                      title: c.searchableAddresses.length
-                          .format(DS.text.numberOfServicedEupMyeonDongFormat),
-                      icon: TEAddressLabel(
-                        DS.text.all,
-                        style: locationTextStyle,
-                      ),
-                      iconActivated: TEAddressLabel(
-                        c.selectedAddress?.toShortLabel() ?? '',
-                        style: locationTextStyle,
-                      ),
-                    )),
-                const Expanded(child: SizedBox()),
-                Obx(() => TESelectorBottomSheet<int?>(
-                      candidates: const [500, 1000, 2000, null],
-                      onSelected: c.onWithInMeterChanged,
-                      isEqual: (lhs, rhs) => lhs == rhs,
-                      toLabel: (v) {
-                        if (v == null) {
-                          return DS.text.noDistanceLimit;
-                        } else {
-                          return v.format(DS.text.withInMeterFormat);
-                        }
-                      },
-                      selectedValue: c.withInMeter,
-                      icon: TEAddressLabel(
-                        DS.text.noDistanceLimit,
-                        style: locationTextStyle,
-                      ),
-                      iconActivated: TEAddressLabel(
-                        c.withInMeter?.format(DS.text.withInMeterFormat) ?? '',
-                        style: locationTextStyle,
-                      ),
-                    )),
-              ],
-            ),
-          ),
-          Expanded(
-              child: Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          height: DS.space.medium,
+          child: Row(
             children: [
-              Expanded(
-                child: TextSearcher(
-                  onCompleted: c.onSearchTextCompleted,
-                  controller: c.searchTextController,
-                  hintText: DS.text.itemSearchPageSearchTextHint,
-                  autoFocus: false,
+              Obx(() => TESelectorBottomSheet<SearchableAddress?>(
+                    candidates: [...c.searchableAddresses, null],
+                    onSelected: c.onSelectedAddressChanged,
+                    isEqual: (lhs, rhs) => lhs == rhs,
+                    toLabel: (v) {
+                      if (v == null) {
+                        return DS.text.noEupMyeonDongLimit;
+                      } else {
+                        return v.toLongLabel();
+                      }
+                    },
+                    selectedValue: c.selectedAddress,
+                    title: c.searchableAddresses.length
+                        .format(DS.text.numberOfServicedEupMyeonDongFormat),
+                    icon: _buildLabelIcon(DS.text.all),
+                    iconActivated: _buildLabelIcon(
+                        c.selectedAddress?.toShortLabel() ?? ''),
+                  )),
+              const Expanded(child: SizedBox()),
+              Obx(() => TESelectorBottomSheet<int?>(
+                    candidates: const [500, 1000, 2000, null],
+                    onSelected: c.onWithInMeterChanged,
+                    isEqual: (lhs, rhs) => lhs == rhs,
+                    toLabel: (v) {
+                      if (v == null) {
+                        return DS.text.noDistanceLimit;
+                      } else {
+                        return v.format(DS.text.withInMeterFormat);
+                      }
+                    },
+                    selectedValue: c.withInMeter,
+                    icon: _buildLabelIcon(DS.text.noDistanceLimit),
+                    iconActivated: _buildLabelIcon(
+                        c.withInMeter?.format(DS.text.withInMeterFormat) ?? ''),
+                  )),
+            ],
+          ),
+        ),
+        Container(
+            alignment: Alignment.center,
+            height: DS.space.large,
+            child: TextSearcher(
+              onCompleted: c.onSearchTextCompleted,
+              controller: c.searchTextController,
+              prefixLeftPadding: DS.space.xSmall,
+              padding: EdgeInsets.symmetric(
+                  vertical: DS.space.tiny, horizontal: DS.space.xSmall),
+              hintText: DS.text.itemSearchPageSearchTextHint,
+              needToActiveBuildActionButton: (value) => value.length >= 2,
+              actionButtonBuilder: (value, isActive, unFocus) => TEonTap(
+                onTap: () {
+                  if (!isActive) return;
+                  unFocus();
+                  c.onSearchTextCompleted(value);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: DS.space.medium,
+                  height: DS.space.xBase,
+                  decoration: BoxDecoration(
+                    color:
+                        isActive ? DS.color.primary600 : DS.color.background000,
+                    borderRadius: BorderRadius.circular(DS.space.xTiny),
+                  ),
+                  child: Text(
+                    DS.text.searchButtonShortText,
+                    style: DS.textStyle.caption2.semiBold.copyWith(
+                      color: isActive
+                          ? DS.color.background000
+                          : DS.color.background600,
+                    ),
+                  ),
                 ),
               ),
-              DS.space.hTiny,
-              TEPrimaryButton(
-                onTap: () =>
-                    c.onSearchTextCompleted(c.searchTextController.text),
-                textStyle: DS.textStyle.caption1.semiBold,
-                contentHorizontalPadding: DS.space.xTiny,
-                text: DS.text.search,
-                height: DS.space.base,
-                fitContentWidth: true,
-              )
-            ],
-          )),
-          DS.space.vXTiny,
-          Obx(
+              autoFocus: false,
+            )),
+        SizedBox(
+          height: DS.space.medium,
+          child: Obx(
             () => TESelectorBottomSheet<Code>(
               candidates: c.orders,
               onSelected: c.onOrderChanged,
@@ -196,9 +206,9 @@ class SearchTools extends GetView<StoreItemSearchPageController> {
               ),
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ).withBasePadding;
   }
 }
 

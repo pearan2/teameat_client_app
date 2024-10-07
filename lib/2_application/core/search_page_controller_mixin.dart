@@ -27,6 +27,7 @@ abstract class SearchPageController<T> extends PageController {
   void clearSearchOption();
   void beforeClearSearchOption();
   void onSearchTextCompleted(String searchText);
+  void onCategorySelected(Code? category);
   Future<void> onSelectedAddressChanged(SearchableAddress? address);
   Future<void> onWithInMeterChanged(int? value);
   Future<void> onOrderChanged(Code order);
@@ -103,6 +104,13 @@ mixin SearchPageControllerMixin<T> on SearchPageController<T> {
     }
     _searchOption.value =
         searchOption.copyWith(searchText: searchText, pageNumber: 0);
+    pagingController.refresh();
+  }
+
+  @override
+  void onCategorySelected(Code? category) {
+    _searchOption.value =
+        searchOption.copyWith(category: category, pageNumber: 0);
     pagingController.refresh();
   }
 

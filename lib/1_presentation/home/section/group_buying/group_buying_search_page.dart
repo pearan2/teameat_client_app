@@ -22,7 +22,8 @@ class GroupBuyingSearchPage extends GetView<GroupBuyingSearchPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return TEScaffold(
+    return Obx(() => TEScaffold(
+        loading: c.loading,
         appBar: TEAppBar(
           leadingIconOnPressed: c.react.back,
           title: DS.text.groupBuyingSectionTitle,
@@ -105,6 +106,6 @@ class GroupBuyingSearchPage extends GetView<GroupBuyingSearchPageController> {
               ),
             ),
           ],
-        ));
+        )));
   }
 }

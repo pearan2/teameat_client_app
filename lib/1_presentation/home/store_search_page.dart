@@ -28,57 +28,59 @@ class StoreSearchPage extends GetView<StoreSearchPageController> {
 
     final scrollController = ScrollController();
 
-    return TEScaffold(
-      appBar: TEAppBar(
-        title: DS.text.storeSearchPage,
-        leadingIconOnPressed: c.react.back,
-      ),
-      onFloatingButtonClick: () {
-        if (scrollController.hasClients) {
-          scrollController.animateTo(0,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.bounceInOut);
-        }
-      },
-      body: TERefreshIndicator(
-        onRefresh: controller.refreshPage,
-        child: CustomScrollView(
-          controller: scrollController,
-          physics: const ClampingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            SliverAppBar(
-              backgroundColor: DS.color.background000,
-              surfaceTintColor: DS.color.background000,
-              automaticallyImplyLeading: false,
-              snap: true,
-              floating: true,
-              primary: false,
-              toolbarHeight: SearchTools.height,
-              flexibleSpace: const SearchTools(),
-            ),
-            PagedSliverGrid(
-                pagingController: c.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
-                  itemBuilder: (_, store, idx) => StoreSimpleColumnCard(
-                    store: store,
-                    onTap: c.react.toStoreDetail,
-                    width: imageWidth,
-                    height: imageWidth / imageRatio,
-                  ),
-                  noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
+    return Obx(() => TEScaffold(
+          loading: c.loading,
+          appBar: TEAppBar(
+            title: DS.text.storeSearchPage,
+            leadingIconOnPressed: c.react.back,
+          ),
+          onFloatingButtonClick: () {
+            if (scrollController.hasClients) {
+              scrollController.animateTo(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.bounceInOut);
+            }
+          },
+          body: TERefreshIndicator(
+            onRefresh: controller.refreshPage,
+            child: CustomScrollView(
+              controller: scrollController,
+              physics: const ClampingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: DS.color.background000,
+                  surfaceTintColor: DS.color.background000,
+                  automaticallyImplyLeading: false,
+                  snap: true,
+                  floating: true,
+                  primary: false,
+                  toolbarHeight: SearchTools.height,
+                  flexibleSpace: const SearchTools(),
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: imageRatio, // Todo 비율 조정
-                  crossAxisSpacing: crossAxisSpacing,
-                  mainAxisSpacing: DS.space.xSmall,
-                  crossAxisCount: 2,
-                )),
-            DS.space.vMedium.toSliver,
-          ],
-        ),
-      ),
-    );
+                PagedSliverGrid(
+                    pagingController: c.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<StoreSimple>(
+                      itemBuilder: (_, store, idx) => StoreSimpleColumnCard(
+                        store: store,
+                        onTap: c.react.toStoreDetail,
+                        width: imageWidth,
+                        height: imageWidth / imageRatio,
+                      ),
+                      noItemsFoundIndicatorBuilder: (_) =>
+                          const SearchNotFound(),
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: imageRatio, // Todo 비율 조정
+                      crossAxisSpacing: crossAxisSpacing,
+                      mainAxisSpacing: DS.space.xSmall,
+                      crossAxisCount: 2,
+                    )),
+                DS.space.vMedium.toSliver,
+              ],
+            ),
+          ),
+        ));
   }
 }
 

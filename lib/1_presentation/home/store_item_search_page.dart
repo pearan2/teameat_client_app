@@ -29,59 +29,61 @@ class StoreItemSearchPage extends GetView<StoreItemSearchPageController> {
 
     final scrollController = ScrollController();
 
-    return TEScaffold(
-      appBar: TEAppBar(
-        title: c.title,
-        leadingIconOnPressed: c.react.back,
-      ),
-      onFloatingButtonClick: () {
-        if (scrollController.hasClients) {
-          scrollController.animateTo(0,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.bounceInOut);
-        }
-      },
-      body: TERefreshIndicator(
-        onRefresh: controller.refreshPage,
-        child: CustomScrollView(
-          controller: scrollController,
-          physics: const ClampingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            SliverAppBar(
-              backgroundColor: DS.color.background000,
-              surfaceTintColor: DS.color.background000,
-              automaticallyImplyLeading: false,
-              snap: true,
-              floating: true,
-              primary: false,
-              toolbarHeight: SearchTools.height,
-              flexibleSpace: const SearchTools(),
-            ),
-            PagedSliverGrid(
-                pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
-                  itemBuilder: (_, item, idx) => StoreItemColumnCard(
-                    imageWidth: imageWidth,
-                    item: item,
-                    infoBoxHorizontalPadding: DS.space.tiny,
-                    onTap: c.react.toStoreItemDetail,
-                  ),
-                  noItemsFoundIndicatorBuilder: (_) => const SearchNotFound(),
+    return Obx(() => TEScaffold(
+          loading: c.loading,
+          appBar: TEAppBar(
+            title: c.title,
+            leadingIconOnPressed: c.react.back,
+          ),
+          onFloatingButtonClick: () {
+            if (scrollController.hasClients) {
+              scrollController.animateTo(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.bounceInOut);
+            }
+          },
+          body: TERefreshIndicator(
+            onRefresh: controller.refreshPage,
+            child: CustomScrollView(
+              controller: scrollController,
+              physics: const ClampingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: DS.color.background000,
+                  surfaceTintColor: DS.color.background000,
+                  automaticallyImplyLeading: false,
+                  snap: true,
+                  floating: true,
+                  primary: false,
+                  toolbarHeight: SearchTools.height,
+                  flexibleSpace: const SearchTools(),
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: imageWidth /
-                      StoreItemColumnCard.calcTotalHeight(
-                          imageWidth), // Todo 비율 조정
-                  crossAxisSpacing: crossAxisSpacing,
-                  mainAxisSpacing: DS.space.xBase,
-                  crossAxisCount: 2,
-                )),
-            DS.space.vMedium.toSliver,
-          ],
-        ),
-      ),
-    );
+                PagedSliverGrid(
+                    pagingController: controller.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<ItemSimple>(
+                      itemBuilder: (_, item, idx) => StoreItemColumnCard(
+                        imageWidth: imageWidth,
+                        item: item,
+                        infoBoxHorizontalPadding: DS.space.tiny,
+                        onTap: c.react.toStoreItemDetail,
+                      ),
+                      noItemsFoundIndicatorBuilder: (_) =>
+                          const SearchNotFound(),
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: imageWidth /
+                          StoreItemColumnCard.calcTotalHeight(
+                              imageWidth), // Todo 비율 조정
+                      crossAxisSpacing: crossAxisSpacing,
+                      mainAxisSpacing: DS.space.xBase,
+                      crossAxisCount: 2,
+                    )),
+                DS.space.vMedium.toSliver,
+              ],
+            ),
+          ),
+        ));
   }
 }
 

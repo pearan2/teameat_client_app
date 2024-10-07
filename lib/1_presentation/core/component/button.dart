@@ -383,6 +383,7 @@ class TESelectorGrid<T> extends StatelessWidget {
   final List<T> candidates;
   final void Function(T) onTap;
   final Widget Function(T value, bool isSelected) builder;
+  final List<int>? numberOfRowChildrenCounts;
   final int numberOfRowChildren;
   final double rowSpacing;
   final double columnSpacing;
@@ -395,15 +396,17 @@ class TESelectorGrid<T> extends StatelessWidget {
     required this.onTap,
     required this.builder,
     this.isEqual,
+    this.numberOfRowChildrenCounts,
     this.numberOfRowChildren = 1,
     this.rowSpacing = 8.0,
     this.columnSpacing = 12.0,
-  }) : assert(numberOfRowChildren == 0 ||
-            (candidates.length % numberOfRowChildren == 0));
+  }) : assert((numberOfRowChildren == 0 ||
+            (candidates.length % numberOfRowChildren == 0)));
 
   Widget Function(T, bool) getBuilder() {
     bool flushed = false;
     int childCount = 0;
+    int columnIdx = 0;
     final List<Widget> buffer = [];
 
     return (value, isSelected) {
@@ -412,9 +415,11 @@ class TESelectorGrid<T> extends StatelessWidget {
               onTap: () => onTap(value), child: builder(value, isSelected))));
       childCount++;
 
-      if (childCount >= numberOfRowChildren) {
+      if (childCount >=
+          (numberOfRowChildrenCounts?[columnIdx] ?? numberOfRowChildren)) {
         /// flush
         final bufferCopy = [...buffer];
+        columnIdx++;
         buffer.clear();
         childCount = 0;
         Widget row = Row(children: bufferCopy);
@@ -652,7 +657,7 @@ class TERowButton extends StatelessWidget {
       child: Padding(
         padding: padding ??
             EdgeInsets.symmetric(
-                horizontal: DS.space.xBase, vertical: DS.space.small),
+                horizontal: DS.space.small, vertical: DS.space.xSmall),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

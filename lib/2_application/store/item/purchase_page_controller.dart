@@ -38,7 +38,7 @@ class PurchasePageController extends PageController {
 
   List<PaymentMethod> get purchaseMethods => [
         PaymentMethod.card(),
-        // PaymentMethod.naver(), -> 웰컴페이먼츠로 변경되면서 사용불가.
+        // PaymentMethod.naver(), //-> 웰컴페이먼츠로 변경되면서 사용불가.
         PaymentMethod.kakao(),
         PaymentMethod.toss()
       ];

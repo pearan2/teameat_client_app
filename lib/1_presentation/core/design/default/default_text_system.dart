@@ -228,7 +228,7 @@ class DefaultTextSystem extends ITextSystem {
   String get successUseVoucher => '이용권을 정상적으로 사용했어요 :)';
 
   @override
-  String get businessRegistrationInformation => '사업자등록정보';
+  String get businessRegistrationInformation => '사업자 등록정보';
 
   @override
   String get logOut => '로그아웃';

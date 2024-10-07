@@ -176,7 +176,7 @@ class HomePageSearcher extends GetView<HomePageController> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: DS.space.tiny,
-                    vertical: DS.space.xTiny,
+                    vertical: DS.space.tiny,
                   ),
                   alignment: Alignment.center,
                   child: Row(

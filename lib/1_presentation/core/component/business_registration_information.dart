@@ -1,78 +1,43 @@
 import 'package:flutter/widgets.dart';
-import 'package:teameat/1_presentation/core/component/divider.dart';
 import 'package:teameat/1_presentation/core/component/info_row.dart';
-import 'package:teameat/1_presentation/core/component/on_tap.dart';
+import 'package:teameat/1_presentation/core/component/text.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
-import 'package:teameat/2_application/core/clipboard.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:teameat/99_util/extension/text_style.dart';
+import 'package:teameat/99_util/extension/widget.dart';
 
 class BusinessRegistrationInformation extends StatelessWidget {
   const BusinessRegistrationInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              DS.text.businessRegistrationInformation,
-              style: DS.textStyle.paragraph1.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          ],
-        ),
-        DS.space.vTiny,
-        PaddingInfoRow(
-          title: DS.text.businessName,
-          content: '파이어니어스',
-        ),
-        TEDivider.normal(),
-        PaddingInfoRow(
-          title: DS.text.businessMailOrderSalesRegistrationNumber,
-          content: '309-30-01543',
-        ),
-        TEDivider.normal(),
-        PaddingInfoRow(
-          title: DS.text.businessMailOrderSalesRegistrationNumber,
-          content: '2023-대구수성구-0883',
-        ),
-        TEDivider.normal(),
-        PaddingInfoRow(
-          title: DS.text.businessCEO,
-          content: '이세웅',
-        ),
-        TEDivider.normal(),
-        PaddingInfoRow(
-          title: DS.text.businessCOCEO,
-          content: '황재용',
-        ),
-        TEDivider.normal(),
-        PaddingInfoRow(
-          title: DS.text.businessEmail,
-          content: 'sadol7797@teameat.kr',
-        ),
-        TEDivider.normal(),
-        TEonTap(
-          onTap: () => TEClipboard.setText('대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)'),
-          child: PaddingInfoRow(
-            title: DS.text.businessAddress,
-            content: '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
-          ),
-        ),
-        TEDivider.normal(),
-        TEonTap(
-          onTap: () => launchUrlString('tel:010-2995-2797'),
-          child: PaddingInfoRow(
-            withUnderLine: true,
-            title: DS.text.businessPhone,
-            content: '010-2995-2797',
-          ),
-        ),
+    return TETitleContentText(
+      titles: [
+        DS.text.businessName,
+        DS.text.businessRegistrationNumber,
+        DS.text.businessMailOrderSalesRegistrationNumber,
+        DS.text.businessCEO,
+        DS.text.businessCOCEO,
+        DS.text.businessEmail,
+        DS.text.businessAddress,
+        DS.text.businessPhone,
       ],
+      contents: const [
+        '파이어니어스',
+        '309-30-01543',
+        '2023-대구수성구-0883',
+        '이세웅',
+        '황재용',
+        'sadol7797@teameat.kr',
+        '대구광역시 수성구 알파시티1로4길 8, 608호(대흥동)',
+        '010-2995-2797',
+      ],
+      titleStyle: DS.textStyle.caption1.semiBold.b600.h14,
+      contentStyle: DS.textStyle.caption1.b600.h14,
+    ).withTitle(
+      DS.text.businessRegistrationInformation,
+      spacing: DS.space.tiny,
+      style: DS.textStyle.paragraph2.semiBold.b800.h14,
+      withBasePadding: false,
     );
   }
 }

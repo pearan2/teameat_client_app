@@ -1,4 +1,3 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teameat/1_presentation/core/component/business_registration_information.dart';
@@ -19,6 +18,7 @@ import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
 import 'package:teameat/99_util/get.dart';
+import 'package:teameat/main.dart';
 
 class PurchasePage extends GetView<PurchasePageController> {
   const PurchasePage({super.key});
@@ -50,25 +50,25 @@ class PurchasePage extends GetView<PurchasePageController> {
             Text(DS.text.purchaseMethod,
                     style: DS.textStyle.paragraph3
                         .copyWith(fontWeight: FontWeight.bold))
-                .paddingSymmetric(horizontal: DS.space.xBase),
+                .withBasePadding,
             DS.space.vTiny,
             Text(DS.text.purchaseHanaCardDisableNotice,
                     style: DS.textStyle.caption1.semiBold.point.h14)
-                .paddingSymmetric(horizontal: DS.space.xBase),
+                .withBasePadding,
             DS.space.vSmall,
-            const PurchaseMethodSelector()
-                .paddingSymmetric(horizontal: DS.space.xBase),
+            const PurchaseMethodSelector().withBasePadding,
             DS.space.vBase,
             const CouponList(),
-            const PurchaseDivider(),
-            DS.space.vBase,
+            TEDivider.normal(),
+            DS.space.vTiny,
             const TEServicePolicyButton(),
             const TEPrivacyPolicyButton(),
+            DS.space.vTiny,
+            TEDivider.normal(),
             DS.space.vBase,
-            const DottedLine(),
-            DS.space.vBase,
-            const BusinessRegistrationInformation(),
+            const BusinessRegistrationInformation().withBasePadding,
             DS.space.vLarge,
+            DS.space.vBase,
           ],
         ),
       ),
@@ -110,12 +110,16 @@ class PurchaseMethodSelector extends GetView<PurchasePageController> {
         selectedValues: controller.purchaseMethod == null
             ? []
             : [controller.purchaseMethod!],
+        columnSpacing: DS.space.tiny,
         candidates: controller.purchaseMethods,
-        numberOfRowChildren: 1,
+        numberOfRowChildrenCounts: [1, controller.purchaseMethods.length - 1],
         onTap: controller.onPurchaseMethodClick,
         builder: (value, isSelected) => TEToggle(
+          borderRadius: DS.space.xTiny,
+          height: DS.space.xLarge,
           text: value.method,
           isSelected: isSelected,
+          textStyle: DS.textStyle.caption1.semiBold.b800,
         ),
       ),
     );
@@ -193,7 +197,8 @@ class PurchaseItemInfoList extends GetView<PurchasePageController> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
+      padding:
+          const EdgeInsets.symmetric(horizontal: AppWidget.horizontalPadding),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (_, idx) => PurchaseItemInfoCard(
@@ -252,14 +257,11 @@ class PurchaseButton extends GetView<PurchasePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: DS.space.xBase),
-      child: Obx(() => TEPrimaryButton(
-            listenEventLoading: true,
-            onTap: c.onPurchaseClick,
-            text:
-                '${c.totalPrice.format(DS.text.priceFormat)} ${c.isForGift ? DS.text.giftAfterPurchase : DS.text.purchase}',
-          )),
-    );
+    return Obx(() => TEPrimaryButton(
+          listenEventLoading: true,
+          onTap: c.onPurchaseClick,
+          text:
+              '${c.totalPrice.format(DS.text.priceFormat)} ${c.isForGift ? DS.text.giftAfterPurchase : DS.text.purchase}',
+        )).withBasePadding;
   }
 }

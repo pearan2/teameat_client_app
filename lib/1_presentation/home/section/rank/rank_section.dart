@@ -100,7 +100,7 @@ class _ItemRankSectionState extends State<ItemRankSection> {
                     ).paddingHorizontal(DS.space.tiny),
                     withLike: false,
                     onTap: Get.find<IReact>().toStoreItemDetail,
-                  ),
+                  ).paddingSymmetric(horizontal: DS.space.xTiny),
               options: CarouselOptions(
                 enlargeFactor: 0.3,
                 enlargeCenterPage: true,

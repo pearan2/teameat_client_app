@@ -205,9 +205,8 @@ class StoreTimeInfoExpandable extends StatelessWidget {
 
 class Category extends StatelessWidget {
   final Code categoryCode;
-  final int idx;
 
-  const Category(this.categoryCode, {super.key, required this.idx});
+  const Category(this.categoryCode, {super.key});
 
   static const size = 40.0;
 
@@ -218,7 +217,8 @@ class Category extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(
-            categoryCode.localImageUrl(idx),
+            categoryCode.localAssetPath ??
+                'assets/image/icon/category/category_1.png',
             width: size,
             height: size,
           ),

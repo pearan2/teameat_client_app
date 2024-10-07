@@ -284,7 +284,7 @@ class DefaultTextSystem extends ITextSystem {
   String get howAboutThisItem => '혹시 이런 상품은 어떠세요?';
 
   @override
-  String get searchNotFound => '검색된 상품이 없어요';
+  String get searchNotFound => '검색된 결과가 없어요';
 
   @override
   String get clearSearchOption => '검색 조건 초기화 하기';
@@ -1211,4 +1211,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get curationRewardFormat => '###원 획득!';
+
+  @override
+  String get storeSearchPage => '가게 검색';
 }

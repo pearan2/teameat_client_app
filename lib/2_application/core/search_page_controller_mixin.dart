@@ -21,8 +21,7 @@ abstract class SearchPageController<T> extends PageController {
   SearchSimpleList get initialSearchOption;
   PagingController<int, T> get pagingController;
   DataLoader<T> get dataLoader;
-  RecommendDataLoader<T>? get recommendDataLoader;
-
+  RecommendDataLoader<T>? get recommendDataLoader => null;
   void onCardClickHandler(int id);
   Future<void> refreshPage();
   void clearSearchOption();
@@ -33,7 +32,7 @@ abstract class SearchPageController<T> extends PageController {
   Future<void> onOrderChanged(Code order);
 }
 
-mixin ItemSearchPageControllerMixin<T> on SearchPageController<T> {
+mixin SearchPageControllerMixin<T> on SearchPageController<T> {
   /// 상수
   final numberOfRecommendRequestItems = 1;
 

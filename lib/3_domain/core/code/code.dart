@@ -4,14 +4,6 @@ part 'code.freezed.dart';
 
 part 'code.g.dart';
 
-extension CategoryCodeExtension on Code {
-  String localImageUrl(int idx) =>
-      'assets/image/icon/category/category_$idx.png';
-
-  String networkImageUrl(int idx) =>
-      'https://teameat-prod-read-public.s3.ap-northeast-2.amazonaws.com/base/category_$idx.png';
-}
-
 @freezed
 class CodeInner with _$CodeInner {
   const factory CodeInner({
@@ -28,8 +20,34 @@ class Code with _$Code {
   const factory Code({
     required String code,
     required String title,
+    String? localAssetPath,
     List<CodeInner>? children,
   }) = _Code;
+
+  static List<Code> getLargeCategories() {
+    return const [
+      Code(
+          code: "S_001",
+          title: "한식 분식\n고기",
+          localAssetPath: 'assets/image/icon/category/category_0.png'),
+      Code(
+          code: "S_002",
+          title: "양식 카페\n디저트",
+          localAssetPath: 'assets/image/icon/category/category_1.png'),
+      Code(
+          code: "S_003",
+          title: "중식 일식\n아시안",
+          localAssetPath: 'assets/image/icon/category/category_2.png'),
+      Code(
+          code: "S_004",
+          title: "치킨 피자\n버거",
+          localAssetPath: 'assets/image/icon/category/category_3.png'),
+      Code(
+          code: "S_005",
+          title: "술집 야식\n안주",
+          localAssetPath: 'assets/image/icon/category/category_4.png'),
+    ];
+  }
 
   factory Code.fromJson(Map<String, Object?> json) => _$CodeFromJson(json);
 

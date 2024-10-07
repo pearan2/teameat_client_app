@@ -205,8 +205,13 @@ class StoreTimeInfoExpandable extends StatelessWidget {
 
 class Category extends StatelessWidget {
   final Code categoryCode;
+  final bool isSelected;
 
-  const Category(this.categoryCode, {super.key});
+  const Category(
+    this.categoryCode, {
+    super.key,
+    this.isSelected = false,
+  });
 
   static const size = 40.0;
 
@@ -225,7 +230,9 @@ class Category extends StatelessWidget {
           DS.space.vTiny,
           Text(
             categoryCode.title,
-            style: DS.textStyle.caption1.h12.b600,
+            style: isSelected
+                ? DS.textStyle.caption1.h12.p700.bold
+                : DS.textStyle.caption1.h12.b600,
             textAlign: TextAlign.center,
           ),
         ],

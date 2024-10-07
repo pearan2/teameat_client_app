@@ -13,6 +13,7 @@ class CategorySection extends StatelessWidget {
   final bool withTitle;
   final double verticalPadding;
   final double horizontalPadding;
+  final Code? selectedCode;
 
   const CategorySection({
     super.key,
@@ -20,6 +21,7 @@ class CategorySection extends StatelessWidget {
     this.verticalPadding = 16.0,
     this.horizontalPadding = AppWidget.horizontalPadding,
     this.withTitle = true,
+    this.selectedCode,
   });
 
   List<Widget> _buildCategories(List<Code> categories) {
@@ -28,7 +30,10 @@ class CategorySection extends StatelessWidget {
       ret.add(
         TEonTap(
             onTap: () => onCategorySelected(categories[i]),
-            child: Category(categories[i])),
+            child: Category(
+              categories[i],
+              isSelected: categories[i] == selectedCode,
+            )),
       );
     }
     return ret;

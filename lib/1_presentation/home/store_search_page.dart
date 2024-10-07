@@ -6,6 +6,7 @@ import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
 import 'package:teameat/1_presentation/core/layout/app_bar.dart';
 import 'package:teameat/1_presentation/core/layout/scaffold.dart';
+import 'package:teameat/1_presentation/home/section/category/category_section.dart';
 import 'package:teameat/1_presentation/home/section/recent_store/recent_store_section.dart';
 import 'package:teameat/2_application/home/store_search_page_controller.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
@@ -146,6 +147,17 @@ class SearchTools extends GetView<StoreSearchPageController> {
             ],
           ),
         ),
+        Expanded(
+            child: Obx(() => Container(
+                  alignment: Alignment.center,
+                  child: CategorySection(
+                    withTitle: false,
+                    horizontalPadding: 0.0,
+                    verticalPadding: 0.0,
+                    onCategorySelected: c.onCategorySelected,
+                    selectedCode: c.searchOption.category,
+                  ),
+                )))
       ],
     ).withBasePadding;
   }

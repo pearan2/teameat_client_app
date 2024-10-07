@@ -109,8 +109,9 @@ mixin SearchPageControllerMixin<T> on SearchPageController<T> {
 
   @override
   void onCategorySelected(Code? category) {
-    _searchOption.value =
-        searchOption.copyWith(category: category, pageNumber: 0);
+    _searchOption.value = searchOption.copyWith(
+        category: searchOption.category == category ? null : category,
+        pageNumber: 0);
     pagingController.refresh();
   }
 

@@ -22,7 +22,7 @@ class GiftReceivePage extends GetView<GiftReceivePageController> {
               text: gift.isUsable ? DS.text.receiveGift : DS.text.back,
               onTap: gift.isUsable ? c.onReceiveGift : c.react.back,
             )),
-        bottomSheetBackgroundColor: DS.color.primary600,
+        bottomSheetBackgroundColor: DS.color.primary700,
         loading: c.isLoading,
         appBar: TEAppBar(
           leadingIconOnPressed: c.react.back,

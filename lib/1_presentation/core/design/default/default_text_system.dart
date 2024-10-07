@@ -1156,10 +1156,10 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get lastWeekBestRewardCurationDescription =>
-      throw UnimplementedError();
+      '지난 주 팀잇에서 제일 많은 리워드를 획득한 푸드로그는?';
 
   @override
-  String get lastWeekBestRewardCurationTitle => throw UnimplementedError();
+  String get lastWeekBestRewardCurationTitle => '🏆 명예의 전당';
 
   @override
   String get lastWeekBestSalesItemDescription => '다른 유저는 지난주, 어떤걸 먹었을까요?';

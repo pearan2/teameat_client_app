@@ -179,6 +179,47 @@ class _TextSearchOverlayState extends State<TextSearchOverlay> {
   }
 }
 
+class TextSearchDefaultSearchButtonBuilder extends StatelessWidget {
+  final bool isActive;
+  final String value;
+  final void Function() unFocus;
+  final void Function(String value) onSearchTextCompleted;
+
+  const TextSearchDefaultSearchButtonBuilder({
+    super.key,
+    required this.isActive,
+    required this.value,
+    required this.unFocus,
+    required this.onSearchTextCompleted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TEonTap(
+      onTap: () {
+        if (!isActive) return;
+        unFocus();
+        onSearchTextCompleted(value);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: DS.space.medium,
+        height: DS.space.xBase,
+        decoration: BoxDecoration(
+          color: isActive ? DS.color.primary600 : DS.color.background000,
+          borderRadius: BorderRadius.circular(DS.space.xTiny),
+        ),
+        child: Text(
+          DS.text.searchButtonShortText,
+          style: DS.textStyle.caption2.semiBold.copyWith(
+            color: isActive ? DS.color.background000 : DS.color.background600,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class TextSearcher extends StatefulWidget {
   final void Function(String) onCompleted;
   final FocusNode? focusNode;

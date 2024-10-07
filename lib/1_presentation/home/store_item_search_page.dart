@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/component/button.dart';
-import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/refresh_indicator.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/component/text_searcher.dart';
@@ -159,30 +158,12 @@ class SearchTools extends GetView<StoreItemSearchPageController> {
                   vertical: DS.space.tiny, horizontal: DS.space.xSmall),
               hintText: DS.text.itemSearchPageSearchTextHint,
               needToActiveBuildActionButton: (value) => value.length >= 2,
-              actionButtonBuilder: (value, isActive, unFocus) => TEonTap(
-                onTap: () {
-                  if (!isActive) return;
-                  unFocus();
-                  c.onSearchTextCompleted(value);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: DS.space.medium,
-                  height: DS.space.xBase,
-                  decoration: BoxDecoration(
-                    color:
-                        isActive ? DS.color.primary600 : DS.color.background000,
-                    borderRadius: BorderRadius.circular(DS.space.xTiny),
-                  ),
-                  child: Text(
-                    DS.text.searchButtonShortText,
-                    style: DS.textStyle.caption2.semiBold.copyWith(
-                      color: isActive
-                          ? DS.color.background000
-                          : DS.color.background600,
-                    ),
-                  ),
-                ),
+              actionButtonBuilder: (value, isActive, unFocus) =>
+                  TextSearchDefaultSearchButtonBuilder(
+                isActive: isActive,
+                value: value,
+                unFocus: unFocus,
+                onSearchTextCompleted: c.onSearchTextCompleted,
               ),
               autoFocus: false,
             )),

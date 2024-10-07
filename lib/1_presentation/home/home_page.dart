@@ -90,6 +90,10 @@ class HomePage extends GetView<HomePageController> {
                           DS.text.itemManyLikeSectionDescription,
                     )).toSliver,
                 sectionHalfSpacingWidget.toSliver,
+                Obx(() => CurationRankSection(
+                      address: c.selectedAddress,
+                      verticalPadding: sectionHalfSpacing,
+                    )).toSliver,
                 sectionHalfSpacingWidget.toSliver,
                 Obx(() => SimpleItemListSection(
                       searchOption:

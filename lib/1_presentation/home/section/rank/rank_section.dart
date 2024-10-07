@@ -19,8 +19,6 @@ class ItemRankSection extends StatefulWidget {
   final double imageWidth;
   final double imageHeight;
 
-  final double enlargementRatio;
-
   const ItemRankSection({
     super.key,
     this.refreshCount = 0,
@@ -28,7 +26,6 @@ class ItemRankSection extends StatefulWidget {
     this.address,
     this.imageWidth = 180,
     this.imageHeight = 240,
-    this.enlargementRatio = 1.2,
   });
 
   @override
@@ -38,7 +35,6 @@ class ItemRankSection extends StatefulWidget {
 class _ItemRankSectionState extends State<ItemRankSection> {
   List<StoreItemSalesStatistics> statistics = [];
   final _statisticsRepo = Get.find<IStatisticsRepository>();
-  final enlargeFactor = 1.2;
 
   Future<void> _loadStatistics() async {
     final ret = await _statisticsRepo.findItemStatistics(
@@ -108,6 +104,80 @@ class _ItemRankSectionState extends State<ItemRankSection> {
                 viewportFraction: 0.5,
               )),
         )
+      ],
+    ).paddingVertical(widget.verticalPadding);
+  }
+}
+
+class CurationRankSection extends StatefulWidget {
+  final int refreshCount;
+  final SearchableAddress? address;
+
+  final double verticalPadding;
+  final double imageWidth;
+  final double imageHeight;
+
+  const CurationRankSection({
+    super.key,
+    this.refreshCount = 0,
+    this.verticalPadding = 16.0,
+    this.address,
+    this.imageWidth = 81,
+    this.imageHeight = 108,
+  });
+
+  @override
+  State<CurationRankSection> createState() => _CurationRankSectionState();
+}
+
+class _CurationRankSectionState extends State<CurationRankSection> {
+  List<CurationRewardStatistics> statistics = [];
+  final _statisticsRepo = Get.find<IStatisticsRepository>();
+
+  Future<void> _loadStatistics() async {
+    final ret = await _statisticsRepo.findCurationStatistics(
+        searchOption: SearchList.empty().copyWith(
+      address: widget.address?.toFullAddress(),
+      limit: 3,
+    ));
+    ret.fold((l) => showError(l.desc), (r) {
+      if (!mounted) return;
+      setState(() => statistics = r);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadStatistics();
+  }
+
+  @override
+  void didUpdateWidget(covariant CurationRankSection oldWidget) {
+    if ((widget.address != oldWidget.address) ||
+        (widget.refreshCount != oldWidget.refreshCount)) {
+      _loadStatistics();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (statistics.isEmpty) return const SizedBox();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          DS.text.lastWeekBestRewardCurationTitle,
+          style: DS.textStyle.paragraph1.semiBold.h14.b900,
+        ),
+        DS.space.vXTiny,
+        Text(
+          DS.text.lastWeekBestRewardCurationDescription,
+          style: DS.textStyle.caption1.b600.h14,
+        ),
+        DS.space.vTiny,
       ],
     ).paddingVertical(widget.verticalPadding);
   }

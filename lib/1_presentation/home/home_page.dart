@@ -120,7 +120,6 @@ class HomePage extends GetView<HomePageController> {
                       address: c.selectedAddress,
                     )).toSliver,
                 sectionHalfSpacingWidget.toSliver,
-                // sectionHalfSpacingWidget.toSliver,
               ],
             ),
           ),

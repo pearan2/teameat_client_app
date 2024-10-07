@@ -1,15 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/component/on_tap.dart';
 import 'package:teameat/1_presentation/core/component/store/item/item.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
+import 'package:teameat/1_presentation/core/image/image.dart';
 import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/i_react.dart';
 import 'package:teameat/3_domain/core/code/statistics/i_statistics_repository.dart';
 import 'package:teameat/3_domain/core/code/statistics/statistics.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
+import 'package:teameat/99_util/extension/num.dart';
 import 'package:teameat/99_util/extension/text_style.dart';
 import 'package:teameat/99_util/extension/widget.dart';
+import 'package:teameat/main.dart';
 
 class ItemRankSection extends StatefulWidget {
   final int refreshCount;
@@ -161,6 +165,96 @@ class _CurationRankSectionState extends State<CurationRankSection> {
     super.didUpdateWidget(oldWidget);
   }
 
+  List<Widget> _buildCurationRewardCardColumnChildren() {
+    final ret = <Widget>[];
+
+    Widget buildCard(int idx, CurationRewardStatistics statistics) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TECacheImage(
+            src: statistics.targetInfo.imageUrl,
+            width: widget.imageWidth,
+            ratio: widget.imageWidth / widget.imageHeight,
+            borderRadius: DS.space.xxTiny,
+          ),
+          Container(
+              alignment: Alignment.center,
+              width: DS.space.medium + DS.space.xSmall,
+              child: Text((idx + 1).toString(),
+                  style: DS.textStyle.title1.h13.b800.copyWith(
+                    fontSize: DS.space.medium + DS.space.tiny,
+                  ))),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DS.space.vTiny,
+                Text(
+                  statistics.targetInfo.name,
+                  style: DS.textStyle.paragraph3.medium.h14.b800,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  statistics.targetInfo.introducePreview,
+                  style: DS.textStyle.caption2.h14.b500,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                DS.space.vXSmall,
+                Row(
+                  children: [
+                    TECacheImage(
+                      src: statistics.targetInfo.curator.profileImageUrl,
+                      width: DS.space.base,
+                      borderRadius: 300,
+                    ),
+                    DS.space.hXTiny,
+                    Text(
+                      statistics.targetInfo.curator.nickname,
+                      style: DS.textStyle.caption1.semiBold.b800,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+                DS.space.vXTiny,
+                Row(
+                  children: [
+                    DS.image.rewardSm,
+                    DS.space.hXTiny,
+                    Text(
+                      statistics.data.format(DS.text.curationRewardFormat),
+                      style: DS.textStyle.paragraph2.bold.s500,
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      );
+    }
+
+    Widget buildSpace() => DS.space.vTiny;
+
+    for (int i = 0; i < statistics.length; i++) {
+      final curation = statistics[i].targetInfo;
+
+      if (i != 0) {
+        ret.add(buildSpace());
+      }
+      ret.add(TEonTap(
+          isLoginRequired: true,
+          onTap: () => Get.find<IReact>()
+              .toCurationDetail(curation.id, simple: curation),
+          child: buildCard(i, statistics[i])));
+    }
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (statistics.isEmpty) return const SizedBox();
@@ -178,7 +272,14 @@ class _CurationRankSectionState extends State<CurationRankSection> {
           style: DS.textStyle.caption1.b600.h14,
         ),
         DS.space.vTiny,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: _buildCurationRewardCardColumnChildren(),
+        ),
       ],
-    ).paddingVertical(widget.verticalPadding);
+    ).paddingSymmetric(
+      vertical: widget.verticalPadding,
+      horizontal: AppWidget.horizontalPadding,
+    );
   }
 }

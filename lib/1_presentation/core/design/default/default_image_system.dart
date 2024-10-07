@@ -520,6 +520,13 @@ class DefaultImageSystem extends IImageSystem {
       );
 
   @override
+  SvgPicture get rewardSm => SvgPicture.asset(
+        'assets/image/icon/reward.svg',
+        height: 16,
+        width: 16,
+      );
+
+  @override
   Image get pacman => Image.asset(
         'assets/image/teameat_pacman.png',
         width: 15,

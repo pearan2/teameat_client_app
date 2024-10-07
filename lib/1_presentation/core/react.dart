@@ -39,6 +39,13 @@ class React extends IReact {
   }
 
   @override
+  void toStoreSearch({required SearchSimpleList searchOption}) {
+    Get.toNamed('/search/store', arguments: {
+      'searchOption': searchOption,
+    });
+  }
+
+  @override
   void toGroupBuyingSearchPage({SearchableAddress? selectedAddress}) {
     Get.toNamed('/search/group-buying',
         arguments: {'selectedAddress': selectedAddress});

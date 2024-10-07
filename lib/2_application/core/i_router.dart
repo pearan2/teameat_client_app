@@ -14,6 +14,8 @@ abstract class IRouter {
 
   void toStoreItemSearch({required SearchSimpleList searchOption});
 
+  void toStoreSearch({required SearchSimpleList searchOption});
+
   void toBanner(String url);
 
   /// section

@@ -1156,7 +1156,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get lastWeekBestRewardCurationDescription =>
-      '지난 주 팀잇에서 제일 많은 리워드를 획득한 푸드로그는?';
+      '지난 주 팀잇에서 가장 많은 리워드를 획득한 푸드로그는?';
 
   @override
   String get lastWeekBestRewardCurationTitle => '🏆 명예의 전당';
@@ -1208,4 +1208,7 @@ class DefaultTextSystem extends ITextSystem {
 
   @override
   String get searchButtonShortText => '검색';
+
+  @override
+  String get curationRewardFormat => '###원 획득!';
 }

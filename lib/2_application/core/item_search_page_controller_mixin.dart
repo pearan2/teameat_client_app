@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:teameat/1_presentation/core/design/design_system.dart';
@@ -8,17 +9,21 @@ import 'package:teameat/2_application/core/location_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/core/code/code.dart';
 import 'package:teameat/3_domain/core/code/i_code_repository.dart';
+import 'package:teameat/3_domain/core/failure.dart';
 import 'package:teameat/3_domain/core/searchable_address.dart';
-import 'package:teameat/3_domain/store/i_store_repository.dart';
-import 'package:teameat/3_domain/store/item/i_item_repository.dart';
-import 'package:teameat/3_domain/store/item/item.dart';
 import 'package:teameat/3_domain/store/store.dart';
 
-abstract class ItemSearchPageController extends PageController {
-  SearchSimpleList get initialSearchOption;
-  PagingController<int, ItemSimple> get pagingController;
+typedef LoadResult<T> = Future<Either<Failure, List<T>>>;
+typedef DataLoader<T> = LoadResult<T> Function(SearchSimpleList searchOption);
+typedef RecommendDataLoader<T> = LoadResult<T> Function(int numberOfRecommend);
 
-  void onStoreItemCardClickHandler(int itemId);
+abstract class SearchPageController<T> extends PageController {
+  SearchSimpleList get initialSearchOption;
+  PagingController<int, T> get pagingController;
+  DataLoader<T> get dataLoader;
+  RecommendDataLoader<T>? get recommendDataLoader;
+
+  void onCardClickHandler(int id);
   Future<void> refreshPage();
   void clearSearchOption();
   void beforeClearSearchOption();
@@ -28,18 +33,16 @@ abstract class ItemSearchPageController extends PageController {
   Future<void> onOrderChanged(Code order);
 }
 
-mixin ItemSearchPageControllerMixin on ItemSearchPageController {
+mixin ItemSearchPageControllerMixin<T> on SearchPageController<T> {
   /// 상수
   final numberOfRecommendRequestItems = 1;
 
   /// repos
-  final _storeRepo = Get.find<IStoreRepository>();
-  final _itemRepo = Get.find<IStoreItemRepository>();
   final _codeRepo = Get.find<ICodeRepository>();
 
   /// controllers
   @override
-  final PagingController<int, ItemSimple> pagingController =
+  final PagingController<int, T> pagingController =
       PagingController(firstPageKey: 0);
   final locationController = Get.find<LocationController>();
 
@@ -48,14 +51,15 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   late final _searchOption = initialSearchOption.obs;
   final _orderCodes = RxList<Code>.empty();
 
-  final _recommendedItems = <ItemSimple>[].obs;
+  final _recommendedItems = <T>[].obs;
+
   final _isLoading = false.obs;
   bool _isPagingLoading = false;
 
   /// getter
   SearchSimpleList get searchOption => _searchOption.value;
 
-  ItemSimple? get recommendedItem =>
+  T? get recommendedItem =>
       // ignore: invalid_use_of_protected_member
       _recommendedItems.value.isEmpty ? null : _recommendedItems.value.first;
 
@@ -69,7 +73,7 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   List<Code> get orders => _orderCodes.value;
 
   @override
-  void onStoreItemCardClickHandler(int itemId) {
+  void onCardClickHandler(int itemId) {
     return react.toStoreItemDetail(itemId);
   }
 
@@ -142,15 +146,15 @@ mixin ItemSearchPageControllerMixin on ItemSearchPageController {
   }
 
   Future<void> _loadRecommendedItem() async {
-    final ret =
-        await _itemRepo.findRecommendedItems(numberOfRecommendRequestItems);
+    if (recommendDataLoader == null) return;
+    final ret = await recommendDataLoader!(numberOfRecommendRequestItems);
     ret.fold((l) => null, (r) => _recommendedItems.value = r);
   }
 
   Future<void> _loadStores(int currentPageNumber) async {
     if (_isPagingLoading) return;
     _isPagingLoading = true;
-    final ret = await _storeRepo.getStoreItems(_searchOption.value);
+    final ret = await dataLoader(_searchOption.value);
     _isPagingLoading = false;
     ret.fold((l) => showError(l.desc), (r) {
       if (r.length < _searchOption.value.pageSize) {

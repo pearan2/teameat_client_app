@@ -47,13 +47,15 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
   final _storeRepo = Get.find<IStoreRepository>();
   final _react = Get.find<IReact>();
 
+  late final _searchOption = SearchSimpleList.empty().copyWith(
+    address: widget.address,
+    pageNumber: 0,
+    pageSize: 10,
+  );
+
   Future<void> _loadStores() async {
     setState(() => isLoading = true);
-    final ret = await _storeRepo.getStores(SearchSimpleList.empty().copyWith(
-      address: widget.address,
-      pageNumber: 0,
-      pageSize: 10,
-    ));
+    final ret = await _storeRepo.getStores(_searchOption);
     ret.fold((l) => showError(l.desc), (r) {
       if (mounted) {
         setState(() {
@@ -89,6 +91,8 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
           title: widget.title,
           description: widget.description,
           horizontalPadding: widget.horizontalPadding,
+          onTap: () =>
+              Get.find<IReact>().toStoreSearch(searchOption: _searchOption),
         ),
         DS.space.vTiny,
         SizedBox(

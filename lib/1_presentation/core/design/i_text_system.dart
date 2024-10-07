@@ -441,4 +441,6 @@ abstract class ITextSystem {
   String get categorySectionDescription;
 
   String get searchButtonShortText;
+
+  String get curationRewardFormat;
 }

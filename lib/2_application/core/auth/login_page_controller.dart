@@ -1,5 +1,6 @@
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:get/get.dart';
+import 'package:teameat/1_presentation/core/layout/snack_bar.dart';
 import 'package:teameat/2_application/core/component/like_controller.dart';
 import 'package:teameat/2_application/core/page_controller.dart';
 import 'package:teameat/3_domain/auth/i_auth_service.dart';
@@ -36,6 +37,11 @@ class LoginPageController extends PageController {
       final result = await FlutterWebAuth2.authenticate(
           url: loginUrl, callbackUrlScheme: 'teameatwebauthcallback');
       final accessToken = Uri.parse(result).queryParameters['accessToken'];
+      final errorMessage = Uri.parse(result).queryParameters['errorMessage'];
+      if (errorMessage != null) {
+        showError(errorMessage);
+        return;
+      }
       if (accessToken == null) return;
       await _authService.login(accessToken);
       await Future.wait([

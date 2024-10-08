@@ -47,7 +47,7 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
   final _storeRepo = Get.find<IStoreRepository>();
   final _react = Get.find<IReact>();
 
-  late final _searchOption = SearchSimpleList.empty().copyWith(
+  late SearchSimpleList _searchOption = SearchSimpleList.empty().copyWith(
     address: widget.address,
     pageNumber: 0,
     pageSize: 10,
@@ -70,6 +70,7 @@ class _RecentStoreSectionState extends State<RecentStoreSection> {
   void didUpdateWidget(covariant RecentStoreSection oldWidget) {
     if ((widget.address != oldWidget.address) ||
         (widget.refreshCount != oldWidget.refreshCount)) {
+      _searchOption = _searchOption.copyWith(address: widget.address);
       _loadStores();
     }
     super.didUpdateWidget(oldWidget);
